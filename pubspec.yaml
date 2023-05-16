@@ -1,10 +1,10 @@
 name: ecowave
 description: A new Flutter project.
-publish_to: 'none'
+publish_to: "none"
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.0.0 <4.0.0'
+  sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
   flutter:
@@ -15,6 +15,18 @@ dependencies:
   flutter_launcher_icons: ^0.13.1
   flutter_bloc: ^8.1.2
   get_it: ^7.6.0
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/logo.png"
+  google_fonts: ^4.0.4
+  flutter_launcher_icons: ^0.13.1
+  flutter_bloc: ^8.1.2
+  get_it: ^7.6.0
+  intl: ^0.18.1
+  another_flushbar: ^1.12.30
+  lottie: ^2.3.2
 
 flutter_launcher_icons:
   android: "launcher_icon"
@@ -31,4 +43,5 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/
-    # - assets/icons/
+    - assets/icons/
+    - assets/json/
