@@ -1,3 +1,4 @@
+import 'package:ecowave/core.dart';
 import 'package:ecowave/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -13,23 +14,23 @@ class App extends StatelessWidget {
       home: const Placeholder(),
       onGenerateRoute: Routes.generateRoute,
       theme: ThemeData(
-        scaffoldBackgroundColor: Colors.white,
+        scaffoldBackgroundColor: AppColors.white,
         useMaterial3: true,
         textTheme: GoogleFonts.poppinsTextTheme(
           Theme.of(context).textTheme,
         ).apply(
-          bodyColor: const Color(0xff111827),
+          bodyColor: AppColors.black,
         ),
         appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.white,
-          foregroundColor: Color(0xff111827),
+          backgroundColor: AppColors.white,
+          foregroundColor: AppColors.black,
           centerTitle: true,
           iconTheme: IconThemeData(
-            color: Color(0xff059669),
+            color: AppColors.primary500,
           ),
           shape: Border(
             bottom: BorderSide(
-              color: Color(0xffADB5C2),
+              color: AppColors.grey300,
             ),
           ),
         ),
