@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+part of 'package:ecowave/core.dart';
 
 class AppColors {
   static const Color primary50 = Color(0xffF6FEFA);

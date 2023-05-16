@@ -1,3 +1,5 @@
+part of 'package:ecowave/core.dart';
+
 class AppImages {
   static const String logo = 'assets/images/logo.png';
 

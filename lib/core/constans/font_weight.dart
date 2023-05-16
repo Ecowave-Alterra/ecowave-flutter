@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+part of 'package:ecowave/core.dart';
 
 class AppFontWeight {
   static const thin = FontWeight.w100;
