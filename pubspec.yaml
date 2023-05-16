@@ -11,6 +11,15 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.2
+  google_fonts: ^4.0.4
+  flutter_launcher_icons: ^0.13.1
+  flutter_bloc: ^8.1.2
+  get_it: ^7.6.0
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/logo.png"
 
 dev_dependencies:
   flutter_test:
@@ -20,6 +29,6 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-  # assets:
-  #   - assets/images/
-  #   - assets/icons/
+  assets:
+    - assets/images/
+    # - assets/icons/
