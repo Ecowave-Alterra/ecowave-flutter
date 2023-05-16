@@ -30,17 +30,17 @@ class EcoFormButton extends StatelessWidget {
         width: width ?? 136.0,
         padding: const EdgeInsets.symmetric(horizontal: 28.0),
         decoration: BoxDecoration(
-          border: Border.all(color: borderColor ?? Colors.green),
-          borderRadius: BorderRadius.circular(100),
-          color: backgroundColor ?? Colors.red,
+          border: Border.all(color: borderColor ?? AppColors.primary500),
+          borderRadius: BorderRadius.circular(AppSizes.radiusButton),
+          color: backgroundColor ?? AppColors.primary500,
         ),
         child: Center(
           child: Text(
             label,
             style: TextStyle(
-              color: textColor ?? Colors.white,
-              fontWeight: FontWeight.w600,
-              fontSize: 14.0,
+              color: textColor ?? AppColors.white,
+              fontWeight: AppFontWeight.semibold,
+              fontSize: AppSizes.buttonFontSize,
             ),
           ),
         ),

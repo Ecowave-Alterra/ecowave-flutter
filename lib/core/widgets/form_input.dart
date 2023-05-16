@@ -27,26 +27,26 @@ class EcoFormInput extends StatelessWidget {
       validator: validator,
       onChanged: onChanged,
       style: const TextStyle(
-        color: Colors.black,
+        color: AppColors.black,
       ),
       decoration: InputDecoration(
-        contentPadding:
-            const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16.0),
+        contentPadding: const EdgeInsets.symmetric(
+            horizontal: AppSizes.secondary, vertical: AppSizes.primary),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(4.0),
-          borderSide: const BorderSide(color: Color(0xFFADB5C2)),
+          borderRadius: BorderRadius.circular(AppSizes.radiusForm),
+          borderSide: const BorderSide(color: AppColors.grey300),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(4.0),
-          borderSide: const BorderSide(color: Color(0xFFADB5C2)),
+          borderRadius: BorderRadius.circular(AppSizes.radiusForm),
+          borderSide: const BorderSide(color: AppColors.grey300),
         ),
         disabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(4.0),
-          borderSide: const BorderSide(color: Color(0xFFADB5C2)),
+          borderRadius: BorderRadius.circular(AppSizes.radiusForm),
+          borderSide: const BorderSide(color: AppColors.grey300),
         ),
         errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(4.0),
-          borderSide: const BorderSide(color: Color(0xFFC8291E)),
+          borderRadius: BorderRadius.circular(AppSizes.radiusForm),
+          borderSide: const BorderSide(color: AppColors.error500),
         ),
         labelStyle: const TextStyle(
           color: Colors.black,
@@ -54,7 +54,7 @@ class EcoFormInput extends StatelessWidget {
         floatingLabelBehavior: FloatingLabelBehavior.always,
         labelText: label,
         hintText: hint,
-        hintStyle: const TextStyle(color: Color(0xFF737D8C)),
+        hintStyle: const TextStyle(color: AppColors.grey500),
         prefixIcon: icon,
       ),
     );
