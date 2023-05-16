@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 class EcoEmpty extends StatelessWidget {
   final String massage;
-  final String gambar;
+  final String image;
 
-  const EcoEmpty({Key? key, required this.massage, required this.gambar})
+  const EcoEmpty({Key? key, required this.massage, required this.image})
       : super(key: key);
 
   @override
@@ -14,7 +14,7 @@ class EcoEmpty extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Image(
-          image: AssetImage(gambar),
+          image: AssetImage(image),
         ),
         const SizedBox(height: 16.0),
         Text(

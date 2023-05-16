@@ -4,8 +4,7 @@ class EcoLoading extends StatefulWidget {
   const EcoLoading({Key? key}) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
-  _EcoLoadingState createState() => _EcoLoadingState();
+  State<EcoLoading> createState() => _EcoLoadingState();
 }
 
 class _EcoLoadingState extends State<EcoLoading>
