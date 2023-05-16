@@ -27,7 +27,7 @@ class EcoFormButton extends StatelessWidget {
       onPressed: onPressed,
       child: Container(
         height: height ?? 40.0,
-        width: width ?? 136.0,
+        width: width ?? MediaQuery.of(context).size.width,
         padding: const EdgeInsets.symmetric(horizontal: 28.0),
         decoration: BoxDecoration(
           border: Border.all(color: borderColor ?? AppColors.primary500),
