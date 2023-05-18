@@ -2,6 +2,8 @@ import 'package:ecowave/core.dart';
 import 'package:ecowave/features/payment/model/entity/address_entity.dart';
 import 'package:ecowave/features/payment/model/entity/payment_info.dart';
 import 'package:ecowave/features/payment/model/entity/voucher.dart';
+import 'package:ecowave/features/payment/view/pages/payment_page.dart';
+import 'package:ecowave/features/payment/view/pages/payment_waiting_page.dart';
 import 'package:ecowave/features/payment/view/widgets/address_info_widget.dart';
 import 'package:ecowave/features/payment/view/widgets/checkout_setting_button.dart';
 import 'package:ecowave/features/payment/view/widgets/checkout_setting_switch.dart';
@@ -9,8 +11,8 @@ import 'package:ecowave/features/payment/view/widgets/payment_info_widget.dart';
 import 'package:ecowave/features/payment/view/widgets/selected_product_card.dart';
 import 'package:flutter/material.dart';
 
-class PaymentDetail extends StatelessWidget {
-  const PaymentDetail({super.key});
+class PaymentDetailPage extends StatelessWidget {
+  const PaymentDetailPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +101,13 @@ class PaymentDetail extends StatelessWidget {
               flex: 1,
               child: EcoFormButton(
                 label: "Order Sekarang",
-                onPressed: () {},
+                onPressed: () async {
+                  await context.push(const PaymentPage());
+                  if (context.mounted) {
+                    await context.pushAndRemoveUntil(
+                        const PaymentWaitingPage(), (route) => route.isFirst);
+                  }
+                },
               ),
             ),
           ],
