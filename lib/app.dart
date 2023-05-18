@@ -1,4 +1,5 @@
 import 'package:ecowave/core.dart';
+import 'package:ecowave/features/payment/view/pages/payment_detail.dart';
 import 'package:ecowave/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -11,7 +12,7 @@ class App extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Ecowave',
-      home: const Placeholder(),
+      home: const PaymentDetail(),
       onGenerateRoute: Routes.generateRoute,
       theme: ThemeData(
         scaffoldBackgroundColor: AppColors.white,
@@ -21,18 +22,21 @@ class App extends StatelessWidget {
         ).apply(
           bodyColor: AppColors.black,
         ),
-        appBarTheme: const AppBarTheme(
+        appBarTheme: AppBarTheme(
           backgroundColor: AppColors.white,
           foregroundColor: AppColors.black,
           centerTitle: true,
-          iconTheme: IconThemeData(
+          iconTheme: const IconThemeData(
             color: AppColors.primary500,
           ),
           shape: Border(
             bottom: BorderSide(
-              color: AppColors.grey300,
+              color: AppColors.grey300.withOpacity(0.5),
             ),
           ),
+        ),
+        dividerTheme: DividerThemeData(
+          color: AppColors.grey300.withOpacity(0.5),
         ),
       ),
     );
