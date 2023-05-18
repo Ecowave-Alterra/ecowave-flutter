@@ -31,7 +31,7 @@ class CheckoutSettingSwitch extends StatelessWidget {
           Text(
             label,
             style: const TextStyle(
-              fontWeight: AppFontWeight.regular,
+              fontWeight: AppFontWeight.semibold,
             ),
           ),
           StatefulBuilder(

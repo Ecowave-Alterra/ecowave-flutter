@@ -38,7 +38,7 @@ class PaymentInfoWidget extends StatelessWidget {
             price: paymentInfo.pointUsed,
           ),
           _PriceInfo(
-            label: "Diskon ${paymentInfo.voucher?.name ?? ""}",
+            label: "Diskon",
             price: paymentInfo.voucher?.discount ?? 0,
           ),
           const Divider(),

@@ -32,10 +32,8 @@ class CheckoutSettingButton extends StatelessWidget {
           children: [
             Text(
               value ?? label,
-              style: TextStyle(
-                fontWeight: value == null
-                    ? AppFontWeight.regular
-                    : AppFontWeight.semibold,
+              style: const TextStyle(
+                fontWeight: AppFontWeight.semibold,
               ),
             ),
             const ImageIcon(
