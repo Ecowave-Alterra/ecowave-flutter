@@ -18,6 +18,7 @@ dependencies:
   intl: ^0.18.1
   another_flushbar: ^1.12.30
   lottie: ^2.3.2
+  carousel_slider: ^4.2.1
 
 flutter_launcher_icons:
   android: "launcher_icon"

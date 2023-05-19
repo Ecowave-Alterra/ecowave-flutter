@@ -1,4 +1,5 @@
 import 'package:ecowave/core.dart';
+import 'package:ecowave/features/ecommerce/view/pages/home_e_commerce_page.dart';
 import 'package:ecowave/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -11,7 +12,7 @@ class App extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Ecowave',
-      home: const Placeholder(),
+      home: const HomeECommerce(),
       onGenerateRoute: Routes.generateRoute,
       theme: ThemeData(
         scaffoldBackgroundColor: AppColors.white,
