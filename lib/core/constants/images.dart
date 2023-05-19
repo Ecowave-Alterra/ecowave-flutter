@@ -27,7 +27,7 @@ class AppImages {
   static const String emptyKeranjang = 'assets/images/emptyKeranjang.png';
 
   static const String homeInfo = 'assets/images/homeInfo.png';
-  static const String homeShop = 'assets/images/homeInfo.png';
+  static const String homeShop = 'assets/images/homeShop.png';
 
   static const String loadingPembayaran = 'assets/images/loadingPembayaran.png';
 }
