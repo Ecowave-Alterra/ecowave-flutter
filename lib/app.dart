@@ -11,7 +11,7 @@ class App extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Ecowave',
-      home: const Placeholder(),
+      home: HistoryPesananPage(),
       onGenerateRoute: Routes.generateRoute,
       theme: ThemeData(
         scaffoldBackgroundColor: AppColors.white,

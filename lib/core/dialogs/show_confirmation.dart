@@ -4,6 +4,7 @@ void showConfirmation(
     {required String title,
     required String message,
     required String? nameButtonConfirmation,
+    required String? nameButtonUnConfirmation,
     required Color? colorButtonConfirmation,
     required void Function() pressNavConfirmation,
     required BuildContext context}) async {
@@ -26,7 +27,6 @@ void showConfirmation(
                       title,
                       style: const TextStyle(
                           fontSize: 20, fontWeight: AppFontWeight.bold),
-                      textAlign: TextAlign.center,
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 8, bottom: 16),
@@ -46,9 +46,9 @@ void showConfirmation(
                               onPressed: () {
                                 Navigator.of(context).pop();
                               },
-                              child: const Text(
-                                "Batal",
-                                style: TextStyle(
+                              child: Text(
+                                nameButtonUnConfirmation ?? "Batal",
+                                style: const TextStyle(
                                   color: Colors.black,
                                 ),
                               )),
