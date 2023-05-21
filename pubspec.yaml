@@ -18,11 +18,12 @@ dependencies:
   intl: ^0.18.1
   another_flushbar: ^1.12.30
   lottie: ^2.3.2
+  flutter_countdown_timer: ^4.1.0
 
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/images/logo.png"
+  image_path: "assets/images/logo_app.png"
 
 dev_dependencies:
   flutter_test:
