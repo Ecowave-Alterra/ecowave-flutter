@@ -1,4 +1,7 @@
-part of 'package:ecowave/core.dart';
+import 'package:ecowave/core.dart';
+import 'package:ecowave/features/history_pesanan/view/pages/rincian_pesanan_page.dart';
+import 'package:ecowave/features/history_pesanan/view/widgets/empty_state.dart';
+import 'package:flutter/material.dart';
 
 class HistoryPesananPage extends StatefulWidget {
   const HistoryPesananPage({super.key});
@@ -161,8 +164,7 @@ class _HistoryPesananPageState extends State<HistoryPesananPage>
                                   const SizedBox(),
                                   InkWell(
                                     onTap: () {
-                                      context
-                                          .push(const RincianBelumBayarPage());
+                                      context.push(const RincianPesananPage());
                                     },
                                     child: const Text(
                                       "Lihat Rincian",

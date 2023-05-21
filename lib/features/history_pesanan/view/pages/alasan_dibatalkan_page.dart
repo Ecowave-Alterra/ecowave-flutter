@@ -1,4 +1,5 @@
-part of 'package:ecowave/core.dart';
+import 'package:ecowave/core.dart';
+import 'package:flutter/material.dart';
 
 class AlasanDibatalkanBayarPage extends StatelessWidget {
   const AlasanDibatalkanBayarPage({super.key});
@@ -103,11 +104,12 @@ class AlasanDibatalkanBayarPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text("Alasan"),
-                  Flexible(child: Container()),
-                  Flexible(
+                  const Spacer(),
+                  Expanded(
                     child: Container(
                       decoration: const BoxDecoration(),
-                      child: const Text("Melakukan Pemesanan Double"),
+                      child: const Text(
+                          "Melakukan Pemesaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaanan Double"),
                     ),
                   ),
                 ],

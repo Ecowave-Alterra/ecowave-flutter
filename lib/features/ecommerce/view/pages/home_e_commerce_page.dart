@@ -11,14 +11,6 @@ class HomeECommerce extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {},
-          icon: const ImageIcon(
-            AppIcons.leftBack,
-            color: AppColors.primary500,
-          ),
-          iconSize: 11.98,
-        ),
         title: const Text("EcoShop"),
         actions: [
           IconButton(

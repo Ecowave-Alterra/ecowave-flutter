@@ -1,4 +1,6 @@
-part of 'package:ecowave/core.dart';
+import 'package:ecowave/core.dart';
+import 'package:ecowave/features/history_pesanan/view/pages/alasan_dibatalkan_page.dart';
+import 'package:flutter/material.dart';
 
 class BatalkanPesananPage extends StatelessWidget {
   const BatalkanPesananPage({super.key});
@@ -47,7 +49,8 @@ class BatalkanPesananPage extends StatelessWidget {
                     nameButtonConfirmation: 'Batalkan',
                     colorButtonConfirmation: AppColors.error500,
                     pressNavConfirmation: () {
-                      context.push(const AlasanDibatalkanBayarPage());
+                      context
+                          .pushReplacement(const AlasanDibatalkanBayarPage());
                     },
                     context: context,
                     nameButtonUnConfirmation: 'Tidak');

@@ -1,7 +1,10 @@
-part of 'package:ecowave/core.dart';
+import 'package:ecowave/core.dart';
+import 'package:ecowave/features/history_pesanan/view/pages/batalkan_pesanan_page.dart';
+import 'package:ecowave/features/history_pesanan/view/pages/lacak_pesanan_page.dart';
+import 'package:flutter/material.dart';
 
-class RincianBelumBayarPage extends StatelessWidget {
-  const RincianBelumBayarPage({super.key});
+class RincianPesananPage extends StatelessWidget {
+  const RincianPesananPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +51,7 @@ class RincianBelumBayarPage extends StatelessWidget {
               const Row(
                 children: [
                   ImageIcon(
-                    AppIcons.mobil,
+                    AppIcons.pengiriman,
                   ),
                   SizedBox(
                     width: 5,
@@ -68,7 +71,9 @@ class RincianBelumBayarPage extends StatelessWidget {
                 children: [
                   const Text("Reguler"),
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      context.push(const LacakPesananPage());
+                    },
                     child: const Text(
                       "Lacak Pesanan",
                       style: TextStyle(color: AppColors.primary500),
@@ -135,8 +140,6 @@ class RincianBelumBayarPage extends StatelessWidget {
                       "assets/images/productShop2.png",
                       fit: BoxFit.cover,
                     ),
-                    // child: Image.network(
-                    //     "https://cdn.shopify.com/s/files/1/0054/6737/3638/products/rug-1651050782034-0_large.jpg?v=1651125749"),
                   ),
                   const Flexible(
                     child: Column(

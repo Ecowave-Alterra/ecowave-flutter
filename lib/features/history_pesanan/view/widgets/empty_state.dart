@@ -1,4 +1,5 @@
-part of 'package:ecowave/core.dart';
+import 'package:ecowave/core.dart';
+import 'package:flutter/material.dart';
 
 class EmptyState extends StatelessWidget {
   const EmptyState({super.key});

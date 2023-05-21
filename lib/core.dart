@@ -24,10 +24,3 @@ part 'package:ecowave/core/widgets/form_input.dart';
 part 'package:ecowave/core/widgets/empty.dart';
 part 'package:ecowave/core/widgets/error.dart';
 part 'package:ecowave/core/widgets/loading.dart';
-
-part 'package:ecowave/features/history_pesanan/view/pages/history_pesanan_page.dart';
-part 'package:ecowave/features/history_pesanan/view/pages/rincian_pesanan_page.dart';
-part 'package:ecowave/features/history_pesanan/view/pages/alasan_dibatalkan_page.dart';
-part 'package:ecowave/features/history_pesanan/view/pages/batalkan_pesanan_page.dart';
-
-part 'package:ecowave/features/history_pesanan/view/widgets/empty_state.dart';
