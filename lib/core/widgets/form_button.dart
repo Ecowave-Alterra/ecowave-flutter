@@ -2,10 +2,10 @@ part of 'package:ecowave/core.dart';
 
 class EcoFormButton extends StatelessWidget {
   final String label;
-  final void Function() onPressed;
+  final void Function()? onPressed;
   final Color? backgroundColor;
   final Color? textColor;
-  final Color? borderColor;
+  final BoxBorder? border;
   final double? width;
   final double? height;
 
@@ -15,25 +15,25 @@ class EcoFormButton extends StatelessWidget {
     required this.onPressed,
     this.backgroundColor,
     this.textColor,
-    this.borderColor,
+    this.border,
     this.width,
     this.height,
   });
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-      clipBehavior: Clip.none,
-      onPressed: onPressed,
-      child: Container(
-        height: height ?? 40.0,
-        width: width ?? MediaQuery.of(context).size.width,
-        padding: const EdgeInsets.symmetric(horizontal: 28.0),
-        decoration: BoxDecoration(
-          border: Border.all(color: borderColor ?? AppColors.primary500),
-          borderRadius: BorderRadius.circular(AppSizes.radiusButton),
-          color: backgroundColor ?? AppColors.primary500,
-        ),
+    return Container(
+      height: height ?? 40.0,
+      width: width ?? MediaQuery.of(context).size.width,
+      decoration: BoxDecoration(
+        border: border,
+        borderRadius: BorderRadius.circular(AppSizes.radiusButton),
+        color: onPressed == null
+            ? backgroundColor?.withOpacity(0.5) ?? AppColors.primary300
+            : backgroundColor ?? AppColors.primary500,
+      ),
+      child: TextButton(
+        onPressed: onPressed,
         child: Center(
           child: Text(
             label,

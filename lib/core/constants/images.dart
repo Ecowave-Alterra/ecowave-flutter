@@ -27,7 +27,16 @@ class AppImages {
   static const String emptyKeranjang = 'assets/images/emptyKeranjang.png';
 
   static const String homeInfo = 'assets/images/homeInfo.png';
-  static const String homeShop = 'assets/images/homeInfo.png';
+  static const String homeShop = 'assets/images/homeShop.png';
 
   static const String loadingPembayaran = 'assets/images/loadingPembayaran.png';
+
+  static const String bca = "assets/icons/bca.png";
+  static const String bri = "assets/icons/bri.png";
+  static const String bni = "assets/icons/bni.png";
+  static const String mandiri = "assets/icons/mandiri.png";
+  static const String ovo = "assets/icons/ovo.png";
+  static const String gopay = "assets/icons/gopay.png";
+  static const String dana = "assets/icons/dana.png";
+  static const String shopeePay = "assets/icons/shopeePay.png";
 }
