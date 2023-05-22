@@ -61,7 +61,8 @@ class _LoginPageState extends State<LoginPage> {
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Email tidak boleh kosong';
-                } else if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
+                } else if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                    .hasMatch(value)) {
                   return 'Alamat email tidak valid';
                 }
                 return null;
@@ -97,7 +98,7 @@ class _LoginPageState extends State<LoginPage> {
               children: [
                 10.0.width,
                 TextButton(
-                  onPressed: () {}, 
+                  onPressed: () {},
                   child: const Text(
                     "Lupa Password?",
                     style: TextStyle(
@@ -110,10 +111,10 @@ class _LoginPageState extends State<LoginPage> {
             ),
             EcoFormButton(
               label: 'Login',
-              onPressed: _isLoginButtonDisabled ? (){} : () {
-             
-              },
-              backgroundColor: _isLoginButtonDisabled ? AppColors.primary300 : AppColors.primary500,
+              onPressed: _isLoginButtonDisabled ? () {} : () {},
+              backgroundColor: _isLoginButtonDisabled
+                  ? AppColors.primary300
+                  : AppColors.primary500,
             ),
             36.0.height,
             const Row(
@@ -151,7 +152,9 @@ class _LoginPageState extends State<LoginPage> {
               },
               backgroundColor: Colors.white,
               textColor: Colors.black,
-              borderColor: Colors.grey[300],
+              border: Border.all(
+                color: AppColors.grey300,
+              ),
               height: 48.0,
               width: MediaQuery.of(context).size.width,
             ),
