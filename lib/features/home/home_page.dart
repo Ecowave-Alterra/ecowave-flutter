@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ecowave/core.dart';
 
-import '../auth/login.dart';
-import 'Dashboard.dart';
+import '../auth/login_page.dart';
+import 'dashboard_page.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
