@@ -20,8 +20,8 @@ class EcoEmpty extends StatelessWidget {
         Text(
           massage,
           style: const TextStyle(
-            fontSize: AppSizes.primary,
-            color: AppColors.grey700,
+            fontSize: AppSizes.secondary,
+            color: AppColors.grey500,
           ),
         ),
       ],

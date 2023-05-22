@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ecowave/core.dart';
 
-import 'Dashboard.dart';
+import '../auth/login_page.dart';
+import 'dashboard_page.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
@@ -32,9 +33,7 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Text('Halaman Riwayat'),
           ),
           // Widget untuk halaman Profil
-          Center(
-            child: Text('Halaman Profil'),
-          ),
+          LoginPage(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
