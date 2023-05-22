@@ -1,14 +1,14 @@
+import 'package:ecowave/features/history_pesanan/view/pages/history_pesanan_page.dart';
+import 'package:ecowave/features/home/dashboard_page.dart';
 import 'package:flutter/material.dart';
 import 'package:ecowave/core.dart';
-
-import '../auth/login_page.dart';
-import 'dashboard_page.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  State<MyHomePage> createState() => _MyHomePageState();
+
 }
 
 class _MyHomePageState extends State<MyHomePage> {
@@ -27,33 +27,40 @@ class _MyHomePageState extends State<MyHomePage> {
         index: _currentIndex,
         children: const [
           // Widget untuk halaman Dashboard
-          Dashboard(),
+
+          DashboardPage(),
           // Widget untuk halaman Riwayat
-          Center(
-            child: Text('Halaman Riwayat'),
-          ),
+          HistoryPesananPage(),
           // Widget untuk halaman Profil
-          LoginPage(),
+          Center(
+            child: Text('Halaman Profil'),
+          ),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: _onTap,
         selectedItemColor: Colors.black, // Warna ikon aktif
-        unselectedItemColor: AppColors.grey500,  // Warna ikon tidak aktif
-        selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold), // Style label ikon aktif
-        unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.normal), // Style label ikon tidak aktif
-        type: BottomNavigationBarType.fixed, // Menetapkan jumlah item tetap di tampilan
+        unselectedItemColor: AppColors.grey500, // Warna ikon tidak aktif
+        selectedLabelStyle: const TextStyle(
+            fontWeight: FontWeight.bold), // Style label ikon aktif
+        unselectedLabelStyle: const TextStyle(
+            fontWeight: FontWeight.normal), // Style label ikon tidak aktif
+        type: BottomNavigationBarType
+            .fixed, // Menetapkan jumlah item tetap di tampilan
         items: [
           BottomNavigationBarItem(
             icon: Padding(
-              padding: const EdgeInsets.only(bottom: 4), // Memberi jarak antara ikon dan label
+              padding: const EdgeInsets.only(
+                  bottom: 4), // Memberi jarak antara ikon dan label
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 4),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 30, vertical: 4),
                 decoration: BoxDecoration(
-                  color: _currentIndex == 0 ?  AppColors.primary300: AppColors.white, // Kondisi untuk item yang dipilih
-                  borderRadius: BorderRadius.all(Radius.circular(10))
-                ),
+                    color: _currentIndex == 0
+                        ? AppColors.primary300
+                        : AppColors.white, // Kondisi untuk item yang dipilih
+                    borderRadius: const BorderRadius.all(Radius.circular(10))),
                 child: const ImageIcon(
                   AppIcons.beranda,
                 ),
@@ -64,13 +71,16 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           BottomNavigationBarItem(
             icon: Padding(
-              padding: const EdgeInsets.only(bottom: 4), // Memberijarak antara ikon dan label
+              padding: const EdgeInsets.only(
+                  bottom: 4), // Memberijarak antara ikon dan label
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 4),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 30, vertical: 4),
                 decoration: BoxDecoration(
-                  color: _currentIndex == 1 ?  AppColors.primary300: AppColors.white, // Kondisi untuk item yang dipilih
-                  borderRadius: BorderRadius.all(Radius.circular(10))
-                ),
+                    color: _currentIndex == 1
+                        ? AppColors.primary300
+                        : AppColors.white, // Kondisi untuk item yang dipilih
+                    borderRadius: const BorderRadius.all(Radius.circular(10))),
                 child: const ImageIcon(
                   AppIcons.pesanan,
                 ),
@@ -81,13 +91,16 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           BottomNavigationBarItem(
             icon: Padding(
-              padding: const EdgeInsets.only(bottom: 4), // Memberi jarak antara ikon dan label
+              padding: const EdgeInsets.only(
+                  bottom: 4), // Memberi jarak antara ikon dan label
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 4),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 30, vertical: 4),
                 decoration: BoxDecoration(
-                  color: _currentIndex == 2 ?  AppColors.primary300: AppColors.white, // Kondisi untuk item yang dipilih
-                  borderRadius: BorderRadius.all(Radius.circular(10))
-                ),
+                    color: _currentIndex == 2
+                        ? AppColors.primary300
+                        : AppColors.white, // Kondisi untuk item yang dipilih
+                    borderRadius: const BorderRadius.all(Radius.circular(10))),
                 child: const ImageIcon(
                   AppIcons.profile,
                 ),

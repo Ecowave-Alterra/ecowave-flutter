@@ -1,4 +1,4 @@
-import 'package:ecowave/core.dart';
+
 import 'package:flutter/material.dart';
 
 class Dashboard extends StatelessWidget {
@@ -8,7 +8,6 @@ class Dashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -202,6 +201,5 @@ class Dashboard extends StatelessWidget {
       ),
     );
   }
-  
-
 }
+

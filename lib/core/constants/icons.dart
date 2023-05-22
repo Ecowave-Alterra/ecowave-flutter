@@ -23,6 +23,7 @@ class AppIcons {
   static const AssetImage keranjang = AssetImage("assets/icons/keranjang.png");
   static const AssetImage leftBack = AssetImage("assets/icons/leftBack.png");
   static const AssetImage min = AssetImage("assets/icons/min.png");
+  static const AssetImage mobil = AssetImage("assets/icons/mobil.png");
   static const AssetImage name = AssetImage("assets/icons/name.png");
   static const AssetImage numberPhone =
       AssetImage("assets/icons/numberPhone.png");
