@@ -22,4 +22,5 @@ part 'package:ecowave/core/widgets/form_input_password.dart';
 part 'package:ecowave/core/widgets/form_input.dart';
 part 'package:ecowave/core/widgets/empty.dart';
 part 'package:ecowave/core/widgets/error.dart';
+
 part 'package:ecowave/core/widgets/loading.dart';
