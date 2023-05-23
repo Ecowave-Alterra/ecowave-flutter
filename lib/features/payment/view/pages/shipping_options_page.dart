@@ -2,10 +2,10 @@ import 'package:ecowave/core.dart';
 import 'package:ecowave/features/payment/model/entity/shipping.dart';
 import 'package:flutter/material.dart';
 
-class ShippingOptions extends StatelessWidget {
+class ShippingOptionsPage extends StatelessWidget {
   final String shipping;
 
-  const ShippingOptions({
+  const ShippingOptionsPage({
     super.key,
     required this.shipping,
   });

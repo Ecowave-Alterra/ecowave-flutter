@@ -5,7 +5,7 @@ import 'package:ecowave/features/payment/model/entity/voucher.dart';
 import 'package:ecowave/features/payment/view/pages/payment_page.dart';
 import 'package:ecowave/features/payment/view/pages/payment_waiting_page.dart';
 import 'package:ecowave/features/payment/view/pages/shipping_address_page.dart';
-import 'package:ecowave/features/payment/view/pages/shipping_options.dart';
+import 'package:ecowave/features/payment/view/pages/shipping_options_page.dart';
 import 'package:ecowave/features/payment/view/widgets/address_info_widget.dart';
 import 'package:ecowave/features/payment/view/widgets/checkout_setting_button.dart';
 import 'package:ecowave/features/payment/view/widgets/checkout_setting_switch.dart';
@@ -49,7 +49,7 @@ class PaymentDetailPage extends StatelessWidget {
             value: "JNE",
             label: "Pilih Opsi Pengiriman",
             onPressed: () =>
-                context.push(const ShippingOptions(shipping: "JNE")),
+                context.push(const ShippingOptionsPage(shipping: "JNE")),
           ),
           16.0.height,
           CheckoutSettingButton(
