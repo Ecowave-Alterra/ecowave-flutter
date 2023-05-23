@@ -1,4 +1,4 @@
-import 'package:ecowave/core/extensions/date_time_ext.dart';
+import 'package:ecowave/core.dart';
 
 class Shipping {
   final String name;

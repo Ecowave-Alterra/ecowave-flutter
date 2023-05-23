@@ -1,3 +1,5 @@
+part of 'package:ecowave/core.dart';
+
 final List<String> _monthNames = [
   'Januari',
   'Februari',
