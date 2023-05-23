@@ -2,6 +2,7 @@ import 'package:ecowave/core.dart';
 import 'package:ecowave/features/payment/model/entity/address_entity.dart';
 import 'package:ecowave/features/payment/model/entity/payment_info.dart';
 import 'package:ecowave/features/payment/model/entity/voucher.dart';
+import 'package:ecowave/features/payment/view/pages/payment_method_page.dart';
 import 'package:ecowave/features/payment/view/pages/payment_page.dart';
 import 'package:ecowave/features/payment/view/pages/payment_waiting_page.dart';
 import 'package:ecowave/features/payment/view/widgets/address_info_widget.dart';
@@ -58,7 +59,9 @@ class PaymentDetailPage extends StatelessWidget {
           16.0.height,
           CheckoutSettingButton(
             label: "Pilih Metode Pembayaran",
-            onPressed: () {},
+            onPressed: () => context.push(const PaymentMethodPage(
+              currentPaymentMethod: null,
+            )),
           ),
           16.0.height,
           PaymentInfoWidget(
