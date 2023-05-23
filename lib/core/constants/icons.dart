@@ -5,6 +5,7 @@ class AppIcons {
   static const AssetImage alamat = AssetImage("assets/icons/alamat.png");
   static const AssetImage beranda = AssetImage("assets/icons/beranda.png");
   static const AssetImage catatan = AssetImage("assets/icons/catatan.png");
+  static const AssetImage coin = AssetImage("assets/icons/coin.png");
   static const AssetImage detailEcoPoints =
       AssetImage("assets/icons/detailEcoPoints.png");
   static const AssetImage disablePassword =
@@ -50,5 +51,6 @@ class AppIcons {
   static const AssetImage ubahProfil =
       AssetImage("assets/icons/ubahProfil.png");
   static const AssetImage username = AssetImage("assets/icons/username.png");
+  static const AssetImage welcome = AssetImage("assets/icons/Welcome.png");
   static const AssetImage video = AssetImage("assets/icons/video.png");
 }
