@@ -11,14 +11,16 @@ class ChangePasswordPage extends StatefulWidget {
 class _ChangePasswordPageState extends State<ChangePasswordPage> {
   final _formKey = GlobalKey<FormState>();
   final _passwordNewController = TextEditingController();
+  final _passwordNewConfirController = TextEditingController();
 
   bool _isLoginButtonDisabled = true;
 
   void _checkLoginButtonStatus() {
     final passwordNew = _passwordNewController.text;
+    final passwordNewConfir = _passwordNewConfirController.text;
 
     setState(() {
-      _isLoginButtonDisabled = passwordNew.isEmpty;
+      _isLoginButtonDisabled = passwordNew.isEmpty || passwordNewConfir.isEmpty ;
     });
   }
 
@@ -26,6 +28,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
   void initState() {
     super.initState();
     _passwordNewController.addListener(_checkLoginButtonStatus);
+    _passwordNewConfirController.addListener(_checkLoginButtonStatus);
   }
   @override
   Widget build(BuildContext context) {
@@ -59,7 +62,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                   EcoFormInputPassword(
                   label: 'Password Baru',
                   hint: 'Masukkan password Baru Anda',
-                  controller: _passwordNewController,
+                  controller: _passwordNewConfirController,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Password tidak boleh kosong';
