@@ -1,3 +1,4 @@
+import 'package:ecowave/features/auth/view/register_page.dart';
 import 'package:flutter/material.dart';
 import 'package:ecowave/core.dart';
 
@@ -174,6 +175,10 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 TextButton(
                   onPressed: () {
+                    Navigator.push(
+                context,  
+                MaterialPageRoute(builder: (context) => const RegisterPage()),  
+              );
                   },
                   child: const Text(
                     "Daftar Sekarang",
