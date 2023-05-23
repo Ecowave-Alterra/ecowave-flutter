@@ -1,5 +1,7 @@
+import 'package:ecowave/features/auth/view/register_page.dart';
 import 'package:flutter/material.dart';
 import 'package:ecowave/core.dart';
+import '../../change_password/view/change_password_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -98,7 +100,12 @@ class _LoginPageState extends State<LoginPage> {
               children: [
                 10.0.width,
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                context,  
+                MaterialPageRoute(builder: (context) => const ChangePasswordPage()),  
+              );
+                  },
                   child: const Text(
                     "Lupa Password?",
                     style: TextStyle(
@@ -145,7 +152,7 @@ class _LoginPageState extends State<LoginPage> {
               ],
             ),
             36.0.height,
-            EcoFormButton(
+            EcoFormButtonIcon(
               label: 'Lanjutkan menggunakan Google',
               onPressed: () {
                 // aksi yang dilakukan ketika tombol ditekan
@@ -155,6 +162,7 @@ class _LoginPageState extends State<LoginPage> {
               border: Border.all(
                 color: AppColors.grey300,
               ),
+              image: const Image(image: AppIcons.google),
               height: 48.0,
               width: MediaQuery.of(context).size.width,
             ),
@@ -165,7 +173,10 @@ class _LoginPageState extends State<LoginPage> {
             ),
             TextButton(
               onPressed: () {
-                // aksi yang dilakukan ketika tombol daftar ditekan
+               Navigator.push(
+                context,  
+                MaterialPageRoute(builder: (context) => const RegisterPage()),  
+              );
               },
               child: const Text(
                 "Daftar Sekarang",
