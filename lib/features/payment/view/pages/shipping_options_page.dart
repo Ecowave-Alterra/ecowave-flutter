@@ -46,59 +46,45 @@ class ShippingOptionsPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: shippings
                     .map(
-                      (shipping) => Row(
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              selectedOption = shipping.name;
-                              changeState(() {});
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: AppSizes.primary,
-                                  vertical: AppSizes.primary / 2),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                      (shipping) => InkWell(
+                        onTap: () {
+                          selectedOption = shipping.name;
+                          changeState(() {});
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: AppSizes.primary,
+                              vertical: AppSizes.primary / 2),
+                          child: Row(
+                            children: [
+                              Radio(
+                                value: shipping.name,
+                                groupValue: selectedOption,
+                                onChanged: (value) {},
+                                activeColor: AppColors.primary500,
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  SizedBox(
-                                    width: context.fullWidth - 87.0,
-                                    child: Row(
-                                      children: [
-                                        Radio(
-                                          value: shipping.name,
-                                          groupValue: selectedOption,
-                                          onChanged: (value) {},
-                                          activeColor: AppColors.primary500,
-                                        ),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              shipping.name,
-                                              style: const TextStyle(
-                                                fontWeight:
-                                                    AppFontWeight.semibold,
-                                              ),
-                                            ),
-                                            Text(
-                                              shipping.estimate,
-                                              style: const TextStyle(
-                                                color: AppColors.grey500,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
+                                  Text(
+                                    shipping.name,
+                                    style: const TextStyle(
+                                      fontWeight: AppFontWeight.semibold,
                                     ),
                                   ),
-                                  Text(shipping.price.currencyFormatRp),
+                                  Text(
+                                    shipping.estimate,
+                                    style: const TextStyle(
+                                      color: AppColors.grey500,
+                                    ),
+                                  ),
                                 ],
                               ),
-                            ),
+                              const Spacer(),
+                              Text(shipping.price.currencyFormatRp),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
                     )
                     .toList(),
