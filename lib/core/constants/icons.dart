@@ -20,6 +20,7 @@ class AppIcons {
   static const AssetImage filterApprove =
       AssetImage("assets/icons/filterApprove.png");
   static const AssetImage foto = AssetImage("assets/icons/foto.png");
+  static const AssetImage google = AssetImage("assets/icons/google.png");
   static const AssetImage keranjang = AssetImage("assets/icons/keranjang.png");
   static const AssetImage leftBack = AssetImage("assets/icons/leftBack.png");
   static const AssetImage min = AssetImage("assets/icons/min.png");
