@@ -2,6 +2,8 @@ import 'package:ecowave/features/auth/view/register_page.dart';
 import 'package:flutter/material.dart';
 import 'package:ecowave/core.dart';
 
+import '../../change_password/view/forget_password.dart';
+
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
@@ -102,7 +104,11 @@ class _LoginPageState extends State<LoginPage> {
                   children: [
                     10.0.width,
                     TextButton(
-                      onPressed: () {
+                      onPressed: () {  
+                      Navigator.push(
+                        context,  
+                        MaterialPageRoute(builder: (context) => const ForgotPasswordPage()),  
+                      );
                       },
                       child: const Text(
                         "Lupa Password?",
