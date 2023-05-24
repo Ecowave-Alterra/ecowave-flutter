@@ -1,5 +1,6 @@
 import 'package:ecowave/core.dart';
 import 'package:ecowave/core/utils/providers.dart';
+import 'package:ecowave/features/ecommerce/view/pages/product_review_page.dart';
 import 'package:ecowave/features/home/home_page.dart';
 import 'package:ecowave/routes/routes.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,7 @@ class App extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Ecowave',
-        home: const MyHomePage(),
+        home: const ProductReview(),
         onGenerateRoute: Routes.generateRoute,
         theme: ThemeData(
           scaffoldBackgroundColor: AppColors.white,
