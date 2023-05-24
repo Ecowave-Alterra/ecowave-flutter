@@ -23,4 +23,11 @@ extension DateTimeExt on DateTime {
 
     return '$day $month $year';
   }
+
+  String toFormattedMonth() {
+    final int day = this.day;
+    final String month = _monthNames[this.month - 1];
+
+    return '$day $month';
+  }
 }
