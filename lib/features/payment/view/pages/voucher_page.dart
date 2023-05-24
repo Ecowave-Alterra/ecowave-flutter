@@ -1,5 +1,6 @@
 import 'package:ecowave/core.dart';
 import 'package:ecowave/features/payment/model/entity/voucher_entity.dart';
+import 'package:ecowave/features/payment/view/pages/term_and_condition_page.dart';
 import 'package:ecowave/features/payment/view/widgets/voucher_card.dart';
 import 'package:flutter/material.dart';
 
@@ -54,7 +55,11 @@ class VoucherPage extends StatelessWidget {
                         selectedOption = element.name;
                         changeState(() {});
                       },
-                      onTermAndConditionTap: () {},
+                      onTermAndConditionTap: () => context.push(
+                        TermAndConditionPage(
+                          voucherEntity: element,
+                        ),
+                      ),
                     ),
                   )
                   .toList(),
