@@ -16,15 +16,15 @@ class AddressAddPage extends StatefulWidget {
 }
 
 class _AddressAddPageState extends State<AddressAddPage> {
-  final _formKey = GlobalKey<FormState>();
+  final GlobalKey _formKey = GlobalKey<FormState>();
   bool status = false;
   int value = 0;
   int _index = 0;
   List users = <AddressUser>[];
-  TextEditingController nameController = TextEditingController();
-  TextEditingController telpController = TextEditingController();
-  TextEditingController addressController = TextEditingController();
-  TextEditingController notesController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController telpController = TextEditingController();
+  final TextEditingController addressController = TextEditingController();
+  final TextEditingController notesController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -100,8 +100,6 @@ class _AddressAddPageState extends State<AddressAddPage> {
                           Text(
                             'Tandai Sebagai : ',
                             style: GoogleFonts.poppins(
-                              fontSize: 14,
-                              fontWeight: AppFontWeight.regular,
                               color: AppColors.grey700,
                             ),
                           ),
