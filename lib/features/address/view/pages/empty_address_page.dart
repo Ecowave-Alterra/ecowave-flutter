@@ -1,3 +1,4 @@
+import 'package:ecowave/features/address/view/pages/add_adress_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -26,7 +27,9 @@ class EmptyAddress extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              context.push(const AddressAddPage());
+            },
             icon: const ImageIcon(AppIcons.add,
                 color: AppColors.primary500, size: 12),
           ),
