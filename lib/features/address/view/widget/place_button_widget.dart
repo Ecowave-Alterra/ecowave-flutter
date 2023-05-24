@@ -39,7 +39,7 @@ class MyRadioListTile<T> extends StatelessWidget {
               )),
       child: Text(
         leading,
-        style: const TextStyle(
+        style: TextStyle(
             fontSize: 14,
             fontWeight: AppFontWeight.regular,
             color: isSelected ? AppColors.white : AppColors.grey700),

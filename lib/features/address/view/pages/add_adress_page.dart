@@ -156,7 +156,6 @@ class _AddressAddPageState extends State<AddressAddPage> {
                 EcoFormButton(
                   label: 'Simpan',
                   backgroundColor: AppColors.primary300,
-                  borderColor: AppColors.primary300,
                   onPressed: () {
                     setState(() {
                       users.add(
