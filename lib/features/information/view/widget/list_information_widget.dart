@@ -41,6 +41,7 @@ class _ListInformationState extends State<ListInformation> {
             SizedBox(
               width: 18,
             ),
+            18.0.width,
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
