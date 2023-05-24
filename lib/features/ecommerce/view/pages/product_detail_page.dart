@@ -1,12 +1,12 @@
-import 'package:ecowave/features/ecommerce/view/widgets/deskripsi_barang_widget.dart';
+import 'package:ecowave/features/ecommerce/view/widgets/product_description_widget.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core.dart';
 import '../../../payment/view/pages/payment_detail_page.dart';
 import '../widgets/carousel_barang_widget.dart';
 
-class DetailBarang extends StatelessWidget {
-  const DetailBarang({super.key});
+class ProductDetail extends StatelessWidget {
+  const ProductDetail({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,30 +21,30 @@ class DetailBarang extends StatelessWidget {
               AppIcons.keranjang,
               color: AppColors.primary500,
             ),
-            iconSize: 18,
+            iconSize: 18.0,
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: const Column(
+      body: const SingleChildScrollView(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CarouselBarang(),
-            DeskripsiBarang(),
+            ProductDescription(),
           ],
         ),
       ),
       bottomNavigationBar: Container(
-        padding: EdgeInsets.all(8),
-        height: 80,
+        padding: const EdgeInsets.all(8.0),
+        height: 80.0,
         child: Row(
           children: [
             TextButton(
               onPressed: () {},
               child: Container(
                 height: 48.0,
-                width: 171,
+                width: 171.0,
                 decoration: BoxDecoration(
                   border: Border.all(color: AppColors.primary50),
                   borderRadius: BorderRadius.circular(100),
@@ -56,7 +56,7 @@ class DetailBarang extends StatelessWidget {
                     children: [
                       ImageIcon(
                         AppIcons.keranjang,
-                        size: 15,
+                        size: 15.0,
                         color: AppColors.primary500,
                       ),
                       SizedBox(
@@ -79,7 +79,7 @@ class DetailBarang extends StatelessWidget {
               onPressed: () {},
               child: Container(
                 height: 48.0,
-                width: 171,
+                width: 171.0,
                 decoration: BoxDecoration(
                   border: Border.all(color: AppColors.primary500),
                   borderRadius: BorderRadius.circular(100),

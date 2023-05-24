@@ -1,8 +1,8 @@
 import 'package:ecowave/core.dart';
 import 'package:flutter/material.dart';
 
-class DeskripsiBarang extends StatelessWidget {
-  const DeskripsiBarang({super.key});
+class ProductDescription extends StatelessWidget {
+  const ProductDescription({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,10 +27,10 @@ class DeskripsiBarang extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-                child: const Text(
-                  'Rp.5.000',
-                  style: TextStyle(
+                padding: const EdgeInsets.fromLTRB(0, 10.0, 0, 10.0),
+                child: Text(
+                  5000.currencyFormatRp,
+                  style: const TextStyle(
                     fontSize: AppSizes.primary,
                     fontWeight: AppFontWeight.bold,
                     color: AppColors.black,
@@ -38,16 +38,16 @@ class DeskripsiBarang extends StatelessWidget {
                 ),
               ),
               Container(
-                height: 44,
-                width: 51,
+                height: 44.0,
+                width: 51.0,
                 decoration: BoxDecoration(
-                    border: Border.all(color: AppColors.primary300, width: 1),
+                    border: Border.all(color: AppColors.primary300, width: 1.0),
                     borderRadius: BorderRadius.circular(AppSizes.primary)),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      padding: const EdgeInsets.only(right: 5),
+                      padding: const EdgeInsets.only(right: 5.0),
                       child: const Text(
                         '5',
                         style: TextStyle(
@@ -57,12 +57,10 @@ class DeskripsiBarang extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Container(
-                      child: const ImageIcon(
-                        AppIcons.solidUlasan,
-                        color: AppColors.primary500,
-                        size: 12,
-                      ),
+                    const ImageIcon(
+                      AppIcons.solidUlasan,
+                      color: AppColors.primary500,
+                      size: 12.0,
                     )
                   ],
                 ),
@@ -169,7 +167,7 @@ class DeskripsiBarang extends StatelessWidget {
                 child: const Text(
                   'Lihat Semua',
                   style: TextStyle(
-                      fontSize: 12,
+                      fontSize: 12.0,
                       fontWeight: AppFontWeight.semibold,
                       color: AppColors.primary500),
                 ),
@@ -188,7 +186,7 @@ class DeskripsiBarang extends StatelessWidget {
                 size: 14.24,
               ),
               Container(
-                padding: const EdgeInsets.only(left: 4),
+                padding: const EdgeInsets.only(left: 4.0),
                 child: const Text(
                   '5',
                   style: TextStyle(
@@ -198,7 +196,8 @@ class DeskripsiBarang extends StatelessWidget {
                 ),
               ),
               Container(
-                padding: const EdgeInsets.only(left: 8, top: 2, bottom: 2),
+                padding:
+                    const EdgeInsets.only(left: 8.0, top: 2.0, bottom: 2.0),
                 child: const Text(
                   '599 penilaian',
                   style: TextStyle(
@@ -215,18 +214,18 @@ class DeskripsiBarang extends StatelessWidget {
           child: Row(
             children: [
               const SizedBox(
-                width: 30,
-                height: 40,
+                width: 30.0,
+                height: 40.0,
                 child: CircleAvatar(
                   backgroundImage: AssetImage(AppImages.cardInfo4),
                 ),
               ),
               Container(
-                padding: const EdgeInsets.only(left: 10),
+                padding: const EdgeInsets.only(left: 10.0),
                 child: const Text(
                   'Muhammad Nabil',
                   style: TextStyle(
-                      fontSize: 12,
+                      fontSize: 12.0,
                       fontWeight: AppFontWeight.medium,
                       color: AppColors.black),
                 ),
@@ -235,7 +234,7 @@ class DeskripsiBarang extends StatelessWidget {
           ),
         ),
         Container(
-          padding: const EdgeInsets.fromLTRB(16, 4, 0, 0),
+          padding: const EdgeInsets.fromLTRB(16.0, 4.0, 0, 0),
           child: Row(
             children: [
               Container(
