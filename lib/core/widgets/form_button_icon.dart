@@ -44,7 +44,8 @@ class EcoFormButtonIcon extends StatelessWidget {
              width: 20,       
              height: 20,       
              child: image,    
-           ),  
+           ), 
+           8.0.width, 
            Text(
             label,
             style: TextStyle(
