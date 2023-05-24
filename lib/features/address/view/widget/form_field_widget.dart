@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../core.dart';
 
@@ -46,13 +45,13 @@ class FormFieldAddress extends StatelessWidget {
           ),
         ),
         labelText: label,
-        labelStyle: GoogleFonts.poppins(
+        labelStyle: const TextStyle(
           fontSize: 14,
           fontWeight: AppFontWeight.regular,
           color: AppColors.grey500,
         ),
       ),
-      style: GoogleFonts.poppins(
+      style: const TextStyle(
         fontSize: 14,
         fontWeight: AppFontWeight.regular,
         color: AppColors.black,

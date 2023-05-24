@@ -1,6 +1,5 @@
 import 'package:ecowave/features/address/view/pages/add_adress_page.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../core.dart';
 
@@ -17,9 +16,9 @@ class EmptyAddress extends StatelessWidget {
           icon: const ImageIcon(AppIcons.leftBack,
               color: AppColors.primary500, size: 12),
         ),
-        title: Text(
+        title: const Text(
           'Alamat Saya anda',
-          style: GoogleFonts.poppins(
+          style: TextStyle(
             fontSize: 20,
             fontWeight: AppFontWeight.regular,
             color: AppColors.black,
@@ -53,9 +52,9 @@ class EmptyAddress extends StatelessWidget {
               width: 181,
             ),
             12.0.height,
-            Text(
+            const Text(
               'Kamu belum menambahkan alamat',
-              style: GoogleFonts.poppins(
+              style: TextStyle(
                 fontSize: 14,
                 fontWeight: AppFontWeight.semibold,
                 color: AppColors.grey500,

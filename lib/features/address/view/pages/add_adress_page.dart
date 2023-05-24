@@ -2,7 +2,6 @@ import 'package:ecowave/features/address/model/address_user_model.dart';
 import 'package:ecowave/features/address/view/pages/address_page.dart';
 import 'package:ecowave/features/address/view/widget/form_field_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 
 import '../../../../core.dart';
@@ -37,9 +36,9 @@ class _AddressAddPageState extends State<AddressAddPage> {
           icon: const ImageIcon(AppIcons.leftBack,
               color: AppColors.primary500, size: 12),
         ),
-        title: Text(
+        title: const Text(
           'Tambah Alamat',
-          style: GoogleFonts.poppins(
+          style: TextStyle(
             fontSize: 20,
             fontWeight: AppFontWeight.regular,
             color: AppColors.black,
@@ -97,9 +96,9 @@ class _AddressAddPageState extends State<AddressAddPage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
+                          const Text(
                             'Tandai Sebagai : ',
-                            style: GoogleFonts.poppins(
+                            style: TextStyle(
                               color: AppColors.grey700,
                             ),
                           ),
@@ -128,9 +127,9 @@ class _AddressAddPageState extends State<AddressAddPage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
+                          const Text(
                             'Atur menjadi alamat utama',
-                            style: GoogleFonts.poppins(
+                            style: TextStyle(
                               fontSize: 14,
                               fontWeight: AppFontWeight.regular,
                               color: AppColors.grey700,

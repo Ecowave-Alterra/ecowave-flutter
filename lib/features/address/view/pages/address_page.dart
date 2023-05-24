@@ -1,6 +1,5 @@
 import 'package:ecowave/features/address/view/pages/add_adress_page.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../core.dart';
 
@@ -18,9 +17,9 @@ class AddressPage extends StatelessWidget {
           icon: const ImageIcon(AppIcons.leftBack,
               color: AppColors.primary500, size: 12),
         ),
-        title: Text(
+        title: const Text(
           'Alamat Saya',
-          style: GoogleFonts.poppins(
+          style: TextStyle(
             fontSize: 20,
             fontWeight: AppFontWeight.regular,
             color: AppColors.black,
@@ -59,7 +58,7 @@ class AddressPage extends StatelessWidget {
                   children: [
                     Text(
                       '${listUser[index].name} (${listUser[index].place})',
-                      style: GoogleFonts.poppins(
+                      style: const TextStyle(
                         fontSize: 14,
                         fontWeight: AppFontWeight.semibold,
                         color: AppColors.black,
@@ -68,7 +67,7 @@ class AddressPage extends StatelessWidget {
                     6.0.height,
                     Text(
                       '${listUser[index].telp}',
-                      style: GoogleFonts.poppins(
+                      style: const TextStyle(
                         fontSize: 14,
                         fontWeight: AppFontWeight.regular,
                         color: AppColors.black,
@@ -76,7 +75,7 @@ class AddressPage extends StatelessWidget {
                     ),
                     Text(
                       '${listUser[index].address}',
-                      style: GoogleFonts.poppins(
+                      style: const TextStyle(
                         fontSize: 14,
                         fontWeight: AppFontWeight.regular,
                         color: AppColors.black,
@@ -89,9 +88,9 @@ class AddressPage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(5),
                         border: Border.all(color: AppColors.primary500),
                       ),
-                      child: Text(
+                      child: const Text(
                         'Utama',
-                        style: GoogleFonts.poppins(
+                        style: TextStyle(
                           fontSize: 14,
                           fontWeight: AppFontWeight.regular,
                           color: AppColors.primary500,
@@ -109,9 +108,9 @@ class AddressPage extends StatelessWidget {
                   ),
                   child: TextButton(
                     onPressed: () {},
-                    child: Text(
+                    child: const Text(
                       'Ubah',
-                      style: GoogleFonts.poppins(
+                      style: TextStyle(
                         fontSize: 14,
                         fontWeight: AppFontWeight.semibold,
                         color: AppColors.primary500,

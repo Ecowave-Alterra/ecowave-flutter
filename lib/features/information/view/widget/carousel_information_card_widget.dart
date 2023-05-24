@@ -1,7 +1,6 @@
 import 'package:ecowave/core.dart';
 import 'package:ecowave/features/information/view/pages/detail_information_page.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class CarouselCardInformation extends StatelessWidget {
   const CarouselCardInformation({
@@ -50,7 +49,7 @@ class CarouselCardInformation extends StatelessWidget {
                 ),
                 child: Text(
                   info,
-                  style: GoogleFonts.poppins(
+                  style: const TextStyle(
                     fontSize: 18,
                     fontWeight: AppFontWeight.semibold,
                     color: AppColors.white,

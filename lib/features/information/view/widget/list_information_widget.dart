@@ -1,6 +1,5 @@
 import 'package:ecowave/features/information/view/pages/detail_information_page.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../core.dart';
 
@@ -48,7 +47,7 @@ class _ListInformationState extends State<ListInformation> {
               children: [
                 Text(
                   widget.date,
-                  style: GoogleFonts.poppins(
+                  style: const TextStyle(
                     fontSize: 12,
                     fontWeight: AppFontWeight.regular,
                     color: AppColors.grey500,
@@ -59,7 +58,7 @@ class _ListInformationState extends State<ListInformation> {
                   width: 212,
                   child: Text(
                     widget.info,
-                    style: GoogleFonts.poppins(
+                    style: const TextStyle(
                       fontSize: 12,
                       fontWeight: AppFontWeight.semibold,
                       color: AppColors.grey700,
