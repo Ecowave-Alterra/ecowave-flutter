@@ -1,4 +1,4 @@
-class BarangModel {
+class ProductModel {
   final String namaBarang;
   final int harga;
   final String? stok;
@@ -7,7 +7,7 @@ class BarangModel {
   final String? deskripsiProduk;
   final String rateProduk;
 
-  BarangModel({
+  ProductModel({
     required this.namaBarang,
     required this.harga,
     this.stok,

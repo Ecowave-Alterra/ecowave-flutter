@@ -17,7 +17,7 @@ class ProductReview extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            padding: const EdgeInsets.all(AppSizes.primary),
+            padding: const EdgeInsets.fromLTRB(16.0, 16.0, 0.0, 0.0),
             child: Row(
               children: [
                 const ImageIcon(

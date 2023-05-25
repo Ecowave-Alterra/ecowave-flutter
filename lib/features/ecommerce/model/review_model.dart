@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class ReviewModel {
   final ImageProvider? photoReviewer;
   final String namaReviewer;
-  late final int bintangReviewer;
+  final double bintangReviewer;
   final String? deskripsiReviewer;
   final Image? reviewPhoto;
 

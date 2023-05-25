@@ -1,5 +1,6 @@
 import 'package:ecowave/core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import '../../model/review_model.dart';
 
@@ -18,11 +19,17 @@ class ReviewListWidget extends StatelessWidget {
         reviewPhoto: Image.asset(AppImages.productShop2),
       ),
       ReviewModel(
-        photoReviewer: const AssetImage(AppImages.cardInfo3),
+        photoReviewer: const AssetImage(AppImages.cardInfo4),
         namaReviewer: 'Muhammad Nabil',
         bintangReviewer: 4,
         deskripsiReviewer:
             'Menjelaskan produk ini dapat digunakan untuk apa dan apa manfaat dari produk ini.',
+      ),
+      ReviewModel(
+        photoReviewer: const AssetImage(AppImages.cardInfo6),
+        namaReviewer: 'Karina',
+        bintangReviewer: 3,
+        deskripsiReviewer: 'Pengirimannya lama:(',
       ),
     ];
     return ListView.builder(
@@ -33,7 +40,8 @@ class ReviewListWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              padding: const EdgeInsets.only(left: AppSizes.primary),
+              padding: const EdgeInsets.only(
+                  left: AppSizes.primary, top: AppSizes.primary),
               child: Row(
                 children: [
                   SizedBox(
@@ -56,15 +64,42 @@ class ReviewListWidget extends StatelessWidget {
                 ],
               ),
             ),
-            StarWidget(star: reviews[index].bintangReviewer),
+            Container(
+              height: 20.0,
+              padding: const EdgeInsets.fromLTRB(16.0, 4.0, 0.0, 4.0),
+              child: RatingBar(
+                initialRating: reviews[index].bintangReviewer,
+                ignoreGestures: true,
+                direction: Axis.horizontal,
+                allowHalfRating: false,
+                itemSize: 14.24,
+                itemCount: 5,
+                ratingWidget: RatingWidget(
+                  full: const ImageIcon(
+                    AppIcons.solidUlasan,
+                    color: AppColors.warning500,
+                  ),
+                  half: const ImageIcon(
+                    AppIcons.outlineUlasan,
+                    color: AppColors.warning500,
+                  ),
+                  empty: const ImageIcon(
+                    AppIcons.outlineUlasan,
+                    color: AppColors.warning500,
+                  ),
+                ),
+                itemPadding: const EdgeInsets.only(right: 4),
+                onRatingUpdate: (rating) {},
+              ),
+            ),
             ImageReview(image: reviews[index].reviewPhoto),
             Container(
               padding: const EdgeInsets.only(
                   left: AppSizes.primary, right: AppSizes.primary),
               alignment: Alignment.centerLeft,
-              child: const Text(
-                'Menjelaskan produk ini dapat digunakan untuk apa dan apa manfaat dari produk ini.',
-                style: TextStyle(
+              child: Text(
+                reviews[index].deskripsiReviewer ?? 'tidak ada deskripsi',
+                style: const TextStyle(
                   fontSize: AppSizes.primary,
                   fontWeight: AppFontWeight.regular,
                 ),
@@ -74,256 +109,6 @@ class ReviewListWidget extends StatelessWidget {
         );
       },
     );
-  }
-}
-
-class StarWidget extends StatelessWidget {
-  const StarWidget({super.key, required this.star});
-  final int star;
-
-  @override
-  Widget build(BuildContext context) {
-    if (star == 1) {
-      return Container(
-        padding: const EdgeInsets.fromLTRB(16.0, 4.0, 0, 0),
-        child: Row(
-          children: [
-            Container(
-              padding: const EdgeInsets.only(right: 6.57),
-              child: const ImageIcon(
-                AppIcons.solidUlasan,
-                color: AppColors.warning500,
-                size: 14.24,
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.only(right: 6.57),
-              child: const ImageIcon(
-                AppIcons.outlineUlasan,
-                color: AppColors.warning500,
-                size: 14.24,
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.only(right: 6.57),
-              child: const ImageIcon(
-                AppIcons.outlineUlasan,
-                color: AppColors.warning500,
-                size: 14.24,
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.only(right: 6.57),
-              child: const ImageIcon(
-                AppIcons.outlineUlasan,
-                color: AppColors.warning500,
-                size: 14.24,
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.only(right: 6.57),
-              child: const ImageIcon(
-                AppIcons.outlineUlasan,
-                color: AppColors.warning500,
-                size: 14.24,
-              ),
-            ),
-          ],
-        ),
-      );
-    } else if (star == 2) {
-      return Container(
-        padding: const EdgeInsets.fromLTRB(16.0, 4.0, 0, 0),
-        child: Row(
-          children: [
-            Container(
-              padding: const EdgeInsets.only(right: 6.57),
-              child: const ImageIcon(
-                AppIcons.solidUlasan,
-                color: AppColors.warning500,
-                size: 14.24,
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.only(right: 6.57),
-              child: const ImageIcon(
-                AppIcons.solidUlasan,
-                color: AppColors.warning500,
-                size: 14.24,
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.only(right: 6.57),
-              child: const ImageIcon(
-                AppIcons.outlineUlasan,
-                color: AppColors.warning500,
-                size: 14.24,
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.only(right: 6.57),
-              child: const ImageIcon(
-                AppIcons.outlineUlasan,
-                color: AppColors.warning500,
-                size: 14.24,
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.only(right: 6.57),
-              child: const ImageIcon(
-                AppIcons.outlineUlasan,
-                color: AppColors.warning500,
-                size: 14.24,
-              ),
-            ),
-          ],
-        ),
-      );
-    } else if (star == 3) {
-      return Container(
-        padding: const EdgeInsets.fromLTRB(16.0, 4.0, 0, 0),
-        child: Row(
-          children: [
-            Container(
-              padding: const EdgeInsets.only(right: 6.57),
-              child: const ImageIcon(
-                AppIcons.solidUlasan,
-                color: AppColors.warning500,
-                size: 14.24,
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.only(right: 6.57),
-              child: const ImageIcon(
-                AppIcons.solidUlasan,
-                color: AppColors.warning500,
-                size: 14.24,
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.only(right: 6.57),
-              child: const ImageIcon(
-                AppIcons.solidUlasan,
-                color: AppColors.warning500,
-                size: 14.24,
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.only(right: 6.57),
-              child: const ImageIcon(
-                AppIcons.outlineUlasan,
-                color: AppColors.warning500,
-                size: 14.24,
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.only(right: 6.57),
-              child: const ImageIcon(
-                AppIcons.outlineUlasan,
-                color: AppColors.warning500,
-                size: 14.24,
-              ),
-            ),
-          ],
-        ),
-      );
-    } else if (star == 4) {
-      return Container(
-        padding: const EdgeInsets.fromLTRB(16.0, 4.0, 0, 0),
-        child: Row(
-          children: [
-            Container(
-              padding: const EdgeInsets.only(right: 6.57),
-              child: const ImageIcon(
-                AppIcons.solidUlasan,
-                color: AppColors.warning500,
-                size: 14.24,
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.only(right: 6.57),
-              child: const ImageIcon(
-                AppIcons.solidUlasan,
-                color: AppColors.warning500,
-                size: 14.24,
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.only(right: 6.57),
-              child: const ImageIcon(
-                AppIcons.solidUlasan,
-                color: AppColors.warning500,
-                size: 14.24,
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.only(right: 6.57),
-              child: const ImageIcon(
-                AppIcons.solidUlasan,
-                color: AppColors.warning500,
-                size: 14.24,
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.only(right: 6.57),
-              child: const ImageIcon(
-                AppIcons.outlineUlasan,
-                color: AppColors.warning500,
-                size: 14.24,
-              ),
-            ),
-          ],
-        ),
-      );
-    } else {
-      return Container(
-        padding: const EdgeInsets.fromLTRB(16.0, 4.0, 0, 0),
-        child: Row(
-          children: [
-            Container(
-              padding: const EdgeInsets.only(right: 6.57),
-              child: const ImageIcon(
-                AppIcons.solidUlasan,
-                color: AppColors.warning500,
-                size: 14.24,
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.only(right: 6.57),
-              child: const ImageIcon(
-                AppIcons.solidUlasan,
-                color: AppColors.warning500,
-                size: 14.24,
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.only(right: 6.57),
-              child: const ImageIcon(
-                AppIcons.solidUlasan,
-                color: AppColors.warning500,
-                size: 14.24,
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.only(right: 6.57),
-              child: const ImageIcon(
-                AppIcons.solidUlasan,
-                color: AppColors.warning500,
-                size: 14.24,
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.only(right: 6.57),
-              child: const ImageIcon(
-                AppIcons.solidUlasan,
-                color: AppColors.warning500,
-                size: 14.24,
-              ),
-            ),
-          ],
-        ),
-      );
-    }
   }
 }
 
