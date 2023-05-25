@@ -10,6 +10,7 @@ part 'core/constants/images.dart';
 part 'core/constants/sizes.dart';
 
 part 'package:ecowave/core/extensions/build_context_ext.dart';
+part 'package:ecowave/core/extensions/date_time_ext.dart';
 part 'package:ecowave/core/extensions/double_ext.dart';
 part 'package:ecowave/core/extensions/int_ext.dart';
 part 'package:ecowave/core/extensions/string_ext.dart';

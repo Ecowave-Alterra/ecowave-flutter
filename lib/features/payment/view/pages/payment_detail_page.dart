@@ -2,8 +2,11 @@ import 'package:ecowave/core.dart';
 import 'package:ecowave/features/payment/model/entity/address_entity.dart';
 import 'package:ecowave/features/payment/model/entity/payment_info.dart';
 import 'package:ecowave/features/payment/model/entity/voucher.dart';
+import 'package:ecowave/features/payment/view/pages/payment_method_page.dart';
 import 'package:ecowave/features/payment/view/pages/payment_page.dart';
 import 'package:ecowave/features/payment/view/pages/payment_waiting_page.dart';
+import 'package:ecowave/features/payment/view/pages/shipping_address_page.dart';
+import 'package:ecowave/features/payment/view/pages/shipping_options_page.dart';
 import 'package:ecowave/features/payment/view/widgets/address_info_widget.dart';
 import 'package:ecowave/features/payment/view/widgets/checkout_setting_button.dart';
 import 'package:ecowave/features/payment/view/widgets/checkout_setting_switch.dart';
@@ -16,6 +19,13 @@ class PaymentDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AddressEntity currentAddress = AddressEntity(
+      name: "Fauzan Abdillah",
+      phoneNumber: "082338453444",
+      address: "Jl. Imam Sukari No. 85 Mangli Jember",
+      markedAs: "Rumah",
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Detail Pembayaran"),
@@ -23,13 +33,10 @@ class PaymentDetailPage extends StatelessWidget {
       body: ListView(
         children: [
           AddressInfoWidget(
-            addressEntity: AddressEntity(
-              name: "Fauzan Abdillah",
-              phoneNumber: "082338453444",
-              address: "Jl. Imam Sukari No. 85 Mangli Jember",
-              markedAs: "Rumah",
-            ),
-            onChangeTap: () {},
+            addressEntity: currentAddress,
+            onChangeTap: () => context.push(ShippingAddressPage(
+              currentAddress: currentAddress,
+            )),
           ),
           const Divider(),
           Padding(
@@ -42,7 +49,8 @@ class PaymentDetailPage extends StatelessWidget {
           CheckoutSettingButton(
             value: "JNE",
             label: "Pilih Opsi Pengiriman",
-            onPressed: () {},
+            onPressed: () =>
+                context.push(const ShippingOptionsPage(shipping: "JNE")),
           ),
           16.0.height,
           CheckoutSettingButton(
@@ -58,7 +66,9 @@ class PaymentDetailPage extends StatelessWidget {
           16.0.height,
           CheckoutSettingButton(
             label: "Pilih Metode Pembayaran",
-            onPressed: () {},
+            onPressed: () => context.push(const PaymentMethodPage(
+              currentPaymentMethod: null,
+            )),
           ),
           16.0.height,
           PaymentInfoWidget(
