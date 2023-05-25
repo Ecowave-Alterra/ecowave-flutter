@@ -16,13 +16,6 @@ class _CartPageState extends State<CartPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {},
-          icon: const ImageIcon(
-            AppIcons.leftBack,
-            size: 12,
-          ),
-        ),
         title: const Text(
           'Keranjang',
         ),
