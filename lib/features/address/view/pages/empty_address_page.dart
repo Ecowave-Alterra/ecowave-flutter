@@ -10,18 +10,10 @@ class EmptyAddress extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        leading: IconButton(
-          onPressed: () {},
-          icon: const ImageIcon(AppIcons.leftBack,
-              color: AppColors.primary500, size: 12),
-        ),
         title: const Text(
-          'Alamat Saya anda',
+          'Alamat Saya',
           style: TextStyle(
             fontSize: 20,
-            fontWeight: AppFontWeight.regular,
-            color: AppColors.black,
           ),
         ),
         actions: [

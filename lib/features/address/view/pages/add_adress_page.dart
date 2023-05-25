@@ -28,14 +28,6 @@ class _AddressAddPageState extends State<AddressAddPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        leading: IconButton(
-          onPressed: () {
-            context.pop();
-          },
-          icon: const ImageIcon(AppIcons.leftBack,
-              color: AppColors.primary500, size: 12),
-        ),
         title: const Text(
           'Tambah Alamat',
           style: TextStyle(
