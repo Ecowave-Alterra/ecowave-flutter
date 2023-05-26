@@ -25,7 +25,7 @@ void showPoint(
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 15),
                       child: Text(
-                        "${nilaiPoint ?? 5.toString()}++",
+                        "+${nilaiPoint ?? 5.toString()}",
                         style: const TextStyle(
                             fontSize: 28,
                             color: AppColors.primary600,
