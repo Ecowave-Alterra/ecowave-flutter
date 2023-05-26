@@ -32,16 +32,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
     final noTelp = _noTelpController.text;
     final name = _nameController.text;
     final image = _image;
+
     setState(() {
-      _isChangeButtonDisabled = email.isEmpty ||
-          username.isEmpty ||
-          noTelp.isEmpty ||
-          name.isEmpty ||
-          image == null ||
-          (email == _initialEmail &&
-              username == _initialUsername &&
-              name == _initialName &&
-              noTelp == _initialNoTelp);
+      _isChangeButtonDisabled = email== _initialEmail &&
+          username== _initialUsername &&
+          noTelp== _initialNoTelp &&
+          name== _initialName &&
+          image == null;
     });
   }
 
@@ -81,7 +78,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
       appBar: AppBar(title: const Text("Saya")),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.all(AppSizes.primary),
           child: Center(
             child: Form(
               key: _formKey,
@@ -125,6 +122,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       AppIcons.name,
                       color: AppColors.grey500,
                     ),
+                    onChanged: (value) {
+                      setState(() {
+                      });
+                    },
                   ),
                   20.0.height,
                   EcoFormInput(
@@ -133,7 +134,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     keyboardType: TextInputType.emailAddress,
                     controller: _emailController,
                     validator: (value) {
-                      if (value == null || value.isEmpty) {
+                      if (value == null || value== _initialName) {
                         return 'Email tidak boleh kosong';
                       } else if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
                           .hasMatch(value)) {
