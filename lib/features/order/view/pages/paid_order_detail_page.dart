@@ -190,21 +190,6 @@ class PaidOrderDetailPage extends StatelessWidget {
                 padding: EdgeInsets.only(top: 10, bottom: 8),
                 child: Divider(),
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 30),
-                child: Center(
-                    child: ElevatedButton(
-                  onPressed: () {
-                    // context.push(const BatalkanPesananPage());
-                  },
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.error500),
-                  child: const Text(
-                    "Batalkan Pesanan",
-                    style: TextStyle(color: AppColors.white),
-                  ),
-                )),
-              )
             ],
           ),
         ),
