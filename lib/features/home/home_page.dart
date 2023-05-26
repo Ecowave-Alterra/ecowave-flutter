@@ -3,12 +3,13 @@ import 'package:ecowave/features/home/dashboard_page.dart';
 import 'package:flutter/material.dart';
 import 'package:ecowave/core.dart';
 
+import '../profile/view/profile.dart';
+
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
-
 }
 
 class _MyHomePageState extends State<MyHomePage> {
@@ -32,9 +33,7 @@ class _MyHomePageState extends State<MyHomePage> {
           // Widget untuk halaman Riwayat
           HistoryPesananPage(),
           // Widget untuk halaman Profil
-          Center(
-            child: Text('Halaman Profil'),
-          ),
+          ProfilePage(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
