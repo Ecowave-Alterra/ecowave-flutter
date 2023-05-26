@@ -1,5 +1,6 @@
 import 'package:ecowave/core.dart';
 import 'package:ecowave/features/order/model/checkout_model.dart';
+import 'package:ecowave/features/order/view/pages/track_order_page.dart';
 import 'package:flutter/material.dart';
 
 class PaidOrderDetailPage extends StatelessWidget {
@@ -46,7 +47,7 @@ class PaidOrderDetailPage extends StatelessWidget {
                         const Text("Reguler"),
                         InkWell(
                           onTap: () {
-                            // context.push(const LacakPesananPage());
+                            context.push(const TrackOrderPage());
                           },
                           child: const Text(
                             "Lacak Pesanan",
