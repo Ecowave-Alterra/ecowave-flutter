@@ -1,8 +1,8 @@
 import 'package:ecowave/core.dart';
 import 'package:flutter/material.dart';
 
-class CardBarang extends StatelessWidget {
-  const CardBarang({super.key});
+class CardProduct extends StatelessWidget {
+  const CardProduct({super.key});
 
   @override
   Widget build(BuildContext context) {
