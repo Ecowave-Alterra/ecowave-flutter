@@ -9,9 +9,9 @@ class ChangePasswordPage extends StatefulWidget {
 }
 
 class _ChangePasswordPageState extends State<ChangePasswordPage> {
-  final _formKey = GlobalKey<FormState>();
-  final _passwordNewController = TextEditingController();
-  final _passwordNewConfirController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _passwordNewController = TextEditingController();
+  final TextEditingController _passwordNewConfirController = TextEditingController();
 
   bool _isLoginButtonDisabled = true;
 

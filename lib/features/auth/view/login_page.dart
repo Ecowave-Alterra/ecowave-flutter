@@ -14,7 +14,6 @@ class LoginPage extends StatefulWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-
   bool _isLoginButtonDisabled = true;
 
   void _checkLoginButtonStatus() {
