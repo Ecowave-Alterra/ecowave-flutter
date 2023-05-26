@@ -12,24 +12,24 @@ class ReviewListWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<ReviewModel> reviews = [
       ReviewModel(
-        photoReviewer: const AssetImage(AppImages.cardInfo4),
-        namaReviewer: 'Muhammad Nabil',
-        bintangReviewer: 5,
-        deskripsiReviewer: 'Keren bangetttt, recommend banget!!',
+        reviewerPhoto: const AssetImage(AppImages.cardInfo4),
+        reviewerName: 'Muhammad Nabil',
+        reviewerStar: 5,
+        reviewerDesc: 'Keren bangetttt, recommend banget!!',
         reviewPhoto: Image.asset(AppImages.productShop2),
       ),
       ReviewModel(
-        photoReviewer: const AssetImage(AppImages.cardInfo4),
-        namaReviewer: 'Muhammad Nabil',
-        bintangReviewer: 4,
-        deskripsiReviewer:
+        reviewerPhoto: const AssetImage(AppImages.cardInfo4),
+        reviewerName: 'Muhammad Nabil',
+        reviewerStar: 4,
+        reviewerDesc:
             'Menjelaskan produk ini dapat digunakan untuk apa dan apa manfaat dari produk ini.',
       ),
       ReviewModel(
-        photoReviewer: const AssetImage(AppImages.cardInfo6),
-        namaReviewer: 'Karina',
-        bintangReviewer: 3,
-        deskripsiReviewer: 'Pengirimannya lama:(',
+        reviewerPhoto: const AssetImage(AppImages.cardInfo6),
+        reviewerName: 'Karina',
+        reviewerStar: 3,
+        reviewerDesc: 'Pengirimannya lama:(',
       ),
     ];
     return ListView.builder(
@@ -48,13 +48,13 @@ class ReviewListWidget extends StatelessWidget {
                     width: 30.0,
                     height: 40.0,
                     child: CircleAvatar(
-                      backgroundImage: reviews[index].photoReviewer,
+                      backgroundImage: reviews[index].reviewerPhoto,
                     ),
                   ),
                   Container(
                     padding: const EdgeInsets.only(left: 10.0),
                     child: Text(
-                      reviews[index].namaReviewer,
+                      reviews[index].reviewerName,
                       style: const TextStyle(
                           fontSize: 12.0,
                           fontWeight: AppFontWeight.medium,
@@ -68,7 +68,7 @@ class ReviewListWidget extends StatelessWidget {
               height: 20.0,
               padding: const EdgeInsets.fromLTRB(16.0, 4.0, 0.0, 4.0),
               child: RatingBar(
-                initialRating: reviews[index].bintangReviewer,
+                initialRating: reviews[index].reviewerStar,
                 ignoreGestures: true,
                 direction: Axis.horizontal,
                 allowHalfRating: false,
@@ -98,7 +98,7 @@ class ReviewListWidget extends StatelessWidget {
                   left: AppSizes.primary, right: AppSizes.primary),
               alignment: Alignment.centerLeft,
               child: Text(
-                reviews[index].deskripsiReviewer ?? 'tidak ada deskripsi',
+                reviews[index].reviewerDesc ?? 'tidak ada deskripsi',
                 style: const TextStyle(
                   fontSize: AppSizes.primary,
                   fontWeight: AppFontWeight.regular,

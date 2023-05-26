@@ -1,19 +1,19 @@
 class ProductModel {
-  final String namaBarang;
-  final int harga;
-  final String? stok;
-  final String? bahan;
-  final String? kategori;
-  final String? deskripsiProduk;
-  final String rateProduk;
+  final String productName;
+  final int productPrice;
+  final String? productStock;
+  final String? productMaterial;
+  final String? productCategory;
+  final String? productDesc;
+  final String productRate;
 
   ProductModel({
-    required this.namaBarang,
-    required this.harga,
-    this.stok,
-    this.bahan,
-    this.kategori,
-    this.deskripsiProduk,
-    required this.rateProduk,
+    required this.productName,
+    required this.productPrice,
+    this.productStock,
+    this.productMaterial,
+    this.productCategory,
+    this.productDesc,
+    required this.productRate,
   });
 }
