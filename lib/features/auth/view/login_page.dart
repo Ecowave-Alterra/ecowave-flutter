@@ -12,10 +12,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final _formKey = GlobalKey<FormState>();
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   bool _isLoginButtonDisabled = true;
 
   void _checkLoginButtonStatus() {
@@ -52,147 +51,149 @@ class _LoginPageState extends State<LoginPage> {
         child: Form(
           key: _formKey,
           child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  AppImages.logo,
-                  width: 200,
-                  height: 200,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                AppImages.logo,
+                width: 200,
+                height: 200,
+              ),
+              EcoFormInput(
+                label: 'Email',
+                hint: 'Masukkan alamat email',
+                keyboardType: TextInputType.emailAddress,
+                controller: _emailController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Email tidak boleh kosong';
+                  } else if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                      .hasMatch(value)) {
+                    return 'Alamat email tidak valid';
+                  }
+                  return null;
+                },
+                onChanged: (value) {
+                  _checkLoginButtonStatus();
+                },
+                icon: const ImageIcon(
+                  AppIcons.email,
+                  color: AppColors.grey500,
                 ),
-                EcoFormInput(
-                  label: 'Email',
-                  hint: 'Masukkan alamat email',
-                  keyboardType: TextInputType.emailAddress,
-                  controller: _emailController,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Email tidak boleh kosong';
-                    } else if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
-                        .hasMatch(value)) {
-                      return 'Alamat email tidak valid';
-                    }
-                    return null;
-                  },
-                  onChanged: (value) {
-                    _checkLoginButtonStatus();
-                  },
-                  icon: const ImageIcon(
-                    AppIcons.email,
-                    color: AppColors.grey500,
-                  ),
-                ),
-                20.0.height,
-                EcoFormInputPassword(
-                  label: 'Password',
-                  hint: 'Masukkan password',
-                  controller: _passwordController,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Password tidak boleh kosong';
-                    } else if (value.length < 6) {
-                      return 'Password harus memiliki setidaknya 6 karakter';
-                    }
-                    return null;
-                  },
-                  onChanged: (value) {
-                    _checkLoginButtonStatus();
-                  },
-                ),
-                10.0.height,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    10.0.width,
-                    TextButton(
-                      onPressed: () {  
+              ),
+              20.0.height,
+              EcoFormInputPassword(
+                label: 'Password',
+                hint: 'Masukkan password',
+                controller: _passwordController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Password tidak boleh kosong';
+                  } else if (value.length < 6) {
+                    return 'Password harus memiliki setidaknya 6 karakter';
+                  }
+                  return null;
+                },
+                onChanged: (value) {
+                  _checkLoginButtonStatus();
+                },
+              ),
+              10.0.height,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  10.0.width,
+                  TextButton(
+                    onPressed: () {
                       Navigator.push(
-                        context,  
-                        MaterialPageRoute(builder: (context) => const ForgotPasswordPage()),  
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const ForgotPasswordPage()),
                       );
+                    },
+                    child: const Text(
+                      "Lupa Password?",
+                      style: TextStyle(
+                        color: AppColors.primary500,
+                        fontWeight: AppFontWeight.bold,
+                      ),
+                    ),
+                  )
+                ],
+              ),
+              EcoFormButton(
+                label: 'Login',
+                onPressed: _isLoginButtonDisabled
+                    ? () {}
+                    : () {
+                        if (_formKey.currentState!.validate()) {}
                       },
-                      child: const Text(
-                        "Lupa Password?",
-                        style: TextStyle(
-                          color: AppColors.primary500,
-                          fontWeight: AppFontWeight.bold,
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-                EcoFormButton(
-                  label: 'Login',
-                  onPressed: _isLoginButtonDisabled ? () {} : () {
-                    if (_formKey.currentState!.validate()) {
-
-                    }
-                  },
-                  backgroundColor: _isLoginButtonDisabled
-                      ? AppColors.primary300
-                      : AppColors.primary500,
-                ),
-                36.0.height,
-                const Row(
-                  children: [
-                    Expanded(
-                      child: Divider(
-                        thickness: 1.0,
+                backgroundColor: _isLoginButtonDisabled
+                    ? AppColors.primary300
+                    : AppColors.primary500,
+              ),
+              36.0.height,
+              const Row(
+                children: [
+                  Expanded(
+                    child: Divider(
+                      thickness: 1.0,
+                      color: AppColors.grey500,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Text(
+                      'ATAU',
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.bold,
                         color: AppColors.grey500,
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Text(
-                        'ATAU',
-                        style: TextStyle(
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.grey500,
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Divider(
-                        thickness: 1.0,
-                        color: AppColors.grey500,
-                      ),
-                    ),
-                  ],
-                ),
-                36.0.height,
-                EcoFormButtonIcon(
-                  label: 'Lanjutkan menggunakan Google',
-                  onPressed: () {
-                    // aksi yang dilakukan ketika tombol ditekan
-                  },
-                  backgroundColor: Colors.white,
-                  textColor: Colors.black,
-                  border: Border.all(
-                    color: AppColors.grey300,
                   ),
-                  image: const Image(image: AppIcons.google),
-                  height: 48.0,
-                  width: MediaQuery.of(context).size.width,
-                ),
-                36.0.height,
-                const Text(
-                  "Tidak Memiliki Akun?",
-                  style: TextStyle(color: AppColors.grey500, fontSize: 12),
-                ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                context,  
-                MaterialPageRoute(builder: (context) => const RegisterPage()),  
-              );
-                  },
-                  child: const Text(
-                    "Daftar Sekarang",
-                    style: TextStyle(color: AppColors.primary500),
+                  Expanded(
+                    child: Divider(
+                      thickness: 1.0,
+                      color: AppColors.grey500,
+                    ),
                   ),
-                )
-              ],
-            ),
+                ],
+              ),
+              36.0.height,
+              EcoFormButtonIcon(
+                label: 'Lanjutkan menggunakan Google',
+                onPressed: () {
+                  // aksi yang dilakukan ketika tombol ditekan
+                },
+                backgroundColor: Colors.white,
+                textColor: Colors.black,
+                border: Border.all(
+                  color: AppColors.grey300,
+                ),
+                image: const Image(image: AppIcons.google),
+                height: 48.0,
+                width: MediaQuery.of(context).size.width,
+              ),
+              36.0.height,
+              const Text(
+                "Tidak Memiliki Akun?",
+                style: TextStyle(color: AppColors.grey500, fontSize: 12),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const RegisterPage()),
+                  );
+                },
+                child: const Text(
+                  "Daftar Sekarang",
+                  style: TextStyle(color: AppColors.primary500),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
