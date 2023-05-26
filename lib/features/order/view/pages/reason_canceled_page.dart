@@ -107,7 +107,7 @@ class ReasonCanceledPage extends StatelessWidget {
               28.0.height,
               const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [Text("Metode Pembayaran"), Text("Belum dibayar")],
+                children: [Text("Status Pembayaran"), Text("Belum dibayar")],
               ),
             ],
           ),
