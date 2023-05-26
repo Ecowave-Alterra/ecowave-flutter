@@ -1,6 +1,7 @@
 import 'package:ecowave/core.dart';
 import 'package:flutter/material.dart';
 
+import 'edit_profile.dart';
 import 'empty_session.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -204,7 +205,12 @@ class ProfilePage extends StatelessWidget {
                           ],
                         ),
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                        context,  
+                        MaterialPageRoute(builder: (context) => const EditProfilePage()),  
+                      );
+                          },
                           child: const Text(
                             '     >',
                             style: TextStyle(
