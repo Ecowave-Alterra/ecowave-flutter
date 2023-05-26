@@ -60,7 +60,10 @@ class _EcoFormInputPasswordState extends State<EcoFormInputPassword> {
         labelText: widget.label,
         hintText: widget.hint,
         hintStyle: const TextStyle(color: AppColors.grey500),
-        prefixIcon: const ImageIcon(AppIcons.password),
+        prefixIcon: Transform.scale(      
+                  scale: 0.5,       
+                  child: const ImageIcon(AppIcons.password, color: AppColors.grey500,),
+               ), 
         suffixIcon: IconButton(
           icon: ImageIcon(
             passwordVisibility

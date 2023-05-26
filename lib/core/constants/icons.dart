@@ -5,6 +5,7 @@ class AppIcons {
   static const AssetImage alamat = AssetImage("assets/icons/alamat.png");
   static const AssetImage beranda = AssetImage("assets/icons/beranda.png");
   static const AssetImage catatan = AssetImage("assets/icons/catatan.png");
+  static const AssetImage coin = AssetImage("assets/icons/coin.png");
   static const AssetImage detailEcoPoints =
       AssetImage("assets/icons/detailEcoPoints.png");
   static const AssetImage disablePassword =
@@ -13,6 +14,7 @@ class AppIcons {
   static const AssetImage ecoPoints = AssetImage("assets/icons/ecoPoints.png");
   static const AssetImage ecoShop = AssetImage("assets/icons/ecoShop.png");
   static const AssetImage email = AssetImage("assets/icons/email.png");
+  static const AssetImage emailConfirmatio= AssetImage("assets/icons/emailConfirmation.png");
   static const AssetImage search = AssetImage("assets/icons/search.png");
   static const AssetImage enablePassword =
       AssetImage("assets/icons/enablePassword.png");
@@ -20,6 +22,7 @@ class AppIcons {
   static const AssetImage filterApprove =
       AssetImage("assets/icons/filterApprove.png");
   static const AssetImage foto = AssetImage("assets/icons/foto.png");
+  static const AssetImage google = AssetImage("assets/icons/google.png");
   static const AssetImage keranjang = AssetImage("assets/icons/keranjang.png");
   static const AssetImage leftBack = AssetImage("assets/icons/leftBack.png");
   static const AssetImage min = AssetImage("assets/icons/min.png");
@@ -48,5 +51,6 @@ class AppIcons {
   static const AssetImage ubahProfil =
       AssetImage("assets/icons/ubahProfil.png");
   static const AssetImage username = AssetImage("assets/icons/username.png");
+  static const AssetImage welcome = AssetImage("assets/icons/Welcome.png");
   static const AssetImage video = AssetImage("assets/icons/video.png");
 }
