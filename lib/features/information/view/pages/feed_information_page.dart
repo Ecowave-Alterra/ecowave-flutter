@@ -1,7 +1,6 @@
 import 'package:ecowave/core.dart';
 import 'package:ecowave/features/information/view/pages/bookmark_page.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
 import '../widget/carousel_information_card_widget.dart';
@@ -49,12 +48,12 @@ class _InformationPageState extends State<InformationPage> {
           icon: const ImageIcon(AppIcons.leftBack,
               color: AppColors.primary500, size: 11),
         ),
-        title: Row(
+        title: const Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
               'Eco',
-              style: GoogleFonts.poppins(
+              style: TextStyle(
                 fontSize: 28,
                 fontWeight: AppFontWeight.semibold,
                 color: AppColors.primary500,
@@ -62,7 +61,7 @@ class _InformationPageState extends State<InformationPage> {
             ),
             Text(
               'Info',
-              style: GoogleFonts.poppins(
+              style: TextStyle(
                 fontSize: 28,
                 fontWeight: AppFontWeight.semibold,
                 color: AppColors.black,
