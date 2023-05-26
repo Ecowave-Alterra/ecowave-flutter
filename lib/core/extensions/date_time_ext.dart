@@ -16,6 +16,14 @@ final List<String> _monthNames = [
 ];
 
 extension DateTimeExt on DateTime {
+  String toFormattedDate() {
+    final int day = this.day;
+    final String month = _monthNames[this.month - 1];
+    final int year = this.year;
+
+    return '$day $month $year';
+  }
+
   String toFormattedMonth() {
     final int day = this.day;
     final String month = _monthNames[this.month - 1];
