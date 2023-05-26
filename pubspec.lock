@@ -198,7 +198,7 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.15"
-  flutter_rating_bar:
+    flutter_rating_bar:
     dependency: "direct main"
     description:
       name: flutter_rating_bar
