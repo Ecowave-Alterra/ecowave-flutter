@@ -1,5 +1,5 @@
-import 'package:ecowave/features/history_pesanan/view/pages/history_pesanan_page.dart';
 import 'package:ecowave/features/home/dashboard_page.dart';
+import 'package:ecowave/features/order/view/pages/order_history_page.dart';
 import 'package:flutter/material.dart';
 import 'package:ecowave/core.dart';
 
@@ -8,7 +8,6 @@ class MyHomePage extends StatefulWidget {
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
-
 }
 
 class _MyHomePageState extends State<MyHomePage> {
@@ -30,7 +29,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
           DashboardPage(),
           // Widget untuk halaman Riwayat
-          HistoryPesananPage(),
+          OrderHistoryPage(),
           // Widget untuk halaman Profil
           Center(
             child: Text('Halaman Profil'),

@@ -14,7 +14,8 @@ class AppIcons {
   static const AssetImage ecoPoints = AssetImage("assets/icons/ecoPoints.png");
   static const AssetImage ecoShop = AssetImage("assets/icons/ecoShop.png");
   static const AssetImage email = AssetImage("assets/icons/email.png");
-  static const AssetImage emailConfirmatio= AssetImage("assets/icons/emailConfirmation.png");
+  static const AssetImage emailConfirmatio =
+      AssetImage("assets/icons/emailConfirmation.png");
   static const AssetImage search = AssetImage("assets/icons/search.png");
   static const AssetImage enablePassword =
       AssetImage("assets/icons/enablePassword.png");
