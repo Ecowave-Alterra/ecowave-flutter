@@ -1,5 +1,5 @@
 import 'package:ecowave/core.dart';
-import 'package:ecowave/features/ecommerce/view/widgets/card_barang_widget.dart';
+import 'package:ecowave/features/ecommerce/view/widgets/card_product_widget.dart';
 import 'package:ecowave/features/ecommerce/view/widgets/carousel_widget.dart';
 import 'package:ecowave/features/ecommerce/view/widgets/searchbar_widget.dart';
 import 'package:ecowave/features/payment/view/pages/payment_detail_page.dart';
@@ -30,7 +30,7 @@ class HomeECommerce extends StatelessWidget {
         children: [
           SearchBarWidget(),
           CarouselGambar(),
-          CardBarang(),
+          CardProduct(),
         ],
       ),
     );
