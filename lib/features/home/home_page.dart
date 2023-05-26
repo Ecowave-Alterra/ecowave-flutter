@@ -3,6 +3,8 @@ import 'package:ecowave/features/order/view/pages/order_history_page.dart';
 import 'package:flutter/material.dart';
 import 'package:ecowave/core.dart';
 
+import '../profile/view/profile.dart';
+
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
 
@@ -31,9 +33,7 @@ class _MyHomePageState extends State<MyHomePage> {
           // Widget untuk halaman Riwayat
           OrderHistoryPage(),
           // Widget untuk halaman Profil
-          Center(
-            child: Text('Halaman Profil'),
-          ),
+          ProfilePage(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(

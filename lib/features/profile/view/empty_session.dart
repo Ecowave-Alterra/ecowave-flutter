@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:ecowave/core.dart';
 
+import '../../auth/view/login_page.dart';
+import '../../auth/view/register_page.dart';
+
 class EmptyUserPage extends StatefulWidget {
   const EmptyUserPage({Key? key}) : super(key: key);
 
@@ -39,12 +42,12 @@ class _EmptyUserPageState extends State<EmptyUserPage> {
             ),
             20.0.height,
             Padding(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(AppSizes.primary),
               child: Column(children: [
                 EcoFormButton(
                   label: 'Register',
                   onPressed: () {
-                    
+                    context.push(const RegisterPage());
                   },
                   backgroundColor: AppColors.primary500,
                 ),
@@ -53,7 +56,7 @@ class _EmptyUserPageState extends State<EmptyUserPage> {
                   label: 'Login',
                   textColor: AppColors.primary500,
                   onPressed: () {
-                    
+                    context.push(const LoginPage());
                   },
                   backgroundColor: AppColors.primary50,
                 ),
