@@ -55,7 +55,10 @@ class EcoFormInput extends StatelessWidget {
         labelText: label,
         hintText: hint,
         hintStyle: const TextStyle(color: AppColors.grey500),
-        prefixIcon: icon,
+        prefixIcon: Transform.scale(      
+                  scale: 0.5,       
+                  child: icon,  
+               ),  
       ),
     );
   }
