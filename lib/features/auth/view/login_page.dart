@@ -180,11 +180,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
               TextButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const LoginPage()),
-                  );
+                  context.push(const RegisterPage());
                 },
                 child: const Text(
                   "Daftar Sekarang",
