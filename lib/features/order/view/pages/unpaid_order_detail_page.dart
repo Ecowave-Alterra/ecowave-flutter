@@ -1,5 +1,6 @@
 import 'package:ecowave/core.dart';
 import 'package:ecowave/features/order/model/checkout_model.dart';
+import 'package:ecowave/features/order/view/pages/cancel_order_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_countdown_timer/current_remaining_time.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
@@ -202,7 +203,7 @@ class UnpaidOrderDetailPage extends StatelessWidget {
                 child: Center(
                     child: ElevatedButton(
                   onPressed: () {
-                    // context.push(const BatalkanPesananPage());
+                    context.push(const CancelOrderPage());
                   },
                   style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.error500),
