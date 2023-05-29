@@ -1,3 +1,4 @@
+import 'package:ecowave/features/auth/view/register_complate_page.dart';
 import 'package:flutter/material.dart';
 import 'package:ecowave/core.dart';
 
@@ -177,6 +178,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 EcoFormButtonIcon(
                   label: 'Lanjutkan menggunakan Google',
                   onPressed: () {
+                    context.push(const RegisterComplatePage());
                     // aksi yang dilakukan ketika tombol ditekan
                   },
                   backgroundColor: Colors.white,
