@@ -10,7 +10,7 @@ class LoginPage extends StatefulWidget {
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
-
+class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -180,11 +180,7 @@ class LoginPage extends StatefulWidget {
               ),
               TextButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const RegisterPage()),
-                  );
+                  context.push(const RegisterPage());
                 },
                 child: const Text(
                   "Daftar Sekarang",

@@ -1,4 +1,5 @@
 import 'package:ecowave/core.dart';
+import 'package:ecowave/features/profile/view/edit_profile.dart';
 import 'package:flutter/material.dart';
 
 import 'empty_session.dart';
@@ -18,7 +19,7 @@ class ProfilePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.all(AppSizes.primary),
               child: Column(
                 children: [
                   Column(
@@ -29,6 +30,7 @@ class ProfilePage extends StatelessWidget {
                           style: TextStyle(
                               fontSize: AppSizes.secondary,
                               fontWeight: AppFontWeight.bold)),
+                      16.0.height,
                       const Row(
                         children: [
                           CircleAvatar(
@@ -93,8 +95,7 @@ class ProfilePage extends StatelessWidget {
                           Text(
                             'Fauzi@gmail.com',
                             style: TextStyle(
-                                fontSize: 14,
-                                color: AppColors.grey700),
+                                fontSize: 14, color: AppColors.grey700),
                           ),
                         ],
                       ),
@@ -122,8 +123,7 @@ class ProfilePage extends StatelessWidget {
                           Text(
                             '0812345678910',
                             style: TextStyle(
-                                fontSize: 14,
-                                color: AppColors.grey700),
+                                fontSize: 14, color: AppColors.grey700),
                           ),
                         ],
                       ),
@@ -157,8 +157,7 @@ class ProfilePage extends StatelessWidget {
                             child: const Text(
                               'Lihat Detail >',
                               style: TextStyle(
-                                  fontSize: 14,
-                                  color: AppColors.grey700),
+                                  fontSize: 14, color: AppColors.grey700),
                             ),
                           ),
                         ],
@@ -173,7 +172,7 @@ class ProfilePage extends StatelessWidget {
               color: AppColors.grey50,
             ),
             Padding(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -204,12 +203,13 @@ class ProfilePage extends StatelessWidget {
                           ],
                         ),
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            context.push(const EditProfilePage());
+                          },
                           child: const Text(
                             '     >',
                             style: TextStyle(
-                                fontSize: 14,
-                                color: AppColors.grey700),
+                                fontSize: 14, color: AppColors.grey700),
                           ),
                         ),
                       ],
@@ -242,8 +242,7 @@ class ProfilePage extends StatelessWidget {
                           child: const Text(
                             '     >',
                             style: TextStyle(
-                                fontSize: 14,
-                                color: AppColors.grey700),
+                                fontSize: 14, color: AppColors.grey700),
                           ),
                         ),
                       ],
@@ -255,7 +254,7 @@ class ProfilePage extends StatelessWidget {
               color: AppColors.grey50,
             ),
             Padding(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -290,8 +289,7 @@ class ProfilePage extends StatelessWidget {
                           child: const Text(
                             '     >',
                             style: TextStyle(
-                                fontSize: 14,
-                                color: AppColors.grey700),
+                                fontSize: 14, color: AppColors.grey700),
                           ),
                         ),
                       ],
@@ -301,14 +299,11 @@ class ProfilePage extends StatelessWidget {
             Container(
               color: AppColors.grey50,
               child: Padding(
-                padding: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
                 child: EcoFormButton(
                   label: 'Log out',
                   onPressed: () {
-                    Navigator.push(
-                        context,  
-                        MaterialPageRoute(builder: (context) => const EmptyUserPage()),  
-                      );
+                    context.push(const  EmptyUserPage());
                   },
                   backgroundColor: AppColors.error500,
                 ),
