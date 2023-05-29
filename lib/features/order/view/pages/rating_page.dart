@@ -44,13 +44,13 @@ class _RatingPageState extends State<RatingPage> {
                   initialRating: 0,
                   minRating: 1,
                   direction: Axis.horizontal,
-                  allowHalfRating: true,
+                  allowHalfRating: false,
                   itemCount: 5,
                   itemSize: 25.0,
                   itemPadding: const EdgeInsets.symmetric(horizontal: 8),
-                  itemBuilder: (context, _) => const Icon(
-                    Icons.star,
-                    color: Colors.amber,
+                  itemBuilder: (context, _) => const ImageIcon(
+                    AppIcons.solidUlasan,
+                    color: AppColors.warning500,
                   ),
                   onRatingUpdate: (rating) {
                     // print(rating);
@@ -68,13 +68,13 @@ class _RatingPageState extends State<RatingPage> {
                   initialRating: 0,
                   minRating: 1,
                   direction: Axis.horizontal,
-                  allowHalfRating: true,
+                  allowHalfRating: false,
                   itemCount: 5,
                   itemSize: 25.0,
                   itemPadding: const EdgeInsets.symmetric(horizontal: 8),
-                  itemBuilder: (context, _) => const Icon(
-                    Icons.star,
-                    color: Colors.amber,
+                  itemBuilder: (context, _) => const ImageIcon(
+                    AppIcons.solidUlasan,
+                    color: AppColors.warning500,
                   ),
                   onRatingUpdate: (rating) {
                     // print(rating);
