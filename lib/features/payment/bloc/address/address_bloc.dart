@@ -13,7 +13,7 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
   AddressBloc(
     this.repository,
   ) : super(AddressInitial()) {
-    on<AddressEvent>((event, emit) async {
+    on<GetAddressesEvent>((event, emit) async {
       final response = await repository.getaddreses();
       response.fold(
         (failed) => emit(AddressFailed(meesage: failed)),
