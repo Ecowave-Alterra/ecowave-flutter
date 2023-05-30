@@ -1,5 +1,5 @@
 import 'package:ecowave/core.dart';
-import 'package:ecowave/features/payment/model/entity/address_entity.dart';
+import 'package:ecowave/features/payment/bloc/address/address_bloc.dart';
 import 'package:ecowave/features/payment/model/entity/payment_info.dart';
 import 'package:ecowave/features/payment/model/entity/voucher_entity.dart';
 import 'package:ecowave/features/payment/view/pages/payment_page.dart';
@@ -14,12 +14,15 @@ import 'package:ecowave/features/payment/view/widgets/checkout_setting_switch.da
 import 'package:ecowave/features/payment/view/widgets/payment_info_widget.dart';
 import 'package:ecowave/features/payment/view/widgets/selected_product_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PaymentDetailPage extends StatelessWidget {
   const PaymentDetailPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    context.read<AddressBloc>().add(GetAddressesEvent());
+
     final VoucherEntity selectedVoucher = VoucherEntity(
       name: "Gratis Ongkir",
       discount: -10000,
@@ -29,12 +32,6 @@ class PaymentDetailPage extends StatelessWidget {
       termCondition: "Min. Blj Rp 0",
       type: "Amount",
     );
-    final AddressEntity currentAddress = AddressEntity(
-      name: "Fauzan Abdillah",
-      phoneNumber: "082338453444",
-      address: "Jl. Imam Sukari No. 85 Mangli Jember",
-      markedAs: "Rumah",
-    );
 
     return Scaffold(
       appBar: AppBar(
@@ -42,11 +39,28 @@ class PaymentDetailPage extends StatelessWidget {
       ),
       body: ListView(
         children: [
-          AddressInfoWidget(
-            addressEntity: currentAddress,
-            onChangeTap: () => context.push(ShippingAddressPage(
-              currentAddress: currentAddress,
-            )),
+          BlocBuilder<AddressBloc, AddressState>(
+            builder: (context, state) {
+              if (state is AddressLoading) {
+                return const EcoLoading();
+              } else if (state is AddressFailed) {
+                return EcoError(
+                  errorMessage: state.meesage,
+                  onRetry: () {},
+                );
+              } else if (state is AddressSuccess) {
+                return AddressInfoWidget(
+                  addressEntity:
+                      state.data.where((element) => element.isPrimary).first,
+                  onChangeTap: () => context.push(ShippingAddressPage(
+                    currentAddress:
+                        state.data.where((element) => element.isPrimary).first,
+                  )),
+                );
+              } else {
+                return Container();
+              }
+            },
           ),
           const Divider(),
           Padding(
