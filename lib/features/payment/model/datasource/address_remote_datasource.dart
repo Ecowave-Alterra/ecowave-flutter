@@ -83,12 +83,6 @@ class AddressRemoteDatasourceImpl implements AddressRemoteDatasource {
     // const String url = '................';
     // final response = await _dio.get(url);
 
-    List<AddressResponseModel> data = [];
-
-    for (Map<String, dynamic> item in dummy) {
-      data.add(AddressResponseModel.fromJson(item));
-    }
-
-    return data;
+    return dummy.map((e) => AddressResponseModel.fromJson(e)).toList();
   }
 }
