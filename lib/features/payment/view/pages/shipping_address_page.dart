@@ -1,7 +1,10 @@
 import 'package:ecowave/core.dart';
+import 'package:ecowave/features/address/view/pages/add_adress_page.dart';
+import 'package:ecowave/features/payment/bloc/address/address_bloc.dart';
 import 'package:ecowave/features/payment/model/entity/address_entity.dart';
 import 'package:ecowave/features/payment/view/widgets/shipping_address_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ShippingAddressPage extends StatelessWidget {
   final AddressEntity currentAddress;
@@ -14,35 +17,13 @@ class ShippingAddressPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String? selectedOption = currentAddress.address;
-    final List<AddressEntity> addresses = [
-      AddressEntity(
-        name: "Hafiizh Taufiqul Hakim",
-        phoneNumber: "087725363828",
-        address: "Jln Anggrek,No 3 rt 4 rw 5, Jakarta Selatan",
-        markedAs: "Rumah",
-        isMain: true,
-      ),
-      AddressEntity(
-        name: "Astri shintia nabila",
-        phoneNumber: "082345873689",
-        address:
-            "Jl. Letjen R. Suprapto Gg. Intan No. 2 Galur, Jakarta Pusat, DKI Jakarta 10530",
-        markedAs: "Kantor",
-      ),
-      AddressEntity(
-        name: "Fauzan Abdillah",
-        phoneNumber: "082338453444",
-        address: "Jl. Imam Sukari No. 85 Mangli Jember",
-        markedAs: "Rumah",
-      ),
-    ];
 
     return Scaffold(
       appBar: AppBar(
         title: const Text("Alamat Pengiriman"),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () => context.push(const AddressAddPage()),
             icon: const ImageIcon(
               AppIcons.add,
               size: 14.0,
@@ -51,25 +32,39 @@ class ShippingAddressPage extends StatelessWidget {
         ],
       ),
       body: ListView(
-        padding: const EdgeInsets.all(AppSizes.primary),
         children: [
-          StatefulBuilder(
-            builder: (context, changeState) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: addresses
-                    .map(
-                      (paymentMethod) => ShippingAddressCard(
-                        selectedOption: selectedOption,
-                        addressEntity: paymentMethod,
-                        onTap: () {
-                          selectedOption = paymentMethod.address;
-                          changeState(() {});
-                        },
-                      ),
-                    )
-                    .toList(),
-              );
+          BlocBuilder<AddressBloc, AddressState>(
+            builder: (context, state) {
+              if (state is AddressLoading) {
+                return const EcoLoading();
+              } else if (state is AddressFailed) {
+                return EcoError(
+                  errorMessage: state.meesage,
+                  onRetry: () {},
+                );
+              } else if (state is AddressSuccess) {
+                return StatefulBuilder(
+                  builder: (context, changeState) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: state.data
+                          .map(
+                            (paymentMethod) => ShippingAddressCard(
+                              selectedOption: selectedOption,
+                              addressEntity: paymentMethod,
+                              onTap: () {
+                                selectedOption = paymentMethod.address;
+                                changeState(() {});
+                              },
+                            ),
+                          )
+                          .toList(),
+                    );
+                  },
+                );
+              } else {
+                return Container();
+              }
             },
           ),
         ],
@@ -79,7 +74,7 @@ class ShippingAddressPage extends StatelessWidget {
         child: EcoFormButton(
           height: 45.0,
           label: "Konfirmasi",
-          onPressed: () {},
+          onPressed: () => context.pop(),
         ),
       ),
     );
