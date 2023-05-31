@@ -1,8 +1,10 @@
 import 'package:ecowave/core.dart';
+import 'package:ecowave/features/payment/bloc/voucher/voucher_bloc.dart';
 import 'package:ecowave/features/payment/model/entity/voucher_entity.dart';
 import 'package:ecowave/features/payment/view/pages/term_and_condition_page.dart';
 import 'package:ecowave/features/payment/view/widgets/voucher_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class VoucherPage extends StatelessWidget {
   final VoucherEntity? currentVoucher;
@@ -15,26 +17,6 @@ class VoucherPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String? selectedOption = currentVoucher?.name;
-    final List<VoucherEntity> vouchers = [
-      VoucherEntity(
-        name: "Gratis Ongkir",
-        discount: -10000,
-        expiredDate: DateTime(2023, 6, 30),
-        imageUrl:
-            "https://github.com/Ecowave-Alterra/ecowave-flutter/assets/74108522/bbbd7877-fc15-47ba-94fe-274f7a4954fd",
-        termCondition: "Min. Blj Rp 0",
-        type: "Amount",
-      ),
-      VoucherEntity(
-        name: "Diskon 30%",
-        discount: 20,
-        expiredDate: DateTime(2023, 6, 30),
-        imageUrl:
-            "https://github.com/Ecowave-Alterra/ecowave-flutter/assets/74108522/bbbd7877-fc15-47ba-94fe-274f7a4954fd",
-        termCondition: "Min. Blj Rp 100RB s/d 150RB",
-        type: "Percent",
-      ),
-    ];
 
     return Scaffold(
       appBar: AppBar(
@@ -43,27 +25,42 @@ class VoucherPage extends StatelessWidget {
       body: ListView(
         children: [
           AppSizes.primary.height,
-          StatefulBuilder(
-            builder: (context, changeState) => Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: vouchers
-                  .map(
-                    (element) => VoucherCard(
-                      selectedOption: selectedOption,
-                      voucherEntity: element,
-                      onTap: () {
-                        selectedOption = element.name;
-                        changeState(() {});
-                      },
-                      onTermAndConditionTap: () => context.push(
-                        TermAndConditionPage(
-                          voucherEntity: element,
-                        ),
-                      ),
-                    ),
-                  )
-                  .toList(),
-            ),
+          BlocBuilder<VoucherBloc, VoucherState>(
+            builder: (context, state) {
+              if (state is VoucherLoading) {
+                return const EcoLoading();
+              } else if (state is VoucherFailed) {
+                return EcoError(
+                  errorMessage: state.meesage,
+                  onRetry: () {},
+                );
+              } else if (state is VoucherSuccess) {
+                return StatefulBuilder(
+                  builder: (context, changeState) => Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: state.data
+                        .map(
+                          (element) => VoucherCard(
+                            selectedOption: selectedOption,
+                            voucherEntity: element,
+                            onTap: () {
+                              selectedOption = element.name;
+                              changeState(() {});
+                            },
+                            onTermAndConditionTap: () => context.push(
+                              TermAndConditionPage(
+                                voucherEntity: element,
+                              ),
+                            ),
+                          ),
+                        )
+                        .toList(),
+                  ),
+                );
+              } else {
+                return Container();
+              }
+            },
           ),
         ],
       ),

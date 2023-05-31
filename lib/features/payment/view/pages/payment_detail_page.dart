@@ -1,7 +1,7 @@
 import 'package:ecowave/core.dart';
 import 'package:ecowave/features/payment/bloc/address/address_bloc.dart';
+import 'package:ecowave/features/payment/bloc/voucher/voucher_bloc.dart';
 import 'package:ecowave/features/payment/model/entity/payment_info.dart';
-import 'package:ecowave/features/payment/model/entity/voucher_entity.dart';
 import 'package:ecowave/features/payment/view/pages/payment_page.dart';
 import 'package:ecowave/features/payment/view/pages/payment_waiting_page.dart';
 import 'package:ecowave/features/payment/view/pages/voucher_page.dart';
@@ -22,16 +22,7 @@ class PaymentDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     context.read<AddressBloc>().add(GetAddressesEvent());
-
-    final VoucherEntity selectedVoucher = VoucherEntity(
-      name: "Gratis Ongkir",
-      discount: -10000,
-      expiredDate: DateTime(2023, 10, 15),
-      imageUrl:
-          "https://github.com/Ecowave-Alterra/ecowave-flutter/assets/74108522/bbbd7877-fc15-47ba-94fe-274f7a4954fd",
-      termCondition: "Min. Blj Rp 0",
-      type: "Amount",
-    );
+    context.read<VoucherBloc>().add(GetVouchersEvent());
 
     return Scaffold(
       appBar: AppBar(
@@ -78,10 +69,10 @@ class PaymentDetailPage extends StatelessWidget {
           ),
           16.0.height,
           CheckoutSettingButton(
-            value: "Gratis Ongkir",
+            value: null,
             label: "Gunakan Voucher",
-            onPressed: () => context.push(VoucherPage(
-              currentVoucher: selectedVoucher,
+            onPressed: () => context.push(const VoucherPage(
+              currentVoucher: null,
             )),
           ),
           16.0.height,
@@ -102,7 +93,7 @@ class PaymentDetailPage extends StatelessWidget {
               productPrice: 89000,
               shippingPrice: 10000,
               pointUsed: 0,
-              voucher: selectedVoucher,
+              voucher: null,
             ),
           ),
         ],
