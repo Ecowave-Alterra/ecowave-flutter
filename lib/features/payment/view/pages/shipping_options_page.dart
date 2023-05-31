@@ -13,6 +13,7 @@ class ShippingOptionsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ValueNotifier<bool> isExist = ValueNotifier<bool>(false);
     String? selectedOption = shipping;
 
     return Scaffold(
@@ -40,6 +41,7 @@ class ShippingOptionsPage extends StatelessWidget {
                             (shipping) => InkWell(
                               onTap: () {
                                 selectedOption = shipping.name;
+                                isExist.value = true;
                                 changeState(() {});
                               },
                               child: Padding(
@@ -92,10 +94,13 @@ class ShippingOptionsPage extends StatelessWidget {
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(AppSizes.primary),
-        child: EcoFormButton(
-          height: 45.0,
-          label: "Konfirmasi",
-          onPressed: () => context.pop(),
+        child: ValueListenableBuilder<bool>(
+          valueListenable: isExist,
+          builder: (context, value, _) => EcoFormButton(
+            height: 45.0,
+            label: "Konfirmasi",
+            onPressed: value ? () => context.pop() : null,
+          ),
         ),
       ),
     );
