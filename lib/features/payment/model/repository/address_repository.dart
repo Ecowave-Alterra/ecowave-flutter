@@ -5,7 +5,7 @@ import 'package:ecowave/features/payment/model/entity/address_entity.dart';
 import 'package:ecowave/features/payment/model/response/address_response_model.dart';
 
 abstract class AddressRepository {
-  Future<Either<String, List<AddressEntity>>> getaddreses();
+  Future<Either<String, List<AddressEntity>>> getAddreses();
 }
 
 class AddressRepositoryImpl implements AddressRepository {
@@ -13,7 +13,7 @@ class AddressRepositoryImpl implements AddressRepository {
   AddressRepositoryImpl(this.datasource);
 
   @override
-  Future<Either<String, List<AddressEntity>>> getaddreses() async {
+  Future<Either<String, List<AddressEntity>>> getAddreses() async {
     try {
       final List<AddressResponseModel> response =
           await datasource.getAddresses();

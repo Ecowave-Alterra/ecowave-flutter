@@ -14,7 +14,7 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
     this.repository,
   ) : super(AddressInitial()) {
     on<GetAddressesEvent>((event, emit) async {
-      final response = await repository.getaddreses();
+      final response = await repository.getAddreses();
       response.fold(
         (failed) => emit(AddressFailed(meesage: failed)),
         (result) => emit(AddressSuccess(data: result)),

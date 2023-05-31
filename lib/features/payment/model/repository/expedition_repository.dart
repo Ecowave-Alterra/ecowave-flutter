@@ -5,7 +5,7 @@ import 'package:ecowave/features/payment/model/entity/expedition_entity.dart';
 import 'package:ecowave/features/payment/model/response/expedition_response_model.dart';
 
 abstract class ExpeditionRepository {
-  Future<Either<String, List<ExpeditionEntity>>> getaddreses();
+  Future<Either<String, List<ExpeditionEntity>>> getExpeditions();
 }
 
 class ExpeditionRepositoryImpl implements ExpeditionRepository {
@@ -13,7 +13,7 @@ class ExpeditionRepositoryImpl implements ExpeditionRepository {
   ExpeditionRepositoryImpl(this.datasource);
 
   @override
-  Future<Either<String, List<ExpeditionEntity>>> getaddreses() async {
+  Future<Either<String, List<ExpeditionEntity>>> getExpeditions() async {
     try {
       final List<ExpeditionResponseModel> result =
           await datasource.getExpeditions();

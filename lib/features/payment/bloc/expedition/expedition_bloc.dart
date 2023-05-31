@@ -14,7 +14,7 @@ class ExpeditionBloc extends Bloc<ExpeditionEvent, ExpeditionState> {
     this.repository,
   ) : super(ExpeditionInitial()) {
     on<GetExpeditionsEvent>((event, emit) async {
-      final response = await repository.getaddreses();
+      final response = await repository.getExpeditions();
       response.fold(
         (failed) => emit(ExpeditionFailed(meesage: failed)),
         (result) => emit(ExpeditionSuccess(data: result)),
