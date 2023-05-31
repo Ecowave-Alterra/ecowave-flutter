@@ -1,12 +1,12 @@
 import 'package:ecowave/core.dart';
 
-class Shipping {
+class ExpeditionEntity {
   final String name;
   final DateTime estimateFrom;
   final DateTime estimateComing;
   final int price;
 
-  Shipping({
+  ExpeditionEntity({
     required this.name,
     required this.estimateFrom,
     required this.estimateComing,

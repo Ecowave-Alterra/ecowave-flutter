@@ -1,5 +1,6 @@
 import 'package:ecowave/core.dart';
 import 'package:ecowave/features/payment/bloc/address/address_bloc.dart';
+import 'package:ecowave/features/payment/bloc/expedition/expedition_bloc.dart';
 import 'package:ecowave/features/payment/model/entity/payment_info.dart';
 import 'package:ecowave/features/payment/model/entity/voucher_entity.dart';
 import 'package:ecowave/features/payment/view/pages/payment_page.dart';
@@ -22,6 +23,7 @@ class PaymentDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     context.read<AddressBloc>().add(GetAddressesEvent());
+    context.read<ExpeditionBloc>().add(GetExpeditionsEvent());
 
     final VoucherEntity selectedVoucher = VoucherEntity(
       name: "Gratis Ongkir",
@@ -71,10 +73,10 @@ class PaymentDetailPage extends StatelessWidget {
             ),
           ),
           CheckoutSettingButton(
-            value: "JNE",
+            value: null,
             label: "Pilih Opsi Pengiriman",
             onPressed: () =>
-                context.push(const ShippingOptionsPage(shipping: "JNE")),
+                context.push(const ShippingOptionsPage(shipping: null)),
           ),
           16.0.height,
           CheckoutSettingButton(

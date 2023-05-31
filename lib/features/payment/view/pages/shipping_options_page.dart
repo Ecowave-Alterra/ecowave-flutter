@@ -1,9 +1,10 @@
 import 'package:ecowave/core.dart';
-import 'package:ecowave/features/payment/model/entity/shipping.dart';
+import 'package:ecowave/features/payment/bloc/expedition/expedition_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ShippingOptionsPage extends StatelessWidget {
-  final String shipping;
+  final String? shipping;
 
   const ShippingOptionsPage({
     super.key,
@@ -13,26 +14,6 @@ class ShippingOptionsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String? selectedOption = shipping;
-    final List<Shipping> shippings = [
-      Shipping(
-        name: "JNE",
-        estimateFrom: DateTime(2023, 5, 1),
-        estimateComing: DateTime(2023, 5, 8),
-        price: 10000,
-      ),
-      Shipping(
-        name: "JNT",
-        estimateFrom: DateTime(2023, 5, 1),
-        estimateComing: DateTime(2023, 5, 5),
-        price: 12000,
-      ),
-      Shipping(
-        name: "SiCepat",
-        estimateFrom: DateTime(2023, 5, 1),
-        estimateComing: DateTime(2023, 5, 3),
-        price: 16000,
-      ),
-    ];
 
     return Scaffold(
       appBar: AppBar(
@@ -40,55 +21,71 @@ class ShippingOptionsPage extends StatelessWidget {
       ),
       body: ListView(
         children: [
-          StatefulBuilder(
-            builder: (context, changeState) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: shippings
-                    .map(
-                      (shipping) => InkWell(
-                        onTap: () {
-                          selectedOption = shipping.name;
-                          changeState(() {});
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: AppSizes.primary,
-                              vertical: AppSizes.primary / 2),
-                          child: Row(
-                            children: [
-                              Radio(
-                                value: shipping.name,
-                                groupValue: selectedOption,
-                                onChanged: (value) {},
-                                activeColor: AppColors.primary500,
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    shipping.name,
-                                    style: const TextStyle(
-                                      fontWeight: AppFontWeight.semibold,
+          BlocBuilder<ExpeditionBloc, ExpeditionState>(
+            builder: (context, state) {
+              if (state is ExpeditionLoading) {
+                return const EcoLoading();
+              } else if (state is ExpeditionFailed) {
+                return EcoError(
+                  errorMessage: state.meesage,
+                  onRetry: () {},
+                );
+              } else if (state is ExpeditionSuccess) {
+                return StatefulBuilder(
+                  builder: (context, changeState) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: state.data
+                          .map(
+                            (shipping) => InkWell(
+                              onTap: () {
+                                selectedOption = shipping.name;
+                                changeState(() {});
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: AppSizes.primary,
+                                    vertical: AppSizes.primary / 2),
+                                child: Row(
+                                  children: [
+                                    Radio(
+                                      value: shipping.name,
+                                      groupValue: selectedOption,
+                                      onChanged: (value) {},
+                                      activeColor: AppColors.primary500,
                                     ),
-                                  ),
-                                  Text(
-                                    shipping.estimate,
-                                    style: const TextStyle(
-                                      color: AppColors.grey500,
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          shipping.name,
+                                          style: const TextStyle(
+                                            fontWeight: AppFontWeight.semibold,
+                                          ),
+                                        ),
+                                        Text(
+                                          shipping.estimate,
+                                          style: const TextStyle(
+                                            color: AppColors.grey500,
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ),
-                                ],
+                                    const Spacer(),
+                                    Text(shipping.price.currencyFormatRp),
+                                  ],
+                                ),
                               ),
-                              const Spacer(),
-                              Text(shipping.price.currencyFormatRp),
-                            ],
-                          ),
-                        ),
-                      ),
-                    )
-                    .toList(),
-              );
+                            ),
+                          )
+                          .toList(),
+                    );
+                  },
+                );
+              } else {
+                return Container();
+              }
             },
           ),
         ],
