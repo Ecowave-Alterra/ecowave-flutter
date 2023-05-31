@@ -54,4 +54,5 @@ class AppIcons {
   static const AssetImage username = AssetImage("assets/icons/username.png");
   static const AssetImage welcome = AssetImage("assets/icons/Welcome.png");
   static const AssetImage video = AssetImage("assets/icons/video.png");
+  static const AssetImage check = AssetImage("assets/icons/check.png");
 }
