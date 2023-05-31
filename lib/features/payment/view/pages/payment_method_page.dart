@@ -14,6 +14,7 @@ class PaymentMethodPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ValueNotifier<bool> isExist = ValueNotifier<bool>(false);
     String? selectedOption = currentPaymentMethod;
 
     return Scaffold(
@@ -55,6 +56,7 @@ class PaymentMethodPage extends StatelessWidget {
                           (element) => InkWell(
                             onTap: () {
                               selectedOption = element.name;
+                              isExist.value = true;
                               changeState(() {});
                             },
                             child: Padding(
@@ -109,6 +111,7 @@ class PaymentMethodPage extends StatelessWidget {
                           (element) => InkWell(
                             onTap: () {
                               selectedOption = element.name;
+                              isExist.value = true;
                               changeState(() {});
                             },
                             child: Padding(
@@ -151,10 +154,13 @@ class PaymentMethodPage extends StatelessWidget {
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(AppSizes.primary),
-        child: EcoFormButton(
-          height: 45.0,
-          label: "Konfirmasi",
-          onPressed: () => context.pop(),
+        child: ValueListenableBuilder(
+          valueListenable: isExist,
+          builder: (context, value, _) => EcoFormButton(
+            height: 45.0,
+            label: "Konfirmasi",
+            onPressed: value ? () => context.pop() : null,
+          ),
         ),
       ),
     );
