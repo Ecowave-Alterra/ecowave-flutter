@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ShippingAddressPage extends StatelessWidget {
-  final ShippingAddressModel currentAddress;
+  final ShippingAddressModel? currentAddress;
 
   const ShippingAddressPage({
     super.key,
@@ -16,7 +16,9 @@ class ShippingAddressPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String? selectedOption = currentAddress.address;
+    String? selectedOption = currentAddress?.address;
+    final ValueNotifier<bool> isExist =
+        ValueNotifier<bool>(selectedOption == null ? false : true);
 
     return Scaffold(
       appBar: AppBar(
@@ -56,6 +58,7 @@ class ShippingAddressPage extends StatelessWidget {
                         addressModel: state.data[index],
                         onTap: () {
                           selectedOption = state.data[index].address;
+                          isExist.value = true;
                           changeState(() {});
                         },
                       ),
@@ -71,10 +74,13 @@ class ShippingAddressPage extends StatelessWidget {
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(AppSizes.primary),
-        child: EcoFormButton(
-          height: 45.0,
-          label: "Konfirmasi",
-          onPressed: () => context.pop(),
+        child: ValueListenableBuilder(
+          valueListenable: isExist,
+          builder: (context, value, _) => EcoFormButton(
+            height: 45.0,
+            label: "Konfirmasi",
+            onPressed: value ? () => context.pop() : null,
+          ),
         ),
       ),
     );
