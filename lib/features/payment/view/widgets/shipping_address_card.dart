@@ -1,16 +1,16 @@
 import 'package:ecowave/core.dart';
-import 'package:ecowave/features/payment/model/entity/address_entity.dart';
+import 'package:ecowave/features/payment/model/models/shipping_address_model.dart';
 import 'package:flutter/material.dart';
 
 class ShippingAddressCard extends StatelessWidget {
   final String? selectedOption;
-  final AddressEntity addressEntity;
+  final ShippingAddressModel addressModel;
   final VoidCallback onTap;
 
   const ShippingAddressCard({
     super.key,
     required this.selectedOption,
-    required this.addressEntity,
+    required this.addressModel,
     required this.onTap,
   });
 
@@ -31,7 +31,7 @@ class ShippingAddressCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Radio(
-                    value: addressEntity.address,
+                    value: addressModel.address,
                     groupValue: selectedOption,
                     onChanged: (value) {},
                     activeColor: AppColors.primary500,
@@ -43,16 +43,16 @@ class ShippingAddressCard extends StatelessWidget {
                       children: [
                         12.0.height,
                         Text(
-                          "${addressEntity.name} (${addressEntity.markedAs})",
+                          "${addressModel.recipient} (${addressModel.mark})",
                           style: const TextStyle(
                             fontWeight: AppFontWeight.semibold,
                           ),
                         ),
                         6.0.height,
-                        Text(addressEntity.phoneNumber),
-                        Text(addressEntity.address),
+                        Text(addressModel.phone),
+                        Text(addressModel.address),
                         6.0.height,
-                        if (addressEntity.isPrimary)
+                        if (addressModel.isPrimary)
                           Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5.0),

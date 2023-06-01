@@ -1,10 +1,6 @@
-import 'package:ecowave/features/payment/model/response/address_response_model.dart';
+import 'package:ecowave/features/payment/model/models/shipping_address_model.dart';
 
-abstract class AddressRemoteDatasource {
-  Future<List<AddressResponseModel>> getAddresses();
-}
-
-class AddressRemoteDatasourceImpl implements AddressRemoteDatasource {
+class ShippingAddressService {
   // late Dio _dio;
   // AddressRemoteDatasourceImpl() {
   //   _dio = Dio();
@@ -78,11 +74,13 @@ class AddressRemoteDatasourceImpl implements AddressRemoteDatasource {
     },
   ];
 
-  @override
-  Future<List<AddressResponseModel>> getAddresses() async {
+  Future<List<ShippingAddressModel>> getAddresses() async {
     // const String url = '................';
     // final response = await _dio.get(url);
 
-    return dummy.map((e) => AddressResponseModel.fromJson(e)).toList();
+    final List<ShippingAddressModel> result =
+        dummy.map((e) => ShippingAddressModel.fromJson(e)).toList();
+
+    return result;
   }
 }
