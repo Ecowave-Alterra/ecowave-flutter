@@ -1,5 +1,6 @@
 import 'package:ecowave/core.dart';
-import 'package:ecowave/features/payment/model/entity/payment_method.dart';
+import 'package:ecowave/features/payment/model/models/payment_method_model.dart';
+import 'package:ecowave/features/payment/model/models/payment_method_type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_countdown_timer/current_remaining_time.dart';
@@ -13,9 +14,10 @@ class PaymentPage extends StatelessWidget {
     final DateTime targetTime = DateTime(2023, 5, 25, 23, 59, 0);
     final int endTime = targetTime.millisecondsSinceEpoch;
 
-    final PaymentMethod paymentMethod = PaymentMethod(
+    final PaymentMethodModel paymentMethod = PaymentMethodModel(
       name: "OVO",
       iconUrl: AppImages.ovo,
+      type: PaymentMethodType.eWallet,
       instructions: [
         "Lakukan login pada aplikasi  OVO",
         "Pilih Transfer > masukan no Rekening pembayaran (contoh : 08734343829)",
@@ -23,6 +25,8 @@ class PaymentPage extends StatelessWidget {
         "Masukan pin OVO",
         "Pembayaran Selesai, Simpan notifikasi yang muncul sebagai bukti pembayaran",
       ],
+      createdAt: DateTime.now().toString(),
+      updatedAt: DateTime.now().toString(),
     );
 
     return Scaffold(
@@ -80,7 +84,7 @@ class PaymentPage extends StatelessWidget {
           Row(
             children: [
               Image.asset(
-                paymentMethod.iconUrl,
+                "https://i.ibb.co/S32HNjD/no-image.jpg",
                 width: 24.0,
               ),
               6.0.width,

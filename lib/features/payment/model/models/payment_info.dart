@@ -1,10 +1,10 @@
-import 'package:ecowave/features/payment/model/entity/voucher_entity.dart';
+import 'package:ecowave/features/payment/model/models/voucher_model.dart';
 
 class PaymentInfo {
   final int productPrice;
   final int shippingPrice;
   final int pointUsed;
-  final VoucherEntity? voucher;
+  final VoucherModel? voucher;
 
   PaymentInfo({
     required this.productPrice,

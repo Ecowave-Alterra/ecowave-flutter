@@ -9,13 +9,6 @@ class ContentInformation extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            context.pop();
-          },
-          icon: const ImageIcon(AppIcons.leftBack,
-              color: AppColors.primary500, size: 11),
-        ),
         actions: [
           IconButton(
             onPressed: () {},

@@ -1,13 +1,13 @@
 import 'package:ecowave/core.dart';
-import 'package:ecowave/features/payment/model/entity/voucher_entity.dart';
+import 'package:ecowave/features/payment/model/models/voucher_model.dart';
 import 'package:flutter/material.dart';
 
 class TermAndConditionPage extends StatelessWidget {
-  final VoucherEntity voucherEntity;
+  final VoucherModel voucherModel;
 
   const TermAndConditionPage({
     super.key,
-    required this.voucherEntity,
+    required this.voucherModel,
   });
 
   @override
@@ -20,7 +20,7 @@ class TermAndConditionPage extends StatelessWidget {
       body: ListView(
         children: [
           Image.network(
-            voucherEntity.imageUrl,
+            voucherModel.photoContentUrl,
             width: context.fullWidth,
             height: 120.0,
             fit: BoxFit.cover,
@@ -32,7 +32,7 @@ class TermAndConditionPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  voucherEntity.name,
+                  voucherModel.name,
                   style: const TextStyle(
                     fontWeight: AppFontWeight.semibold,
                   ),
@@ -49,7 +49,7 @@ class TermAndConditionPage extends StatelessWidget {
                     const Text("Berlaku hingga"),
                     const Spacer(),
                     Text(
-                      voucherEntity.expiredDateFormatString,
+                      voucherModel.expiredDateFormatString,
                       style: const TextStyle(
                         color: AppColors.primary500,
                         fontWeight: AppFontWeight.semibold,

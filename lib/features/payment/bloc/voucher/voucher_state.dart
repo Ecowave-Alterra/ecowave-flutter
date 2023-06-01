@@ -12,7 +12,7 @@ class VoucherInitial extends VoucherState {}
 class VoucherLoading extends VoucherState {}
 
 class VoucherSuccess extends VoucherState {
-  final List<VoucherEntity> data;
+  final List<VoucherModel> data;
 
   const VoucherSuccess({
     required this.data,

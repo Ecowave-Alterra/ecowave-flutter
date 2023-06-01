@@ -1,10 +1,6 @@
-import 'package:ecowave/features/payment/model/response/voucher_response_model.dart';
+import 'package:ecowave/features/payment/model/models/voucher_model.dart';
 
-abstract class VoucherRemoteDatasource {
-  Future<List<VoucherResponseModel>> getVouchers();
-}
-
-class VoucherRemoteDatasourceImpl implements VoucherRemoteDatasource {
+class VoucherService {
   // late Dio _dio;
   // VoucherRemoteDatasourceImpl() {
   //   _dio = Dio();
@@ -85,11 +81,14 @@ class VoucherRemoteDatasourceImpl implements VoucherRemoteDatasource {
     },
   ];
 
-  @override
-  Future<List<VoucherResponseModel>> getVouchers() async {
-    // const String url = '................';
-    // final response = await _dio.get(url);
+  Future<List<VoucherModel>> getVouchers() async {
+    try {
+      // const String url = '................';
+      // final response = await _dio.get(url);
 
-    return dummy.map((e) => VoucherResponseModel.fromJson(e)).toList();
+      return dummy.map((e) => VoucherModel.fromJson(e)).toList();
+    } catch (e) {
+      rethrow;
+    }
   }
 }

@@ -1,29 +1,27 @@
-import 'package:ecowave/features/payment/bloc/address/address_bloc.dart';
+import 'package:ecowave/features/payment/bloc/expedition/expedition_bloc.dart';
+import 'package:ecowave/features/payment/bloc/payment_method/payment_method_bloc.dart';
+import 'package:ecowave/features/payment/bloc/shipping_address/shipping_address_bloc.dart';
 import 'package:ecowave/features/payment/bloc/voucher/voucher_bloc.dart';
-import 'package:ecowave/features/payment/model/datasource/address_remote_datasource.dart';
-import 'package:ecowave/features/payment/model/datasource/voucher_remote_datasource.dart';
-import 'package:ecowave/features/payment/model/repository/address_repository.dart';
-import 'package:ecowave/features/payment/model/repository/voucher_repository.dart';
+import 'package:ecowave/features/payment/model/services/expedition_service.dart';
+import 'package:ecowave/features/payment/model/services/payment_method_service.dart';
+import 'package:ecowave/features/payment/model/services/shipping_address_service.dart';
+import 'package:ecowave/features/payment/model/services/voucher_service.dart';
 import 'package:get_it/get_it.dart';
 
 final GetIt locator = GetIt.instance;
 
 void init() {
   // state management
-  locator.registerFactory(() => AddressBloc(locator()));
+  locator.registerFactory(() => ShippingAddressBloc(locator()));
+  locator.registerFactory(() => PaymentMethodBloc(locator()));
+  locator.registerFactory(() => ExpeditionBloc(locator()));
   locator.registerFactory(() => VoucherBloc(locator()));
 
-  // repository
-  locator.registerLazySingleton<AddressRepository>(
-      () => AddressRepositoryImpl(locator()));
-  locator.registerLazySingleton<VoucherRepository>(
-      () => VoucherRepositoryImpl(locator()));
-
-  // remote datasource
-  locator.registerLazySingleton<AddressRemoteDatasource>(
-      () => AddressRemoteDatasourceImpl());
-  locator.registerLazySingleton<VoucherRemoteDatasource>(
-      () => VoucherRemoteDatasourceImpl());
-
-  // local datasource
+  // service
+  locator.registerLazySingleton<ShippingAddressService>(
+      () => ShippingAddressService());
+  locator.registerLazySingleton<PaymentMethodService>(
+      () => PaymentMethodService());
+  locator.registerLazySingleton<ExpeditionService>(() => ExpeditionService());
+  locator.registerLazySingleton<VoucherService>(() => VoucherService());
 }
