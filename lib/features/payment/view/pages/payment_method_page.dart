@@ -1,6 +1,7 @@
 import 'package:ecowave/core.dart';
-import 'package:ecowave/features/payment/bloc/bloc/payment_method_bloc.dart';
-import 'package:ecowave/features/payment/model/entity/payment_method_entity.dart';
+import 'package:ecowave/features/payment/bloc/payment_method/payment_method_bloc.dart';
+import 'package:ecowave/features/payment/model/models/payment_method_model.dart';
+import 'package:ecowave/features/payment/model/models/payment_method_type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -14,8 +15,9 @@ class PaymentMethodPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ValueNotifier<bool> isExist = ValueNotifier<bool>(false);
     String? selectedOption = currentPaymentMethod;
+    final ValueNotifier<bool> isExist =
+        ValueNotifier<bool>(selectedOption == null ? false : true);
 
     return Scaffold(
       appBar: AppBar(
@@ -49,45 +51,46 @@ class PaymentMethodPage extends StatelessWidget {
                     padding: EdgeInsets.symmetric(horizontal: AppSizes.primary),
                     child: Divider(),
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: state.ewallets
-                        .map(
-                          (element) => InkWell(
-                            onTap: () {
-                              selectedOption = element.name;
-                              isExist.value = true;
-                              changeState(() {});
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: AppSizes.primary,
-                                  vertical: AppSizes.primary),
-                              child: Row(
-                                children: [
-                                  Image.network(
-                                    element.iconUrl,
-                                    width: 24.0,
-                                  ),
-                                  6.0.width,
-                                  Text(
-                                    element.name,
-                                    style: const TextStyle(
-                                      fontWeight: AppFontWeight.semibold,
-                                    ),
-                                  ),
-                                  const Spacer(),
-                                  if (selectedOption == element.name)
-                                    const Icon(
-                                      Icons.check,
-                                      color: AppColors.primary500,
-                                    ),
-                                ],
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: state.ewallets.length,
+                    itemBuilder: (context, index) {
+                      final PaymentMethodModel element = state.ewallets[index];
+                      return InkWell(
+                        onTap: () {
+                          selectedOption = element.name;
+                          isExist.value = true;
+                          changeState(() {});
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: AppSizes.primary,
+                              vertical: AppSizes.primary),
+                          child: Row(
+                            children: [
+                              Image.network(
+                                element.iconUrl,
+                                width: 24.0,
                               ),
-                            ),
+                              6.0.width,
+                              Text(
+                                element.name,
+                                style: const TextStyle(
+                                  fontWeight: AppFontWeight.semibold,
+                                ),
+                              ),
+                              const Spacer(),
+                              if (selectedOption == element.name)
+                                const Icon(
+                                  Icons.check,
+                                  color: AppColors.primary500,
+                                ),
+                            ],
                           ),
-                        )
-                        .toList(),
+                        ),
+                      );
+                    },
                   ),
                   30.0.height,
                   const Padding(
@@ -104,51 +107,53 @@ class PaymentMethodPage extends StatelessWidget {
                     padding: EdgeInsets.symmetric(horizontal: AppSizes.primary),
                     child: Divider(),
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: state.bankTransfers
-                        .map(
-                          (element) => InkWell(
-                            onTap: () {
-                              selectedOption = element.name;
-                              isExist.value = true;
-                              changeState(() {});
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: AppSizes.primary,
-                                  vertical: AppSizes.primary),
-                              child: Row(
-                                children: [
-                                  Image.network(
-                                    element.iconUrl,
-                                    width: 24.0,
-                                  ),
-                                  6.0.width,
-                                  Text(
-                                    element.name,
-                                    style: const TextStyle(
-                                      fontWeight: AppFontWeight.semibold,
-                                    ),
-                                  ),
-                                  const Spacer(),
-                                  if (selectedOption == element.name)
-                                    const Icon(
-                                      Icons.check,
-                                      color: AppColors.primary500,
-                                    ),
-                                ],
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: state.bankTransfers.length,
+                    itemBuilder: (context, index) {
+                      final PaymentMethodModel element =
+                          state.bankTransfers[index];
+                      return InkWell(
+                        onTap: () {
+                          selectedOption = element.name;
+                          isExist.value = true;
+                          changeState(() {});
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: AppSizes.primary,
+                              vertical: AppSizes.primary),
+                          child: Row(
+                            children: [
+                              Image.network(
+                                element.iconUrl,
+                                width: 24.0,
                               ),
-                            ),
+                              6.0.width,
+                              Text(
+                                element.name,
+                                style: const TextStyle(
+                                  fontWeight: AppFontWeight.semibold,
+                                ),
+                              ),
+                              const Spacer(),
+                              if (selectedOption == element.name)
+                                const Icon(
+                                  Icons.check,
+                                  color: AppColors.primary500,
+                                ),
+                            ],
                           ),
-                        )
-                        .toList(),
+                        ),
+                      );
+                    },
                   ),
                 ],
               ),
             );
           } else {
-            return Container();
+            return const SizedBox.shrink();
           }
         },
       ),

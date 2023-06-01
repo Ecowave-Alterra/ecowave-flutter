@@ -1,13 +1,13 @@
 import 'package:ecowave/core.dart';
 import 'package:ecowave/features/address/view/pages/add_adress_page.dart';
-import 'package:ecowave/features/payment/bloc/address/address_bloc.dart';
-import 'package:ecowave/features/payment/model/entity/address_entity.dart';
+import 'package:ecowave/features/payment/bloc/shipping_address/shipping_address_bloc.dart';
+import 'package:ecowave/features/payment/model/models/shipping_address_model.dart';
 import 'package:ecowave/features/payment/view/widgets/shipping_address_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ShippingAddressPage extends StatelessWidget {
-  final AddressEntity currentAddress;
+  final ShippingAddressModel? currentAddress;
 
   const ShippingAddressPage({
     super.key,
@@ -16,7 +16,9 @@ class ShippingAddressPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String? selectedOption = currentAddress.address;
+    String? selectedOption = currentAddress?.address;
+    final ValueNotifier<bool> isExist =
+        ValueNotifier<bool>(selectedOption == null ? false : true);
 
     return Scaffold(
       appBar: AppBar(
@@ -33,37 +35,38 @@ class ShippingAddressPage extends StatelessWidget {
       ),
       body: ListView(
         children: [
-          BlocBuilder<AddressBloc, AddressState>(
+          BlocBuilder<ShippingAddressBloc, ShippingAddressState>(
             builder: (context, state) {
-              if (state is AddressLoading) {
+              if (state is ShippingAddressLoading) {
                 return const EcoLoading();
-              } else if (state is AddressFailed) {
+              } else if (state is ShippingAddressFailed) {
                 return EcoError(
                   errorMessage: state.meesage,
-                  onRetry: () {},
+                  onRetry: () => context
+                      .read<ShippingAddressBloc>()
+                      .add(GetShippingAddressesEvent()),
                 );
-              } else if (state is AddressSuccess) {
+              } else if (state is ShippingAddressSuccess) {
                 return StatefulBuilder(
                   builder: (context, changeState) {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: state.data
-                          .map(
-                            (paymentMethod) => ShippingAddressCard(
-                              selectedOption: selectedOption,
-                              addressEntity: paymentMethod,
-                              onTap: () {
-                                selectedOption = paymentMethod.address;
-                                changeState(() {});
-                              },
-                            ),
-                          )
-                          .toList(),
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: state.data.length,
+                      itemBuilder: (context, index) => ShippingAddressCard(
+                        selectedOption: selectedOption,
+                        addressModel: state.data[index],
+                        onTap: () {
+                          selectedOption = state.data[index].address;
+                          isExist.value = true;
+                          changeState(() {});
+                        },
+                      ),
                     );
                   },
                 );
               } else {
-                return Container();
+                return const SizedBox.shrink();
               }
             },
           ),
@@ -71,10 +74,13 @@ class ShippingAddressPage extends StatelessWidget {
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(AppSizes.primary),
-        child: EcoFormButton(
-          height: 45.0,
-          label: "Konfirmasi",
-          onPressed: () => context.pop(),
+        child: ValueListenableBuilder(
+          valueListenable: isExist,
+          builder: (context, value, _) => EcoFormButton(
+            height: 45.0,
+            label: "Konfirmasi",
+            onPressed: value ? () => context.pop() : null,
+          ),
         ),
       ),
     );

@@ -1,24 +1,24 @@
+import 'package:ecowave/features/payment/model/models/payment_method_model.dart';
+import 'package:ecowave/features/payment/model/models/payment_method_type.dart';
+import 'package:ecowave/features/payment/model/services/payment_method_service.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'package:ecowave/features/payment/model/entity/payment_method_entity.dart';
-import 'package:ecowave/features/payment/model/repository/payment_method_repository.dart';
 
 part 'payment_method_event.dart';
 part 'payment_method_state.dart';
 
 class PaymentMethodBloc extends Bloc<PaymentMethodEvent, PaymentMethodState> {
-  final PaymentMethodRepository repository;
+  final PaymentMethodService service;
 
   PaymentMethodBloc(
-    this.repository,
+    this.service,
   ) : super(PaymentMethodInitial()) {
     on<GetPaymentMethodsEvent>((event, emit) async {
-      final response = await repository.getPaymentMethods();
-      response.fold((failed) => emit(PaymentMethodFailed(meesage: failed)),
-          (result) {
-        late List<PaymentMethodEntity> ewallets;
-        late List<PaymentMethodEntity> bankTransfers;
+      try {
+        final List<PaymentMethodModel> result =
+            await service.getPaymentMethods();
+        late List<PaymentMethodModel> ewallets;
+        late List<PaymentMethodModel> bankTransfers;
 
         ewallets = result
             .where((element) => element.type == PaymentMethodType.eWallet)
@@ -31,7 +31,9 @@ class PaymentMethodBloc extends Bloc<PaymentMethodEvent, PaymentMethodState> {
           ewallets: ewallets,
           bankTransfers: bankTransfers,
         ));
-      });
+      } catch (e) {
+        emit(PaymentMethodFailed(meesage: e.toString()));
+      }
     });
   }
 }

@@ -1,14 +1,14 @@
 import 'package:ecowave/core.dart';
-import 'package:ecowave/features/payment/model/entity/address_entity.dart';
+import 'package:ecowave/features/payment/model/models/shipping_address_model.dart';
 import 'package:flutter/material.dart';
 
 class AddressInfoWidget extends StatelessWidget {
-  final AddressEntity addressEntity;
+  final ShippingAddressModel addressModel;
   final VoidCallback onChangeTap;
 
   const AddressInfoWidget({
     super.key,
-    required this.addressEntity,
+    required this.addressModel,
     required this.onChangeTap,
   });
 
@@ -30,9 +30,9 @@ class AddressInfoWidget extends StatelessWidget {
                 ),
               ),
               12.0.height,
-              Text("${addressEntity.name} (${addressEntity.markedAs})"),
-              Text(addressEntity.phoneNumber),
-              Text(addressEntity.address),
+              Text("${addressModel.recipient} (${addressModel.mark})"),
+              Text(addressModel.phone),
+              Text(addressModel.address),
             ],
           ),
           OutlinedButton(

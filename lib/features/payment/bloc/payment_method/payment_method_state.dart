@@ -12,8 +12,8 @@ class PaymentMethodInitial extends PaymentMethodState {}
 class PaymentMethodLoading extends PaymentMethodState {}
 
 class PaymentMethodSuccess extends PaymentMethodState {
-  final List<PaymentMethodEntity> ewallets;
-  final List<PaymentMethodEntity> bankTransfers;
+  final List<PaymentMethodModel> ewallets;
+  final List<PaymentMethodModel> bankTransfers;
 
   const PaymentMethodSuccess({
     required this.ewallets,
