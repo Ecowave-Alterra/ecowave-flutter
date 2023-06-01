@@ -1,5 +1,6 @@
 import 'package:ecowave/core.dart';
 import 'package:ecowave/features/payment/model/models/payment_method_model.dart';
+import 'package:ecowave/features/payment/model/models/payment_method_type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_countdown_timer/current_remaining_time.dart';

@@ -1,6 +1,7 @@
 import 'package:ecowave/core.dart';
 import 'package:ecowave/features/payment/bloc/payment_method/payment_method_bloc.dart';
 import 'package:ecowave/features/payment/model/models/payment_method_model.dart';
+import 'package:ecowave/features/payment/model/models/payment_method_type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

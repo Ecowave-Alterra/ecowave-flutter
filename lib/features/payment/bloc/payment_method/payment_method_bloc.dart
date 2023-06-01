@@ -1,5 +1,6 @@
 import 'package:ecowave/features/payment/model/models/payment_method_model.dart';
-import 'package:ecowave/features/payment/model/services/payment_method_remote_datasource.dart';
+import 'package:ecowave/features/payment/model/models/payment_method_type.dart';
+import 'package:ecowave/features/payment/model/services/payment_method_service.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
