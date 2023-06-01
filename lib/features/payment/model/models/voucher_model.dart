@@ -1,3 +1,7 @@
+// To parse this JSON data, do
+//
+//     final voucherModel = voucherModelFromJson(jsonString);
+
 import 'dart:convert';
 
 import 'package:ecowave/core.dart';
@@ -9,6 +13,7 @@ String voucherModelToJson(VoucherModel data) => json.encode(data.toJson());
 
 class VoucherModel {
   final String name;
+  final int minimumPurchase;
   final double discount;
   final String expiredDate;
   final String photoContentUrl;
@@ -20,6 +25,7 @@ class VoucherModel {
 
   VoucherModel({
     required this.name,
+    required this.minimumPurchase,
     required this.discount,
     required this.expiredDate,
     required this.photoContentUrl,
@@ -30,11 +36,14 @@ class VoucherModel {
     this.deletedAt,
   });
 
+  String get minimumPurchaseFormat =>
+      "Min. Blj ${minimumPurchase.currencyFormatSimpleRp}";
   String get expiredDateFormatString =>
       DateTime.parse(expiredDate).toFormattedDate();
 
   factory VoucherModel.fromJson(Map<String, dynamic> json) => VoucherModel(
         name: json["name"],
+        minimumPurchase: json["minimum_purchase"],
         discount: json["discount"]?.toDouble(),
         expiredDate: json["expired_date"],
         photoContentUrl: json["photo_content_url"],
@@ -47,6 +56,7 @@ class VoucherModel {
 
   Map<String, dynamic> toJson() => {
         "name": name,
+        "minimum_purchase": minimumPurchase,
         "discount": discount,
         "expired_date": expiredDate,
         "photo_content_url": photoContentUrl,

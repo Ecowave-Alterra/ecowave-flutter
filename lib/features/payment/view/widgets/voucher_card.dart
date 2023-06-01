@@ -71,7 +71,7 @@ class VoucherCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: AppSizes.primary),
               child: Text(
-                voucherModel.termCondition,
+                voucherModel.minimumPurchaseFormat,
                 style: const TextStyle(
                   color: AppColors.grey600,
                 ),
