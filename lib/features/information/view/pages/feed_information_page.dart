@@ -42,12 +42,6 @@ class _InformationPageState extends State<InformationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        leading: IconButton(
-          onPressed: () {},
-          icon: const ImageIcon(AppIcons.leftBack,
-              color: AppColors.primary500, size: 11),
-        ),
         title: const Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -78,15 +72,6 @@ class _InformationPageState extends State<InformationPage> {
                 color: AppColors.primary600, size: 18),
           ),
         ],
-        backgroundColor: AppColors.white,
-        elevation: 0.0,
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(2.0),
-          child: Container(
-            color: AppColors.grey300,
-            height: 2.0,
-          ),
-        ),
       ),
       body: SingleChildScrollView(
         child: Column(

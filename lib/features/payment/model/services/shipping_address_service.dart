@@ -75,12 +75,13 @@ class ShippingAddressService {
   ];
 
   Future<List<ShippingAddressModel>> getAddresses() async {
-    // const String url = '................';
-    // final response = await _dio.get(url);
+    try {
+      // const String url = '................';
+      // final response = await _dio.get(url);
 
-    final List<ShippingAddressModel> result =
-        dummy.map((e) => ShippingAddressModel.fromJson(e)).toList();
-
-    return result;
+      return dummy.map((e) => ShippingAddressModel.fromJson(e)).toList();
+    } catch (e) {
+      rethrow;
+    }
   }
 }
