@@ -47,25 +47,23 @@ class ShippingAddressPage extends StatelessWidget {
               } else if (state is ShippingAddressSuccess) {
                 return StatefulBuilder(
                   builder: (context, changeState) {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: state.data
-                          .map(
-                            (paymentMethod) => ShippingAddressCard(
-                              selectedOption: selectedOption,
-                              addressModel: paymentMethod,
-                              onTap: () {
-                                selectedOption = paymentMethod.address;
-                                changeState(() {});
-                              },
-                            ),
-                          )
-                          .toList(),
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: state.data.length,
+                      itemBuilder: (context, index) => ShippingAddressCard(
+                        selectedOption: selectedOption,
+                        addressModel: state.data[index],
+                        onTap: () {
+                          selectedOption = state.data[index].address;
+                          changeState(() {});
+                        },
+                      ),
                     );
                   },
                 );
               } else {
-                return Container();
+                return const SizedBox.shrink();
               }
             },
           ),
