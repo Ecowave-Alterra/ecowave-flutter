@@ -17,6 +17,8 @@ class VoucherPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String? selectedOption = currentVoucher?.name;
+    final ValueNotifier<bool> isExist =
+        ValueNotifier<bool>(selectedOption == null ? false : true);
 
     return Scaffold(
       appBar: AppBar(
@@ -47,6 +49,7 @@ class VoucherPage extends StatelessWidget {
                         voucherModel: element,
                         onTap: () {
                           selectedOption = element.name;
+                          isExist.value = true;
                           changeState(() {});
                         },
                         onTermAndConditionTap: () => context.push(
@@ -67,10 +70,13 @@ class VoucherPage extends StatelessWidget {
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(AppSizes.primary),
-        child: EcoFormButton(
-          height: 45.0,
-          label: "Gunakan",
-          onPressed: () => context.pop(),
+        child: ValueListenableBuilder<bool>(
+          valueListenable: isExist,
+          builder: (context, value, _) => EcoFormButton(
+            height: 45.0,
+            label: "Gunakan",
+            onPressed: value ? () => context.pop() : null,
+          ),
         ),
       ),
     );
