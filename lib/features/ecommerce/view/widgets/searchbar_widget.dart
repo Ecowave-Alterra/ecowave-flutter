@@ -14,6 +14,7 @@ enum SingingCharacter { tertinggi, terendah }
 class _SearchBarWidgetState extends State<SearchBarWidget> {
   TextEditingController search = TextEditingController();
   SingingCharacter? _character = SingingCharacter.tertinggi;
+  int isProductCategory = 0;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -129,85 +130,174 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                                     ),
                                   ),
                                 ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    TextButton(
-                                      onPressed: () {},
-                                      child: Container(
-                                        height: 40.0,
-                                        padding: const EdgeInsets.fromLTRB(
-                                            10, 0, 10, 0),
-                                        decoration: BoxDecoration(
-                                          border: Border.all(
-                                              color: AppColors.primary500),
-                                          borderRadius: BorderRadius.circular(
-                                              AppSizes.radius),
-                                          color: AppColors.white,
-                                        ),
-                                        child: const Center(
-                                          child: Text(
-                                            'Semua',
-                                            style: TextStyle(
-                                              color: AppColors.primary500,
-                                              fontWeight: AppFontWeight.regular,
-                                              fontSize: AppSizes.buttonFontSize,
+                                StatefulBuilder(
+                                  builder: (context, setState) => Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      TextButton(
+                                        onPressed: () {
+                                          isProductCategory = 0;
+                                          setState(() {});
+                                        },
+                                        child: Container(
+                                          height: 40.0,
+                                          padding: const EdgeInsets.fromLTRB(
+                                              10.0, 0, 10.0, 0),
+                                          decoration: BoxDecoration(
+                                            border: Border.all(
+                                                color: AppColors.primary500),
+                                            borderRadius: BorderRadius.circular(
+                                                AppSizes.radius),
+                                            color: isProductCategory == 0
+                                                ? AppColors.primary500
+                                                : AppColors.white,
+                                          ),
+                                          child: Center(
+                                            child: Row(
+                                              children: [
+                                                Visibility(
+                                                  visible:
+                                                      isProductCategory == 0
+                                                          ? true
+                                                          : false,
+                                                  child: const Padding(
+                                                    padding: EdgeInsets.only(
+                                                        right: 13.0),
+                                                    child: ImageIcon(
+                                                      AppIcons.check,
+                                                      color: AppColors.white,
+                                                      size: 13.99,
+                                                    ),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  'Semua',
+                                                  style: TextStyle(
+                                                    color: isProductCategory ==
+                                                            0
+                                                        ? AppColors.white
+                                                        : AppColors.primary500,
+                                                    fontWeight:
+                                                        AppFontWeight.regular,
+                                                    fontSize:
+                                                        AppSizes.buttonFontSize,
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    TextButton(
-                                      onPressed: () {},
-                                      child: Container(
-                                        height: 40.0,
-                                        padding: const EdgeInsets.fromLTRB(
-                                            10, 0, 10, 0),
-                                        decoration: BoxDecoration(
-                                          border: Border.all(
-                                              color: AppColors.primary500),
-                                          borderRadius: BorderRadius.circular(
-                                              AppSizes.radius),
-                                          color: AppColors.white,
-                                        ),
-                                        child: const Center(
-                                          child: Text(
-                                            'Perabot',
-                                            style: TextStyle(
-                                              color: AppColors.primary500,
-                                              fontWeight: AppFontWeight.regular,
-                                              fontSize: AppSizes.buttonFontSize,
+                                      TextButton(
+                                        onPressed: () {
+                                          isProductCategory = 1;
+                                          setState(() {});
+                                        },
+                                        child: Container(
+                                          height: 40.0,
+                                          padding: const EdgeInsets.fromLTRB(
+                                              10.0, 0, 10.0, 0),
+                                          decoration: BoxDecoration(
+                                            border: Border.all(
+                                                color: AppColors.primary500),
+                                            borderRadius: BorderRadius.circular(
+                                                AppSizes.radius),
+                                            color: isProductCategory == 1
+                                                ? AppColors.primary500
+                                                : AppColors.white,
+                                          ),
+                                          child: Center(
+                                            child: Row(
+                                              children: [
+                                                Visibility(
+                                                  visible:
+                                                      isProductCategory == 1
+                                                          ? true
+                                                          : false,
+                                                  child: const Padding(
+                                                    padding: EdgeInsets.only(
+                                                        right: 13.0),
+                                                    child: ImageIcon(
+                                                      AppIcons.check,
+                                                      color: AppColors.white,
+                                                      size: 13.99,
+                                                    ),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  'Perabot',
+                                                  style: TextStyle(
+                                                    color: isProductCategory ==
+                                                            1
+                                                        ? AppColors.white
+                                                        : AppColors.primary500,
+                                                    fontWeight:
+                                                        AppFontWeight.regular,
+                                                    fontSize:
+                                                        AppSizes.buttonFontSize,
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    TextButton(
-                                      onPressed: () {},
-                                      child: Container(
-                                        height: 40.0,
-                                        padding: const EdgeInsets.fromLTRB(
-                                            10, 0, 10, 0),
-                                        decoration: BoxDecoration(
-                                          border: Border.all(
-                                              color: AppColors.primary500),
-                                          borderRadius: BorderRadius.circular(
-                                              AppSizes.radius),
-                                          color: AppColors.white,
-                                        ),
-                                        child: const Center(
-                                          child: Text(
-                                            'Kantong',
-                                            style: TextStyle(
-                                              color: AppColors.primary500,
-                                              fontWeight: AppFontWeight.regular,
-                                              fontSize: AppSizes.buttonFontSize,
+                                      TextButton(
+                                        onPressed: () {
+                                          isProductCategory = 2;
+                                          setState(() {});
+                                        },
+                                        child: Container(
+                                          height: 40.0,
+                                          padding: const EdgeInsets.fromLTRB(
+                                              10.0, 0, 10.0, 0),
+                                          decoration: BoxDecoration(
+                                            border: Border.all(
+                                                color: AppColors.primary500),
+                                            borderRadius: BorderRadius.circular(
+                                                AppSizes.radius),
+                                            color: isProductCategory == 2
+                                                ? AppColors.primary500
+                                                : AppColors.white,
+                                          ),
+                                          child: Center(
+                                            child: Row(
+                                              children: [
+                                                Visibility(
+                                                  visible:
+                                                      isProductCategory == 2
+                                                          ? true
+                                                          : false,
+                                                  child: const Padding(
+                                                    padding: EdgeInsets.only(
+                                                        right: 13.0),
+                                                    child: ImageIcon(
+                                                      AppIcons.check,
+                                                      color: AppColors.white,
+                                                      size: 13.99,
+                                                    ),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  'Kantong',
+                                                  style: TextStyle(
+                                                    color: isProductCategory ==
+                                                            2
+                                                        ? AppColors.white
+                                                        : AppColors.primary500,
+                                                    fontWeight:
+                                                        AppFontWeight.regular,
+                                                    fontSize:
+                                                        AppSizes.buttonFontSize,
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                                 Container(
                                   alignment: Alignment.topLeft,
