@@ -1,6 +1,7 @@
 import 'package:ecowave/core.dart';
-import 'package:ecowave/features/payment/bloc/address/address_bloc.dart';
 import 'package:ecowave/features/payment/bloc/expedition/expedition_bloc.dart';
+import 'package:ecowave/features/payment/bloc/shipping_address/shipping_address_bloc.dart';
+import 'package:ecowave/features/payment/bloc/payment_method/payment_method_bloc.dart';
 import 'package:ecowave/features/payment/model/entity/payment_info.dart';
 import 'package:ecowave/features/payment/model/entity/voucher_entity.dart';
 import 'package:ecowave/features/payment/view/pages/payment_page.dart';
@@ -22,8 +23,9 @@ class PaymentDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.read<AddressBloc>().add(GetAddressesEvent());
     context.read<ExpeditionBloc>().add(GetExpeditionsEvent());
+    context.read<ShippingAddressBloc>().add(GetShippingAddressesEvent());
+    context.read<PaymentMethodBloc>().add(GetPaymentMethodsEvent());
 
     final VoucherEntity selectedVoucher = VoucherEntity(
       name: "Gratis Ongkir",
@@ -41,18 +43,18 @@ class PaymentDetailPage extends StatelessWidget {
       ),
       body: ListView(
         children: [
-          BlocBuilder<AddressBloc, AddressState>(
+          BlocBuilder<ShippingAddressBloc, ShippingAddressState>(
             builder: (context, state) {
-              if (state is AddressLoading) {
+              if (state is ShippingAddressLoading) {
                 return const EcoLoading();
-              } else if (state is AddressFailed) {
+              } else if (state is ShippingAddressFailed) {
                 return EcoError(
                   errorMessage: state.meesage,
                   onRetry: () {},
                 );
-              } else if (state is AddressSuccess) {
+              } else if (state is ShippingAddressSuccess) {
                 return AddressInfoWidget(
-                  addressEntity:
+                  addressModel:
                       state.data.where((element) => element.isPrimary).first,
                   onChangeTap: () => context.push(ShippingAddressPage(
                     currentAddress:
@@ -60,7 +62,7 @@ class PaymentDetailPage extends StatelessWidget {
                   )),
                 );
               } else {
-                return Container();
+                return const SizedBox.shrink();
               }
             },
           ),
@@ -93,6 +95,7 @@ class PaymentDetailPage extends StatelessWidget {
           ),
           16.0.height,
           CheckoutSettingButton(
+            value: null,
             label: "Pilih Metode Pembayaran",
             onPressed: () => context.push(const PaymentMethodPage(
               currentPaymentMethod: null,

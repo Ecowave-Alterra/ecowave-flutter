@@ -1,4 +1,5 @@
 import 'package:ecowave/core.dart';
+import 'package:ecowave/features/ecommerce/view/pages/product_review_page.dart';
 import 'package:flutter/material.dart';
 
 class ProductDescription extends StatelessWidget {
@@ -163,7 +164,7 @@ class ProductDescription extends StatelessWidget {
                 ),
               ),
               TextButton(
-                onPressed: () {},
+                onPressed: () => context.push(const ProductReview()),
                 child: const Text(
                   'Lihat Semua',
                   style: TextStyle(

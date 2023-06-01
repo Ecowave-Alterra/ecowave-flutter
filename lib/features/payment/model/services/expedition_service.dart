@@ -1,10 +1,6 @@
-import 'package:ecowave/features/payment/model/response/expedition_response_model.dart';
+import 'package:ecowave/features/payment/model/models/expedition_model.dart';
 
-abstract class ExpeditionRemoteDatasource {
-  Future<List<ExpeditionResponseModel>> getExpeditions();
-}
-
-class ExpeditionRemoteDatasourceImpl implements ExpeditionRemoteDatasource {
+class ExpeditionService {
   // late Dio _dio;
   // AddressRemoteDatasourceImpl() {
   //   _dio = Dio();
@@ -37,11 +33,10 @@ class ExpeditionRemoteDatasourceImpl implements ExpeditionRemoteDatasource {
     },
   ];
 
-  @override
-  Future<List<ExpeditionResponseModel>> getExpeditions() async {
+  Future<List<ExpeditionModel>> getExpeditions() async {
     // const String url = '';
     // final response = await _dio.get(url);
 
-    return dummy.map((e) => ExpeditionResponseModel.fromJson(e)).toList();
+    return dummy.map((e) => ExpeditionModel.fromJson(e)).toList();
   }
 }

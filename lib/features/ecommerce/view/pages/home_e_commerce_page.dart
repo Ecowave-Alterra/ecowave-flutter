@@ -24,14 +24,16 @@ class HomeECommerce extends StatelessWidget {
           ),
         ],
       ),
-      body: const Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SearchBarWidget(),
-          CarouselGambar(),
-          CardProduct(),
-        ],
+      body: const SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SearchBarWidget(),
+            CarouselGambar(),
+            CardProduct(),
+          ],
+        ),
       ),
     );
   }

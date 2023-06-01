@@ -13,8 +13,9 @@ class ShippingOptionsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ValueNotifier<bool> isExist = ValueNotifier<bool>(false);
     String? selectedOption = shipping;
+    final ValueNotifier<bool> isExist =
+        ValueNotifier<bool>(selectedOption == null ? false : true);
 
     return Scaffold(
       appBar: AppBar(
@@ -34,54 +35,54 @@ class ShippingOptionsPage extends StatelessWidget {
               } else if (state is ExpeditionSuccess) {
                 return StatefulBuilder(
                   builder: (context, changeState) {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: state.data
-                          .map(
-                            (shipping) => InkWell(
-                              onTap: () {
-                                selectedOption = shipping.name;
-                                isExist.value = true;
-                                changeState(() {});
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: AppSizes.primary,
-                                    vertical: AppSizes.primary / 2),
-                                child: Row(
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: state.data.length,
+                      itemBuilder: (context, index) {
+                        final shipping = state.data[index];
+                        return InkWell(
+                          onTap: () {
+                            selectedOption = shipping.name;
+                            isExist.value = true;
+                            changeState(() {});
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: AppSizes.primary,
+                                vertical: AppSizes.primary / 2),
+                            child: Row(
+                              children: [
+                                Radio(
+                                  value: shipping.name,
+                                  groupValue: selectedOption,
+                                  onChanged: (value) {},
+                                  activeColor: AppColors.primary500,
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Radio(
-                                      value: shipping.name,
-                                      groupValue: selectedOption,
-                                      onChanged: (value) {},
-                                      activeColor: AppColors.primary500,
+                                    Text(
+                                      shipping.name,
+                                      style: const TextStyle(
+                                        fontWeight: AppFontWeight.semibold,
+                                      ),
                                     ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          shipping.name,
-                                          style: const TextStyle(
-                                            fontWeight: AppFontWeight.semibold,
-                                          ),
-                                        ),
-                                        Text(
-                                          shipping.estimate,
-                                          style: const TextStyle(
-                                            color: AppColors.grey500,
-                                          ),
-                                        ),
-                                      ],
+                                    Text(
+                                      shipping.estimateFormat,
+                                      style: const TextStyle(
+                                        color: AppColors.grey500,
+                                      ),
                                     ),
-                                    const Spacer(),
-                                    Text(shipping.price.currencyFormatRp),
                                   ],
                                 ),
-                              ),
+                                const Spacer(),
+                                Text(shipping.price.currencyFormatRp),
+                              ],
                             ),
-                          )
-                          .toList(),
+                          ),
+                        );
+                      },
                     );
                   },
                 );

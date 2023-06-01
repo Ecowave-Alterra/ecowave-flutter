@@ -12,7 +12,7 @@ class ExpeditionInitial extends ExpeditionState {}
 class ExpeditionLoading extends ExpeditionState {}
 
 class ExpeditionSuccess extends ExpeditionState {
-  final List<ExpeditionEntity> data;
+  final List<ExpeditionModel> data;
 
   const ExpeditionSuccess({
     required this.data,

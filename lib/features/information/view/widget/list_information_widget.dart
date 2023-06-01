@@ -37,9 +37,6 @@ class _ListInformationState extends State<ListInformation> {
               height: 148,
               fit: BoxFit.cover,
             ),
-            SizedBox(
-              width: 18,
-            ),
             18.0.width,
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,

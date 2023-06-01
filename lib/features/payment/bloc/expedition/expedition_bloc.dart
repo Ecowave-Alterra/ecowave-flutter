@@ -1,24 +1,24 @@
+import 'package:ecowave/features/payment/model/models/expedition_model.dart';
+import 'package:ecowave/features/payment/model/services/expedition_service.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'package:ecowave/features/payment/model/entity/expedition_entity.dart';
-import 'package:ecowave/features/payment/model/repository/expedition_repository.dart';
 
 part 'expedition_event.dart';
 part 'expedition_state.dart';
 
 class ExpeditionBloc extends Bloc<ExpeditionEvent, ExpeditionState> {
-  final ExpeditionRepository repository;
+  final ExpeditionService service;
 
   ExpeditionBloc(
-    this.repository,
+    this.service,
   ) : super(ExpeditionInitial()) {
     on<GetExpeditionsEvent>((event, emit) async {
-      final response = await repository.getExpeditions();
-      response.fold(
-        (failed) => emit(ExpeditionFailed(meesage: failed)),
-        (result) => emit(ExpeditionSuccess(data: result)),
-      );
+      try {
+        final List<ExpeditionModel> result = await service.getExpeditions();
+        emit(ExpeditionSuccess(data: result));
+      } catch (e) {
+        emit(ExpeditionFailed(meesage: e.toString()));
+      }
     });
   }
 }
