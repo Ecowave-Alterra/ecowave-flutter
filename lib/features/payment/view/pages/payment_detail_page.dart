@@ -1,4 +1,5 @@
 import 'package:ecowave/core.dart';
+import 'package:ecowave/features/payment/bloc/expedition/expedition_bloc.dart';
 import 'package:ecowave/features/payment/bloc/shipping_address/shipping_address_bloc.dart';
 import 'package:ecowave/features/payment/bloc/payment_method/payment_method_bloc.dart';
 import 'package:ecowave/features/payment/model/entity/payment_info.dart';
@@ -22,6 +23,7 @@ class PaymentDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.read<ExpeditionBloc>().add(GetExpeditionsEvent());
     context.read<ShippingAddressBloc>().add(GetShippingAddressesEvent());
     context.read<PaymentMethodBloc>().add(GetPaymentMethodsEvent());
 
@@ -60,7 +62,7 @@ class PaymentDetailPage extends StatelessWidget {
                   )),
                 );
               } else {
-                return Container();
+                return const SizedBox.shrink();
               }
             },
           ),
@@ -73,10 +75,10 @@ class PaymentDetailPage extends StatelessWidget {
             ),
           ),
           CheckoutSettingButton(
-            value: "JNE",
+            value: null,
             label: "Pilih Opsi Pengiriman",
             onPressed: () =>
-                context.push(const ShippingOptionsPage(shipping: "JNE")),
+                context.push(const ShippingOptionsPage(shipping: null)),
           ),
           16.0.height,
           CheckoutSettingButton(
