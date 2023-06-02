@@ -210,8 +210,6 @@ class DashboardPage extends StatelessWidget {
                                 return Container(
                                   width: MediaQuery.of(context).size.width -
                                       2 * AppSizes.secondary,
-                                  margin: const EdgeInsets.only(
-                                      right: AppSizes.primary),
                                   decoration: BoxDecoration(
                                     image: const DecorationImage(
                                       image: AssetImage(AppImages.homeShop),
@@ -251,8 +249,6 @@ class DashboardPage extends StatelessWidget {
                                 return Container(
                                   width: MediaQuery.of(context).size.width -
                                       2 * AppSizes.secondary,
-                                  margin: const EdgeInsets.only(
-                                      right: AppSizes.primary),
                                   decoration: BoxDecoration(
                                     image: const DecorationImage(
                                       image: AssetImage(AppImages.homeInfo),
