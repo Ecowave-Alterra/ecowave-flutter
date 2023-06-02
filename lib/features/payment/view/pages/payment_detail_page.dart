@@ -77,6 +77,7 @@ class PaymentDetailPage extends StatelessWidget {
           CheckoutSettingButton(
             value: null,
             label: "Pilih Opsi Pengiriman",
+            icon: AppIcons.shipping,
             onPressed: () =>
                 context.push(const ShippingOptionsPage(shipping: null)),
           ),
@@ -84,12 +85,14 @@ class PaymentDetailPage extends StatelessWidget {
           CheckoutSettingButton(
             value: "Gratis Ongkir",
             label: "Gunakan Voucher",
+            icon: AppIcons.voucher,
             onPressed: () => context.push(VoucherPage(
               currentVoucher: selectedVoucher,
             )),
           ),
           16.0.height,
           CheckoutSettingSwitch(
+            currentPoint: 0,
             label: "Tukarkan Point",
             onChanged: (value) {},
           ),
@@ -97,6 +100,7 @@ class PaymentDetailPage extends StatelessWidget {
           CheckoutSettingButton(
             value: null,
             label: "Pilih Metode Pembayaran",
+            icon: AppIcons.payment,
             onPressed: () => context.push(const PaymentMethodPage(
               currentPaymentMethod: null,
             )),

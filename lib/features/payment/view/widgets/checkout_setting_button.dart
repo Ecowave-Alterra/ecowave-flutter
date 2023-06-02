@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 class CheckoutSettingButton extends StatelessWidget {
   final String? value;
   final String label;
+  final AssetImage icon;
   final VoidCallback onPressed;
 
   const CheckoutSettingButton({
     super.key,
     this.value,
     required this.label,
+    required this.icon,
     required this.onPressed,
   });
 
@@ -28,14 +30,16 @@ class CheckoutSettingButton extends StatelessWidget {
           ),
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            ImageIcon(icon),
+            10.5.width,
             Text(
               value ?? label,
               style: const TextStyle(
                 fontWeight: AppFontWeight.semibold,
               ),
             ),
+            const Spacer(),
             const ImageIcon(
               AppIcons.rightBack,
               size: 12.0,
