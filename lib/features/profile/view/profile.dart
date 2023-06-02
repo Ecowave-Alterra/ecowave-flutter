@@ -26,10 +26,13 @@ class ProfilePage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       10.0.height,
-                      const Text("Saya",
-                          style: TextStyle(
-                              fontSize: AppSizes.secondary,
-                              fontWeight: AppFontWeight.bold)),
+                      const Text(
+                        "Saya",
+                        style: TextStyle(
+                          fontSize: AppSizes.secondary,
+                          fontWeight: AppFontWeight.bold,
+                        ),
+                      ),
                       16.0.height,
                       const Row(
                         children: [
@@ -50,9 +53,10 @@ class ProfilePage extends StatelessWidget {
                               Text(
                                 'Fauzi Maulia Tarigan',
                                 style: TextStyle(
-                                    fontSize: 18.0,
-                                    fontWeight: FontWeight.bold,
-                                    color: AppColors.black),
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.black,
+                                ),
                               ),
                               SizedBox(height: 8.0),
                               Text(
@@ -86,20 +90,23 @@ class ProfilePage extends StatelessWidget {
                               Text(
                                 'Email',
                                 style: TextStyle(
-                                    fontSize: 14,
-                                    color: AppColors.grey700,
-                                    fontWeight: AppFontWeight.bold),
+                                  fontSize: 14,
+                                  color: AppColors.grey700,
+                                  fontWeight: AppFontWeight.bold,
+                                ),
                               ),
                             ],
                           ),
                           Text(
                             'Fauzi@gmail.com',
                             style: TextStyle(
-                                fontSize: 14, color: AppColors.grey700),
+                              fontSize: 14,
+                              color: AppColors.grey700,
+                            ),
                           ),
                         ],
                       ),
-                      8.0.height,
+                      16.0.height,
                       const Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -114,16 +121,19 @@ class ProfilePage extends StatelessWidget {
                               Text(
                                 'No. Telepon',
                                 style: TextStyle(
-                                    fontSize: 14,
-                                    color: AppColors.grey700,
-                                    fontWeight: AppFontWeight.bold),
+                                  fontSize: 14,
+                                  color: AppColors.grey700,
+                                  fontWeight: AppFontWeight.bold,
+                                ),
                               ),
                             ],
                           ),
                           Text(
                             '0812345678910',
                             style: TextStyle(
-                                fontSize: 14, color: AppColors.grey700),
+                              fontSize: 14,
+                              color: AppColors.grey700,
+                            ),
                           ),
                         ],
                       ),
@@ -132,36 +142,54 @@ class ProfilePage extends StatelessWidget {
                         thickness: 1,
                         color: AppColors.grey50,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Row(
+                      InkWell(
+                        onTap: () {
+                          // Tindakan yang dijalankan saat tombol diklik
+                        },
+                        child: const Padding(
+                          padding: EdgeInsets.symmetric(
+                              vertical: AppSizes.primary / 2),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              ImageIcon(
-                                size: 20,
-                                AppIcons.coin,
-                                color: AppColors.primary500,
+                              Row(
+                                children: [
+                                  ImageIcon(
+                                    size: 20,
+                                    AppIcons.coin,
+                                    color: AppColors.primary500,
+                                  ),
+                                  SizedBox(width: AppSizes.primary),
+                                  Text(
+                                    'EcoPoints',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: AppColors.grey700,
+                                      fontWeight: AppFontWeight.bold,
+                                    ),
+                                  ),
+                                ],
                               ),
-                              SizedBox(width: AppSizes.primary),
-                              Text(
-                                'EcoPoints',
-                                style: TextStyle(
-                                    fontSize: 14,
+                              Row(
+                                children: [
+                                  Text(
+                                    'Lihat Detail ',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: AppColors.grey700,
+                                    ),
+                                  ),
+                                  Icon(
+                                    Icons.arrow_forward_ios,
+                                    size: 14,
                                     color: AppColors.grey700,
-                                    fontWeight: AppFontWeight.bold),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
-                          TextButton(
-                            onPressed: () {},
-                            child: const Text(
-                              'Lihat Detail >',
-                              style: TextStyle(
-                                  fontSize: 14, color: AppColors.grey700),
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                      )
                     ],
                   ),
                 ],
@@ -172,82 +200,104 @@ class ProfilePage extends StatelessWidget {
               color: AppColors.grey50,
             ),
             Padding(
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.all(AppSizes.primary),
               child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      "Akun",
-                      style: TextStyle(
-                          fontSize: AppSizes.primary,
-                          fontWeight: AppFontWeight.extrabold),
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    "Akun",
+                    style: TextStyle(
+                      fontSize: AppSizes.primary,
+                      fontWeight: AppFontWeight.extrabold,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Row(
-                          children: [
-                            ImageIcon(
-                              size: 20,
-                              AppIcons.ubahProfil,
-                              color: AppColors.primary500,
-                            ),
-                            SizedBox(width: AppSizes.primary),
-                            Text(
-                              'Ubah Profile',
-                              style: TextStyle(
+                  ),
+                  InkWell(
+                    onTap: () {
+                      context.push(const EditProfilePage());
+                    },
+                    child: const Padding(
+                      padding:
+                          EdgeInsets.symmetric(vertical: AppSizes.primary / 2),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              ImageIcon(
+                                size: 20,
+                                AppIcons.ubahProfil,
+                                color: AppColors.primary500,
+                              ),
+                              SizedBox(width: AppSizes.primary),
+                              Text(
+                                'Ubah Profile',
+                                style: TextStyle(
                                   fontSize: 14,
                                   color: AppColors.grey700,
-                                  fontWeight: AppFontWeight.bold),
+                                  fontWeight: AppFontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Icon(
+                            Icons.arrow_forward_ios,
+                            size: 14,
+                            color: AppColors.grey700,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const Divider(
+                    color: AppColors.grey50,
+                  ),
+                  InkWell(
+                      onTap: () {},
+                      child: const Padding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: AppSizes.primary / 2),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                ImageIcon(
+                                  size: 20,
+                                  AppIcons.alamat,
+                                  color: AppColors.primary500,
+                                ),
+                                SizedBox(width: AppSizes.primary),
+                                Text(
+                                  'Alamat',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: AppColors.grey700,
+                                    fontWeight: AppFontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  ' ',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: AppColors.grey700,
+                                  ),
+                                ),
+                                Icon(
+                                  Icons.arrow_forward_ios,
+                                  size: 14,
+                                  color: AppColors.grey700,
+                                ),
+                              ],
                             ),
                           ],
                         ),
-                        TextButton(
-                          onPressed: () {
-                            context.push(const EditProfilePage());
-                          },
-                          child: const Text(
-                            '     >',
-                            style: TextStyle(
-                                fontSize: 14, color: AppColors.grey700),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const Divider(
-                      color: AppColors.grey50,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Row(
-                          children: [
-                            ImageIcon(
-                              size: 20,
-                              AppIcons.alamat,
-                              color: AppColors.primary500,
-                            ),
-                            SizedBox(width: AppSizes.primary),
-                            Text(
-                              'Alamat',
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  color: AppColors.grey700,
-                                  fontWeight: AppFontWeight.bold),
-                            ),
-                          ],
-                        ),
-                        TextButton(
-                          onPressed: () {},
-                          child: const Text(
-                            '     >',
-                            style: TextStyle(
-                                fontSize: 14, color: AppColors.grey700),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ]),
+                      ))
+                ],
+              ),
             ),
             const Divider(
               thickness: 10,
@@ -256,45 +306,52 @@ class ProfilePage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(10),
               child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      "Keamanan",
-                      style: TextStyle(
-                          fontSize: AppSizes.primary,
-                          fontWeight: AppFontWeight.extrabold),
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    "Keamanan",
+                    style: TextStyle(
+                      fontSize: AppSizes.primary,
+                      fontWeight: AppFontWeight.extrabold,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Row(
-                          children: [
-                            ImageIcon(
-                              size: 20,
-                              AppIcons.password,
-                              color: AppColors.primary500,
-                            ),
-                            SizedBox(width: AppSizes.primary),
-                            Text(
-                              'Ubah Password',
-                              style: TextStyle(
+                  ),
+                  InkWell(
+                    onTap: () {},
+                    child: const Padding(
+                      padding:
+                          EdgeInsets.symmetric(vertical: AppSizes.primary / 2),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              ImageIcon(
+                                size: 20,
+                                AppIcons.password,
+                                color: AppColors.primary500,
+                              ),
+                              SizedBox(width: AppSizes.primary),
+                              Text(
+                                'Ubah Password',
+                                style: TextStyle(
                                   fontSize: 14,
                                   color: AppColors.grey700,
-                                  fontWeight: AppFontWeight.bold),
-                            ),
-                          ],
-                        ),
-                        TextButton(
-                          onPressed: () {},
-                          child: const Text(
-                            '     >',
-                            style: TextStyle(
-                                fontSize: 14, color: AppColors.grey700),
+                                  fontWeight: AppFontWeight.bold,
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                      ],
+                          Icon(
+                            Icons.arrow_forward_ios,
+                            size: 14,
+                            color: AppColors.grey700,
+                          ),
+                        ],
+                      ),
                     ),
-                  ]),
+                  )
+                ],
+              ),
             ),
             Container(
               color: AppColors.grey50,
@@ -303,7 +360,7 @@ class ProfilePage extends StatelessWidget {
                 child: EcoFormButton(
                   label: 'Log out',
                   onPressed: () {
-                    context.push(const  EmptyUserPage());
+                    context.push(const EmptyUserPage());
                   },
                   backgroundColor: AppColors.error500,
                 ),
