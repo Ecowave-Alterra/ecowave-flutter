@@ -69,7 +69,6 @@ class _OrderHistoryPageState extends State<OrderHistoryPage>
               decoration: const BoxDecoration(),
               child: TabBarView(
                 controller: _tabController,
-                physics: const NeverScrollableScrollPhysics(),
                 children: <Widget>[
                   //
                   //STATUS PRODUK BELUM BAYAR

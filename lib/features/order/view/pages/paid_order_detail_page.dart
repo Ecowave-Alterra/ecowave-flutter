@@ -103,6 +103,7 @@ class PaidOrderDetailPage extends StatelessWidget {
               const Divider(),
               ListView.builder(
                   itemCount: orderPaid.order.length,
+                  physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
                     final produkBelumByar = orderPaid.order[index];

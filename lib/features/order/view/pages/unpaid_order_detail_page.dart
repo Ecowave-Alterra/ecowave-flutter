@@ -110,6 +110,7 @@ class UnpaidOrderDetailPage extends StatelessWidget {
               ListView.builder(
                   itemCount: orderUnpaid.order.length,
                   shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
                     final produkBelumByar = orderUnpaid.order[index];
                     return Padding(

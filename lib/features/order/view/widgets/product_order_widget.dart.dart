@@ -130,7 +130,7 @@ class StatusOrderWidget extends StatelessWidget {
                 InkWell(
                   onTap: onPressedDetail,
                   child: const Text(
-                    "Lihat Rincian",
+                    "Rincian Pesanan",
                     style: TextStyle(color: AppColors.grey600),
                   ),
                 )
