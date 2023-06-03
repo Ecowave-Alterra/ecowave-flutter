@@ -89,7 +89,7 @@ class PaidTransactionDetailPage extends StatelessWidget {
               6.0.height,
               Text(detailTransaction.address),
               Container(
-                margin: const EdgeInsets.symmetric(vertical: 24),
+                margin: const EdgeInsets.only(bottom: 16, top: 32),
                 child: const Row(
                   children: [
                     ImageIcon(AppIcons.shopPesanan),

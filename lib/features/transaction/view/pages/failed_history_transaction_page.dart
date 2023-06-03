@@ -1,5 +1,6 @@
 import 'package:ecowave/core.dart';
 import 'package:ecowave/features/transaction/bloc/bloc/history_transaction_bloc.dart';
+import 'package:ecowave/features/transaction/model/models/history_transaction.dart';
 import 'package:ecowave/features/transaction/view/pages/failed_transaction_detail_page.dart';
 import 'package:ecowave/features/transaction/view/pages/reason_canceled_page.dart';
 import 'package:ecowave/features/transaction/view/widgets/empty_state.dart';
@@ -25,7 +26,7 @@ class FailedHistoryTransactionPage extends StatelessWidget {
             shrinkWrap: true,
             itemBuilder: (context, index) {
               // print("Ada data gasih ${state.dataFailed}");
-              final cFailed = state.dataFailed[index];
+              final HistoryTransactionModel cFailed = state.dataFailed[index];
               // print("ada data Failed gak $cFailed");
               return ProductTransactionWidget(
                   statusOrder: cFailed.statusTransaction,

@@ -60,10 +60,10 @@ class FailedTransactionDetailPage extends StatelessWidget {
                                     ),
                                   );
                                 }
-                                final hours = time.hours ?? 0;
-                                final minutes = time.min ?? 0;
-                                final seconds = time.sec ?? 0;
-                                final formattedTime =
+                                final int hours = time.hours ?? 0;
+                                final int minutes = time.min ?? 0;
+                                final int seconds = time.sec ?? 0;
+                                final String formattedTime =
                                     '$hours jam $minutes menit $seconds detik';
                                 return Text(
                                   formattedTime,
@@ -104,7 +104,7 @@ class FailedTransactionDetailPage extends StatelessWidget {
               6.0.height,
               Text(detailTransaction.address),
               Container(
-                margin: const EdgeInsets.symmetric(vertical: 24),
+                margin: const EdgeInsets.only(bottom: 16, top: 32),
                 child: const Row(
                   children: [
                     ImageIcon(AppIcons.shopPesanan),

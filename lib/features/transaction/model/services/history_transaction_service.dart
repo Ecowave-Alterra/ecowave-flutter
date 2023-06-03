@@ -15,7 +15,7 @@ class HistoryTransactionService {
       "note": "Taruh di Sumurrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr",
       "status_transaction": "Belum Dibayar",
       "total_price": 80000,
-      "created_at": "2023-06-02T02:00:00Z",
+      "created_at": "2023-08-02T19:00:00Z",
       "shipping": 15000,
       "voucher": 8000,
       "payment_method": "DANA",

@@ -1,5 +1,6 @@
 import 'package:ecowave/core.dart';
 import 'package:ecowave/features/transaction/bloc/bloc/history_transaction_bloc.dart';
+import 'package:ecowave/features/transaction/model/models/history_transaction.dart';
 import 'package:ecowave/features/transaction/view/pages/unpaid_transaction_detail_page.dart';
 import 'package:ecowave/features/transaction/view/widgets/empty_state.dart';
 import 'package:ecowave/features/transaction/view/widgets/product_transaction_widget.dart.dart';
@@ -24,7 +25,7 @@ class UnpaidHistoryTransactionPage extends StatelessWidget {
             shrinkWrap: true,
             itemBuilder: (context, index) {
               // print("Ada data gasih ${state.dataUnpaid}");
-              final cUnpaid = state.dataUnpaid[index];
+              final HistoryTransactionModel cUnpaid = state.dataUnpaid[index];
               // print("ada data unpaid gak $cUnpaid");
               return ProductTransactionWidget(
                   statusOrder: cUnpaid.statusTransaction,

@@ -1,5 +1,6 @@
 import 'package:ecowave/core.dart';
 import 'package:ecowave/features/transaction/bloc/bloc/history_transaction_bloc.dart';
+import 'package:ecowave/features/transaction/model/models/history_transaction.dart';
 import 'package:ecowave/features/transaction/view/pages/paid_transaction_detail_page.dart';
 import 'package:ecowave/features/transaction/view/pages/rating_page.dart';
 import 'package:ecowave/features/transaction/view/widgets/empty_state.dart';
@@ -23,7 +24,7 @@ class SuccessHistoryTransactionPage extends StatelessWidget {
         return ListView.builder(
             itemCount: state.dataSuccess.length,
             itemBuilder: (BuildContext context, int index) {
-              final cSuccess = state.dataSuccess[index];
+              final HistoryTransactionModel cSuccess = state.dataSuccess[index];
               return ProductTransactionWidget(
                 statusOrder: cSuccess.statusTransaction,
                 imageUrl: cSuccess.productTransaction[0].productImageUrl,
