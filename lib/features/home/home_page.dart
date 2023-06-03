@@ -27,81 +27,84 @@ class _MyHomePageState extends State<MyHomePage> {
       body: IndexedStack(
         index: _currentIndex,
         children: const [
-          // Widget untuk halaman Dashboard
-
           DashboardPage(),
-          // Widget untuk halaman Riwayat
           OrderHistoryPage(),
-          // Widget untuk halaman Profil
           ProfilePage(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
-        onTap: _onTap,
-        selectedItemColor: Colors.black, // Warna ikon aktif
-        unselectedItemColor: AppColors.grey500, // Warna ikon tidak aktif
-        selectedLabelStyle: const TextStyle(
-            fontWeight: FontWeight.bold), // Style label ikon aktif
-        unselectedLabelStyle: const TextStyle(
-            fontWeight: FontWeight.normal), // Style label ikon tidak aktif
-        type: BottomNavigationBarType
-            .fixed, // Menetapkan jumlah item tetap di tampilan
+        selectedItemColor: Colors.black,
+        unselectedItemColor: AppColors.grey500,
+        unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.normal),
+        type: BottomNavigationBarType.fixed,
         items: [
           BottomNavigationBarItem(
-            icon: Padding(
-              padding: const EdgeInsets.only(
-                  bottom: 4), // Memberi jarak antara ikon dan label
-              child: Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 30, vertical: 4),
-                decoration: BoxDecoration(
-                    color: _currentIndex == 0
-                        ? AppColors.primary300
-                        : AppColors.white, // Kondisi untuk item yang dipilih
-                    borderRadius: const BorderRadius.all(Radius.circular(10))),
-                child: const ImageIcon(
-                  AppIcons.beranda,
+            icon: InkWell(
+              onTap: () => _onTap(0),
+              child: Padding(
+                padding: const EdgeInsets.only(
+                    bottom: 4), 
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 30, vertical: 4),
+                  decoration: BoxDecoration(
+                      color: _currentIndex == 0
+                          ? AppColors.primary300
+                          : AppColors.white,
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(10))),
+                  child: const ImageIcon(
+                    AppIcons.beranda,
+                  ),
                 ),
               ),
             ),
             label: 'Dashboard',
-            backgroundColor: AppColors.white, // Background aktif
+            backgroundColor: AppColors.white,
           ),
           BottomNavigationBarItem(
-            icon: Padding(
-              padding: const EdgeInsets.only(
-                  bottom: 4), // Memberijarak antara ikon dan label
-              child: Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 30, vertical: 4),
-                decoration: BoxDecoration(
-                    color: _currentIndex == 1
-                        ? AppColors.primary300
-                        : AppColors.white, // Kondisi untuk item yang dipilih
-                    borderRadius: const BorderRadius.all(Radius.circular(10))),
-                child: const ImageIcon(
-                  AppIcons.pesanan,
+            icon: InkWell(
+              onTap: () => _onTap(1),
+              child: Padding(
+                padding: const EdgeInsets.only(
+                    bottom: 4), 
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 30, vertical: 4),
+                  decoration: BoxDecoration(
+                      color: _currentIndex == 1
+                          ? AppColors.primary300
+                          : AppColors.white,
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(10))),
+                  child: const ImageIcon(
+                    AppIcons.pesanan,
+                  ),
                 ),
               ),
             ),
             label: 'Pesanan',
-            backgroundColor: AppColors.white, // Background tidak aktif
+            backgroundColor: AppColors.white,
           ),
           BottomNavigationBarItem(
-            icon: Padding(
-              padding: const EdgeInsets.only(
-                  bottom: 4), // Memberi jarak antara ikon dan label
-              child: Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 30, vertical: 4),
-                decoration: BoxDecoration(
-                    color: _currentIndex == 2
-                        ? AppColors.primary300
-                        : AppColors.white, // Kondisi untuk item yang dipilih
-                    borderRadius: const BorderRadius.all(Radius.circular(10))),
-                child: const ImageIcon(
-                  AppIcons.profile,
+            icon: InkWell(
+              onTap: () => _onTap(2),
+              child: Padding(
+                padding: const EdgeInsets.only(
+                    bottom: 4), 
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 30, vertical: 4),
+                  decoration: BoxDecoration(
+                      color: _currentIndex == 2
+                          ? AppColors.primary300
+                          : AppColors.white, 
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(10))),
+                  child: const ImageIcon(
+                    AppIcons.profile,
+                  ),
                 ),
               ),
             ),
