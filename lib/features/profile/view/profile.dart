@@ -2,6 +2,8 @@ import 'package:ecowave/core.dart';
 import 'package:ecowave/features/profile/view/edit_profile.dart';
 import 'package:flutter/material.dart';
 
+import '../../address/view/pages/address_page.dart';
+import '../../change_password/view/change_password_user_page.dart';
 import 'empty_session.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -252,7 +254,7 @@ class ProfilePage extends StatelessWidget {
                     color: AppColors.grey50,
                   ),
                   InkWell(
-                      onTap: () {},
+                      onTap: () => context.push(const AddressPage(listUser: [])),
                       child: const Padding(
                         padding: EdgeInsets.symmetric(
                             vertical: AppSizes.primary / 2),
@@ -277,21 +279,10 @@ class ProfilePage extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            Row(
-                              children: [
-                                Text(
-                                  ' ',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: AppColors.grey700,
-                                  ),
-                                ),
-                                Icon(
-                                  Icons.arrow_forward_ios,
-                                  size: 14,
-                                  color: AppColors.grey700,
-                                ),
-                              ],
+                            Icon(
+                              Icons.arrow_forward_ios,
+                              size: 14,
+                              color: AppColors.grey700,
                             ),
                           ],
                         ),
@@ -316,7 +307,9 @@ class ProfilePage extends StatelessWidget {
                     ),
                   ),
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      context.push(const ChangePasswordUserPage());
+                    },
                     child: const Padding(
                       padding:
                           EdgeInsets.symmetric(vertical: AppSizes.primary / 2),
