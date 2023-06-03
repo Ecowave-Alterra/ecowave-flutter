@@ -1,12 +1,12 @@
 import 'package:ecowave/core.dart';
-import 'package:ecowave/features/order/model/checkout_model.dart';
-import 'package:ecowave/features/order/view/pages/track_order_page.dart';
+import 'package:ecowave/features/transaction/model/models/history_transaction.dart';
+import 'package:ecowave/features/transaction/view/pages/track_delivery_page.dart';
 import 'package:flutter/material.dart';
 
-class PaidOrderDetailPage extends StatelessWidget {
-  final Checkout orderPaid;
+class PaidTransactionDetailPage extends StatelessWidget {
+  final HistoryTransactionModel detailTransaction;
 
-  const PaidOrderDetailPage({super.key, required this.orderPaid});
+  const PaidTransactionDetailPage({super.key, required this.detailTransaction});
 
   @override
   Widget build(BuildContext context) {
@@ -44,10 +44,10 @@ class PaidOrderDetailPage extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text("Reguler"),
+                        Text(detailTransaction.typeDelivery),
                         InkWell(
                           onTap: () {
-                            context.push(const TrackOrderPage());
+                            context.push(const TrackDeliveryPage());
                           },
                           child: const Text(
                             "Lacak Pesanan",
@@ -57,11 +57,11 @@ class PaidOrderDetailPage extends StatelessWidget {
                       ],
                     ),
                     6.0.height,
-                    const Row(
+                    Row(
                       children: [
-                        Text("JNE Express"),
-                        Text(" : "),
-                        Text("251372563213")
+                        Text(detailTransaction.expedition),
+                        const Text(" : "),
+                        Text(detailTransaction.resiCode)
                       ],
                     )
                   ],
@@ -83,11 +83,11 @@ class PaidOrderDetailPage extends StatelessWidget {
                 ],
               ),
               14.0.height,
-              Text(orderPaid.person?.name ?? ""),
+              Text(detailTransaction.recipient),
               6.0.height,
-              Text(orderPaid.person?.noTelp ?? ""),
+              Text(detailTransaction.phone),
               6.0.height,
-              Text(orderPaid.person?.address ?? ""),
+              Text(detailTransaction.address),
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 24),
                 child: const Row(
@@ -102,11 +102,11 @@ class PaidOrderDetailPage extends StatelessWidget {
               ),
               const Divider(),
               ListView.builder(
-                  itemCount: orderPaid.order.length,
-                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: detailTransaction.productTransaction.length,
                   shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
-                    final produkBelumByar = orderPaid.order[index];
+                    final cPaid = detailTransaction.productTransaction[index];
                     return Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10),
                       child: Row(
@@ -117,27 +117,29 @@ class PaidOrderDetailPage extends StatelessWidget {
                             height: 70,
                             width: 90,
                             child: Image.network(
-                              produkBelumByar.product.imageUrl ?? "",
+                              cPaid.productImageUrl,
                               fit: BoxFit.cover,
                             ),
+                          ),
+                          const SizedBox(
+                            width: 50,
                           ),
                           Flexible(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
-                                Text(produkBelumByar.product.productName ?? ""),
+                                Text(
+                                  cPaid.productName,
+                                  textAlign: TextAlign.right,
+                                ),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     const Text("x"),
-                                    Text(produkBelumByar.totalProduct
-                                        .toString()),
+                                    Text(cPaid.qty.toString()),
                                   ],
                                 ),
-                                Text(produkBelumByar
-                                        .totalProductPrice?.currencyFormatRp
-                                        .toString() ??
-                                    ""),
+                                Text(cPaid.price.currencyFormatRp.toString()),
                               ],
                             ),
                           )
@@ -153,8 +155,23 @@ class PaidOrderDetailPage extends StatelessWidget {
                 children: [
                   const Text("Ongkos Kirim"),
                   Text(
-                    orderPaid.delivery.shipping?.currencyFormatRp.toString() ??
-                        "",
+                    detailTransaction.shipping.currencyFormatRp.toString(),
+                  )
+                ],
+              ),
+              28.0.height,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text("Catatan Untuk Kurir"),
+                  const SizedBox(
+                    width: 50,
+                  ),
+                  Expanded(
+                    child: Text(
+                      detailTransaction.note,
+                      textAlign: TextAlign.right,
+                    ),
                   )
                 ],
               ),
@@ -164,7 +181,7 @@ class PaidOrderDetailPage extends StatelessWidget {
                 children: [
                   const Text("Promo yang Digunakan"),
                   Text(
-                    orderPaid.promo.piece?.currencyFormatRp.toString() ?? "",
+                    detailTransaction.voucher.currencyFormatRp.toString(),
                   )
                 ],
               ),
@@ -172,12 +189,13 @@ class PaidOrderDetailPage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("${orderPaid.order.length} Produk"),
+                  Text("${detailTransaction.productTransaction.length} Produk"),
                   Row(
                     children: [
                       const Text("Total Pesanan : "),
                       Text(
-                        orderPaid.totalOrderPrice.currencyFormatRp.toString(),
+                        detailTransaction.totalPrice.currencyFormatRp
+                            .toString(),
                         style:
                             const TextStyle(fontWeight: AppFontWeight.semibold),
                       )
@@ -186,8 +204,13 @@ class PaidOrderDetailPage extends StatelessWidget {
                 ],
               ),
               28.0.height,
-              const Text("Metode Pembayaran"),
-              Text(orderPaid.paymentMethod.methodName ?? ""),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text("Metode Pembayaran"),
+                  Text(detailTransaction.paymentMethod),
+                ],
+              ),
               const Padding(
                 padding: EdgeInsets.only(top: 10, bottom: 8),
                 child: Divider(),

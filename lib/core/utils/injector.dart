@@ -4,6 +4,8 @@ import 'package:ecowave/features/payment/bloc/shipping_address/shipping_address_
 import 'package:ecowave/features/payment/model/services/expedition_service.dart';
 import 'package:ecowave/features/payment/model/services/payment_method_service.dart';
 import 'package:ecowave/features/payment/model/services/shipping_address_service.dart';
+import 'package:ecowave/features/transaction/bloc/bloc/history_transaction_bloc.dart';
+import 'package:ecowave/features/transaction/model/services/history_transaction_service.dart';
 import 'package:get_it/get_it.dart';
 
 final locator = GetIt.instance;
@@ -13,6 +15,7 @@ void init() {
   locator.registerFactory(() => ShippingAddressBloc(locator()));
   locator.registerFactory(() => PaymentMethodBloc(locator()));
   locator.registerFactory(() => ExpeditionBloc(locator()));
+  locator.registerFactory(() => HistoryTransactionBloc(locator()));
 
   // service
   locator.registerLazySingleton<ShippingAddressService>(
@@ -20,4 +23,6 @@ void init() {
   locator.registerLazySingleton<PaymentMethodService>(
       () => PaymentMethodService());
   locator.registerLazySingleton<ExpeditionService>(() => ExpeditionService());
+  locator.registerLazySingleton<HistoryTransactionService>(
+      () => HistoryTransactionService());
 }

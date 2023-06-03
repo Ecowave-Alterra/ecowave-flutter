@@ -1,14 +1,14 @@
 import 'package:ecowave/core.dart';
 import 'package:flutter/material.dart';
 
-class TrackOrderPage extends StatefulWidget {
-  const TrackOrderPage({super.key});
+class TrackDeliveryPage extends StatefulWidget {
+  const TrackDeliveryPage({super.key});
 
   @override
-  State<TrackOrderPage> createState() => _TrackOrderPageState();
+  State<TrackDeliveryPage> createState() => _TrackDeliveryPageState();
 }
 
-class _TrackOrderPageState extends State<TrackOrderPage> {
+class _TrackDeliveryPageState extends State<TrackDeliveryPage> {
   final GlobalKey<TooltipState> tooltipkey = GlobalKey<TooltipState>();
   @override
   Widget build(BuildContext context) {

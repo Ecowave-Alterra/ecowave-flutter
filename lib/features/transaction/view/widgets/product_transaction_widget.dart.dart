@@ -1,7 +1,7 @@
 import 'package:ecowave/core.dart';
 import 'package:flutter/material.dart';
 
-class StatusOrderWidget extends StatelessWidget {
+class ProductTransactionWidget extends StatelessWidget {
   final String? statusOrder;
   final Color? colorTextStatusOrder;
   final String? imageUrl;
@@ -17,7 +17,7 @@ class StatusOrderWidget extends StatelessWidget {
   final Color? colorBackgroundButton;
   final Color? colorTextButton;
 
-  const StatusOrderWidget(
+  const ProductTransactionWidget(
       {super.key,
       required this.statusOrder,
       required this.imageUrl,
@@ -74,11 +74,17 @@ class StatusOrderWidget extends StatelessWidget {
                   // ),
                   child: Image.network(imageUrl ?? ""),
                 ),
+                const SizedBox(
+                  width: 50,
+                ),
                 Flexible(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Text(productName ?? ""),
+                      Text(
+                        productName ?? "",
+                        textAlign: TextAlign.right,
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [

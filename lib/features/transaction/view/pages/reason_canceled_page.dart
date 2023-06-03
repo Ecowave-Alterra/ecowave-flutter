@@ -8,7 +8,7 @@ class ReasonCanceledPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Pesanan Saya"),
+        title: const Text("Alasan Dibatalkan"),
       ),
       body: Container(
         margin: const EdgeInsets.symmetric(horizontal: 16),
