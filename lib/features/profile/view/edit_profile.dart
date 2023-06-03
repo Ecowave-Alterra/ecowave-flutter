@@ -34,10 +34,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
     final image = _image;
 
     setState(() {
-      _isChangeButtonDisabled = email== _initialEmail &&
-          username== _initialUsername &&
-          noTelp== _initialNoTelp &&
-          name== _initialName &&
+      _isChangeButtonDisabled = email == _initialEmail &&
+          username == _initialUsername &&
+          noTelp == _initialNoTelp &&
+          name == _initialName &&
           image == null;
     });
   }
@@ -65,10 +65,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
         _image = File(result.files.single.path!);
         _isChangeButtonDisabled = false;
       });
-      // ignore: use_build_context_synchronously
-      "Berhasil! Foto profil berhasil diubah".succeedBar(context);
+      if (context.mounted) {
+        "Berhasil! Foto profil berhasil diubah".succeedBar(context);
+      }
     } else {
-      "Ups! Foto profil gagal diunggah. Coba lagi ya".failedBar(context);
+      if (context.mounted) {
+        "Ups! Foto profil gagal diunggah. Coba lagi ya".failedBar(context);
+      }
     }
   }
 
@@ -123,8 +126,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       color: AppColors.grey500,
                     ),
                     onChanged: (value) {
-                      setState(() {
-                      });
+                      setState(() {});
                     },
                   ),
                   20.0.height,
@@ -134,7 +136,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     keyboardType: TextInputType.emailAddress,
                     controller: _emailController,
                     validator: (value) {
-                      if (value == null || value== _initialName) {
+                      if (value == null || value == _initialName) {
                         return 'Email tidak boleh kosong';
                       } else if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
                           .hasMatch(value)) {
