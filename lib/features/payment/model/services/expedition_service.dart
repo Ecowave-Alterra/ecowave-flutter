@@ -34,9 +34,13 @@ class ExpeditionService {
   ];
 
   Future<List<ExpeditionModel>> getExpeditions() async {
-    // const String url = '';
-    // final response = await _dio.get(url);
+    try {
+      // const String url = '................';
+      // final response = await _dio.get(url);
 
-    return dummy.map((e) => ExpeditionModel.fromJson(e)).toList();
+      return dummy.map((e) => ExpeditionModel.fromJson(e)).toList();
+    } catch (e) {
+      rethrow;
+    }
   }
 }
