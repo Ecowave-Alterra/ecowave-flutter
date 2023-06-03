@@ -16,8 +16,8 @@ class ProfilePage extends StatelessWidget {
         title: const Text('Saya'),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
-        child: Column(
+      body: ListView(children: [
+        Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Column(
@@ -209,7 +209,9 @@ class ProfilePage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: AppSizes.primary, vertical: AppSizes.primary/2),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: AppSizes.primary,
+                      vertical: AppSizes.primary / 2),
                   child: Text(
                     "Akun",
                     style: TextStyle(
@@ -223,7 +225,9 @@ class ProfilePage extends StatelessWidget {
                     context.push(const EditProfilePage());
                   },
                   child: const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: AppSizes.primary, vertical: AppSizes.primary/2),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: AppSizes.primary,
+                        vertical: AppSizes.primary / 2),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -260,7 +264,9 @@ class ProfilePage extends StatelessWidget {
                 InkWell(
                     onTap: () => context.push(const AddressPage(listUser: [])),
                     child: const Padding(
-                      padding:EdgeInsets.symmetric(horizontal: AppSizes.primary, vertical: AppSizes.primary/2),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: AppSizes.primary,
+                          vertical: AppSizes.primary / 2),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -300,7 +306,9 @@ class ProfilePage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: AppSizes.primary, vertical: AppSizes.primary/2),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: AppSizes.primary,
+                      vertical: AppSizes.primary / 2),
                   child: Text(
                     "Keamanan",
                     style: TextStyle(
@@ -314,7 +322,9 @@ class ProfilePage extends StatelessWidget {
                     context.push(const ChangePasswordUserPage());
                   },
                   child: const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: AppSizes.primary, vertical: AppSizes.primary/2),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: AppSizes.primary,
+                        vertical: AppSizes.primary / 2),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -362,7 +372,7 @@ class ProfilePage extends StatelessWidget {
             ),
           ],
         ),
-      ),
+      ]),
     );
   }
 }
