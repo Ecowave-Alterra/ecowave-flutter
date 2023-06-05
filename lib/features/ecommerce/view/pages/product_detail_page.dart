@@ -1,3 +1,4 @@
+import 'package:ecowave/features/cart/view/pages/cart_page.dart';
 import 'package:ecowave/features/ecommerce/view/widgets/product_description_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +17,7 @@ class ProductDetail extends StatelessWidget {
         title: const Text("Detail Barang"),
         actions: [
           IconButton(
-            onPressed: () => context.push(const PaymentDetailPage()),
+            onPressed: () => context.push(const CartPage()),
             icon: const ImageIcon(
               AppIcons.keranjang,
               color: AppColors.primary500,

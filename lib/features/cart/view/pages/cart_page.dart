@@ -1,6 +1,10 @@
+import 'package:ecowave/features/cart/model/entity/cart_model.dart';
+import 'package:ecowave/features/cart/model/service/cart_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core.dart';
+import '../../bloc/cart/cart_bloc.dart';
 import '../widgets/list_item_widget.dart';
 
 class CartPage extends StatefulWidget {
@@ -11,7 +15,23 @@ class CartPage extends StatefulWidget {
 }
 
 class _CartPageState extends State<CartPage> {
+  DatabaseInstance? databaseInstance;
   bool checkedAll = false;
+  Future initDatabase() async {
+    await databaseInstance!.database();
+    setState(() {});
+  }
+
+  Future delete(int id) async {
+    await databaseInstance!.delete(id);
+    setState(() {});
+  }
+
+  Future deleteAll() async {
+    await databaseInstance!.deleteAll();
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,12 +40,12 @@ class _CartPageState extends State<CartPage> {
           'Keranjang',
         ),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(right: 16.0),
-            child: Row(
+      body: Padding(
+        padding: const EdgeInsets.only(right: 16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
               children: [
                 Expanded(
                   child: CheckboxListTile(
@@ -44,10 +64,8 @@ class _CartPageState extends State<CartPage> {
                   ),
                 ),
                 SizedBox(
-                  width: 95,
-                  height: 32,
                   child: OutlinedButton(
-                    onPressed: () {},
+                    onPressed: () => deleteAll(),
                     child: const Text(
                       'Hapus',
                       style: TextStyle(
@@ -59,28 +77,48 @@ class _CartPageState extends State<CartPage> {
                 ),
               ],
             ),
-          ),
-          const Divider(),
-          Padding(
-            padding: const EdgeInsets.only(
-              left: 14,
-              top: 20,
-            ),
-            child: Column(
-              children: [
-                const ListItem(
-                  price: '50.000',
-                  image: AppImages.productShop2,
-                ),
-                48.0.height,
-                const ListItem(
-                  price: '39.000',
-                  image: AppImages.productShop1,
-                ),
-              ],
-            ),
-          )
-        ],
+            const Divider(),
+            BlocBuilder<CartBloc, CartState>(
+              builder: (context, state) {
+                if (state is CartInitial) {
+                  return const Center(
+                    child: CircularProgressIndicator(
+                      color: AppColors.primary500,
+                    ),
+                  );
+                } else if (state is CartSuccess) {
+                  return Expanded(
+                    child: ListView.separated(
+                      padding: const EdgeInsets.only(left: 14, top: 32),
+                      itemCount: state.data!.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return ListItem(
+                          id: state.data![index].id!,
+                          item: state.data![index].nameItems!,
+                          detail: state.data![index].detailItems!,
+                          price: state.data![index].price!,
+                          image: state.data![index].image!,
+                          onPressed: () => (),
+                        );
+                      },
+                      separatorBuilder: (context, index) {
+                        return const SizedBox(
+                          height: 48,
+                        );
+                      },
+                    ),
+                  );
+                } else if (state is CartError) {
+                  return const Center(
+                    child: Text('Data not found!'),
+                  );
+                } else {
+                  return const CircularProgressIndicator();
+                }
+              },
+            )
+          ],
+        ),
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(AppSizes.primary),
