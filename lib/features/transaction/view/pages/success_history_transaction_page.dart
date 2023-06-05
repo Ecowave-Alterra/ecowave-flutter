@@ -1,5 +1,5 @@
 import 'package:ecowave/core.dart';
-import 'package:ecowave/features/transaction/bloc/bloc/history_transaction_bloc.dart';
+import 'package:ecowave/features/transaction/bloc/history_transaction/history_transaction_bloc.dart';
 import 'package:ecowave/features/transaction/model/models/history_transaction.dart';
 import 'package:ecowave/features/transaction/view/pages/paid_transaction_detail_page.dart';
 import 'package:ecowave/features/transaction/view/pages/rating_page.dart';
