@@ -1,7 +1,10 @@
 part of 'package:ecowave/core.dart';
 
 void showPoint(
-    {String? message, int? nilaiPoint, required BuildContext context}) async {
+    {String? message,
+    int? nilaiPoint,
+    required void Function() onPress,
+    required BuildContext context}) async {
   await showDialog<void>(
     context: context,
     barrierDismissible: false, // user must tap button!
@@ -39,9 +42,7 @@ void showPoint(
                       child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                               backgroundColor: AppColors.primary600),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
+                          onPressed: onPress,
                           child: const Text(
                             "Oke",
                             style: TextStyle(color: Colors.white),

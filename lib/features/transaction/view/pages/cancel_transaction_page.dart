@@ -1,9 +1,9 @@
 import 'package:ecowave/core.dart';
-import 'package:ecowave/features/order/view/pages/reason_canceled_page.dart';
+import 'package:ecowave/features/transaction/view/pages/history_transaction_page.dart';
 import 'package:flutter/material.dart';
 
-class CancelOrderPage extends StatelessWidget {
-  const CancelOrderPage({super.key});
+class CancelTransactionPage extends StatelessWidget {
+  const CancelTransactionPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +43,7 @@ class CancelOrderPage extends StatelessWidget {
                     nameButtonConfirmation: 'Batalkan',
                     colorButtonConfirmation: AppColors.error500,
                     pressNavConfirmation: () {
-                      context.pushReplacement(const ReasonCanceledPage());
+                      context.pushReplacement(const HistoryTransactionPage());
                     },
                     context: context,
                     nameButtonUnConfirmation: 'Tidak');
