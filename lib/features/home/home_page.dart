@@ -1,5 +1,5 @@
 import 'package:ecowave/features/home/dashboard_page.dart';
-import 'package:ecowave/features/order/view/pages/order_history_page.dart';
+import 'package:ecowave/features/transaction/view/pages/history_transaction_page.dart';
 import 'package:flutter/material.dart';
 import 'package:ecowave/core.dart';
 
@@ -28,7 +28,7 @@ class _MyHomePageState extends State<MyHomePage> {
         index: _currentIndex,
         children: const [
           DashboardPage(),
-          OrderHistoryPage(),
+          HistoryTransactionPage(),
           ProfilePage(),
         ],
       ),
