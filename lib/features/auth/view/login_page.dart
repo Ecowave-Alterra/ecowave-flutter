@@ -1,8 +1,10 @@
 import 'package:ecowave/features/auth/view/register_page.dart';
 import 'package:flutter/material.dart';
 import 'package:ecowave/core.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../change_password/view/forget_password.dart';
+import '../bloc/login/login_bloc.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -14,23 +16,8 @@ class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  bool _isLoginButtonDisabled = true;
 
-  void _checkLoginButtonStatus() {
-    final email = _emailController.text;
-    final password = _passwordController.text;
-
-    setState(() {
-      _isLoginButtonDisabled = email.isEmpty || password.isEmpty;
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _emailController.addListener(_checkLoginButtonStatus);
-    _passwordController.addListener(_checkLoginButtonStatus);
-  }
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +32,16 @@ class _LoginPageState extends State<LoginPage> {
           },
         ),
       ),
-      body: SingleChildScrollView(
+      body: BlocProvider(
+        create: (context) => LoginBloc(
+          emailController: _emailController,
+          passwordController: _passwordController
+        ),
+        child: BlocConsumer<LoginBloc, LoginState>(
+          listener: (context, state) {
+          },
+          builder: (context, state) {
+            return  SingleChildScrollView(
         padding: const EdgeInsets.all(10),
         child: Form(
           key: _formKey,
@@ -72,7 +68,8 @@ class _LoginPageState extends State<LoginPage> {
                   return null;
                 },
                 onChanged: (value) {
-                  _checkLoginButtonStatus();
+                  _emailController.text = value;
+                  context.read<LoginBloc>().add(const LoginEvent());
                 },
                 icon: const ImageIcon(
                   AppIcons.email,
@@ -83,7 +80,7 @@ class _LoginPageState extends State<LoginPage> {
               EcoFormInputPassword(
                 label: 'Password',
                 hint: 'Masukkan password',
-                controller: _passwordController,
+                controller:_passwordController ,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Password tidak boleh kosong';
@@ -93,7 +90,8 @@ class _LoginPageState extends State<LoginPage> {
                   return null;
                 },
                 onChanged: (value) {
-                  _checkLoginButtonStatus();
+                  _passwordController.text =value;
+                  context.read<LoginBloc>().add(const LoginEvent());
                 },
               ),
               10.0.height,
@@ -121,12 +119,12 @@ class _LoginPageState extends State<LoginPage> {
               ),
               EcoFormButton(
                 label: 'Login',
-                onPressed: _isLoginButtonDisabled
+                onPressed: state.isLoginButtonDisabled
                     ? () {}
                     : () {
                         if (_formKey.currentState!.validate()) {}
                       },
-                backgroundColor: _isLoginButtonDisabled
+                backgroundColor: state.isLoginButtonDisabled
                     ? AppColors.primary300
                     : AppColors.primary500,
               ),
@@ -190,7 +188,8 @@ class _LoginPageState extends State<LoginPage> {
             ],
           ),
         ),
-      ),
+      );
+      }))
     );
   }
 }
