@@ -1,1 +1,1 @@
-enum DataStateStatus { isInitial, isLoading, isSuccess, isError, isEmpty }
+enum DataStateStatus { initial, loading, success, error, empty }

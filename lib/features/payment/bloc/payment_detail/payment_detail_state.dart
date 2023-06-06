@@ -6,13 +6,15 @@ class PaymentDetailState {
   final ExpeditionModel? expeditionModel;
   final VoucherModel? voucherModel;
   final PaymentMethodModel? paymentMethodModel;
+  final PaymentInfo? paymentInfo;
 
   const PaymentDetailState({
-    this.status = DataStateStatus.isInitial,
+    this.status = DataStateStatus.initial,
     this.shippingAddressModel,
     this.expeditionModel,
     this.voucherModel,
     this.paymentMethodModel,
+    this.paymentInfo,
   });
 
   PaymentDetailState copyWith({
@@ -28,6 +30,13 @@ class PaymentDetailState {
       expeditionModel: expeditionModel ?? this.expeditionModel,
       voucherModel: voucherModel ?? this.voucherModel,
       paymentMethodModel: paymentMethodModel ?? this.paymentMethodModel,
+      paymentInfo: PaymentInfo(
+        productPrice: 89000,
+        shippingPrice:
+            expeditionModel?.price ?? this.expeditionModel?.price ?? 0,
+        pointUsed: 0,
+        voucher: voucherModel ?? this.voucherModel,
+      ),
     );
   }
 }

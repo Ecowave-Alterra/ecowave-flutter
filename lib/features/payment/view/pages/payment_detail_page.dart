@@ -5,7 +5,6 @@ import 'package:ecowave/features/payment/bloc/voucher/voucher_bloc.dart';
 import 'package:ecowave/features/payment/bloc/expedition/expedition_bloc.dart';
 import 'package:ecowave/features/payment/bloc/shipping_address/shipping_address_bloc.dart';
 import 'package:ecowave/features/payment/bloc/payment_method/payment_method_bloc.dart';
-import 'package:ecowave/features/payment/model/models/payment_info.dart';
 import 'package:ecowave/features/payment/model/models/shipping_address_model.dart';
 import 'package:ecowave/features/payment/view/pages/payment_page.dart';
 import 'package:ecowave/features/payment/view/pages/payment_waiting_page.dart';
@@ -39,7 +38,7 @@ class PaymentDetailPage extends StatelessWidget {
         children: [
           BlocBuilder<PaymentDetailBloc, PaymentDetailState>(
             builder: (context, state) {
-              if (state.status == DataStateStatus.isSuccess) {
+              if (state.status == DataStateStatus.success) {
                 return AddressInfoWidget(
                   addressModel: state.shippingAddressModel,
                   onChangeTap: () => context.push(ShippingAddressPage(
@@ -136,13 +135,12 @@ class PaymentDetailPage extends StatelessWidget {
             },
           ),
           16.0.height,
-          PaymentInfoWidget(
-            paymentInfo: PaymentInfo(
-              productPrice: 89000,
-              shippingPrice: 10000,
-              pointUsed: 0,
-              voucher: null,
-            ),
+          BlocBuilder<PaymentDetailBloc, PaymentDetailState>(
+            builder: (context, state) {
+              return PaymentInfoWidget(
+                paymentInfo: state.paymentInfo!,
+              );
+            },
           ),
         ],
       ),
@@ -160,11 +158,15 @@ class PaymentDetailPage extends StatelessWidget {
                 children: [
                   const Text("Total Pembayaran"),
                   5.0.height,
-                  Text(
-                    89000.currencyFormatRp,
-                    style: const TextStyle(
-                      fontWeight: AppFontWeight.semibold,
-                    ),
+                  BlocBuilder<PaymentDetailBloc, PaymentDetailState>(
+                    builder: (context, state) {
+                      return Text(
+                        (state.paymentInfo?.totalPayment ?? 0).currencyFormatRp,
+                        style: const TextStyle(
+                          fontWeight: AppFontWeight.semibold,
+                        ),
+                      );
+                    },
                   ),
                 ],
               ),
