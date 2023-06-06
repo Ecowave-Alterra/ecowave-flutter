@@ -5,6 +5,7 @@ class CheckoutSettingButton extends StatelessWidget {
   final String? value;
   final String label;
   final AssetImage icon;
+  final Color iconColor;
   final VoidCallback onPressed;
 
   const CheckoutSettingButton({
@@ -12,6 +13,7 @@ class CheckoutSettingButton extends StatelessWidget {
     this.value,
     required this.label,
     required this.icon,
+    this.iconColor = AppColors.primary500,
     required this.onPressed,
   });
 
@@ -31,7 +33,10 @@ class CheckoutSettingButton extends StatelessWidget {
         ),
         child: Row(
           children: [
-            ImageIcon(icon),
+            ImageIcon(
+              icon,
+              color: iconColor,
+            ),
             10.5.width,
             Text(
               value ?? label,

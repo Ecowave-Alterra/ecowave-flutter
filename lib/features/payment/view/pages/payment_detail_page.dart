@@ -77,6 +77,7 @@ class PaymentDetailPage extends StatelessWidget {
             value: null,
             label: "Gunakan Voucher",
             icon: AppIcons.voucher,
+            iconColor: AppColors.warning500,
             onPressed: () => context.push(const VoucherPage(
               currentVoucher: null,
             )),
