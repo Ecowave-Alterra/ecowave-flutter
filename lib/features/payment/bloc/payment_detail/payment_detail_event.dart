@@ -11,7 +11,7 @@ class CheckoutNow extends PaymentDetailEvent {
   final ShippingAddressModel shippingAddressModel;
   final PaymentMethodModel paymentMethodModel;
   final ExpeditionModel expeditionModel;
-  final VoucherEntity voucherModel;
+  final VoucherModel voucherModel;
   final String statusTransaction;
   final List<ProductModel> products;
   final int totalPrice;
