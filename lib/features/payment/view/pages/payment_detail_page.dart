@@ -173,14 +173,23 @@ class PaymentDetailPage extends StatelessWidget {
             ),
             Flexible(
               flex: 1,
-              child: EcoFormButton(
-                label: "Order Sekarang",
-                onPressed: () async {
-                  await context.push(const PaymentPage());
-                  if (context.mounted) {
-                    await context.pushAndRemoveUntil(
-                        const PaymentWaitingPage(), (route) => route.isFirst);
-                  }
+              child: BlocBuilder<PaymentDetailBloc, PaymentDetailState>(
+                builder: (context, state) {
+                  return EcoFormButton(
+                    label: "Order Sekarang",
+                    onPressed: state.shippingAddressModel == null ||
+                            state.expeditionModel == null ||
+                            state.paymentMethodModel == null
+                        ? null
+                        : () async {
+                            await context.push(const PaymentPage());
+                            if (context.mounted) {
+                              await context.pushAndRemoveUntil(
+                                  const PaymentWaitingPage(),
+                                  (route) => route.isFirst);
+                            }
+                          },
+                  );
                 },
               ),
             ),
