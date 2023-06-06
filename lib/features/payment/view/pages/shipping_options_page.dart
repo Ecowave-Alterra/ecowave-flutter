@@ -1,5 +1,6 @@
 import 'package:ecowave/core.dart';
 import 'package:ecowave/features/payment/bloc/expedition/expedition_bloc.dart';
+import 'package:ecowave/features/payment/model/models/expedition_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -40,7 +41,7 @@ class ShippingOptionsPage extends StatelessWidget {
                       physics: const NeverScrollableScrollPhysics(),
                       itemCount: state.data.length,
                       itemBuilder: (context, index) {
-                        final shipping = state.data[index];
+                        final ExpeditionModel shipping = state.data[index];
                         return InkWell(
                           onTap: () {
                             selectedOption = shipping.name;
@@ -87,7 +88,7 @@ class ShippingOptionsPage extends StatelessWidget {
                   },
                 );
               } else {
-                return Container();
+                return const SizedBox.shrink();
               }
             },
           ),

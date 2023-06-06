@@ -1,9 +1,9 @@
 import 'package:ecowave/core.dart';
+import 'package:ecowave/features/payment/bloc/voucher/voucher_bloc.dart';
 import 'package:ecowave/features/payment/bloc/expedition/expedition_bloc.dart';
 import 'package:ecowave/features/payment/bloc/shipping_address/shipping_address_bloc.dart';
 import 'package:ecowave/features/payment/bloc/payment_method/payment_method_bloc.dart';
-import 'package:ecowave/features/payment/model/entity/payment_info.dart';
-import 'package:ecowave/features/payment/model/entity/voucher_entity.dart';
+import 'package:ecowave/features/payment/model/models/payment_info.dart';
 import 'package:ecowave/features/payment/view/pages/payment_page.dart';
 import 'package:ecowave/features/payment/view/pages/payment_waiting_page.dart';
 import 'package:ecowave/features/payment/view/pages/voucher_page.dart';
@@ -23,19 +23,10 @@ class PaymentDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.read<VoucherBloc>().add(GetVouchersEvent());
     context.read<ExpeditionBloc>().add(GetExpeditionsEvent());
     context.read<ShippingAddressBloc>().add(GetShippingAddressesEvent());
     context.read<PaymentMethodBloc>().add(GetPaymentMethodsEvent());
-
-    final VoucherEntity selectedVoucher = VoucherEntity(
-      name: "Gratis Ongkir",
-      discount: -10000,
-      expiredDate: DateTime(2023, 10, 15),
-      imageUrl:
-          "https://github.com/Ecowave-Alterra/ecowave-flutter/assets/74108522/bbbd7877-fc15-47ba-94fe-274f7a4954fd",
-      termCondition: "Min. Blj Rp 0",
-      type: "Amount",
-    );
 
     return Scaffold(
       appBar: AppBar(
@@ -83,11 +74,11 @@ class PaymentDetailPage extends StatelessWidget {
           ),
           16.0.height,
           CheckoutSettingButton(
-            value: "Gratis Ongkir",
+            value: null,
             label: "Gunakan Voucher",
             icon: AppIcons.voucher,
-            onPressed: () => context.push(VoucherPage(
-              currentVoucher: selectedVoucher,
+            onPressed: () => context.push(const VoucherPage(
+              currentVoucher: null,
             )),
           ),
           16.0.height,
@@ -111,7 +102,7 @@ class PaymentDetailPage extends StatelessWidget {
               productPrice: 89000,
               shippingPrice: 10000,
               pointUsed: 0,
-              voucher: selectedVoucher,
+              voucher: null,
             ),
           ),
         ],
