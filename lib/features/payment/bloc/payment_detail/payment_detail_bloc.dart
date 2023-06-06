@@ -18,5 +18,12 @@ class PaymentDetailBloc extends Bloc<PaymentDetailEvent, PaymentDetailState> {
         shippingAddressModel: event.shippingAddressModel,
       ));
     });
+
+    on<ChangeExpeditionEvent>((event, emit) {
+      emit(PaymentDetailLoading());
+      emit(PaymentDetailSuccess(
+        expeditionModel: event.expeditionModel,
+      ));
+    });
   }
 }

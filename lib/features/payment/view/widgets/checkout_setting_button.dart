@@ -33,11 +33,12 @@ class CheckoutSettingButton extends StatelessWidget {
         ),
         child: Row(
           children: [
-            ImageIcon(
-              icon,
-              color: iconColor,
-            ),
-            10.5.width,
+            if (value == null)
+              ImageIcon(
+                icon,
+                color: iconColor,
+              ),
+            if (value == null) 10.5.width,
             Text(
               value ?? label,
               style: const TextStyle(

@@ -15,6 +15,14 @@ class ChangeShippingAddressEvent extends PaymentDetailEvent {
   });
 }
 
+class ChangeExpeditionEvent extends PaymentDetailEvent {
+  final ExpeditionModel expeditionModel;
+
+  const ChangeExpeditionEvent({
+    required this.expeditionModel,
+  });
+}
+
 class CheckoutNow extends PaymentDetailEvent {
   final ShippingAddressModel shippingAddressModel;
   final PaymentMethodModel paymentMethodModel;

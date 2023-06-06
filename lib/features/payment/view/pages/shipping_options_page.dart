@@ -1,11 +1,12 @@
 import 'package:ecowave/core.dart';
 import 'package:ecowave/features/payment/bloc/expedition/expedition_bloc.dart';
+import 'package:ecowave/features/payment/bloc/payment_detail/payment_detail_bloc.dart';
 import 'package:ecowave/features/payment/model/models/expedition_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ShippingOptionsPage extends StatelessWidget {
-  final String? shipping;
+  final ExpeditionModel? shipping;
 
   const ShippingOptionsPage({
     super.key,
@@ -14,7 +15,7 @@ class ShippingOptionsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String? selectedOption = shipping;
+    ExpeditionModel? selectedOption = shipping;
     final ValueNotifier<bool> isExist =
         ValueNotifier<bool>(selectedOption == null ? false : true);
 
@@ -44,7 +45,7 @@ class ShippingOptionsPage extends StatelessWidget {
                         final ExpeditionModel shipping = state.data[index];
                         return InkWell(
                           onTap: () {
-                            selectedOption = shipping.name;
+                            selectedOption = shipping;
                             isExist.value = true;
                             changeState(() {});
                           },
@@ -56,7 +57,7 @@ class ShippingOptionsPage extends StatelessWidget {
                               children: [
                                 Radio(
                                   value: shipping.name,
-                                  groupValue: selectedOption,
+                                  groupValue: selectedOption?.name,
                                   onChanged: (value) {},
                                   activeColor: AppColors.primary500,
                                 ),
@@ -101,7 +102,14 @@ class ShippingOptionsPage extends StatelessWidget {
           builder: (context, value, _) => EcoFormButton(
             height: 45.0,
             label: "Konfirmasi",
-            onPressed: value ? () => context.pop() : null,
+            onPressed: value
+                ? () {
+                    context.read<PaymentDetailBloc>().add(ChangeExpeditionEvent(
+                          expeditionModel: selectedOption!,
+                        ));
+                    context.pop();
+                  }
+                : null,
           ),
         ),
       ),

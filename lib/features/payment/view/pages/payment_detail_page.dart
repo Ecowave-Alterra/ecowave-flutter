@@ -91,12 +91,21 @@ class PaymentDetailPage extends StatelessWidget {
                   [1, 2, 3].map((e) => const SelectedProductCard()).toList(),
             ),
           ),
-          CheckoutSettingButton(
-            value: null,
-            label: "Pilih Opsi Pengiriman",
-            icon: AppIcons.shipping,
-            onPressed: () =>
-                context.push(const ShippingOptionsPage(shipping: null)),
+          BlocBuilder<PaymentDetailBloc, PaymentDetailState>(
+            builder: (context, state) {
+              if (state is PaymentDetailSuccess) {
+                return CheckoutSettingButton(
+                  value: state.expeditionModel?.name,
+                  label: "Pilih Opsi Pengiriman",
+                  icon: AppIcons.shipping,
+                  onPressed: () => context.push(ShippingOptionsPage(
+                    shipping: state.expeditionModel,
+                  )),
+                );
+              } else {
+                return const SizedBox.shrink();
+              }
+            },
           ),
           16.0.height,
           CheckoutSettingButton(
