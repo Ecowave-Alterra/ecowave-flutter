@@ -12,10 +12,12 @@ class PaymentDetailInitial extends PaymentDetailState {}
 class PaymentDetailLoading extends PaymentDetailState {}
 
 class PaymentDetailSuccess extends PaymentDetailState {
-  final PaymentInfo data;
+  final ShippingAddressModel? shippingAddressModel;
+  final PaymentInfo? paymentInfo;
 
   const PaymentDetailSuccess({
-    required this.data,
+    required this.shippingAddressModel,
+    this.paymentInfo,
   });
 }
 

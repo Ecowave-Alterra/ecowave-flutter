@@ -1,9 +1,11 @@
 import 'package:ecowave/core.dart';
+import 'package:ecowave/features/payment/bloc/payment_detail/payment_detail_bloc.dart';
 import 'package:ecowave/features/payment/bloc/voucher/voucher_bloc.dart';
 import 'package:ecowave/features/payment/bloc/expedition/expedition_bloc.dart';
 import 'package:ecowave/features/payment/bloc/shipping_address/shipping_address_bloc.dart';
 import 'package:ecowave/features/payment/bloc/payment_method/payment_method_bloc.dart';
 import 'package:ecowave/features/payment/model/models/payment_info.dart';
+import 'package:ecowave/features/payment/model/models/shipping_address_model.dart';
 import 'package:ecowave/features/payment/view/pages/payment_page.dart';
 import 'package:ecowave/features/payment/view/pages/payment_waiting_page.dart';
 import 'package:ecowave/features/payment/view/pages/voucher_page.dart';
@@ -34,22 +36,46 @@ class PaymentDetailPage extends StatelessWidget {
       ),
       body: ListView(
         children: [
-          BlocBuilder<ShippingAddressBloc, ShippingAddressState>(
+          BlocBuilder<PaymentDetailBloc, PaymentDetailState>(
             builder: (context, state) {
-              if (state is ShippingAddressLoading) {
-                return const EcoLoading();
-              } else if (state is ShippingAddressFailed) {
-                return EcoError(
-                  errorMessage: state.meesage,
-                  onRetry: () {},
+              if (state is PaymentDetailInitial) {
+                return BlocBuilder<ShippingAddressBloc, ShippingAddressState>(
+                  builder: (context, state) {
+                    if (state is ShippingAddressLoading) {
+                      return const EcoLoading();
+                    } else if (state is ShippingAddressFailed) {
+                      return EcoError(
+                        errorMessage: state.meesage,
+                        onRetry: () {},
+                      );
+                    } else if (state is ShippingAddressSuccess) {
+                      final ShippingAddressModel shippingAddressModel = state
+                          .data
+                          .where((element) => element.isPrimary)
+                          .first;
+
+                      context
+                          .read<PaymentDetailBloc>()
+                          .add(ChangeShippingAddressEvent(
+                            shippingAddressModel: shippingAddressModel,
+                          ));
+
+                      return AddressInfoWidget(
+                        addressModel: shippingAddressModel,
+                        onChangeTap: () => context.push(ShippingAddressPage(
+                          currentAddress: shippingAddressModel,
+                        )),
+                      );
+                    } else {
+                      return const SizedBox.shrink();
+                    }
+                  },
                 );
-              } else if (state is ShippingAddressSuccess) {
+              } else if (state is PaymentDetailSuccess) {
                 return AddressInfoWidget(
-                  addressModel:
-                      state.data.where((element) => element.isPrimary).first,
+                  addressModel: state.shippingAddressModel,
                   onChangeTap: () => context.push(ShippingAddressPage(
-                    currentAddress:
-                        state.data.where((element) => element.isPrimary).first,
+                    currentAddress: state.shippingAddressModel,
                   )),
                 );
               } else {

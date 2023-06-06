@@ -7,6 +7,14 @@ abstract class PaymentDetailEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class ChangeShippingAddressEvent extends PaymentDetailEvent {
+  final ShippingAddressModel shippingAddressModel;
+
+  const ChangeShippingAddressEvent({
+    required this.shippingAddressModel,
+  });
+}
+
 class CheckoutNow extends PaymentDetailEvent {
   final ShippingAddressModel shippingAddressModel;
   final PaymentMethodModel paymentMethodModel;

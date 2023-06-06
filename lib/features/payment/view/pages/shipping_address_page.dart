@@ -1,5 +1,6 @@
 import 'package:ecowave/core.dart';
 import 'package:ecowave/features/address/view/pages/add_adress_page.dart';
+import 'package:ecowave/features/payment/bloc/payment_detail/payment_detail_bloc.dart';
 import 'package:ecowave/features/payment/bloc/shipping_address/shipping_address_bloc.dart';
 import 'package:ecowave/features/payment/model/models/shipping_address_model.dart';
 import 'package:ecowave/features/payment/view/widgets/shipping_address_card.dart';
@@ -16,7 +17,7 @@ class ShippingAddressPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String? selectedOption = currentAddress?.address;
+    ShippingAddressModel? selectedOption = currentAddress;
     final ValueNotifier<bool> isExist =
         ValueNotifier<bool>(selectedOption == null ? false : true);
 
@@ -54,10 +55,10 @@ class ShippingAddressPage extends StatelessWidget {
                       physics: const NeverScrollableScrollPhysics(),
                       itemCount: state.data.length,
                       itemBuilder: (context, index) => ShippingAddressCard(
-                        selectedOption: selectedOption,
+                        selectedOption: selectedOption?.address,
                         addressModel: state.data[index],
                         onTap: () {
-                          selectedOption = state.data[index].address;
+                          selectedOption = state.data[index];
                           isExist.value = true;
                           changeState(() {});
                         },
@@ -79,7 +80,16 @@ class ShippingAddressPage extends StatelessWidget {
           builder: (context, value, _) => EcoFormButton(
             height: 45.0,
             label: "Konfirmasi",
-            onPressed: value ? () => context.pop() : null,
+            onPressed: value
+                ? () {
+                    context
+                        .read<PaymentDetailBloc>()
+                        .add(ChangeShippingAddressEvent(
+                          shippingAddressModel: selectedOption!,
+                        ));
+                    context.pop();
+                  }
+                : null,
           ),
         ),
       ),

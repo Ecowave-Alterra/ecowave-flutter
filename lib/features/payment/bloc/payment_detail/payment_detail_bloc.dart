@@ -12,6 +12,11 @@ part 'payment_detail_state.dart';
 
 class PaymentDetailBloc extends Bloc<PaymentDetailEvent, PaymentDetailState> {
   PaymentDetailBloc() : super(PaymentDetailInitial()) {
-    on<PaymentDetailEvent>((event, emit) {});
+    on<ChangeShippingAddressEvent>((event, emit) {
+      emit(PaymentDetailLoading());
+      emit(PaymentDetailSuccess(
+        shippingAddressModel: event.shippingAddressModel,
+      ));
+    });
   }
 }
