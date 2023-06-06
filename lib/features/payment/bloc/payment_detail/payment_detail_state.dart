@@ -1,32 +1,29 @@
 part of 'payment_detail_bloc.dart';
 
-abstract class PaymentDetailState extends Equatable {
-  const PaymentDetailState();
-
-  @override
-  List<Object> get props => [];
-}
-
-class PaymentDetailInitial extends PaymentDetailState {}
-
-class PaymentDetailLoading extends PaymentDetailState {}
-
-class PaymentDetailSuccess extends PaymentDetailState {
+class PaymentDetailState {
+  final DataStateStatus status;
   final ShippingAddressModel? shippingAddressModel;
   final ExpeditionModel? expeditionModel;
-  final PaymentInfo? paymentInfo;
+  final VoucherModel? voucherModel;
 
-  const PaymentDetailSuccess({
+  const PaymentDetailState({
+    this.status = DataStateStatus.isInitial,
     this.shippingAddressModel,
     this.expeditionModel,
-    this.paymentInfo,
+    this.voucherModel,
   });
-}
 
-class PaymentDetailFailed extends PaymentDetailState {
-  final String meesage;
-
-  const PaymentDetailFailed({
-    required this.meesage,
-  });
+  PaymentDetailState copyWith({
+    DataStateStatus? status,
+    ShippingAddressModel? shippingAddressModel,
+    ExpeditionModel? expeditionModel,
+    VoucherModel? voucherModel,
+  }) {
+    return PaymentDetailState(
+      status: status ?? this.status,
+      shippingAddressModel: shippingAddressModel ?? this.shippingAddressModel,
+      expeditionModel: expeditionModel ?? this.expeditionModel,
+      voucherModel: voucherModel ?? this.voucherModel,
+    );
+  }
 }

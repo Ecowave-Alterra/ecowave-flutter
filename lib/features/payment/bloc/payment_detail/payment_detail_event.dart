@@ -23,6 +23,14 @@ class ChangeExpeditionEvent extends PaymentDetailEvent {
   });
 }
 
+class ChangeVoucherEvent extends PaymentDetailEvent {
+  final VoucherModel voucherModel;
+
+  const ChangeVoucherEvent({
+    required this.voucherModel,
+  });
+}
+
 class CheckoutNow extends PaymentDetailEvent {
   final ShippingAddressModel shippingAddressModel;
   final PaymentMethodModel paymentMethodModel;

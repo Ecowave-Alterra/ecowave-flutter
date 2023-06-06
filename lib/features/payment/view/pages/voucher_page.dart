@@ -1,4 +1,5 @@
 import 'package:ecowave/core.dart';
+import 'package:ecowave/features/payment/bloc/payment_detail/payment_detail_bloc.dart';
 import 'package:ecowave/features/payment/bloc/voucher/voucher_bloc.dart';
 import 'package:ecowave/features/payment/model/models/voucher_model.dart';
 import 'package:ecowave/features/payment/view/pages/term_and_condition_page.dart';
@@ -16,7 +17,7 @@ class VoucherPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String? selectedOption = currentVoucher?.name;
+    VoucherModel? selectedOption = currentVoucher;
     final ValueNotifier<bool> isExist =
         ValueNotifier<bool>(selectedOption == null ? false : true);
 
@@ -45,10 +46,10 @@ class VoucherPage extends StatelessWidget {
                     itemBuilder: (context, index) {
                       final VoucherModel element = state.data[index];
                       return VoucherCard(
-                        selectedOption: selectedOption,
+                        selectedOption: selectedOption?.name,
                         voucherModel: element,
                         onTap: () {
-                          selectedOption = element.name;
+                          selectedOption = element;
                           isExist.value = true;
                           changeState(() {});
                         },
@@ -75,7 +76,14 @@ class VoucherPage extends StatelessWidget {
           builder: (context, value, _) => EcoFormButton(
             height: 45.0,
             label: "Gunakan",
-            onPressed: value ? () => context.pop() : null,
+            onPressed: value
+                ? () {
+                    context.read<PaymentDetailBloc>().add(ChangeVoucherEvent(
+                          voucherModel: selectedOption!,
+                        ));
+                    context.pop();
+                  }
+                : null,
           ),
         ),
       ),

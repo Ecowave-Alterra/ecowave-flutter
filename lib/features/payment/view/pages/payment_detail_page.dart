@@ -1,4 +1,5 @@
 import 'package:ecowave/core.dart';
+import 'package:ecowave/core/enums/data_state_status.dart';
 import 'package:ecowave/features/payment/bloc/payment_detail/payment_detail_bloc.dart';
 import 'package:ecowave/features/payment/bloc/voucher/voucher_bloc.dart';
 import 'package:ecowave/features/payment/bloc/expedition/expedition_bloc.dart';
@@ -38,7 +39,14 @@ class PaymentDetailPage extends StatelessWidget {
         children: [
           BlocBuilder<PaymentDetailBloc, PaymentDetailState>(
             builder: (context, state) {
-              if (state is PaymentDetailInitial) {
+              if (state.status == DataStateStatus.isSuccess) {
+                return AddressInfoWidget(
+                  addressModel: state.shippingAddressModel,
+                  onChangeTap: () => context.push(ShippingAddressPage(
+                    currentAddress: state.shippingAddressModel,
+                  )),
+                );
+              } else {
                 return BlocBuilder<ShippingAddressBloc, ShippingAddressState>(
                   builder: (context, state) {
                     if (state is ShippingAddressLoading) {
@@ -71,15 +79,6 @@ class PaymentDetailPage extends StatelessWidget {
                     }
                   },
                 );
-              } else if (state is PaymentDetailSuccess) {
-                return AddressInfoWidget(
-                  addressModel: state.shippingAddressModel,
-                  onChangeTap: () => context.push(ShippingAddressPage(
-                    currentAddress: state.shippingAddressModel,
-                  )),
-                );
-              } else {
-                return const SizedBox.shrink();
               }
             },
           ),
@@ -93,7 +92,7 @@ class PaymentDetailPage extends StatelessWidget {
           ),
           BlocBuilder<PaymentDetailBloc, PaymentDetailState>(
             builder: (context, state) {
-              if (state is PaymentDetailSuccess) {
+              if (state.status == DataStateStatus.isSuccess) {
                 return CheckoutSettingButton(
                   value: state.expeditionModel?.name,
                   label: "Pilih Opsi Pengiriman",
@@ -108,14 +107,22 @@ class PaymentDetailPage extends StatelessWidget {
             },
           ),
           16.0.height,
-          CheckoutSettingButton(
-            value: null,
-            label: "Gunakan Voucher",
-            icon: AppIcons.voucher,
-            iconColor: AppColors.warning500,
-            onPressed: () => context.push(const VoucherPage(
-              currentVoucher: null,
-            )),
+          BlocBuilder<PaymentDetailBloc, PaymentDetailState>(
+            builder: (context, state) {
+              if (state.status == DataStateStatus.isSuccess) {
+                return CheckoutSettingButton(
+                  value: state.voucherModel?.name,
+                  label: "Gunakan Voucher",
+                  icon: AppIcons.voucher,
+                  iconColor: AppColors.warning500,
+                  onPressed: () => context.push(VoucherPage(
+                    currentVoucher: state.voucherModel,
+                  )),
+                );
+              } else {
+                return const SizedBox.shrink();
+              }
+            },
           ),
           16.0.height,
           CheckoutSettingSwitch(
