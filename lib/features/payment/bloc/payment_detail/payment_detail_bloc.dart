@@ -32,5 +32,12 @@ class PaymentDetailBloc extends Bloc<PaymentDetailEvent, PaymentDetailState> {
         voucherModel: event.voucherModel,
       ));
     });
+
+    on<ChangePaymentMethodEvent>((event, emit) {
+      emit(state.copyWith(
+        status: DataStateStatus.isSuccess,
+        paymentMethodModel: event.paymentMethodModel,
+      ));
+    });
   }
 }

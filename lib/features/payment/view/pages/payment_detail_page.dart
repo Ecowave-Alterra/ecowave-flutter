@@ -92,36 +92,28 @@ class PaymentDetailPage extends StatelessWidget {
           ),
           BlocBuilder<PaymentDetailBloc, PaymentDetailState>(
             builder: (context, state) {
-              if (state.status == DataStateStatus.isSuccess) {
-                return CheckoutSettingButton(
-                  value: state.expeditionModel?.name,
-                  label: "Pilih Opsi Pengiriman",
-                  icon: AppIcons.shipping,
-                  onPressed: () => context.push(ShippingOptionsPage(
-                    shipping: state.expeditionModel,
-                  )),
-                );
-              } else {
-                return const SizedBox.shrink();
-              }
+              return CheckoutSettingButton(
+                value: state.expeditionModel?.name,
+                label: "Pilih Opsi Pengiriman",
+                icon: AppIcons.shipping,
+                onPressed: () => context.push(ShippingOptionsPage(
+                  shipping: state.expeditionModel,
+                )),
+              );
             },
           ),
           16.0.height,
           BlocBuilder<PaymentDetailBloc, PaymentDetailState>(
             builder: (context, state) {
-              if (state.status == DataStateStatus.isSuccess) {
-                return CheckoutSettingButton(
-                  value: state.voucherModel?.name,
-                  label: "Gunakan Voucher",
-                  icon: AppIcons.voucher,
-                  iconColor: AppColors.warning500,
-                  onPressed: () => context.push(VoucherPage(
-                    currentVoucher: state.voucherModel,
-                  )),
-                );
-              } else {
-                return const SizedBox.shrink();
-              }
+              return CheckoutSettingButton(
+                value: state.voucherModel?.name,
+                label: "Gunakan Voucher",
+                icon: AppIcons.voucher,
+                iconColor: AppColors.warning500,
+                onPressed: () => context.push(VoucherPage(
+                  currentVoucher: state.voucherModel,
+                )),
+              );
             },
           ),
           16.0.height,
@@ -131,13 +123,17 @@ class PaymentDetailPage extends StatelessWidget {
             onChanged: (value) {},
           ),
           16.0.height,
-          CheckoutSettingButton(
-            value: null,
-            label: "Pilih Metode Pembayaran",
-            icon: AppIcons.payment,
-            onPressed: () => context.push(const PaymentMethodPage(
-              currentPaymentMethod: null,
-            )),
+          BlocBuilder<PaymentDetailBloc, PaymentDetailState>(
+            builder: (context, state) {
+              return CheckoutSettingButton(
+                value: state.paymentMethodModel?.name,
+                label: "Pilih Metode Pembayaran",
+                icon: AppIcons.payment,
+                onPressed: () => context.push(PaymentMethodPage(
+                  currentPaymentMethod: state.paymentMethodModel,
+                )),
+              );
+            },
           ),
           16.0.height,
           PaymentInfoWidget(

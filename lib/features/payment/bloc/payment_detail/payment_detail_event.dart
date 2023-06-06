@@ -31,6 +31,14 @@ class ChangeVoucherEvent extends PaymentDetailEvent {
   });
 }
 
+class ChangePaymentMethodEvent extends PaymentDetailEvent {
+  final PaymentMethodModel paymentMethodModel;
+
+  const ChangePaymentMethodEvent({
+    required this.paymentMethodModel,
+  });
+}
+
 class CheckoutNow extends PaymentDetailEvent {
   final ShippingAddressModel shippingAddressModel;
   final PaymentMethodModel paymentMethodModel;
