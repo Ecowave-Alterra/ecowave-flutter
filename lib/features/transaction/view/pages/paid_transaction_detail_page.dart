@@ -47,7 +47,9 @@ class PaidTransactionDetailPage extends StatelessWidget {
                         Text(detailTransaction.typeDelivery),
                         InkWell(
                           onTap: () {
-                            context.push(const TrackDeliveryPage());
+                            context.push(TrackDeliveryPage(
+                              detailTransaction: detailTransaction,
+                            ));
                           },
                           child: const Text(
                             "Lacak Pesanan",
@@ -106,7 +108,8 @@ class PaidTransactionDetailPage extends StatelessWidget {
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
-                    final cPaid = detailTransaction.productTransaction[index];
+                    final ProductTransaction cPaid =
+                        detailTransaction.productTransaction[index];
                     return Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10),
                       child: Row(

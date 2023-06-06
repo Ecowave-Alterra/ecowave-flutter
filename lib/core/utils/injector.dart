@@ -5,7 +5,7 @@ import 'package:ecowave/features/payment/bloc/voucher/voucher_bloc.dart';
 import 'package:ecowave/features/payment/model/services/expedition_service.dart';
 import 'package:ecowave/features/payment/model/services/payment_method_service.dart';
 import 'package:ecowave/features/payment/model/services/shipping_address_service.dart';
-import 'package:ecowave/features/transaction/bloc/bloc/history_transaction_bloc.dart';
+import 'package:ecowave/features/transaction/bloc/history_transaction/history_transaction_bloc.dart';
 import 'package:ecowave/features/transaction/model/services/history_transaction_service.dart';
 import 'package:ecowave/features/payment/model/services/voucher_service.dart';
 import 'package:get_it/get_it.dart';

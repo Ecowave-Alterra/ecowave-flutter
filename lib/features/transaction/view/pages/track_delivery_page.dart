@@ -1,8 +1,12 @@
 import 'package:ecowave/core.dart';
+import 'package:ecowave/features/transaction/model/models/history_transaction.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class TrackDeliveryPage extends StatefulWidget {
-  const TrackDeliveryPage({super.key});
+  final HistoryTransactionModel detailTransaction;
+
+  const TrackDeliveryPage({super.key, required this.detailTransaction});
 
   @override
   State<TrackDeliveryPage> createState() => _TrackDeliveryPageState();
@@ -27,22 +31,26 @@ class _TrackDeliveryPageState extends State<TrackDeliveryPage> {
               style: TextStyle(fontWeight: AppFontWeight.medium),
             ),
             14.0.height,
-            const Row(
+            Row(
               children: [
-                ImageIcon(AppIcons.pengiriman),
-                SizedBox(
+                const ImageIcon(AppIcons.pengiriman),
+                const SizedBox(
                   width: 9,
                 ),
-                Text("Estimasi diterima tanggal : 28 Apr 2023")
+                Flexible(
+                  child: Text(
+                      "Estimasi diterima tanggal : ${DateTime.parse(widget.detailTransaction.estimateReceived).toFormattedDateShort()}"),
+                )
               ],
             ),
             30.0.height,
-            const Text("Reguler"),
+            Text(widget.detailTransaction.typeDelivery),
             6.0.height,
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text("JNE Express : 21372563213"),
+                Text(
+                    "${widget.detailTransaction.expedition.toString()} : ${widget.detailTransaction.resiCode.toString()}"),
                 Row(
                   children: [
                     Tooltip(
@@ -54,6 +62,9 @@ class _TrackDeliveryPageState extends State<TrackDeliveryPage> {
                     InkWell(
                       onTap: () {
                         tooltipkey.currentState?.ensureTooltipVisible();
+
+                        Clipboard.setData(ClipboardData(
+                            text: widget.detailTransaction.resiCode));
                       },
                       child: const Text(
                         'Salin',
@@ -66,54 +77,49 @@ class _TrackDeliveryPageState extends State<TrackDeliveryPage> {
             ),
             32.0.height,
             Expanded(
-              child: ListView(
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 28),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text("28 Apr 2023"),
-                        Container(
-                          width: 100,
-                        ),
-                        Expanded(
-                          child: Container(
-                            decoration: const BoxDecoration(),
-                            child: const Text(
-                              "pesanan sedang dalam perjalanan ke alamat tujuan",
-                              textAlign: TextAlign.justify,
+                child: ListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount:
+                        widget.detailTransaction.trackingExpedition!.length,
+                    itemBuilder: (context, index) {
+                      final List<TrackingExpedition> reversedList = widget
+                          .detailTransaction.trackingExpedition!.reversed
+                          .toList();
+                      final TrackingExpedition trackingExpedition =
+                          reversedList[index];
+                      return Container(
+                        margin: const EdgeInsets.only(bottom: 28),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              DateTime.parse(trackingExpedition.deliveryDate)
+                                  .toFormattedDateShort(),
+                              style: TextStyle(
+                                  color: index == 0
+                                      ? AppColors.black
+                                      : AppColors.grey300),
                             ),
-                          ),
+                            Container(
+                              width: 50,
+                            ),
+                            Expanded(
+                              child: Container(
+                                decoration: const BoxDecoration(),
+                                child: Text(
+                                  trackingExpedition.description,
+                                  style: TextStyle(
+                                      color: index == 0
+                                          ? AppColors.black
+                                          : AppColors.grey300),
+                                  textAlign: TextAlign.right,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        "28 Apr 2023",
-                        style: TextStyle(color: AppColors.grey300),
-                      ),
-                      Container(
-                        width: 100,
-                      ),
-                      Expanded(
-                        child: Container(
-                          decoration: const BoxDecoration(),
-                          child: const Text(
-                            "Pesanan sedang dikirim",
-                            textAlign: TextAlign.justify,
-                            style: TextStyle(color: AppColors.grey300),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            )
+                      );
+                    }))
           ],
         ),
       ),
