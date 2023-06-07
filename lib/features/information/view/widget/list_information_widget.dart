@@ -25,7 +25,7 @@ class _ListInformationState extends State<ListInformation> {
         context.push(const ContentInformation());
       },
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 7),
+        padding: const EdgeInsets.symmetric(horizontal: 12),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
