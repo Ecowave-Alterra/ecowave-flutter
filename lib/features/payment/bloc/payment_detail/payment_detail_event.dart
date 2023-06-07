@@ -47,22 +47,22 @@ class PointUsedEvent extends PaymentDetailEvent {
   });
 }
 
-class CheckoutNow extends PaymentDetailEvent {
+class CheckoutEvent extends PaymentDetailEvent {
   final ShippingAddressModel shippingAddressModel;
   final PaymentMethodModel paymentMethodModel;
   final ExpeditionModel expeditionModel;
-  final VoucherModel voucherModel;
-  final String statusTransaction;
+  final VoucherModel? voucherModel;
   final List<ProductModel> products;
-  final int totalPrice;
+  final int? pointUsed;
+  final int totalPayment;
 
-  const CheckoutNow({
+  const CheckoutEvent({
     required this.shippingAddressModel,
     required this.paymentMethodModel,
     required this.expeditionModel,
     required this.voucherModel,
-    required this.statusTransaction,
     required this.products,
-    required this.totalPrice,
+    required this.pointUsed,
+    required this.totalPayment,
   });
 }

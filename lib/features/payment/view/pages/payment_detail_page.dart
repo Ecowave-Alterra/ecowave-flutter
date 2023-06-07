@@ -25,6 +25,7 @@ class PaymentDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.read<PaymentDetailBloc>().add(const PointUsedEvent(pointUsed: 0));
     context.read<VoucherBloc>().add(GetVouchersEvent());
     context.read<ExpeditionBloc>().add(GetExpeditionsEvent());
     context.read<ShippingAddressBloc>().add(GetShippingAddressesEvent());
@@ -38,7 +39,7 @@ class PaymentDetailPage extends StatelessWidget {
         children: [
           BlocBuilder<PaymentDetailBloc, PaymentDetailState>(
             builder: (context, state) {
-              if (state.status == DataStateStatus.success) {
+              if (state.shippingAddressModel != null) {
                 return AddressInfoWidget(
                   addressModel: state.shippingAddressModel,
                   onChangeTap: () => context.push(ShippingAddressPage(
@@ -139,9 +140,13 @@ class PaymentDetailPage extends StatelessWidget {
           16.0.height,
           BlocBuilder<PaymentDetailBloc, PaymentDetailState>(
             builder: (context, state) {
-              return PaymentInfoWidget(
-                paymentInfo: state.paymentInfo!,
-              );
+              if (state.status == DataStateStatus.success) {
+                return PaymentInfoWidget(
+                  paymentInfo: state.paymentInfo!,
+                );
+              } else {
+                return const SizedBox.shrink();
+              }
             },
           ),
         ],
@@ -186,6 +191,21 @@ class PaymentDetailPage extends StatelessWidget {
                         : () async {
                             await context.push(const PaymentPage());
                             if (context.mounted) {
+                              context.read<PaymentDetailBloc>().add(
+                                    CheckoutEvent(
+                                      shippingAddressModel:
+                                          state.shippingAddressModel!,
+                                      paymentMethodModel:
+                                          state.paymentMethodModel!,
+                                      expeditionModel: state.expeditionModel!,
+                                      voucherModel: state.voucherModel,
+                                      products: const [],
+                                      pointUsed: state.pointUsed,
+                                      totalPayment:
+                                          state.paymentInfo!.totalPayment,
+                                    ),
+                                  );
+
                               await context.pushAndRemoveUntil(
                                   const PaymentWaitingPage(),
                                   (route) => route.isFirst);

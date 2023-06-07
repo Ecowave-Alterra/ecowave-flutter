@@ -47,5 +47,9 @@ class PaymentDetailBloc extends Bloc<PaymentDetailEvent, PaymentDetailState> {
         pointUsed: -event.pointUsed,
       ));
     });
+
+    on<CheckoutEvent>((event, emit) {
+      emit(const PaymentDetailState());
+    });
   }
 }
