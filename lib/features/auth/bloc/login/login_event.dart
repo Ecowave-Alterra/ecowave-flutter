@@ -6,3 +6,10 @@ class LoginEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+class LoginButtonPressed extends LoginEvent {
+  const LoginButtonPressed();
+}
+class LoginInputChange extends LoginEvent {
+  const LoginInputChange();
+}
+class LoginSubmitted extends LoginEvent {}

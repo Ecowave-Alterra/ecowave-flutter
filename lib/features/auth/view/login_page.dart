@@ -17,7 +17,6 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
- 
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +40,16 @@ class _LoginPageState extends State<LoginPage> {
           listener: (context, state) {
           },
           builder: (context, state) {
+            if (state is LoginError){
+            ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Gagal Login'),
+          backgroundColor: AppColors.warning500,
+        ),
+      );
+            }else if( state is LoginLoading){
+              return const EcoLoading();
+            }
             return  SingleChildScrollView(
         padding: const EdgeInsets.all(10),
         child: Form(
@@ -68,8 +77,7 @@ class _LoginPageState extends State<LoginPage> {
                   return null;
                 },
                 onChanged: (value) {
-                  _emailController.text = value;
-                  context.read<LoginBloc>().add(const LoginEvent());
+                  context.read<LoginBloc>().add(const LoginInputChange());
                 },
                 icon: const ImageIcon(
                   AppIcons.email,
@@ -90,8 +98,7 @@ class _LoginPageState extends State<LoginPage> {
                   return null;
                 },
                 onChanged: (value) {
-                  _passwordController.text =value;
-                  context.read<LoginBloc>().add(const LoginEvent());
+                 context.read<LoginBloc>().add(const LoginInputChange());
                 },
               ),
               10.0.height,
@@ -118,11 +125,14 @@ class _LoginPageState extends State<LoginPage> {
                 ],
               ),
               EcoFormButton(
-                label: 'Login',
+                label:  'Login',
                 onPressed: state.isLoginButtonDisabled
                     ? () {}
                     : () {
-                        if (_formKey.currentState!.validate()) {}
+                        if (_formKey.currentState!.validate()) {
+                          context.read<LoginBloc>().add(const LoginButtonPressed());
+                         
+                        }
                       },
                 backgroundColor: state.isLoginButtonDisabled
                     ? AppColors.primary300
