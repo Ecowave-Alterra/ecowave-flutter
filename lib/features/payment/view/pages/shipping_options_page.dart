@@ -58,7 +58,11 @@ class ShippingOptionsPage extends StatelessWidget {
                                 Radio(
                                   value: shipping.name,
                                   groupValue: selectedOption?.name,
-                                  onChanged: (value) {},
+                                  onChanged: (value) {
+                                    selectedOption = shipping;
+                                    isExist.value = true;
+                                    changeState(() {});
+                                  },
                                   activeColor: AppColors.primary500,
                                 ),
                                 Column(

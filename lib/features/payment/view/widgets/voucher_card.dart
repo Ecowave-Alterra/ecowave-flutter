@@ -60,7 +60,7 @@ class VoucherCard extends StatelessWidget {
                     child: Radio(
                       value: voucherModel.name,
                       groupValue: selectedOption,
-                      onChanged: (value) {},
+                      onChanged: (value) => onTap(),
                       activeColor: AppColors.primary500,
                     ),
                   ),

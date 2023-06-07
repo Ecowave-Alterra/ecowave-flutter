@@ -33,7 +33,7 @@ class ShippingAddressCard extends StatelessWidget {
                   Radio(
                     value: addressModel.address,
                     groupValue: selectedOption,
-                    onChanged: (value) {},
+                    onChanged: (value) => onTap(),
                     activeColor: AppColors.primary500,
                   ),
                   SizedBox(
