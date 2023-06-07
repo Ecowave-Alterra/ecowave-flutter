@@ -1,19 +1,31 @@
 import 'package:ecowave/core.dart';
-import 'package:ecowave/features/order/model/checkout_model.dart';
-import 'package:ecowave/features/order/view/pages/cancel_order_page.dart';
+import 'package:ecowave/features/transaction/model/models/history_transaction.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_countdown_timer/current_remaining_time.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
+import 'package:intl/intl.dart';
 
-class UnpaidOrderDetailPage extends StatelessWidget {
-  final Checkout orderUnpaid;
+class FailedTransactionDetailPage extends StatelessWidget {
+  final HistoryTransactionModel detailTransaction;
 
-  const UnpaidOrderDetailPage({super.key, required this.orderUnpaid});
+  const FailedTransactionDetailPage(
+      {super.key, required this.detailTransaction});
 
   @override
   Widget build(BuildContext context) {
-    final DateTime targetTime = DateTime(2023, 5, 27, 23, 59, 0);
+    final DateTime transactionTime =
+        DateTime.parse(detailTransaction.createdAt);
+
+    final DateTime targetTime = transactionTime.add(const Duration(days: 1));
+    final String tempoTime = DateFormat('d MMM y, H:mm').format(targetTime);
+
     final int endTime = targetTime.millisecondsSinceEpoch;
+
+    // print("INi trnsaction Time $transactionTime");
+    // print("INi target Time $targetTime");
+    // print("INi tempo Time $tempoTime");
+    // print("INi end Time $endTime");
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Pesanan Saya"),
@@ -48,14 +60,11 @@ class UnpaidOrderDetailPage extends StatelessWidget {
                                     ),
                                   );
                                 }
-
-                                final hours = time.hours ?? 0;
-                                final minutes = time.min ?? 0;
-                                final seconds = time.sec ?? 0;
-
-                                final formattedTime =
+                                final int hours = time.hours ?? 0;
+                                final int minutes = time.min ?? 0;
+                                final int seconds = time.sec ?? 0;
+                                final String formattedTime =
                                     '$hours jam $minutes menit $seconds detik';
-
                                 return Text(
                                   formattedTime,
                                   style: const TextStyle(
@@ -65,7 +74,7 @@ class UnpaidOrderDetailPage extends StatelessWidget {
                                 );
                               },
                             ),
-                            const Text("Jatuh tempo 19 Mei 2023, 23:59"),
+                            Text("Jatuh tempo $tempoTime"),
                           ],
                         ),
                       ],
@@ -89,13 +98,13 @@ class UnpaidOrderDetailPage extends StatelessWidget {
                 ],
               ),
               14.0.height,
-              Text(orderUnpaid.person?.name ?? ""),
+              Text(detailTransaction.recipient),
               6.0.height,
-              Text(orderUnpaid.person?.noTelp ?? ""),
+              Text(detailTransaction.phone),
               6.0.height,
-              Text(orderUnpaid.person?.address ?? ""),
+              Text(detailTransaction.address),
               Container(
-                margin: const EdgeInsets.symmetric(vertical: 24),
+                margin: const EdgeInsets.only(bottom: 16, top: 32),
                 child: const Row(
                   children: [
                     ImageIcon(AppIcons.shopPesanan),
@@ -108,10 +117,11 @@ class UnpaidOrderDetailPage extends StatelessWidget {
               ),
               const Divider(),
               ListView.builder(
-                  itemCount: orderUnpaid.order.length,
+                  itemCount: detailTransaction.productTransaction.length,
                   shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
-                    final produkBelumByar = orderUnpaid.order[index];
+                    final cUnpaid = detailTransaction.productTransaction[index];
                     return Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10),
                       child: Row(
@@ -122,27 +132,29 @@ class UnpaidOrderDetailPage extends StatelessWidget {
                             height: 70,
                             width: 90,
                             child: Image.network(
-                              produkBelumByar.product.imageUrl ?? "",
+                              cUnpaid.productImageUrl,
                               fit: BoxFit.cover,
                             ),
+                          ),
+                          const SizedBox(
+                            width: 50,
                           ),
                           Flexible(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
-                                Text(produkBelumByar.product.productName ?? ""),
+                                Text(
+                                  cUnpaid.productName,
+                                  textAlign: TextAlign.right,
+                                ),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     const Text("x"),
-                                    Text(produkBelumByar.totalProduct
-                                        .toString()),
+                                    Text(cUnpaid.qty.toString()),
                                   ],
                                 ),
-                                Text(produkBelumByar
-                                        .totalProductPrice?.currencyFormatRp
-                                        .toString() ??
-                                    ""),
+                                Text(cUnpaid.price.currencyFormatRp.toString()),
                               ],
                             ),
                           )
@@ -158,9 +170,23 @@ class UnpaidOrderDetailPage extends StatelessWidget {
                 children: [
                   const Text("Ongkos Kirim"),
                   Text(
-                    orderUnpaid.delivery.shipping?.currencyFormatRp
-                            .toString() ??
-                        "",
+                    detailTransaction.shipping.currencyFormatRp.toString(),
+                  )
+                ],
+              ),
+              28.0.height,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text("Catatan Untuk Kurir"),
+                  const SizedBox(
+                    width: 50,
+                  ),
+                  Expanded(
+                    child: Text(
+                      detailTransaction.note,
+                      textAlign: TextAlign.right,
+                    ),
                   )
                 ],
               ),
@@ -170,7 +196,7 @@ class UnpaidOrderDetailPage extends StatelessWidget {
                 children: [
                   const Text("Promo yang Digunakan"),
                   Text(
-                    orderUnpaid.promo.piece?.currencyFormatRp.toString() ?? "",
+                    detailTransaction.voucher.currencyFormatRp.toString(),
                   )
                 ],
               ),
@@ -178,12 +204,13 @@ class UnpaidOrderDetailPage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("${orderUnpaid.order.length} Produk"),
+                  Text("${detailTransaction.productTransaction.length} Produk"),
                   Row(
                     children: [
                       const Text("Total Pesanan : "),
                       Text(
-                        orderUnpaid.totalOrderPrice.currencyFormatRp.toString(),
+                        detailTransaction.totalPrice.currencyFormatRp
+                            .toString(),
                         style:
                             const TextStyle(fontWeight: AppFontWeight.semibold),
                       )
@@ -192,27 +219,17 @@ class UnpaidOrderDetailPage extends StatelessWidget {
                 ],
               ),
               28.0.height,
-              const Text("Metode Pembayaran"),
-              Text(orderUnpaid.paymentMethod.methodName ?? ""),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text("Metode Pembayaran"),
+                  Text(detailTransaction.paymentMethod),
+                ],
+              ),
               const Padding(
                 padding: EdgeInsets.only(top: 10, bottom: 8),
                 child: Divider(),
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 30),
-                child: Center(
-                    child: ElevatedButton(
-                  onPressed: () {
-                    context.push(const CancelOrderPage());
-                  },
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.error500),
-                  child: const Text(
-                    "Batalkan Pesanan",
-                    style: TextStyle(color: AppColors.white),
-                  ),
-                )),
-              )
             ],
           ),
         ),

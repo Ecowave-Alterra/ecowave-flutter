@@ -1,4 +1,5 @@
 import 'package:ecowave/core.dart';
+import 'package:ecowave/features/transaction/view/pages/history_transaction_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
@@ -158,7 +159,11 @@ class _RatingPageState extends State<RatingPage> {
               16.0.height,
               ElevatedButton(
                 onPressed: () {
-                  showPoint(context: context);
+                  showPoint(
+                      context: context,
+                      onPress: () {
+                        context.pushReplacement(const HistoryTransactionPage());
+                      });
                 },
                 style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primary500),

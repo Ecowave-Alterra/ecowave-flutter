@@ -1,10 +1,11 @@
 import 'package:ecowave/core.dart';
 import 'package:ecowave/core/utils/providers.dart';
-import 'package:ecowave/features/home/home_page.dart';
 import 'package:ecowave/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import 'features/home/view/home_page.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
