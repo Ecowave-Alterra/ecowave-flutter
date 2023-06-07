@@ -1,17 +1,17 @@
 import 'package:ecowave/core.dart';
-import 'package:ecowave/features/payment/model/entity/voucher_entity.dart';
+import 'package:ecowave/features/payment/model/models/voucher_model.dart';
 import 'package:flutter/material.dart';
 
 class VoucherCard extends StatelessWidget {
   final String? selectedOption;
-  final VoucherEntity voucherEntity;
+  final VoucherModel voucherModel;
   final VoidCallback onTap;
   final VoidCallback onTermAndConditionTap;
 
   const VoucherCard({
     super.key,
     required this.selectedOption,
-    required this.voucherEntity,
+    required this.voucherModel,
     required this.onTap,
     required this.onTermAndConditionTap,
   });
@@ -36,7 +36,7 @@ class VoucherCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Image.network(
-              voucherEntity.imageUrl,
+              voucherModel.photoContentUrl,
               width: context.fullWidth,
               height: 120.0,
               fit: BoxFit.cover,
@@ -48,7 +48,7 @@ class VoucherCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    voucherEntity.name,
+                    voucherModel.name,
                     style: const TextStyle(
                       fontWeight: AppFontWeight.semibold,
                       fontSize: 16.0,
@@ -58,7 +58,7 @@ class VoucherCard extends StatelessWidget {
                     width: 14.0,
                     height: 14.0,
                     child: Radio(
-                      value: voucherEntity.name,
+                      value: voucherModel.name,
                       groupValue: selectedOption,
                       onChanged: (value) {},
                       activeColor: AppColors.primary500,
@@ -71,7 +71,7 @@ class VoucherCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: AppSizes.primary),
               child: Text(
-                voucherEntity.termCondition,
+                voucherModel.minimumPurchaseFormat,
                 style: const TextStyle(
                   color: AppColors.grey600,
                 ),
@@ -89,7 +89,7 @@ class VoucherCard extends StatelessWidget {
                   ),
                   6.0.width,
                   Text(
-                    "Berlaku sampai ${voucherEntity.expiredDateFormatString}",
+                    "Berlaku sampai ${voucherModel.expiredDateFormatString}",
                     style: const TextStyle(
                       color: AppColors.primary500,
                       fontSize: 12.0,

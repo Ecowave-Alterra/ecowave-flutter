@@ -1,7 +1,9 @@
 import 'package:ecowave/core.dart';
-import 'package:ecowave/features/payment/model/entity/address_entity.dart';
-import 'package:ecowave/features/payment/model/entity/payment_info.dart';
-import 'package:ecowave/features/payment/model/entity/voucher_entity.dart';
+import 'package:ecowave/features/payment/bloc/voucher/voucher_bloc.dart';
+import 'package:ecowave/features/payment/bloc/expedition/expedition_bloc.dart';
+import 'package:ecowave/features/payment/bloc/shipping_address/shipping_address_bloc.dart';
+import 'package:ecowave/features/payment/bloc/payment_method/payment_method_bloc.dart';
+import 'package:ecowave/features/payment/model/models/payment_info.dart';
 import 'package:ecowave/features/payment/view/pages/payment_page.dart';
 import 'package:ecowave/features/payment/view/pages/payment_waiting_page.dart';
 import 'package:ecowave/features/payment/view/pages/voucher_page.dart';
@@ -14,27 +16,17 @@ import 'package:ecowave/features/payment/view/widgets/checkout_setting_switch.da
 import 'package:ecowave/features/payment/view/widgets/payment_info_widget.dart';
 import 'package:ecowave/features/payment/view/widgets/selected_product_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PaymentDetailPage extends StatelessWidget {
   const PaymentDetailPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final VoucherEntity selectedVoucher = VoucherEntity(
-      name: "Gratis Ongkir",
-      discount: -10000,
-      expiredDate: DateTime(2023, 10, 15),
-      imageUrl:
-          "https://github.com/Ecowave-Alterra/ecowave-flutter/assets/74108522/bbbd7877-fc15-47ba-94fe-274f7a4954fd",
-      termCondition: "Min. Blj Rp 0",
-      type: "Amount",
-    );
-    final AddressEntity currentAddress = AddressEntity(
-      name: "Fauzan Abdillah",
-      phoneNumber: "082338453444",
-      address: "Jl. Imam Sukari No. 85 Mangli Jember",
-      markedAs: "Rumah",
-    );
+    context.read<VoucherBloc>().add(GetVouchersEvent());
+    context.read<ExpeditionBloc>().add(GetExpeditionsEvent());
+    context.read<ShippingAddressBloc>().add(GetShippingAddressesEvent());
+    context.read<PaymentMethodBloc>().add(GetPaymentMethodsEvent());
 
     return Scaffold(
       appBar: AppBar(
@@ -42,11 +34,28 @@ class PaymentDetailPage extends StatelessWidget {
       ),
       body: ListView(
         children: [
-          AddressInfoWidget(
-            addressEntity: currentAddress,
-            onChangeTap: () => context.push(ShippingAddressPage(
-              currentAddress: currentAddress,
-            )),
+          BlocBuilder<ShippingAddressBloc, ShippingAddressState>(
+            builder: (context, state) {
+              if (state is ShippingAddressLoading) {
+                return const EcoLoading();
+              } else if (state is ShippingAddressFailed) {
+                return EcoError(
+                  errorMessage: state.meesage,
+                  onRetry: () {},
+                );
+              } else if (state is ShippingAddressSuccess) {
+                return AddressInfoWidget(
+                  addressModel:
+                      state.data.where((element) => element.isPrimary).first,
+                  onChangeTap: () => context.push(ShippingAddressPage(
+                    currentAddress:
+                        state.data.where((element) => element.isPrimary).first,
+                  )),
+                );
+              } else {
+                return const SizedBox.shrink();
+              }
+            },
           ),
           const Divider(),
           Padding(
@@ -57,17 +66,17 @@ class PaymentDetailPage extends StatelessWidget {
             ),
           ),
           CheckoutSettingButton(
-            value: "JNE",
+            value: null,
             label: "Pilih Opsi Pengiriman",
             onPressed: () =>
-                context.push(const ShippingOptionsPage(shipping: "JNE")),
+                context.push(const ShippingOptionsPage(shipping: null)),
           ),
           16.0.height,
           CheckoutSettingButton(
-            value: "Gratis Ongkir",
+            value: null,
             label: "Gunakan Voucher",
-            onPressed: () => context.push(VoucherPage(
-              currentVoucher: selectedVoucher,
+            onPressed: () => context.push(const VoucherPage(
+              currentVoucher: null,
             )),
           ),
           16.0.height,
@@ -77,6 +86,7 @@ class PaymentDetailPage extends StatelessWidget {
           ),
           16.0.height,
           CheckoutSettingButton(
+            value: null,
             label: "Pilih Metode Pembayaran",
             onPressed: () => context.push(const PaymentMethodPage(
               currentPaymentMethod: null,
@@ -88,7 +98,7 @@ class PaymentDetailPage extends StatelessWidget {
               productPrice: 89000,
               shippingPrice: 10000,
               pointUsed: 0,
-              voucher: selectedVoucher,
+              voucher: null,
             ),
           ),
         ],

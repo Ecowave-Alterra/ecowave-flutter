@@ -1,4 +1,4 @@
-import 'package:ecowave/features/payment/model/entity/payment_info.dart';
+import 'package:ecowave/features/payment/model/models/payment_info.dart';
 import 'package:flutter/material.dart';
 
 import 'package:ecowave/core.dart';
