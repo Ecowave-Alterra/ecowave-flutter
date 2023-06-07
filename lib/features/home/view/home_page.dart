@@ -1,9 +1,10 @@
-import 'package:ecowave/features/home/dashboard_page.dart';
+
+import 'package:ecowave/features/profile/view/profile.dart';
 import 'package:ecowave/features/transaction/view/pages/history_transaction_page.dart';
 import 'package:flutter/material.dart';
 import 'package:ecowave/core.dart';
 
-import '../profile/view/profile.dart';
+import 'dashboard_page.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
