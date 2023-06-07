@@ -18,6 +18,8 @@ part 'package:ecowave/core/extensions/string_ext.dart';
 part 'package:ecowave/core/dialogs/show_confirmation.dart';
 part 'package:ecowave/core/dialogs/show_point.dart';
 
+part 'package:ecowave/core/enums/data_state_status.dart';
+
 part 'package:ecowave/core/widgets/form_button.dart';
 part 'package:ecowave/core/widgets/form_input_password.dart';
 part 'package:ecowave/core/widgets/form_input.dart';

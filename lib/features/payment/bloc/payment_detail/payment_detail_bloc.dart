@@ -1,4 +1,4 @@
-import 'package:ecowave/core/enums/data_state_status.dart';
+import 'package:ecowave/core.dart';
 import 'package:ecowave/features/ecommerce/model/product_model.dart';
 import 'package:ecowave/features/payment/model/models/expedition_model.dart';
 import 'package:ecowave/features/payment/model/models/payment_info.dart';
