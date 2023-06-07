@@ -162,18 +162,18 @@ class HistoryTransactionService {
       "tracking_expedition": [
         {
           "tracking_expedition_id": 1,
-          "delivery_date": "2023-09-30T11:00:00Z",
-          "description": "pesanan sedang dalam perjalanan ke alamat tujuan"
+          "delivery_date": "2023-07-30T11:00:00Z",
+          "description": "Pesanan sedang dikemas"
         },
         {
           "tracking_expedition_id": 2,
           "delivery_date": "2023-08-30T11:00:00Z",
-          "description": "Pesanan sudah sampai di kota tujuan"
+          "description": "pesanan sedang dalam perjalanan ke alamat tujuan"
         },
         {
           "tracking_expedition_id": 3,
-          "delivery_date": "2023-07-30T11:00:00Z",
-          "description": "Pesanan sedang dikemas"
+          "delivery_date": "2023-09-30T11:00:00Z",
+          "description": "Pesanan sudah sampai di kota tujuan"
         }
       ],
       "estimate_received": "2023-09-30T11:00:00Z"
@@ -216,21 +216,16 @@ class HistoryTransactionService {
       "tracking_expedition": [
         {
           "tracking_expedition_id": 1,
-          "delivery_date": "2023-09-30T11:00:00Z",
-          "description": "pesanan sedang dalam perjalanan ke alamat tujuan"
+          "delivery_date": "2023-07-30T11:00:00Z",
+          "description": "Pesanan sedang dikemas"
         },
         {
           "tracking_expedition_id": 2,
           "delivery_date": "2023-08-30T11:00:00Z",
-          "description": "Pesanan sudah sampai di kota tujuan"
+          "description": "pesanan sedang dalam perjalanan ke alamat tujuan"
         },
-        {
-          "tracking_expedition_id": 3,
-          "delivery_date": "2023-07-30T11:00:00Z",
-          "description": "Pesanan sedang dikemas"
-        }
       ],
-      "estimate_received": "2023-09-30T11:00:00Z"
+      "estimate_received": "2023-04-30T11:00:00Z"
     },
     {
       "transaction_id": "4",
@@ -245,7 +240,7 @@ class HistoryTransactionService {
       "voucher": 4000,
       "payment_method": "SHOPEEPAY",
       "expedition": "JNE",
-      "resi_code": "55555555",
+      "resi_code": "Belum Ada",
       "type_delivery": "Reguler",
       "description_transaction":
           "Silahkan melakukan pembayaran agar pesanan segera di proses",
@@ -268,16 +263,6 @@ class HistoryTransactionService {
         },
       ],
       "tracking_expedition": [
-        {
-          "tracking_expedition_id": 1,
-          "delivery_date": "2023-09-30T11:00:00Z",
-          "description": "pesanan sedang dalam perjalanan ke alamat tujuan"
-        },
-        {
-          "tracking_expedition_id": 2,
-          "delivery_date": "2023-08-30T11:00:00Z",
-          "description": "Pesanan sudah sampai di kota tujuan"
-        },
         {
           "tracking_expedition_id": 3,
           "delivery_date": "2023-07-30T11:00:00Z",
@@ -321,23 +306,7 @@ class HistoryTransactionService {
               "https://raw.githubusercontent.com/Ecowave-Alterra/ecowave-flutter/main/assets/images/productShop2.png"
         }
       ],
-      "tracking_expedition": [
-        {
-          "tracking_expedition_id": 1,
-          "delivery_date": "2023-09-30T11:00:00Z",
-          "description": "pesanan sedang dalam perjalanan ke alamat tujuan"
-        },
-        {
-          "tracking_expedition_id": 2,
-          "delivery_date": "2023-08-30T11:00:00Z",
-          "description": "Pesanan sudah sampai di kota tujuan"
-        },
-        {
-          "tracking_expedition_id": 3,
-          "delivery_date": "2023-07-30T11:00:00Z",
-          "description": "Pesanan sedang dikemas"
-        }
-      ],
+      "tracking_expedition": [],
       "estimate_received": "2023-09-30T11:00:00Z"
     },
     {
