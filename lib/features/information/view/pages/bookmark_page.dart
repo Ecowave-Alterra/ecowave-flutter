@@ -9,56 +9,36 @@ class BookmarkPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          leading: IconButton(
-            onPressed: () {
-              context.pop();
-            },
-            icon: const ImageIcon(AppIcons.leftBack,
-                color: AppColors.primary500, size: 11),
-          ),
-          title: Text(
-            'Bookmark',
-            style: GoogleFonts.poppins(
-              fontSize: 30,
-              fontWeight: AppFontWeight.regular,
-              color: AppColors.black,
-            ),
-          ),
-          backgroundColor: AppColors.white,
-          elevation: 0.0,
-          bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(2.0),
-            child: Container(
-              color: AppColors.grey300,
-              height: 2.0,
-            ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'Bookmark',
+          style: GoogleFonts.poppins(
+            fontSize: 30,
+            fontWeight: AppFontWeight.regular,
+            color: AppColors.black,
           ),
         ),
-        body: Column(
-          children: [
-            24.0.height,
-            const ListInformation(
-              image: AppImages.cardInfo6,
-              date: '4 Mei 2023',
-              info:
-                  'Peduli Lingkungan, Yuk Mulai\nGanti Botol Plastik dengan\nTumblr',
-            ),
-            const Divider(
-              color: AppColors.grey50,
-            ),
-            const ListInformation(
-              image: AppImages.cardInfo4,
-              date: '5 Mei 2023',
-              info:
-                  'Menjaga Lingkungan Hidup\ndengan Melakukan Enam\nLangkah Pelestarian',
-            ),
-          ],
-        ),
+      ),
+      body: Column(
+        children: [
+          24.0.height,
+          const ListInformation(
+            image: AppImages.cardInfo6,
+            date: '4 Mei 2023',
+            info:
+                'Peduli Lingkungan, Yuk Mulai Ganti Botol Plastik dengan Tumblr',
+          ),
+          const Divider(
+            color: AppColors.grey50,
+          ),
+          const ListInformation(
+            image: AppImages.cardInfo4,
+            date: '5 Mei 2023',
+            info:
+                'Menjaga Lingkungan Hidup dengan Melakukan Enam Langkah Pelestarian',
+          ),
+        ],
       ),
     );
   }
