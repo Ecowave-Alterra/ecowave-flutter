@@ -40,5 +40,12 @@ class PaymentDetailBloc extends Bloc<PaymentDetailEvent, PaymentDetailState> {
         paymentMethodModel: event.paymentMethodModel,
       ));
     });
+
+    on<PointUsedEvent>((event, emit) {
+      emit(state.copyWith(
+        status: DataStateStatus.success,
+        pointUsed: -event.pointUsed,
+      ));
+    });
   }
 }

@@ -7,6 +7,7 @@ class PaymentDetailState {
   final VoucherModel? voucherModel;
   final PaymentMethodModel? paymentMethodModel;
   final PaymentInfo? paymentInfo;
+  final int pointUsed;
 
   const PaymentDetailState({
     this.status = DataStateStatus.initial,
@@ -15,6 +16,7 @@ class PaymentDetailState {
     this.voucherModel,
     this.paymentMethodModel,
     this.paymentInfo,
+    this.pointUsed = 0,
   });
 
   PaymentDetailState copyWith({
@@ -23,6 +25,7 @@ class PaymentDetailState {
     ExpeditionModel? expeditionModel,
     VoucherModel? voucherModel,
     PaymentMethodModel? paymentMethodModel,
+    int? pointUsed,
   }) {
     return PaymentDetailState(
       status: status ?? this.status,
@@ -34,9 +37,10 @@ class PaymentDetailState {
         productPrice: 89000,
         shippingPrice:
             expeditionModel?.price ?? this.expeditionModel?.price ?? 0,
-        pointUsed: 0,
+        pointUsed: pointUsed ?? this.pointUsed,
         voucher: voucherModel ?? this.voucherModel,
       ),
+      pointUsed: pointUsed ?? this.pointUsed,
     );
   }
 }

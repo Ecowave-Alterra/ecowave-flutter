@@ -117,9 +117,11 @@ class PaymentDetailPage extends StatelessWidget {
           ),
           16.0.height,
           CheckoutSettingSwitch(
-            currentPoint: 0,
+            currentPoint: 9000,
             label: "Tukarkan Point",
-            onChanged: (value) {},
+            onChanged: (value) => context
+                .read<PaymentDetailBloc>()
+                .add(PointUsedEvent(pointUsed: value)),
           ),
           16.0.height,
           BlocBuilder<PaymentDetailBloc, PaymentDetailState>(

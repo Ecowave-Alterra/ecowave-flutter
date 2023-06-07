@@ -44,7 +44,11 @@ class CheckoutSettingSwitch extends StatelessWidget {
                   "Maaf, Kamu tidak punya point".failedBar(context);
                 } else {
                   isSwitched = value;
-                  onChanged(currentPoint);
+                  if (isSwitched) {
+                    onChanged(currentPoint);
+                  } else {
+                    onChanged(0);
+                  }
                   setState(() {});
                 }
               },

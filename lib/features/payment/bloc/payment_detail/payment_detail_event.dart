@@ -39,6 +39,14 @@ class ChangePaymentMethodEvent extends PaymentDetailEvent {
   });
 }
 
+class PointUsedEvent extends PaymentDetailEvent {
+  final int pointUsed;
+
+  const PointUsedEvent({
+    required this.pointUsed,
+  });
+}
+
 class CheckoutNow extends PaymentDetailEvent {
   final ShippingAddressModel shippingAddressModel;
   final PaymentMethodModel paymentMethodModel;
