@@ -3,47 +3,48 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core.dart';
 import '../../model/entity/cart_model.dart';
-import '../../model/service/cart_database.dart';
+import '../../model/service/cart_storage.dart';
 
 part 'cart_event.dart';
 part 'cart_state.dart';
 
-class CartBloc extends Bloc<CartEvent, CartState> {
-  final DatabaseInstance dbCart;
-  final List<CartModel> data = [
-    CartModel(
-        nameItems: 'Botol',
-        detailItems: 'Perabot',
-        price: 50000,
-        totalItems: 0,
-        image: AppImages.productShop1),
-    CartModel(
-        nameItems: 'ToteBag',
-        detailItems: 'Kantong',
-        price: 39000,
-        totalItems: 0,
-        image: AppImages.productShop2),
-    CartModel(
-        nameItems: 'ToteBag',
-        detailItems: 'Kantong',
-        price: 40000,
-        totalItems: 0,
-        image: AppImages.productShop7),
-  ];
-  CartBloc(this.dbCart) : super(CartInitial()) {
-    on<CartInsert>((event, emit) async {
-      await dbCart.database();
-      for (CartModel item in data) {
-        await dbCart.insert({
-          'nameItems': item.nameItems,
-          'detailItems': item.detailItems,
-          'price': item.price,
-          'totalItems': item.totalItems,
-          'image': item.image,
-        });
+class CartBloc extends Bloc<CartEvent, List<CartModel>> {
+  final CartService service = CartService();
+  CartBloc() : super([]) {
+    on<AddItemCart>((event, emit) {
+      service.addItem(event.cartModel);
+      emit(service.items);
+    });
+    on<AddTotalItemCart>((event, emit) {
+      service.addTotalItem(event.id);
+      emit(service.items);
+    });
+    on<ReduceTotalItemCart>((event, emit) {
+      service.reduceTotalItem(event.id);
+      emit(service.items);
+    });
+    on<DeleteItemCart>((event, emit) {
+      service.deleteItem(event.id);
+      emit(service.items);
+    });
+    on<DeleteAllItemCart>((event, emit) {
+      service.deleteAllItems();
+      emit(service.items);
+    });
+    on<GetItemCart>((event, emit) async {
+      emit(service.items);
+    });
+
+    on<CheckedItemCart>((event, emit) async {
+      final int targetIndex =
+          service.items.indexWhere((data) => data.id == event.id);
+      if (event.value == false) {
+        service.items[targetIndex].checkedItems = false;
+      } else if (event.value == true) {
+        service.items[targetIndex].checkedItems = true;
       }
-      final List<CartModel> result = await dbCart.all();
-      emit(CartSuccess(data: result));
+
+      emit(service.items);
     });
   }
 }

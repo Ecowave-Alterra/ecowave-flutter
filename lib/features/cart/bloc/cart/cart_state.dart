@@ -7,9 +7,8 @@ class CartInitial extends CartState {}
 
 class CartSuccess extends CartState {
   final List<CartModel>? data;
-  final int? index;
 
-  CartSuccess({this.index, this.data});
+  CartSuccess({this.data});
 }
 
 class CartError extends CartState {}

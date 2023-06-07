@@ -1,6 +1,38 @@
 part of 'cart_bloc.dart';
 
-@immutable
 abstract class CartEvent {}
 
-class CartInsert extends CartEvent {}
+class GetItemCart extends CartEvent {}
+
+class AddItemCart extends CartEvent {
+  final CartModel cartModel;
+
+  AddItemCart({required this.cartModel});
+}
+
+class AddTotalItemCart extends CartEvent {
+  final String id;
+
+  AddTotalItemCart({required this.id});
+}
+
+class ReduceTotalItemCart extends CartEvent {
+  final String id;
+
+  ReduceTotalItemCart({required this.id});
+}
+
+class DeleteItemCart extends CartEvent {
+  final String id;
+
+  DeleteItemCart({required this.id});
+}
+
+class DeleteAllItemCart extends CartEvent {}
+
+class CheckedItemCart extends CartEvent {
+  final String id;
+  bool value;
+
+  CheckedItemCart({required this.value, required this.id});
+}

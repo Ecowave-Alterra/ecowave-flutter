@@ -1,5 +1,5 @@
 import 'package:ecowave/features/cart/model/entity/cart_model.dart';
-import 'package:ecowave/features/cart/model/service/cart_database.dart';
+import 'package:ecowave/features/cart/model/service/cart_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -15,25 +15,53 @@ class CartPage extends StatefulWidget {
 }
 
 class _CartPageState extends State<CartPage> {
-  DatabaseInstance? databaseInstance;
   bool checkedAll = false;
-  Future initDatabase() async {
-    await databaseInstance!.database();
-    setState(() {});
-  }
-
-  Future delete(int id) async {
-    await databaseInstance!.delete(id);
-    setState(() {});
-  }
-
-  Future deleteAll() async {
-    await databaseInstance!.deleteAll();
-    setState(() {});
-  }
-
+  final List<CartModel> data = [
+    CartModel(
+      id: '1',
+      nameItems: 'Botol',
+      detailItems: 'Perabot',
+      price: '50000',
+      totalItems: 0,
+      image: AppImages.productShop1,
+      checkedItems: false,
+    ),
+    CartModel(
+      id: '2',
+      nameItems: 'ToteBag',
+      detailItems: 'Kantong',
+      price: '39000',
+      totalItems: 0,
+      image: AppImages.productShop2,
+      checkedItems: false,
+    ),
+    CartModel(
+      id: '3',
+      nameItems: 'ToteBag',
+      detailItems: 'Kantong',
+      price: '40000',
+      totalItems: 0,
+      image: AppImages.productShop7,
+      checkedItems: false,
+    ),
+  ];
   @override
   Widget build(BuildContext context) {
+    for (CartModel item in data) {
+      context.read<CartBloc>().add(
+            AddItemCart(
+              cartModel: CartModel(
+                  id: item.id,
+                  nameItems: item.nameItems,
+                  detailItems: item.detailItems,
+                  image: item.image,
+                  price: item.price,
+                  totalItems: item.totalItems,
+                  checkedItems: item.checkedItems),
+            ),
+          );
+    }
+    context.read<CartBloc>().add(GetItemCart());
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -65,7 +93,8 @@ class _CartPageState extends State<CartPage> {
                 ),
                 SizedBox(
                   child: OutlinedButton(
-                    onPressed: () => deleteAll(),
+                    onPressed: () =>
+                        context.read<CartBloc>().add(DeleteAllItemCart()),
                     child: const Text(
                       'Hapus',
                       style: TextStyle(
@@ -78,43 +107,33 @@ class _CartPageState extends State<CartPage> {
               ],
             ),
             const Divider(),
-            BlocBuilder<CartBloc, CartState>(
+            BlocBuilder<CartBloc, List<CartModel>>(
               builder: (context, state) {
-                if (state is CartInitial) {
-                  return const Center(
-                    child: CircularProgressIndicator(
-                      color: AppColors.primary500,
-                    ),
-                  );
-                } else if (state is CartSuccess) {
-                  return Expanded(
-                    child: ListView.separated(
-                      padding: const EdgeInsets.only(left: 14, top: 32),
-                      itemCount: state.data!.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return ListItem(
-                          id: state.data![index].id!,
-                          item: state.data![index].nameItems!,
-                          detail: state.data![index].detailItems!,
-                          price: state.data![index].price!,
-                          image: state.data![index].image!,
-                          onPressed: () => (),
-                        );
-                      },
-                      separatorBuilder: (context, index) {
-                        return const SizedBox(
-                          height: 48,
-                        );
-                      },
-                    ),
-                  );
-                } else if (state is CartError) {
-                  return const Center(
-                    child: Text('Data not found!'),
-                  );
-                } else {
-                  return const CircularProgressIndicator();
-                }
+                return Expanded(
+                  child: ListView.separated(
+                    padding: const EdgeInsets.only(left: 14, top: 32),
+                    itemCount: state.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return ListItem(
+                        id: state[index].id,
+                        item: state[index].nameItems,
+                        detail: state[index].detailItems,
+                        price: state[index].price,
+                        image: state[index].image,
+                        onPressed: () => context
+                            .read<CartBloc>()
+                            .add(DeleteItemCart(id: state[index].id)),
+                        totalItems: state[index].totalItems,
+                        checkedItems: state[index].checkedItems,
+                      );
+                    },
+                    separatorBuilder: (context, index) {
+                      return const SizedBox(
+                        height: 48,
+                      );
+                    },
+                  ),
+                );
               },
             )
           ],
