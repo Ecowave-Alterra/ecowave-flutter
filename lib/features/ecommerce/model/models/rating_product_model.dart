@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class ReviewModel {
+class RatingProductModel {
   final ImageProvider? reviewerPhoto;
   final String reviewerName;
   final double reviewerStar;
   final String? reviewerDesc;
   final Image? reviewPhoto;
 
-  ReviewModel({
+  RatingProductModel({
     this.reviewerPhoto,
     required this.reviewerName,
     required this.reviewerStar,

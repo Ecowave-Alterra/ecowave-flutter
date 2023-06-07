@@ -1,3 +1,5 @@
+import 'package:ecowave/features/ecommerce/bloc/product_home/product_bloc.dart';
+import 'package:ecowave/features/ecommerce/model/services/product_service.dart';
 import 'package:ecowave/features/payment/bloc/expedition/expedition_bloc.dart';
 import 'package:ecowave/features/payment/bloc/payment_method/payment_method_bloc.dart';
 import 'package:ecowave/features/payment/bloc/shipping_address/shipping_address_bloc.dart';
@@ -16,6 +18,7 @@ void init() {
   locator.registerFactory(() => PaymentMethodBloc(locator()));
   locator.registerFactory(() => ExpeditionBloc(locator()));
   locator.registerFactory(() => VoucherBloc(locator()));
+  locator.registerFactory(() => ProductBloc(locator()));
 
   // service
   locator.registerLazySingleton<ShippingAddressService>(
@@ -24,4 +27,5 @@ void init() {
       () => PaymentMethodService());
   locator.registerLazySingleton<ExpeditionService>(() => ExpeditionService());
   locator.registerLazySingleton<VoucherService>(() => VoucherService());
+  locator.registerLazySingleton<ProductService>(() => ProductService());
 }
