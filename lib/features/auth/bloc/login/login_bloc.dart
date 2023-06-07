@@ -1,9 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:ecowave/features/auth/model/models/login_model.dart';
+import 'package:ecowave/features/auth/model/services/login_services.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-
-import '../../model/services/login_services.dart';
 
 part 'login_event.dart';
 part 'login_state.dart';
@@ -17,35 +16,44 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     required this.passwordController,
   }) : super(LoginState.initial()) {
     on<LoginButtonPressed>((event, emit) async {
-      try {
-        emit(const LoginLoading(isLoginButtonDisabled: true, isLoading: true));
-        LoginService loginService = LoginService();
-        String loginResponse = await loginService.login(Login(
-            email: emailController.text, password: passwordController.text));
+  try {
+    emit(const LoginLoading(isLoginButtonDisabled: true, isLoading: true));  
 
-        
+    final userId = await LoginService().login(Login(email: emailController.text, password: passwordController.text));
 
-        // Add a delay of 2 seconds before emitting the success event
-        await Future.delayed(const Duration(seconds: 2));
-        emit(const LoginSuccess(
-          isLoginButtonDisabled: false,
-          message: "Login Sukses",
-        ));
-      } catch (error) {
-        print(error);
-        await Future.delayed(const Duration(seconds: 2));
-        emit(LoginError(
-          isLoginButtonDisabled: false,
-          errorMessage: error.toString(),
-        ));
-      }
-    });
+    if (userId != null) {
+
+      emit(const LoginSuccess(
+        isLoginButtonDisabled: false,
+        message: "Login Sukses",
+      ));
+    } else {
+      emit(const LoginError(
+        isLoginButtonDisabled: false,
+        errorMessage: "Gagal melakukan login",
+      ));
+    }
+  } catch (error) {
+    print(error);
+    await Future.delayed(const Duration(seconds: 2));
+    emit(LoginError(
+      isLoginButtonDisabled: false,
+      errorMessage: error.toString(),
+    ));
+  }
+});
 
     on<LoginInputChange>((event, emit) {
+      state.isLoginButtonDisabled == true;
       if (emailController.text.isNotEmpty &&
           passwordController.text.isNotEmpty) {
         emit(const LoginState(
           isLoginButtonDisabled: false,
+        ));
+      }
+      else if(emailController.text.isEmpty || passwordController.text.isEmpty){
+         emit(const LoginState(
+          isLoginButtonDisabled: true,
         ));
       }
     });

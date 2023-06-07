@@ -51,7 +51,7 @@ class LoginError extends LoginState {
   const LoginError({
     required bool isLoginButtonDisabled,
     required this.errorMessage,
-  }) : super(isLoginButtonDisabled: isLoginButtonDisabled);
+  }) : super(isLoginButtonDisabled: !isLoginButtonDisabled);
 
   @override
   List<Object?> get props => [...super.props, errorMessage];
