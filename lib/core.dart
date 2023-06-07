@@ -25,3 +25,4 @@ part 'package:ecowave/core/widgets/form_button_icon.dart';
 part 'package:ecowave/core/widgets/empty.dart';
 part 'package:ecowave/core/widgets/error.dart';
 part 'package:ecowave/core/widgets/loading.dart';
+
