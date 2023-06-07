@@ -49,7 +49,7 @@ class _ListInformationState extends State<ListInformation> {
                 ),
                 Container(
                   alignment: Alignment.centerLeft,
-                  width: 212,
+                  width: context.fullWidth - 160.0,
                   child: Text(
                     widget.info,
                     style: const TextStyle(

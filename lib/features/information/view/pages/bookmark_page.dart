@@ -20,7 +20,7 @@ class BookmarkPage extends StatelessWidget {
           ),
         ),
       ),
-      body: Column(
+      body: ListView(
         children: [
           24.0.height,
           const ListInformation(

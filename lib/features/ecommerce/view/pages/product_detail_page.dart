@@ -3,7 +3,6 @@ import 'package:ecowave/features/ecommerce/view/widgets/product_description_widg
 import 'package:flutter/material.dart';
 
 import '../../../../core.dart';
-import '../../../payment/view/pages/payment_detail_page.dart';
 import '../widgets/carousel_barang_widget.dart';
 
 class ProductDetail extends StatelessWidget {

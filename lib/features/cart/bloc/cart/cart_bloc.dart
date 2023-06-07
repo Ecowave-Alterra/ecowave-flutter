@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../core.dart';
 import '../../model/entity/cart_model.dart';
 import '../../model/service/cart_storage.dart';
 

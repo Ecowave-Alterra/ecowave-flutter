@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core.dart';
 
 class ListItem extends StatefulWidget {
-  ListItem({
+  const ListItem({
     super.key,
     required this.price,
     required this.id,
@@ -19,7 +19,7 @@ class ListItem extends StatefulWidget {
   });
   final String item, detail, image, price, id;
   final int totalItems;
-  late bool checkedItems;
+  final bool checkedItems;
   final void Function() onPressed;
   @override
   State<ListItem> createState() => _ListItemState();
