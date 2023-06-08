@@ -48,24 +48,35 @@ class ShippingAddressPage extends StatelessWidget {
                       .add(GetShippingAddressesEvent()),
                 );
               } else if (state is ShippingAddressSuccess) {
-                return StatefulBuilder(
-                  builder: (context, changeState) {
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: state.data.length,
-                      itemBuilder: (context, index) => ShippingAddressCard(
-                        selectedOption: selectedOption?.address,
-                        addressModel: state.data[index],
-                        onTap: () {
-                          selectedOption = state.data[index];
-                          isExist.value = true;
-                          changeState(() {});
-                        },
-                      ),
-                    );
-                  },
-                );
+                if (state.data.isEmpty) {
+                  return SizedBox(
+                    height: context.fullHeight / 1.4,
+                    child: EcoEmpty(
+                      massage: "Kamu belum menambahkan alamat",
+                      image: AppImages.emptyState,
+                      height: context.fullWidth / 2,
+                    ),
+                  );
+                } else {
+                  return StatefulBuilder(
+                    builder: (context, changeState) {
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: state.data.length,
+                        itemBuilder: (context, index) => ShippingAddressCard(
+                          selectedOption: selectedOption?.address,
+                          addressModel: state.data[index],
+                          onTap: () {
+                            selectedOption = state.data[index];
+                            isExist.value = true;
+                            changeState(() {});
+                          },
+                        ),
+                      );
+                    },
+                  );
+                }
               } else {
                 return const SizedBox.shrink();
               }

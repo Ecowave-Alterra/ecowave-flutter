@@ -38,30 +38,41 @@ class VoucherPage extends StatelessWidget {
                   onRetry: () {},
                 );
               } else if (state is VoucherSuccess) {
-                return StatefulBuilder(
-                  builder: (context, changeState) => ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: state.data.length,
-                    itemBuilder: (context, index) {
-                      final VoucherModel element = state.data[index];
-                      return VoucherCard(
-                        selectedOption: selectedOption?.name,
-                        voucherModel: element,
-                        onTap: () {
-                          selectedOption = element;
-                          isExist.value = true;
-                          changeState(() {});
-                        },
-                        onTermAndConditionTap: () => context.push(
-                          TermAndConditionPage(
-                            voucherModel: element,
+                if (state.data.isEmpty) {
+                  return SizedBox(
+                    height: context.fullHeight / 1.4,
+                    child: EcoEmpty(
+                      massage: "Voucher tidak tersedia",
+                      image: AppImages.emptyState,
+                      height: context.fullWidth / 2,
+                    ),
+                  );
+                } else {
+                  return StatefulBuilder(
+                    builder: (context, changeState) => ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: state.data.length,
+                      itemBuilder: (context, index) {
+                        final VoucherModel element = state.data[index];
+                        return VoucherCard(
+                          selectedOption: selectedOption?.name,
+                          voucherModel: element,
+                          onTap: () {
+                            selectedOption = element;
+                            isExist.value = true;
+                            changeState(() {});
+                          },
+                          onTermAndConditionTap: () => context.push(
+                            TermAndConditionPage(
+                              voucherModel: element,
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                  ),
-                );
+                        );
+                      },
+                    ),
+                  );
+                }
               } else {
                 return const SizedBox.shrink();
               }
