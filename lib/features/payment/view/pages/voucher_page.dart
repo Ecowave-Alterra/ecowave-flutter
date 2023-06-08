@@ -1,4 +1,5 @@
 import 'package:ecowave/core.dart';
+import 'package:ecowave/features/payment/bloc/payment_detail/payment_detail_bloc.dart';
 import 'package:ecowave/features/payment/bloc/voucher/voucher_bloc.dart';
 import 'package:ecowave/features/payment/model/models/voucher_model.dart';
 import 'package:ecowave/features/payment/view/pages/term_and_condition_page.dart';
@@ -7,16 +8,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class VoucherPage extends StatelessWidget {
+  final int productPrice;
   final VoucherModel? currentVoucher;
 
   const VoucherPage({
     super.key,
+    required this.productPrice,
     required this.currentVoucher,
   });
 
   @override
   Widget build(BuildContext context) {
-    String? selectedOption = currentVoucher?.name;
+    VoucherModel? selectedOption = currentVoucher;
     final ValueNotifier<bool> isExist =
         ValueNotifier<bool>(selectedOption == null ? false : true);
 
@@ -37,30 +40,42 @@ class VoucherPage extends StatelessWidget {
                   onRetry: () {},
                 );
               } else if (state is VoucherSuccess) {
-                return StatefulBuilder(
-                  builder: (context, changeState) => ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: state.data.length,
-                    itemBuilder: (context, index) {
-                      final VoucherModel element = state.data[index];
-                      return VoucherCard(
-                        selectedOption: selectedOption,
-                        voucherModel: element,
-                        onTap: () {
-                          selectedOption = element.name;
-                          isExist.value = true;
-                          changeState(() {});
-                        },
-                        onTermAndConditionTap: () => context.push(
-                          TermAndConditionPage(
-                            voucherModel: element,
+                if (state.data.isEmpty) {
+                  return SizedBox(
+                    height: context.fullHeight / 1.4,
+                    child: EcoEmpty(
+                      massage: "Voucher tidak tersedia",
+                      image: AppImages.emptyState,
+                      height: context.fullWidth / 2,
+                    ),
+                  );
+                } else {
+                  return StatefulBuilder(
+                    builder: (context, changeState) => ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: state.data.length,
+                      itemBuilder: (context, index) {
+                        final VoucherModel element = state.data[index];
+                        return VoucherCard(
+                          productPrice: productPrice,
+                          selectedOption: selectedOption?.id,
+                          voucherModel: element,
+                          onTap: () {
+                            selectedOption = element;
+                            isExist.value = true;
+                            changeState(() {});
+                          },
+                          onTermAndConditionTap: () => context.push(
+                            TermAndConditionPage(
+                              voucherModel: element,
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                  ),
-                );
+                        );
+                      },
+                    ),
+                  );
+                }
               } else {
                 return const SizedBox.shrink();
               }
@@ -75,7 +90,14 @@ class VoucherPage extends StatelessWidget {
           builder: (context, value, _) => EcoFormButton(
             height: 45.0,
             label: "Gunakan",
-            onPressed: value ? () => context.pop() : null,
+            onPressed: value
+                ? () {
+                    context.read<PaymentDetailBloc>().add(ChangeVoucherEvent(
+                          voucherModel: selectedOption!,
+                        ));
+                    context.pop();
+                  }
+                : null,
           ),
         ),
       ),

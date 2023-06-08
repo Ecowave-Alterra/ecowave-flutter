@@ -13,8 +13,20 @@ class PaymentInfo {
     this.voucher,
   });
 
-  int get totalPayment {
-    final int discount = voucher?.discount.toInt() ?? 0;
-    return productPrice + shippingPrice + pointUsed + discount;
+  int get discount {
+    int discountUsed = voucher?.discount.toInt() ?? 0;
+
+    if (voucher?.type == "Diskon") {
+      discountUsed = ((voucher?.discount ?? 0) * productPrice).toInt();
+      if (discountUsed > (voucher?.maximumDiscount ?? 0)) {
+        discountUsed = voucher!.maximumDiscount;
+      }
+    } else if (discountUsed > shippingPrice) {
+      discountUsed = shippingPrice;
+    }
+
+    return -discountUsed;
   }
+
+  int get totalPayment => productPrice + shippingPrice + pointUsed + discount;
 }

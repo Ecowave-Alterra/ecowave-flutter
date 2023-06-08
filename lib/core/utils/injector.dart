@@ -2,6 +2,7 @@ import 'package:ecowave/features/ecommerce/bloc/product_home/product_bloc.dart';
 import 'package:ecowave/features/ecommerce/model/services/product_service.dart';
 import 'package:ecowave/features/home/bloc/page_bloc.dart';
 import 'package:ecowave/features/payment/bloc/expedition/expedition_bloc.dart';
+import 'package:ecowave/features/payment/bloc/payment_detail/payment_detail_bloc.dart';
 import 'package:ecowave/features/payment/bloc/payment_method/payment_method_bloc.dart';
 import 'package:ecowave/features/payment/bloc/shipping_address/shipping_address_bloc.dart';
 import 'package:ecowave/features/payment/bloc/voucher/voucher_bloc.dart';
@@ -21,6 +22,7 @@ void init() {
   locator.registerFactory(() => ShippingAddressBloc(locator()));
   locator.registerFactory(() => PaymentMethodBloc(locator()));
   locator.registerFactory(() => ExpeditionBloc(locator()));
+  locator.registerFactory(() => PaymentDetailBloc());
   locator.registerFactory(() => HistoryTransactionBloc(locator()));
   locator.registerFactory(() => VoucherBloc(locator()));
   locator.registerFactory(() => ProductBloc(locator()));

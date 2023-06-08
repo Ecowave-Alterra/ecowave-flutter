@@ -1,5 +1,7 @@
 import 'package:ecowave/core.dart';
+import 'package:ecowave/features/home/bloc/page_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PaymentWaitingPage extends StatelessWidget {
   const PaymentWaitingPage({super.key});
@@ -84,7 +86,10 @@ class PaymentWaitingPage extends StatelessWidget {
                   flex: 1,
                   child: EcoFormButton(
                     label: "Pesanan Saya",
-                    onPressed: () {},
+                    onPressed: () {
+                      context.popToRoot();
+                      context.read<PageBloc>().add(1);
+                    },
                     backgroundColor: Colors.transparent,
                     textColor: AppColors.primary500,
                     border: Border.all(
