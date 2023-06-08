@@ -27,7 +27,7 @@ class HistoryTransactionModel {
   String typeDelivery;
   String descriptionTransaction;
   List<ProductTransaction> productTransaction;
-  List<TrackingExpedition> trackingExpedition;
+  List<TrackingExpedition>? trackingExpedition;
   String estimateReceived;
 
   HistoryTransactionModel({
@@ -96,7 +96,7 @@ class HistoryTransactionModel {
         "productTransaction":
             List<dynamic>.from(productTransaction.map((x) => x.toJson())),
         "tracking_expedition":
-            List<dynamic>.from(trackingExpedition.map((x) => x.toJson())),
+            List<dynamic>.from(trackingExpedition!.map((x) => x.toJson())),
         "estimate_received": estimateReceived,
       };
 }
