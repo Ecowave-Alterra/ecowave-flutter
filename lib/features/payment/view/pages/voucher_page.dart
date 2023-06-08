@@ -8,10 +8,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class VoucherPage extends StatelessWidget {
+  final int productPrice;
   final VoucherModel? currentVoucher;
 
   const VoucherPage({
     super.key,
+    required this.productPrice,
     required this.currentVoucher,
   });
 
@@ -56,6 +58,7 @@ class VoucherPage extends StatelessWidget {
                       itemBuilder: (context, index) {
                         final VoucherModel element = state.data[index];
                         return VoucherCard(
+                          productPrice: productPrice,
                           selectedOption: selectedOption?.id,
                           voucherModel: element,
                           onTap: () {

@@ -34,7 +34,7 @@ class PaymentDetailState {
       voucherModel: voucherModel ?? this.voucherModel,
       paymentMethodModel: paymentMethodModel ?? this.paymentMethodModel,
       paymentInfo: PaymentInfo(
-        productPrice: 89000,
+        productPrice: 150000,
         shippingPrice:
             expeditionModel?.price ?? this.expeditionModel?.price ?? 0,
         pointUsed: pointUsed ?? this.pointUsed,

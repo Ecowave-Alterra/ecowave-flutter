@@ -110,6 +110,7 @@ class PaymentDetailPage extends StatelessWidget {
                 icon: AppIcons.voucher,
                 iconColor: AppColors.warning500,
                 onPressed: () => context.push(VoucherPage(
+                  productPrice: state.paymentInfo?.productPrice ?? 0,
                   currentVoucher: state.voucherModel,
                 )),
               );

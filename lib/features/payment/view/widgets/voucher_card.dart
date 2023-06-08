@@ -3,6 +3,7 @@ import 'package:ecowave/features/payment/model/models/voucher_model.dart';
 import 'package:flutter/material.dart';
 
 class VoucherCard extends StatelessWidget {
+  final int productPrice;
   final int? selectedOption;
   final VoucherModel voucherModel;
   final VoidCallback onTap;
@@ -10,6 +11,7 @@ class VoucherCard extends StatelessWidget {
 
   const VoucherCard({
     super.key,
+    required this.productPrice,
     required this.selectedOption,
     required this.voucherModel,
     required this.onTap,
@@ -19,7 +21,10 @@ class VoucherCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: productPrice < voucherModel.minimumPurchase
+          ? () => "Maaf, kamu belum memenuhi syarat dan ketentuan"
+              .failedBar(context)
+          : onTap,
       child: Container(
         margin: const EdgeInsets.symmetric(
             horizontal: AppSizes.primary, vertical: AppSizes.primary / 2),
@@ -35,11 +40,14 @@ class VoucherCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.network(
-              voucherModel.photoContentUrl,
-              width: context.fullWidth,
-              height: 120.0,
-              fit: BoxFit.cover,
+            Opacity(
+              opacity: productPrice < voucherModel.minimumPurchase ? 0.2 : 1.0,
+              child: Image.network(
+                voucherModel.photoContentUrl,
+                width: context.fullWidth,
+                height: 120.0,
+                fit: BoxFit.cover,
+              ),
             ),
             16.0.height,
             Padding(
