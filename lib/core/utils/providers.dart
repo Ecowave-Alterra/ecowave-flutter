@@ -1,4 +1,5 @@
 import 'package:ecowave/core/utils/injector.dart' as di;
+import 'package:ecowave/features/ecommerce/bloc/product_home/product_bloc.dart';
 import 'package:ecowave/features/home/bloc/page_bloc.dart';
 import 'package:ecowave/features/payment/bloc/expedition/expedition_bloc.dart';
 import 'package:ecowave/features/payment/bloc/payment_method/payment_method_bloc.dart';
@@ -20,5 +21,6 @@ class Providers {
     BlocProvider<HistoryTransactionBloc>(
         create: (context) => di.locator<HistoryTransactionBloc>()),
     BlocProvider<VoucherBloc>(create: (context) => di.locator<VoucherBloc>()),
+    BlocProvider<ProductBloc>(create: (context) => di.locator<ProductBloc>()),
   ];
 }
