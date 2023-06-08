@@ -82,7 +82,7 @@ class PaymentMethodPage extends StatelessWidget {
                                 ),
                               ),
                               const Spacer(),
-                              if (selectedOption?.name == element.name)
+                              if (selectedOption?.id == element.id)
                                 const Icon(
                                   Icons.check,
                                   color: AppColors.primary500,
@@ -139,7 +139,7 @@ class PaymentMethodPage extends StatelessWidget {
                                 ),
                               ),
                               const Spacer(),
-                              if (selectedOption?.name == element.name)
+                              if (selectedOption?.id == element.id)
                                 const Icon(
                                   Icons.check,
                                   color: AppColors.primary500,

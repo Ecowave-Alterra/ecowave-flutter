@@ -65,7 +65,7 @@ class ShippingAddressPage extends StatelessWidget {
                         physics: const NeverScrollableScrollPhysics(),
                         itemCount: state.data.length,
                         itemBuilder: (context, index) => ShippingAddressCard(
-                          selectedOption: selectedOption?.address,
+                          selectedOption: selectedOption?.id,
                           addressModel: state.data[index],
                           onTap: () {
                             selectedOption = state.data[index];

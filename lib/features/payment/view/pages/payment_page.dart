@@ -15,6 +15,7 @@ class PaymentPage extends StatelessWidget {
     final int endTime = targetTime.millisecondsSinceEpoch;
 
     final PaymentMethodModel paymentMethod = PaymentMethodModel(
+      id: 1,
       name: "OVO",
       iconUrl: "https://i.ibb.co/S32HNjD/no-image.jpg",
       type: PaymentMethodType.eWallet,

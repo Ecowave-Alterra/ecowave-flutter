@@ -56,8 +56,8 @@ class ShippingOptionsPage extends StatelessWidget {
                             child: Row(
                               children: [
                                 Radio(
-                                  value: shipping.name,
-                                  groupValue: selectedOption?.name,
+                                  value: shipping.id,
+                                  groupValue: selectedOption?.id,
                                   onChanged: (value) {
                                     selectedOption = shipping;
                                     isExist.value = true;

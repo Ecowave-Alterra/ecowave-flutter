@@ -3,7 +3,7 @@ import 'package:ecowave/features/payment/model/models/shipping_address_model.dar
 import 'package:flutter/material.dart';
 
 class ShippingAddressCard extends StatelessWidget {
-  final String? selectedOption;
+  final int? selectedOption;
   final ShippingAddressModel addressModel;
   final VoidCallback onTap;
 
@@ -31,7 +31,7 @@ class ShippingAddressCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Radio(
-                    value: addressModel.address,
+                    value: addressModel.id,
                     groupValue: selectedOption,
                     onChanged: (value) => onTap(),
                     activeColor: AppColors.primary500,

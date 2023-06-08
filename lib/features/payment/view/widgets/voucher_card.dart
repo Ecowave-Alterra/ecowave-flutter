@@ -3,7 +3,7 @@ import 'package:ecowave/features/payment/model/models/voucher_model.dart';
 import 'package:flutter/material.dart';
 
 class VoucherCard extends StatelessWidget {
-  final String? selectedOption;
+  final int? selectedOption;
   final VoucherModel voucherModel;
   final VoidCallback onTap;
   final VoidCallback onTermAndConditionTap;
@@ -58,7 +58,7 @@ class VoucherCard extends StatelessWidget {
                     width: 14.0,
                     height: 14.0,
                     child: Radio(
-                      value: voucherModel.name,
+                      value: voucherModel.id,
                       groupValue: selectedOption,
                       onChanged: (value) => onTap(),
                       activeColor: AppColors.primary500,

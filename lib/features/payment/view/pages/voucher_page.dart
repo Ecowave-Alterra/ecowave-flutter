@@ -56,7 +56,7 @@ class VoucherPage extends StatelessWidget {
                       itemBuilder: (context, index) {
                         final VoucherModel element = state.data[index];
                         return VoucherCard(
-                          selectedOption: selectedOption?.name,
+                          selectedOption: selectedOption?.id,
                           voucherModel: element,
                           onTap: () {
                             selectedOption = element;
