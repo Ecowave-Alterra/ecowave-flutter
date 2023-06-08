@@ -12,7 +12,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     List<ProductModel> products = [];
     on<GetProductEvent>((event, emit) async {
       try {
-        emit(ProductInitial());
+        emit(ProductLoading());
         products = await service.getProduct();
         emit(ProductSuccess(data: products));
       } catch (e) {
