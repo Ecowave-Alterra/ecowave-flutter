@@ -1,4 +1,5 @@
 import 'package:ecowave/features/cart/model/models/cart_model.dart';
+import 'package:ecowave/features/payment/view/pages/payment_detail_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -119,7 +120,7 @@ class _CartPageState extends State<CartPage> {
               flex: 1,
               child: EcoFormButton(
                 label: 'Beli',
-                onPressed: () {},
+                onPressed: () => context.push(const PaymentDetailPage()),
               ),
             ),
           ],
