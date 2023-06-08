@@ -13,7 +13,6 @@ class TermAndConditionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<String> termAndConditionFreeShipping = [
-      "Dapatkan diskon gratis ongkir.",
       "Voucher hanya berlaku apabila pembelian pengguna sudah memenuhi syarat dan ketentuan yang tertera pada voucher.",
       "Nominal yang didapatkan sebesar biaya ongkir.",
       "Jika transaksi dibatalkan atau masuk ke pusat resolusi, dana yang kembali ke pembeli akan sesuai dengan nominal pembayaran yang dilakukan.",
@@ -22,7 +21,6 @@ class TermAndConditionPage extends StatelessWidget {
       "Voucher ini tidak dapat digunakan bersamaan dengan voucher lain kecuali diatur lain sebagaimana kebijakan Ecowave.",
     ];
     final List<String> termAndConditionDiscount = [
-      "Dapatkan diskon potongan harga.",
       "Voucher hanya berlaku apabila pembelian pengguna sudah memenuhi syarat dan ketentuan yang tertera pada voucher.",
       "Nominal yang didapatkan sebesar maksimal ${voucherModel.maximumDiscount.currencyFormatRp}.",
       "Jika transaksi dibatalkan atau masuk ke pusat resolusi, dana yang kembali ke pembeli akan sesuai dengan nominal pembayaran yang dilakukan.",
@@ -85,7 +83,7 @@ class TermAndConditionPage extends StatelessWidget {
                       color: AppColors.grey500,
                     ),
                     6.0.width,
-                    const Text("Minimum transaksi"),
+                    const Text("Min. belanja"),
                     const Spacer(),
                     Text(
                       voucherModel.minimumPurchase.currencyFormatRp,
@@ -100,12 +98,12 @@ class TermAndConditionPage extends StatelessWidget {
                   Row(
                     children: [
                       const ImageIcon(
-                        AppIcons.voucher,
+                        AppIcons.payment,
                         size: 14.0,
                         color: AppColors.grey500,
                       ),
                       6.0.width,
-                      const Text("Maksimum diskon"),
+                      const Text("Maks. potongan belanja"),
                       const Spacer(),
                       Text(
                         voucherModel.maximumDiscount.currencyFormatRp,
