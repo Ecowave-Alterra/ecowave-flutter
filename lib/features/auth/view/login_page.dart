@@ -87,8 +87,8 @@ class _LoginPageState extends State<LoginPage> {
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Password tidak boleh kosong';
-                  } else if (value.length < 6) {
-                    return 'Password harus memiliki setidaknya 6 karakter';
+                  } else if (value.length < 8) {
+                    return 'Password harus memiliki setidaknya 8 karakter';
                   }
                   return null;
                 },

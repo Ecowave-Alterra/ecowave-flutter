@@ -1,5 +1,6 @@
 import 'package:ecowave/core/utils/injector.dart' as di;
 import 'package:ecowave/features/information/bloc/informatio/information_bloc.dart';
+import 'package:ecowave/features/home/bloc/page_bloc.dart';
 import 'package:ecowave/features/payment/bloc/expedition/expedition_bloc.dart';
 import 'package:ecowave/features/payment/bloc/payment_method/payment_method_bloc.dart';
 import 'package:ecowave/features/payment/bloc/shipping_address/shipping_address_bloc.dart';
@@ -9,6 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Providers {
   static final List<BlocProvider> init = [
+    BlocProvider<PageBloc>(create: (context) => di.locator<PageBloc>()),
     BlocProvider<ShippingAddressBloc>(
         create: (context) => di.locator<ShippingAddressBloc>()),
     BlocProvider<PaymentMethodBloc>(
