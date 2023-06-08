@@ -8,8 +8,8 @@ class VoucherService {
 
   List dummy = [
     {
-      "name": "Voucher A",
       "minimum_purchase": 100000,
+      "maximum_discount": 20000,
       "discount": 0.1,
       "expired_date": "2023-06-30T11:00:00Z",
       "photo_content_url":
@@ -21,8 +21,8 @@ class VoucherService {
       "deleted_at": null
     },
     {
-      "name": "Voucher B",
       "minimum_purchase": 150000,
+      "maximum_discount": 20000,
       "discount": 0.2,
       "expired_date": "2023-06-30T11:00:00Z",
       "photo_content_url":
@@ -34,8 +34,8 @@ class VoucherService {
       "deleted_at": null
     },
     {
-      "name": "Voucher C",
       "minimum_purchase": 200000,
+      "maximum_discount": 20000,
       "discount": 0.5,
       "expired_date": "2023-06-30T11:00:00Z",
       "photo_content_url":
@@ -47,8 +47,8 @@ class VoucherService {
       "deleted_at": null
     },
     {
-      "name": "Voucher D",
       "minimum_purchase": 1000000,
+      "maximum_discount": 20000,
       "discount": 0.05,
       "expired_date": "2023-06-30T11:00:00Z",
       "photo_content_url":
@@ -60,8 +60,8 @@ class VoucherService {
       "deleted_at": null
     },
     {
-      "name": "Voucher E",
       "minimum_purchase": 12000000,
+      "maximum_discount": 20000,
       "discount": 200000,
       "expired_date": "2023-06-30T11:00:00Z",
       "photo_content_url":
@@ -73,8 +73,8 @@ class VoucherService {
       "deleted_at": null
     },
     {
-      "name": "Voucher F",
       "minimum_purchase": 0,
+      "maximum_discount": 20000,
       "discount": 40000,
       "expired_date": "2023-06-30T11:00:00Z",
       "photo_content_url":

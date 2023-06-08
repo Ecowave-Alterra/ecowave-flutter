@@ -12,6 +12,25 @@ class TermAndConditionPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final List<String> termAndConditionFreeShipping = [
+      "Dapatkan diskon gratis ongkir.",
+      "Voucher hanya berlaku apabila pembelian pengguna sudah memenuhi syarat dan ketentuan yang tertera pada voucher.",
+      "Nominal yang didapatkan sebesar biaya ongkir.",
+      "Jika transaksi dibatalkan atau masuk ke pusat resolusi, dana yang kembali ke pembeli akan sesuai dengan nominal pembayaran yang dilakukan.",
+      "Ecowave berhak melakukan tindakan yang diperlukan apabila diduga terjadi tindakan kecurangan yang dilakukan oleh pengguna yang melanggra syarat dan ketentuan dan merugikan Ecowave.",
+      "Dengan menggunakan voucher ini, pengguna dianggap telah memahami dan meyetujui semua Syarat dan Ketentuan yang berlaku.",
+      "Voucher ini tidak dapat digunakan bersamaan dengan voucher lain kecuali diatur lain sebagaimana kebijakan Ecowave.",
+    ];
+    final List<String> termAndConditionDiscount = [
+      "Dapatkan diskon potongan harga.",
+      "Voucher hanya berlaku apabila pembelian pengguna sudah memenuhi syarat dan ketentuan yang tertera pada voucher.",
+      "Nominal yang didapatkan sebesar maksimal ${voucherModel.maximumDiscount.currencyFormatRp}.",
+      "Jika transaksi dibatalkan atau masuk ke pusat resolusi, dana yang kembali ke pembeli akan sesuai dengan nominal pembayaran yang dilakukan.",
+      "Ecowave berhak melakukan tindakan yang diperlukan apabila diduga terjadi tindakan kecurangan yang dilakukan oleh pengguna yang melanggra syarat dan ketentuan dan merugikan Ecowave.",
+      "Dengan menggunakan voucher ini, pengguna dianggap telah memahami dan meyetujui semua Syarat dan Ketentuan yang berlaku.",
+      "Voucher ini tidak dapat digunakan bersamaan dengan voucher lain kecuali diatur lain sebagaimana kebijakan Ecowave.",
+    ];
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Syarat dan Ketentuan"),
@@ -60,8 +79,8 @@ class TermAndConditionPage extends StatelessWidget {
                 8.0.height,
                 Row(
                   children: [
-                    const Icon(
-                      Icons.alarm,
+                    const ImageIcon(
+                      AppIcons.payment,
                       size: 14.0,
                       color: AppColors.grey500,
                     ),
@@ -76,6 +95,26 @@ class TermAndConditionPage extends StatelessWidget {
                     ),
                   ],
                 ),
+                if (voucherModel.type == "Diskon") 8.0.height,
+                if (voucherModel.type == "Diskon")
+                  Row(
+                    children: [
+                      const ImageIcon(
+                        AppIcons.voucher,
+                        size: 14.0,
+                        color: AppColors.grey500,
+                      ),
+                      6.0.width,
+                      const Text("Maksimum diskon"),
+                      const Spacer(),
+                      Text(
+                        voucherModel.maximumDiscount.currencyFormatRp,
+                        style: const TextStyle(
+                          fontWeight: AppFontWeight.semibold,
+                        ),
+                      ),
+                    ],
+                  ),
                 16.0.height,
                 const Text(
                   "Syarat dan Ketentuan",
@@ -84,7 +123,24 @@ class TermAndConditionPage extends StatelessWidget {
                   ),
                 ),
                 8.0.height,
-                Text(voucherModel.termCondition),
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: voucherModel.type == "Gratis Ongkir"
+                      ? termAndConditionFreeShipping.length
+                      : termAndConditionDiscount.length,
+                  itemBuilder: (context, index) => Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("${index + 1}. "),
+                      Flexible(
+                        child: Text(voucherModel.type == "Gratis Ongkir"
+                            ? termAndConditionFreeShipping[index]
+                            : termAndConditionDiscount[index]),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),

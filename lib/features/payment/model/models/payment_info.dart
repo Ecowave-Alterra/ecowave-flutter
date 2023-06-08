@@ -18,6 +18,9 @@ class PaymentInfo {
 
     if (voucher?.type == "Diskon") {
       discountUsed = ((voucher?.discount ?? 0) * productPrice).toInt();
+      if (discountUsed > (voucher?.maximumDiscount ?? 0)) {
+        discountUsed = voucher!.maximumDiscount;
+      }
     } else if (discountUsed > shippingPrice) {
       discountUsed = shippingPrice;
     }
