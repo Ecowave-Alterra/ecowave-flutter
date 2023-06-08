@@ -25,7 +25,7 @@ class _ListInformationState extends State<ListInformation> {
         context.push(const ContentInformation());
       },
       child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 16),
+        margin: const EdgeInsets.symmetric(horizontal: 12),
         width: 357,
         height: 148,
         child: Row(
@@ -37,7 +37,6 @@ class _ListInformationState extends State<ListInformation> {
               height: 148,
               fit: BoxFit.cover,
             ),
-            18.0.width,
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -52,7 +51,7 @@ class _ListInformationState extends State<ListInformation> {
                 ),
                 Container(
                   alignment: Alignment.centerLeft,
-                  width: 212,
+                  width: context.fullWidth - 160.0,
                   child: Text(
                     widget.info,
                     style: const TextStyle(
