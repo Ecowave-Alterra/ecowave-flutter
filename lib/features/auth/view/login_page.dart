@@ -1,4 +1,5 @@
 import 'package:ecowave/features/auth/view/register_page.dart';
+import 'package:ecowave/features/home/view/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:ecowave/core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -38,12 +39,13 @@ class _LoginPageState extends State<LoginPage> {
         child: BlocConsumer<LoginBloc, LoginState>(
           listener: (context, state) {
             if (state is LoginError) {
-              "Email atau password tidak valid. Mohon coba lagi.".failedBar(context);
-               _emailController.clear();
-                        _passwordController.clear();
-                        context.read<LoginBloc>().add(const LoginInputChange());
+              "Email atau password tidak valid. Mohon coba lagi."
+                  .failedBar(context);
+              _emailController.clear();
+              _passwordController.clear();
+              context.read<LoginBloc>().add(const LoginInputChange());
             } else if (state is LoginSuccess) {
-              Navigator.pop(context);
+              context.push(MyHomePage());
             }
           },
           builder: (context, state) {
@@ -55,9 +57,9 @@ class _LoginPageState extends State<LoginPage> {
               label: 'Login',
               onPressed: state.isLoginButtonDisabled
                   ? () {}
-                  : () async{
+                  : () async {
                       if (_formKey.currentState!.validate()) {
-                       context
+                        context
                             .read<LoginBloc>()
                             .add(const LoginButtonPressed());
                       }
@@ -173,11 +175,17 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     36.0.height,
                     EcoFormButtonIcon(
-                        label: 'Lanjutkan menggunakan Google',
-                        onPressed: () {},
-                        backgroundColor: AppColors.white,
-                        textColor: AppColors.grey700,
-                        image: const Image(image: AppIcons.google)),
+                      label: 'Lanjutkan menggunakan Google',
+                      onPressed: () {},
+                      backgroundColor: AppColors.white,
+                      border: Border.all(
+                        color: AppColors.grey300,
+                      ),
+                      textColor: AppColors.grey700,
+                      image: const Image(
+                        image: AppIcons.google,
+                      ),
+                    ),
                     10.0.height,
                     EcoFormButton(
                       label: 'Belum punya akun? Daftar',

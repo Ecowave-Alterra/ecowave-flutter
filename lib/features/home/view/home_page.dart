@@ -1,11 +1,13 @@
-import 'package:ecowave/features/home/bloc/page_bloc.dart';
+
 import 'package:ecowave/features/home/view/dashboard_page.dart';
+import 'package:ecowave/features/profile/view/empty_session.dart';
 import 'package:ecowave/features/transaction/view/pages/history_transaction_page.dart';
 import 'package:flutter/material.dart';
 import 'package:ecowave/core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../profile/view/profile.dart';
+import '../bloc/home/home_bloc.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
@@ -17,15 +19,17 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<PageBloc, int>(
+    return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
         return Scaffold(
           body: IndexedStack(
-            index: state,
-            children: const [
-              DashboardPage(),
-              HistoryTransactionPage(),
-              ProfilePage(),
+            index: state.index,
+            children:  [
+              const DashboardPage(),
+              state.token != '' ?
+              const HistoryTransactionPage(): const EmptyUserPage() ,
+              state.token != '' ?
+              const ProfilePage(): const EmptyUserPage() ,
             ],
           ),
           bottomNavigationBar: Container(
@@ -48,19 +52,19 @@ class _MyHomePageState extends State<MyHomePage> {
                   index: 0,
                   label: "Beranda",
                   icon: AppIcons.beranda,
-                  state: state,
+                  state: state.index,
                 ),
                 _BottomNavCustom(
                   index: 1,
                   label: "Pesanan",
                   icon: AppIcons.pesanan,
-                  state: state,
+                  state: state.index,
                 ),
                 _BottomNavCustom(
                   index: 2,
                   label: "Saya",
                   icon: AppIcons.username,
-                  state: state,
+                  state: state.index,
                 ),
               ],
             ),
@@ -86,8 +90,9 @@ class _BottomNavCustom extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.read<HomeBloc>().add(UpdateSharedPreferences());
     return InkWell(
-      onTap: () => context.read<PageBloc>().add(index),
+      onTap: () => context.read<HomeBloc>().add(OnButtonTap(index)),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 12.0),
         child: Column(

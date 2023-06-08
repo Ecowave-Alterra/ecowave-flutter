@@ -1,10 +1,12 @@
 import 'package:ecowave/core.dart';
+import 'package:ecowave/features/home/bloc/home/home_bloc.dart';
 import 'package:ecowave/features/profile/view/edit_profile.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../address/view/pages/address_page.dart';
 import '../../change_password/view/change_password_user_page.dart';
-import 'empty_session.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -357,16 +359,25 @@ class ProfilePage extends StatelessWidget {
                 )
               ],
             ),
-            Container(
-              color: AppColors.grey50,
-              child: Padding(
-                padding: const EdgeInsets.all(20),
-                child: EcoFormButton(
-                  label: 'Log out',
-                  onPressed: () {
-                    context.push(const EmptyUserPage());
-                  },
-                  backgroundColor: AppColors.error500,
+            BlocListener<HomeBloc, HomeState>(
+              listener: (context, state) {
+              },
+              child: Container(
+                color: AppColors.grey50,
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: EcoFormButton(
+                    label: 'Log out',
+                    onPressed: () async {
+                      SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
+                      prefs.remove('userId');
+                      if (context.mounted) {
+                        context.read<HomeBloc>().add(LogOut());
+                      }
+                    },
+                    backgroundColor: AppColors.error500,
+                  ),
                 ),
               ),
             ),
