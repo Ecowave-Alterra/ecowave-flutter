@@ -5,9 +5,11 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core.dart';
+import '../../model/models/information_model.dart';
 
 class ContentInformation extends StatelessWidget {
-  const ContentInformation({super.key});
+  const ContentInformation({super.key, required this.informationModel});
+  final InformationModel informationModel;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +34,7 @@ class ContentInformation extends StatelessWidget {
                 children: [
                   16.0.height,
                   Text(
-                    state.data[5].title,
+                    informationModel.title,
                     style: const TextStyle(
                       fontSize: 20,
                       fontWeight: AppFontWeight.semibold,
@@ -41,7 +43,7 @@ class ContentInformation extends StatelessWidget {
                   ),
                   8.0.height,
                   Text(
-                    'by ecoInfo  |  ${DateFormat.yMMMMd().format(DateTime.parse(state.data[5].createdAt))}',
+                    'by ecoInfo  |  ${DateFormat.yMMMMd().format(DateTime.parse(informationModel.createdAt))}',
                     style: const TextStyle(
                       fontSize: 12,
                       fontWeight: AppFontWeight.regular,
@@ -50,11 +52,11 @@ class ContentInformation extends StatelessWidget {
                   ),
                   16.0.height,
                   Image.asset(
-                    state.data[5].photoContentUrl,
+                    informationModel.photoContentUrl,
                   ),
                   16.0.height,
                   Html(
-                    data: state.data[5].writingContent,
+                    data: informationModel.writingContent,
                   ),
                 ],
               );

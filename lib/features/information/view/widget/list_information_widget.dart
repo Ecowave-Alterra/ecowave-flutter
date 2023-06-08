@@ -1,3 +1,4 @@
+import 'package:ecowave/features/information/model/models/information_model.dart';
 import 'package:ecowave/features/information/view/pages/detail_information_page.dart';
 import 'package:flutter/material.dart';
 
@@ -9,8 +10,10 @@ class ListInformation extends StatefulWidget {
     required this.image,
     required this.date,
     required this.info,
+    required this.informationModel,
   });
   final String image, date, info;
+  final InformationModel informationModel;
 
   @override
   State<ListInformation> createState() => _ListInformationState();
@@ -22,7 +25,9 @@ class _ListInformationState extends State<ListInformation> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        context.push(const ContentInformation());
+        context.push(ContentInformation(
+          informationModel: widget.informationModel,
+        ));
       },
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 12),

@@ -1,4 +1,5 @@
 import 'package:ecowave/core.dart';
+import 'package:ecowave/features/information/model/models/information_model.dart';
 import 'package:ecowave/features/information/view/pages/detail_information_page.dart';
 import 'package:flutter/material.dart';
 
@@ -7,13 +8,17 @@ class CarouselCardInformation extends StatelessWidget {
     super.key,
     required this.images,
     required this.info,
+    required this.informationModel,
   });
   final String images, info;
+  final InformationModel informationModel;
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        context.push(const ContentInformation());
+        context.push(ContentInformation(
+          informationModel: informationModel,
+        ));
       },
       child: Card(
         shape: RoundedRectangleBorder(

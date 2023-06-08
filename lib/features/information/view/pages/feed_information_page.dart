@@ -75,6 +75,7 @@ class _InformationPageState extends State<InformationPage> {
                     return CarouselCardInformation(
                       images: state.data[index].photoContentUrl,
                       info: state.data[index].title,
+                      informationModel: state.data[index],
                     );
                   },
                   carouselController: _controller,
@@ -141,6 +142,7 @@ class _InformationPageState extends State<InformationPage> {
                           state.data[index].createdAt,
                         )),
                         info: state.data[index].title,
+                        informationModel: state.data[index],
                       );
                     },
                     separatorBuilder: (context, index) => const Divider(
