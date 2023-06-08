@@ -45,7 +45,7 @@ class _LoginPageState extends State<LoginPage> {
               _passwordController.clear();
               context.read<LoginBloc>().add(const LoginInputChange());
             } else if (state is LoginSuccess) {
-              context.push(MyHomePage());
+              context.push(const MyHomePage());
             }
           },
           builder: (context, state) {

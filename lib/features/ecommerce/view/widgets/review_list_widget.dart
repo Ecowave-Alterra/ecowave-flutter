@@ -2,30 +2,30 @@ import 'package:ecowave/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
-import '../../model/review_model.dart';
+import '../../model/models/rating_product_model.dart';
 
 class ReviewListWidget extends StatelessWidget {
   const ReviewListWidget({super.key, this.review});
-  final ReviewModel? review;
+  final RatingProductModel? review;
 
   @override
   Widget build(BuildContext context) {
-    final List<ReviewModel> reviews = [
-      ReviewModel(
+    final List<RatingProductModel> reviews = [
+      RatingProductModel(
         reviewerPhoto: const AssetImage(AppImages.cardInfo4),
         reviewerName: 'Muhammad Nabil',
         reviewerStar: 5,
         reviewerDesc: 'Keren bangetttt, recommend banget!!',
         reviewPhoto: Image.asset(AppImages.productShop2),
       ),
-      ReviewModel(
+      RatingProductModel(
         reviewerPhoto: const AssetImage(AppImages.cardInfo4),
         reviewerName: 'Muhammad Nabil',
         reviewerStar: 4,
         reviewerDesc:
             'Menjelaskan produk ini dapat digunakan untuk apa dan apa manfaat dari produk ini.',
       ),
-      ReviewModel(
+      RatingProductModel(
         reviewerPhoto: const AssetImage(AppImages.cardInfo6),
         reviewerName: 'Karina',
         reviewerStar: 3,
