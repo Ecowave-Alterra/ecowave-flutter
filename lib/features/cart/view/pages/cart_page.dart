@@ -1,4 +1,4 @@
-import 'package:ecowave/features/cart/model/entity/cart_model.dart';
+import 'package:ecowave/features/cart/model/models/cart_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -15,51 +15,8 @@ class CartPage extends StatefulWidget {
 
 class _CartPageState extends State<CartPage> {
   bool checkedAll = false;
-  final List<CartModel> data = [
-    CartModel(
-      id: '1',
-      nameItems: 'Botol',
-      detailItems: 'Perabot',
-      price: '50000',
-      totalItems: 0,
-      image: AppImages.productShop1,
-      checkedItems: false,
-    ),
-    CartModel(
-      id: '2',
-      nameItems: 'ToteBag',
-      detailItems: 'Kantong',
-      price: '39000',
-      totalItems: 0,
-      image: AppImages.productShop2,
-      checkedItems: false,
-    ),
-    CartModel(
-      id: '3',
-      nameItems: 'ToteBag',
-      detailItems: 'Kantong',
-      price: '40000',
-      totalItems: 0,
-      image: AppImages.productShop7,
-      checkedItems: false,
-    ),
-  ];
   @override
   Widget build(BuildContext context) {
-    for (CartModel item in data) {
-      context.read<CartBloc>().add(
-            AddItemCart(
-              cartModel: CartModel(
-                  id: item.id,
-                  nameItems: item.nameItems,
-                  detailItems: item.detailItems,
-                  image: item.image,
-                  price: item.price,
-                  totalItems: item.totalItems,
-                  checkedItems: item.checkedItems),
-            ),
-          );
-    }
     context.read<CartBloc>().add(GetItemCart());
     return Scaffold(
       appBar: AppBar(

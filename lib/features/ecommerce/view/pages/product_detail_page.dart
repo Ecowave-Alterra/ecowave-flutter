@@ -1,8 +1,12 @@
 import 'package:ecowave/features/cart/view/pages/cart_page.dart';
 import 'package:ecowave/features/ecommerce/view/widgets/product_description_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../../../core.dart';
+import '../../../cart/bloc/cart/cart_bloc.dart';
+import '../../../cart/model/models/cart_model.dart';
 import '../widgets/carousel_barang_widget.dart';
 
 class ProductDetail extends StatelessWidget {
@@ -41,7 +45,21 @@ class ProductDetail extends StatelessWidget {
         child: Row(
           children: [
             TextButton(
-              onPressed: () {},
+              onPressed: () {
+                final String id = const Uuid().v1();
+                context.read<CartBloc>().add(
+                      AddItemCart(
+                        cartModel: CartModel(
+                            id: id,
+                            nameItems: 'Tote Bag Putih Polos',
+                            detailItems: 'Kategori : Kantong',
+                            image: AppImages.productShop2,
+                            price: 5000.currencyFormatRp,
+                            totalItems: 1,
+                            checkedItems: false),
+                      ),
+                    );
+              },
               child: Container(
                 height: 48.0,
                 width: 171.0,

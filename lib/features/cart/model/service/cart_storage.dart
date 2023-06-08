@@ -1,6 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../entity/cart_model.dart';
+import '../models/cart_model.dart';
 
 class CartService {
   late SharedPreferences _preferences;

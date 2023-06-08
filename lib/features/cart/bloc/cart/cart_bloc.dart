@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../model/entity/cart_model.dart';
+import '../../model/models/cart_model.dart';
 import '../../model/service/cart_storage.dart';
 
 part 'cart_event.dart';

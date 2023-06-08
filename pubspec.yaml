@@ -28,6 +28,8 @@ dependencies:
   shared_preferences: ^2.1.1
   dio: ^5.1.2
   equatable: ^2.0.5
+  flutter_html:
+  uuid: ^3.0.7 
 
 flutter_launcher_icons:
   android: "launcher_icon"
