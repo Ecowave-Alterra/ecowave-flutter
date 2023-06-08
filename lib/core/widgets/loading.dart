@@ -25,55 +25,56 @@ class _EcoLoadingState extends State<EcoLoading>
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(AppSizes.radiusButton),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.green.withOpacity(0.5),
-            spreadRadius: 2,
-            blurRadius: 5,
-            offset: const Offset(0, 3),
-          ),
-        ],
-      ),
-      width: 6*AppSizes.secondary,
-      height: 6*AppSizes.secondary,
+    return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          RotationTransition(
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(AppSizes.radiusButton),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.green.withOpacity(0.5),
+                spreadRadius: 2,
+                blurRadius: 5,
+                offset: const Offset(0, 3),
+              ),
+            ],
+          ),
+          width: 6 * AppSizes.secondary,
+          height: 6 * AppSizes.secondary,
+          child: RotationTransition(
             turns: _animation,
             child: const SizedBox(
-              width:3*AppSizes.secondary,
-              height: 6*AppSizes.secondary,
+              width: 3 * AppSizes.secondary,
+              height: 6 * AppSizes.secondary,
               child: CircularProgressIndicator(
                 color: AppColors.primary300,
               ),
             ),
           ),
-          const SizedBox(height: AppSizes.primary),
-          AnimatedBuilder(
-            animation: _animation,
-            builder: (context, child) {
-              return Opacity(
-                opacity: _animation.value,
-                child: child,
-              );
-            },
-            child: const Text(
-              'Loading...',
-              style: TextStyle(
-                fontSize: AppSizes.primary,
-                fontWeight: FontWeight.bold,
-                color: AppColors.grey700,
+        ),
+         const SizedBox(height: AppSizes.primary),
+            AnimatedBuilder(
+              animation: _animation,
+              builder: (context, child) {
+                return Opacity(
+                  opacity: _animation.value,
+                  child: child,
+                );
+              },
+              child: const Text(
+                'Loading...',
+                style: TextStyle(
+                  fontSize: AppSizes.primary,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.grey700,
+                ),
               ),
             ),
-          ),
-        ],
-      ),
+      ]),
     );
   }
 }
