@@ -1,3 +1,5 @@
+import 'package:ecowave/features/information/bloc/informatio/information_bloc.dart';
+import 'package:ecowave/features/information/model/services/information_service.dart';
 import 'package:ecowave/features/ecommerce/bloc/product_home/product_bloc.dart';
 import 'package:ecowave/features/ecommerce/model/services/product_service.dart';
 import 'package:ecowave/features/home/bloc/page_bloc.dart';
@@ -25,6 +27,7 @@ void init() {
   locator.registerFactory(() => PaymentDetailBloc());
   locator.registerFactory(() => HistoryTransactionBloc(locator()));
   locator.registerFactory(() => VoucherBloc(locator()));
+  locator.registerFactory(() => InformationBloc(locator()));
   locator.registerFactory(() => ProductBloc(locator()));
 
   // service
@@ -36,5 +39,6 @@ void init() {
   locator.registerLazySingleton<HistoryTransactionService>(
       () => HistoryTransactionService());
   locator.registerLazySingleton<VoucherService>(() => VoucherService());
+  locator.registerLazySingleton<InformationService>(() => InformationService());
   locator.registerLazySingleton<ProductService>(() => ProductService());
 }
