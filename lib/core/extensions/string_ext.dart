@@ -55,14 +55,14 @@ extension DialogExt on String {
 }
 
 extension ValidationExt on String {
-  bool isValidEmail() {
+  bool isNotValidEmail() {
     final RegExp emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
     return !emailRegex.hasMatch(this);
   }
 
-  bool isValidPhoneNumber() {
+  bool isNotValidPhoneNumber() {
     final RegExp phoneRegex = RegExp(
-      r'^62\d{9,12}$',
+      r'^0\d{9,12}$',
     );
     return !phoneRegex.hasMatch(this);
   }
