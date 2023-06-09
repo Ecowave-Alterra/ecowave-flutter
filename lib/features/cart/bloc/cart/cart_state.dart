@@ -5,10 +5,12 @@ abstract class CartState {}
 
 class CartInitial extends CartState {}
 
-class CartSuccess extends CartState {
-  final List<CartModel>? data;
+class CartLoading extends CartState {}
 
-  CartSuccess({this.data});
+class CartSuccess extends CartState {
+  final List<CartModel> data;
+
+  CartSuccess({required this.data});
 }
 
 class CartError extends CartState {}

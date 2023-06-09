@@ -32,7 +32,21 @@ class DeleteAllItemCart extends CartEvent {}
 
 class CheckedItemCart extends CartEvent {
   final String id;
-  bool value;
+  final bool value;
 
   CheckedItemCart({required this.value, required this.id});
+}
+
+class CheckedAllItemCart extends CartEvent {
+  final bool value;
+  CheckedAllItemCart({
+    required this.value,
+  });
+}
+
+class GetTotalPayment extends CartEvent {
+  double total;
+  GetTotalPayment({
+    required this.total,
+  });
 }

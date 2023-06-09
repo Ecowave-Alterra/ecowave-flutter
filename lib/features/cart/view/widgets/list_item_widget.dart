@@ -1,5 +1,4 @@
 import 'package:ecowave/features/cart/bloc/cart/cart_bloc.dart';
-import 'package:ecowave/features/cart/model/models/cart_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -64,7 +63,7 @@ class _ListItemState extends State<ListItem> {
                 ),
                 12.0.height,
                 Text(
-                  'Rp. ${widget.price}',
+                  widget.price,
                   style: const TextStyle(
                     fontSize: 12,
                     fontWeight: AppFontWeight.regular,
@@ -79,33 +78,42 @@ class _ListItemState extends State<ListItem> {
             Row(
               children: [
                 SizedBox(
-                  width: MediaQuery.of(context).size.width - 215,
+                  width: MediaQuery.of(context).size.width - 240,
                 ),
-                InkWell(
-                    child: const ImageIcon(
+                IconButton(
+                    icon: const ImageIcon(
                       AppIcons.min,
                       size: 10,
                       color: AppColors.grey500,
                     ),
-                    onTap: () => context
+                    onPressed: () => context
                         .read<CartBloc>()
                         .add(ReduceTotalItemCart(id: widget.id))),
                 12.5.width,
-                BlocBuilder<CartBloc, List<CartModel>>(
+                BlocBuilder<CartBloc, CartState>(
                   builder: (context, state) {
-                    return Text(widget.totalItems.toString());
+                    if (state is CartLoading) {
+                      return const EcoLoading();
+                    } else if (state is CartSuccess) {
+                      return Text(widget.totalItems.toString());
+                    } else if (state is CartError) {
+                      return const Text('error');
+                    } else {
+                      return const SizedBox.shrink();
+                    }
                   },
                 ),
                 12.5.width,
-                InkWell(
-                    child: const ImageIcon(
-                      AppIcons.add,
-                      size: 10,
-                      color: AppColors.primary500,
-                    ),
-                    onTap: () => context
-                        .read<CartBloc>()
-                        .add(AddTotalItemCart(id: widget.id))),
+                IconButton(
+                  onPressed: () => context
+                      .read<CartBloc>()
+                      .add(AddTotalItemCart(id: widget.id)),
+                  icon: const ImageIcon(
+                    AppIcons.add,
+                    size: 10,
+                    color: AppColors.primary500,
+                  ),
+                ),
               ],
             ),
             const Spacer(),
