@@ -149,6 +149,15 @@ class _UpdateAddressPageState extends State<UpdateAddressPage> {
                 label: 'Catatan untuk Kurir (Optional)',
                 hint: 'Catatan untuk Kurir (Optional)',
                 floatingLabelBehavior: FloatingLabelBehavior.auto,
+                onChanged: (value) {
+                  if (nameController.text.isNotEmpty &&
+                      phoneController.text.isNotEmpty &&
+                      addressController.text.isNotEmpty) {
+                    isExist.value = true;
+                  } else {
+                    isExist.value = false;
+                  }
+                },
               ),
               26.0.height,
               Padding(
@@ -181,6 +190,13 @@ class _UpdateAddressPageState extends State<UpdateAddressPage> {
                                 value: 2,
                                 groupValue: currentIndexMark,
                                 onChanged: (index) {
+                                  if (nameController.text.isNotEmpty &&
+                                      phoneController.text.isNotEmpty &&
+                                      addressController.text.isNotEmpty) {
+                                    isExist.value = true;
+                                  } else {
+                                    isExist.value = false;
+                                  }
                                   currentIndexMark = index!;
                                   changeState(() {});
                                 },
@@ -208,6 +224,13 @@ class _UpdateAddressPageState extends State<UpdateAddressPage> {
                             activeColor: AppColors.primary500,
                             value: isSwitched,
                             onChanged: (value) {
+                              if (nameController.text.isNotEmpty &&
+                                  phoneController.text.isNotEmpty &&
+                                  addressController.text.isNotEmpty) {
+                                isExist.value = true;
+                              } else {
+                                isExist.value = false;
+                              }
                               isSwitched = value;
                               changeState(() {});
                             },
