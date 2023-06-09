@@ -90,9 +90,9 @@ class _BottomNavCustom extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.read<HomeBloc>().add(UpdateSharedPreferences());
+    context.read<HomeBloc>().add(const UpdateSharedPreferences());
     return InkWell(
-      onTap: () => context.read<HomeBloc>().add(OnButtonTap(index)),
+      onTap: () => context.read<HomeBloc>().add(OnBottomNavTap(index)),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 12.0),
         child: Column(

@@ -19,7 +19,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       }
     });
 
-    on<OnButtonTap>((event, emit) {
+    on<OnBottomNavTap>((event, emit) {
       emit(state.copyWith(index: event.index));
     });
 

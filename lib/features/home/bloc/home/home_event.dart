@@ -7,10 +7,10 @@ class HomeEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class OnButtonTap extends HomeEvent {
+class OnBottomNavTap extends HomeEvent {
   final int index;
 
-  const OnButtonTap(this.index);
+  const OnBottomNavTap(this.index);
 
   @override
   List<Object?> get props => [index];
