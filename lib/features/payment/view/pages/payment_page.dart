@@ -15,8 +15,9 @@ class PaymentPage extends StatelessWidget {
     final int endTime = targetTime.millisecondsSinceEpoch;
 
     final PaymentMethodModel paymentMethod = PaymentMethodModel(
+      id: 1,
       name: "OVO",
-      iconUrl: AppImages.ovo,
+      iconUrl: "https://i.ibb.co/S32HNjD/no-image.jpg",
       type: PaymentMethodType.eWallet,
       instructions: [
         "Lakukan login pada aplikasi  OVO",
@@ -83,8 +84,8 @@ class PaymentPage extends StatelessWidget {
           16.0.height,
           Row(
             children: [
-              Image.asset(
-                "https://i.ibb.co/S32HNjD/no-image.jpg",
+              Image.network(
+                paymentMethod.iconUrl,
                 width: 24.0,
               ),
               6.0.width,
