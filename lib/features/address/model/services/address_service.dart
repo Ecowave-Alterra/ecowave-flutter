@@ -46,7 +46,7 @@ class AddressService {
 
   Future<List<AddressModel>> getAddresses() async {
     try {
-      // const String url = '................';
+      // const String url = 'localhost:8080/user/address';
       // final response = await _dio.get(url);
 
       List<Map<String, dynamic>> datas = dummy["Data"];
@@ -59,8 +59,19 @@ class AddressService {
 
   Future<bool> createAddresses(AddressRequest request) async {
     try {
-      // const String url = '................';
-      // final response = await _dio.get(url);
+      // const String url = 'localhost:8080/user/address';
+      // final response = await _dio.post(url);
+
+      return true;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<bool> updateAddresses(int id, AddressRequest request) async {
+    try {
+      // const String url = 'localhost:8080/user/address/$id';
+      // final response = await _dio.put(url);
 
       return true;
     } catch (e) {

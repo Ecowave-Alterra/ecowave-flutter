@@ -15,3 +15,12 @@ class AddAddressesEvent extends AddressEvent {
     required this.request,
   });
 }
+
+class UpdateAddressesEvent extends AddressEvent {
+  final int id;
+  final AddressRequest request;
+  const UpdateAddressesEvent({
+    required this.id,
+    required this.request,
+  });
+}

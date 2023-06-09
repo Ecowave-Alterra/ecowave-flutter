@@ -1,5 +1,6 @@
 import 'package:ecowave/core.dart';
 import 'package:ecowave/features/address/model/models/address_model.dart';
+import 'package:ecowave/features/address/view/pages/update_adress_page.dart';
 import 'package:flutter/material.dart';
 
 class ShippingAddressCard extends StatelessWidget {
@@ -81,7 +82,9 @@ class ShippingAddressCard extends StatelessWidget {
               child: EcoFormButton(
                 width: 62.0,
                 label: "Ubah",
-                onPressed: () {},
+                onPressed: () => context.push(UpdateAddressPage(
+                  addressModel: addressModel,
+                )),
                 backgroundColor: Colors.transparent,
                 border: Border.all(
                   color: AppColors.primary500,

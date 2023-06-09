@@ -10,8 +10,8 @@ class AddressModel {
   final String recipient;
   final String phoneNumber;
   final String address;
-  final String note;
-  final String mark;
+  final String? note;
+  final String? mark;
   final bool isPrimary;
   final int userId;
 
@@ -20,8 +20,8 @@ class AddressModel {
     required this.recipient,
     required this.phoneNumber,
     required this.address,
-    required this.note,
-    required this.mark,
+    this.note,
+    this.mark,
     required this.isPrimary,
     required this.userId,
   });

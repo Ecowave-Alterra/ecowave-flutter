@@ -18,7 +18,6 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
       try {
         final List<AddressModel> result = await service.getAddresses();
         emit(AddressSuccess(data: result));
-        print(result);
       } catch (e) {
         emit(AddressFailed(meesage: e.toString()));
       }
@@ -30,10 +29,25 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
         final bool isCreated = await service.createAddresses(event.request);
         if (isCreated) {
           add(GetAddressesEvent());
-          print("created: ${event.request.toJson()}");
         } else {
           emit(const AddressFailed(
               meesage: "Gagal menyimpan alamat, silahkan coba lagi nanti"));
+        }
+      } catch (e) {
+        emit(AddressFailed(meesage: e.toString()));
+      }
+    });
+
+    on<UpdateAddressesEvent>((event, emit) async {
+      emit(AddressLoading());
+      try {
+        final bool isCreated =
+            await service.updateAddresses(event.id, event.request);
+        if (isCreated) {
+          add(GetAddressesEvent());
+        } else {
+          emit(const AddressFailed(
+              meesage: "Gagal memperbarui alamat, silahkan coba lagi nanti"));
         }
       } catch (e) {
         emit(AddressFailed(meesage: e.toString()));

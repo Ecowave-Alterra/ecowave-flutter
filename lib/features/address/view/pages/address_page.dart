@@ -1,6 +1,7 @@
 import 'package:ecowave/core.dart';
 import 'package:ecowave/features/address/bloc/address/address_bloc.dart';
 import 'package:ecowave/features/address/view/pages/add_adress_page.dart';
+import 'package:ecowave/features/address/view/pages/update_adress_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -111,7 +112,9 @@ class AddressPage extends StatelessWidget {
                             border: Border.all(color: AppColors.primary500),
                           ),
                           child: TextButton(
-                            onPressed: () {},
+                            onPressed: () => context.push(UpdateAddressPage(
+                              addressModel: state.data[index],
+                            )),
                             child: const Text(
                               'Ubah',
                               style: TextStyle(
