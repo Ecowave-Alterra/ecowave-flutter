@@ -3,7 +3,7 @@ import 'package:ecowave/features/payment/model/models/shipping_address_model.dar
 import 'package:flutter/material.dart';
 
 class AddressInfoWidget extends StatelessWidget {
-  final ShippingAddressModel addressModel;
+  final ShippingAddressModel? addressModel;
   final VoidCallback onChangeTap;
 
   const AddressInfoWidget({
@@ -30,9 +30,11 @@ class AddressInfoWidget extends StatelessWidget {
                 ),
               ),
               12.0.height,
-              Text("${addressModel.recipient} (${addressModel.mark})"),
-              Text(addressModel.phone),
-              Text(addressModel.address),
+              if (addressModel == null) const Text("-"),
+              if (addressModel != null)
+                Text("${addressModel!.recipient} (${addressModel!.mark})"),
+              if (addressModel != null) Text(addressModel!.phone),
+              if (addressModel != null) Text(addressModel!.address),
             ],
           ),
           OutlinedButton(

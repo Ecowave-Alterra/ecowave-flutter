@@ -1,5 +1,6 @@
 import 'package:ecowave/core.dart';
 import 'package:ecowave/features/address/view/pages/add_adress_page.dart';
+import 'package:ecowave/features/payment/bloc/payment_detail/payment_detail_bloc.dart';
 import 'package:ecowave/features/payment/bloc/shipping_address/shipping_address_bloc.dart';
 import 'package:ecowave/features/payment/model/models/shipping_address_model.dart';
 import 'package:ecowave/features/payment/view/widgets/shipping_address_card.dart';
@@ -16,7 +17,7 @@ class ShippingAddressPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String? selectedOption = currentAddress?.address;
+    ShippingAddressModel? selectedOption = currentAddress;
     final ValueNotifier<bool> isExist =
         ValueNotifier<bool>(selectedOption == null ? false : true);
 
@@ -47,24 +48,35 @@ class ShippingAddressPage extends StatelessWidget {
                       .add(GetShippingAddressesEvent()),
                 );
               } else if (state is ShippingAddressSuccess) {
-                return StatefulBuilder(
-                  builder: (context, changeState) {
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: state.data.length,
-                      itemBuilder: (context, index) => ShippingAddressCard(
-                        selectedOption: selectedOption,
-                        addressModel: state.data[index],
-                        onTap: () {
-                          selectedOption = state.data[index].address;
-                          isExist.value = true;
-                          changeState(() {});
-                        },
-                      ),
-                    );
-                  },
-                );
+                if (state.data.isEmpty) {
+                  return SizedBox(
+                    height: context.fullHeight / 1.4,
+                    child: EcoEmpty(
+                      massage: "Kamu belum menambahkan alamat",
+                      image: AppImages.emptyState,
+                      height: context.fullWidth / 2,
+                    ),
+                  );
+                } else {
+                  return StatefulBuilder(
+                    builder: (context, changeState) {
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: state.data.length,
+                        itemBuilder: (context, index) => ShippingAddressCard(
+                          selectedOption: selectedOption?.id,
+                          addressModel: state.data[index],
+                          onTap: () {
+                            selectedOption = state.data[index];
+                            isExist.value = true;
+                            changeState(() {});
+                          },
+                        ),
+                      );
+                    },
+                  );
+                }
               } else {
                 return const SizedBox.shrink();
               }
@@ -79,7 +91,16 @@ class ShippingAddressPage extends StatelessWidget {
           builder: (context, value, _) => EcoFormButton(
             height: 45.0,
             label: "Konfirmasi",
-            onPressed: value ? () => context.pop() : null,
+            onPressed: value
+                ? () {
+                    context
+                        .read<PaymentDetailBloc>()
+                        .add(ChangeShippingAddressEvent(
+                          shippingAddressModel: selectedOption!,
+                        ));
+                    context.pop();
+                  }
+                : null,
           ),
         ),
       ),

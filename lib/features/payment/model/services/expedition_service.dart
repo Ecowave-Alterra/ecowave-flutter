@@ -8,6 +8,7 @@ class ExpeditionService {
 
   List dummy = [
     {
+      "id": 1,
       "name": "JNE",
       "price": 10000,
       "estimate": 7,
@@ -16,6 +17,7 @@ class ExpeditionService {
       "deleted_at": null
     },
     {
+      "id": 2,
       "name": "JNT",
       "price": 12000,
       "estimate": 4,
@@ -24,6 +26,7 @@ class ExpeditionService {
       "deleted_at": null
     },
     {
+      "id": 3,
       "name": "SiCepat",
       "price": 16000,
       "estimate": 2,

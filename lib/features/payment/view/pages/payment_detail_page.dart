@@ -1,9 +1,10 @@
 import 'package:ecowave/core.dart';
+import 'package:ecowave/features/payment/bloc/payment_detail/payment_detail_bloc.dart';
 import 'package:ecowave/features/payment/bloc/voucher/voucher_bloc.dart';
 import 'package:ecowave/features/payment/bloc/expedition/expedition_bloc.dart';
 import 'package:ecowave/features/payment/bloc/shipping_address/shipping_address_bloc.dart';
 import 'package:ecowave/features/payment/bloc/payment_method/payment_method_bloc.dart';
-import 'package:ecowave/features/payment/model/models/payment_info.dart';
+import 'package:ecowave/features/payment/model/models/shipping_address_model.dart';
 import 'package:ecowave/features/payment/view/pages/payment_page.dart';
 import 'package:ecowave/features/payment/view/pages/payment_waiting_page.dart';
 import 'package:ecowave/features/payment/view/pages/voucher_page.dart';
@@ -23,6 +24,7 @@ class PaymentDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.read<PaymentDetailBloc>().add(const PointUsedEvent(pointUsed: 0));
     context.read<VoucherBloc>().add(GetVouchersEvent());
     context.read<ExpeditionBloc>().add(GetExpeditionsEvent());
     context.read<ShippingAddressBloc>().add(GetShippingAddressesEvent());
@@ -34,26 +36,48 @@ class PaymentDetailPage extends StatelessWidget {
       ),
       body: ListView(
         children: [
-          BlocBuilder<ShippingAddressBloc, ShippingAddressState>(
+          BlocBuilder<PaymentDetailBloc, PaymentDetailState>(
             builder: (context, state) {
-              if (state is ShippingAddressLoading) {
-                return const EcoLoading();
-              } else if (state is ShippingAddressFailed) {
-                return EcoError(
-                  errorMessage: state.meesage,
-                  onRetry: () {},
-                );
-              } else if (state is ShippingAddressSuccess) {
+              if (state.shippingAddressModel != null) {
                 return AddressInfoWidget(
-                  addressModel:
-                      state.data.where((element) => element.isPrimary).first,
+                  addressModel: state.shippingAddressModel,
                   onChangeTap: () => context.push(ShippingAddressPage(
-                    currentAddress:
-                        state.data.where((element) => element.isPrimary).first,
+                    currentAddress: state.shippingAddressModel,
                   )),
                 );
               } else {
-                return const SizedBox.shrink();
+                return BlocBuilder<ShippingAddressBloc, ShippingAddressState>(
+                  builder: (context, state) {
+                    if (state is ShippingAddressLoading) {
+                      return const EcoLoading();
+                    } else if (state is ShippingAddressFailed) {
+                      return EcoError(
+                        errorMessage: state.meesage,
+                        onRetry: () {},
+                      );
+                    } else if (state is ShippingAddressSuccess) {
+                      final ShippingAddressModel shippingAddressModel = state
+                          .data
+                          .where((element) => element.isPrimary)
+                          .first;
+
+                      context
+                          .read<PaymentDetailBloc>()
+                          .add(ChangeShippingAddressEvent(
+                            shippingAddressModel: shippingAddressModel,
+                          ));
+
+                      return AddressInfoWidget(
+                        addressModel: shippingAddressModel,
+                        onChangeTap: () => context.push(ShippingAddressPage(
+                          currentAddress: shippingAddressModel,
+                        )),
+                      );
+                    } else {
+                      return const SizedBox.shrink();
+                    }
+                  },
+                );
               }
             },
           ),
@@ -65,41 +89,65 @@ class PaymentDetailPage extends StatelessWidget {
                   [1, 2, 3].map((e) => const SelectedProductCard()).toList(),
             ),
           ),
-          CheckoutSettingButton(
-            value: null,
-            label: "Pilih Opsi Pengiriman",
-            onPressed: () =>
-                context.push(const ShippingOptionsPage(shipping: null)),
+          BlocBuilder<PaymentDetailBloc, PaymentDetailState>(
+            builder: (context, state) {
+              return CheckoutSettingButton(
+                value: state.expeditionModel?.name,
+                label: "Pilih Opsi Pengiriman",
+                icon: AppIcons.shipping,
+                onPressed: () => context.push(ShippingOptionsPage(
+                  shipping: state.expeditionModel,
+                )),
+              );
+            },
           ),
           16.0.height,
-          CheckoutSettingButton(
-            value: null,
-            label: "Gunakan Voucher",
-            onPressed: () => context.push(const VoucherPage(
-              currentVoucher: null,
-            )),
+          BlocBuilder<PaymentDetailBloc, PaymentDetailState>(
+            builder: (context, state) {
+              return CheckoutSettingButton(
+                value: state.voucherModel?.name,
+                label: "Gunakan Voucher",
+                icon: AppIcons.voucher,
+                iconColor: AppColors.warning500,
+                onPressed: () => context.push(VoucherPage(
+                  productPrice: state.paymentInfo?.productPrice ?? 0,
+                  currentVoucher: state.voucherModel,
+                )),
+              );
+            },
           ),
           16.0.height,
           CheckoutSettingSwitch(
+            currentPoint: 9000,
             label: "Tukarkan Point",
-            onChanged: (value) {},
+            onChanged: (value) => context
+                .read<PaymentDetailBloc>()
+                .add(PointUsedEvent(pointUsed: value)),
           ),
           16.0.height,
-          CheckoutSettingButton(
-            value: null,
-            label: "Pilih Metode Pembayaran",
-            onPressed: () => context.push(const PaymentMethodPage(
-              currentPaymentMethod: null,
-            )),
+          BlocBuilder<PaymentDetailBloc, PaymentDetailState>(
+            builder: (context, state) {
+              return CheckoutSettingButton(
+                value: state.paymentMethodModel?.name,
+                label: "Pilih Metode Pembayaran",
+                icon: AppIcons.payment,
+                onPressed: () => context.push(PaymentMethodPage(
+                  currentPaymentMethod: state.paymentMethodModel,
+                )),
+              );
+            },
           ),
           16.0.height,
-          PaymentInfoWidget(
-            paymentInfo: PaymentInfo(
-              productPrice: 89000,
-              shippingPrice: 10000,
-              pointUsed: 0,
-              voucher: null,
-            ),
+          BlocBuilder<PaymentDetailBloc, PaymentDetailState>(
+            builder: (context, state) {
+              if (state.status == DataStateStatus.success) {
+                return PaymentInfoWidget(
+                  paymentInfo: state.paymentInfo!,
+                );
+              } else {
+                return const SizedBox.shrink();
+              }
+            },
           ),
         ],
       ),
@@ -117,25 +165,53 @@ class PaymentDetailPage extends StatelessWidget {
                 children: [
                   const Text("Total Pembayaran"),
                   5.0.height,
-                  Text(
-                    89000.currencyFormatRp,
-                    style: const TextStyle(
-                      fontWeight: AppFontWeight.semibold,
-                    ),
+                  BlocBuilder<PaymentDetailBloc, PaymentDetailState>(
+                    builder: (context, state) {
+                      return Text(
+                        (state.paymentInfo?.totalPayment ?? 0).currencyFormatRp,
+                        style: const TextStyle(
+                          fontWeight: AppFontWeight.semibold,
+                        ),
+                      );
+                    },
                   ),
                 ],
               ),
             ),
             Flexible(
               flex: 1,
-              child: EcoFormButton(
-                label: "Order Sekarang",
-                onPressed: () async {
-                  await context.push(const PaymentPage());
-                  if (context.mounted) {
-                    await context.pushAndRemoveUntil(
-                        const PaymentWaitingPage(), (route) => route.isFirst);
-                  }
+              child: BlocBuilder<PaymentDetailBloc, PaymentDetailState>(
+                builder: (context, state) {
+                  return EcoFormButton(
+                    label: "Order Sekarang",
+                    onPressed: state.shippingAddressModel == null ||
+                            state.expeditionModel == null ||
+                            state.paymentMethodModel == null
+                        ? null
+                        : () async {
+                            await context.push(const PaymentPage());
+                            if (context.mounted) {
+                              context.read<PaymentDetailBloc>().add(
+                                    CheckoutEvent(
+                                      shippingAddressModel:
+                                          state.shippingAddressModel!,
+                                      paymentMethodModel:
+                                          state.paymentMethodModel!,
+                                      expeditionModel: state.expeditionModel!,
+                                      voucherModel: state.voucherModel,
+                                      products: const [],
+                                      pointUsed: state.pointUsed,
+                                      totalPayment:
+                                          state.paymentInfo!.totalPayment,
+                                    ),
+                                  );
+
+                              await context.pushAndRemoveUntil(
+                                  const PaymentWaitingPage(),
+                                  (route) => route.isFirst);
+                            }
+                          },
+                  );
                 },
               ),
             ),

@@ -1,4 +1,5 @@
 import 'package:ecowave/core.dart';
+import 'package:ecowave/features/payment/bloc/payment_detail/payment_detail_bloc.dart';
 import 'package:ecowave/features/payment/bloc/payment_method/payment_method_bloc.dart';
 import 'package:ecowave/features/payment/model/models/payment_method_model.dart';
 import 'package:ecowave/features/payment/model/models/payment_method_type.dart';
@@ -6,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PaymentMethodPage extends StatelessWidget {
-  final String? currentPaymentMethod;
+  final PaymentMethodModel? currentPaymentMethod;
 
   const PaymentMethodPage({
     super.key,
@@ -15,7 +16,7 @@ class PaymentMethodPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String? selectedOption = currentPaymentMethod;
+    PaymentMethodModel? selectedOption = currentPaymentMethod;
     final ValueNotifier<bool> isExist =
         ValueNotifier<bool>(selectedOption == null ? false : true);
 
@@ -59,7 +60,7 @@ class PaymentMethodPage extends StatelessWidget {
                       final PaymentMethodModel element = state.ewallets[index];
                       return InkWell(
                         onTap: () {
-                          selectedOption = element.name;
+                          selectedOption = element;
                           isExist.value = true;
                           changeState(() {});
                         },
@@ -81,7 +82,7 @@ class PaymentMethodPage extends StatelessWidget {
                                 ),
                               ),
                               const Spacer(),
-                              if (selectedOption == element.name)
+                              if (selectedOption?.id == element.id)
                                 const Icon(
                                   Icons.check,
                                   color: AppColors.primary500,
@@ -116,7 +117,7 @@ class PaymentMethodPage extends StatelessWidget {
                           state.bankTransfers[index];
                       return InkWell(
                         onTap: () {
-                          selectedOption = element.name;
+                          selectedOption = element;
                           isExist.value = true;
                           changeState(() {});
                         },
@@ -138,7 +139,7 @@ class PaymentMethodPage extends StatelessWidget {
                                 ),
                               ),
                               const Spacer(),
-                              if (selectedOption == element.name)
+                              if (selectedOption?.id == element.id)
                                 const Icon(
                                   Icons.check,
                                   color: AppColors.primary500,
@@ -164,7 +165,16 @@ class PaymentMethodPage extends StatelessWidget {
           builder: (context, value, _) => EcoFormButton(
             height: 45.0,
             label: "Konfirmasi",
-            onPressed: value ? () => context.pop() : null,
+            onPressed: value
+                ? () {
+                    context
+                        .read<PaymentDetailBloc>()
+                        .add(ChangePaymentMethodEvent(
+                          paymentMethodModel: selectedOption!,
+                        ));
+                    context.pop();
+                  }
+                : null,
           ),
         ),
       ),

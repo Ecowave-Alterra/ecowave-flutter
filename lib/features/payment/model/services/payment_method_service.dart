@@ -8,6 +8,7 @@ class PaymentMethodService {
 
   List dummy = [
     {
+      "id": 1,
       "name": "OVO",
       "type": "E-Wallet",
       "iconUrl": "https://i.ibb.co/S32HNjD/no-image.jpg",
@@ -17,6 +18,7 @@ class PaymentMethodService {
       "deleted_at": null
     },
     {
+      "id": 2,
       "name": "BCA",
       "type": "Transfer Bank",
       "iconUrl": "https://i.ibb.co/S32HNjD/no-image.jpg",
@@ -26,6 +28,7 @@ class PaymentMethodService {
       "deleted_at": null
     },
     {
+      "id": 3,
       "name": "GoPay",
       "type": "E-Wallet",
       "iconUrl": "https://i.ibb.co/S32HNjD/no-image.jpg",
@@ -35,6 +38,7 @@ class PaymentMethodService {
       "deleted_at": null
     },
     {
+      "id": 4,
       "name": "ShopeePay",
       "type": "E-Wallet",
       "iconUrl": "https://i.ibb.co/S32HNjD/no-image.jpg",
@@ -44,6 +48,7 @@ class PaymentMethodService {
       "deleted_at": null
     },
     {
+      "id": 5,
       "name": "BRI",
       "type": "Transfer Bank",
       "iconUrl": "https://i.ibb.co/S32HNjD/no-image.jpg",
