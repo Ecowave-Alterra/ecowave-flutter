@@ -22,7 +22,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
   final ValueNotifier<bool> isExist = ValueNotifier<bool>(false);
 
   bool isSwitched = false;
-  int currentIndexMark = 0;
+  int currentIndexMark = -1;
 
   @override
   void dispose() {
@@ -148,7 +148,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
                           builder: (context, changeState) => Row(
                             children: [
                               MyRadioListTile<int>(
-                                value: 1,
+                                value: 0,
                                 groupValue: currentIndexMark,
                                 onChanged: (index) {
                                   currentIndexMark = index!;
@@ -158,7 +158,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
                               ),
                               12.0.width,
                               MyRadioListTile<int>(
-                                value: 2,
+                                value: 1,
                                 groupValue: currentIndexMark,
                                 onChanged: (index) {
                                   currentIndexMark = index!;
@@ -212,9 +212,9 @@ class _AddAddressPageState extends State<AddAddressPage> {
               onPressed: value
                   ? () {
                       String? mark;
-                      if (currentIndexMark == 1) {
+                      if (currentIndexMark == 0) {
                         mark = "Rumah";
-                      } else if (currentIndexMark == 2) {
+                      } else if (currentIndexMark == 1) {
                         mark = "Kantor";
                       }
 

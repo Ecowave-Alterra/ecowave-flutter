@@ -27,9 +27,6 @@ class _UpdateAddressPageState extends State<UpdateAddressPage> {
   final TextEditingController noteController = TextEditingController();
   final ValueNotifier<bool> isExist = ValueNotifier<bool>(false);
 
-  bool isSwitched = false;
-  int currentIndexMark = 0;
-
   @override
   void dispose() {
     nameController.clear();
@@ -45,14 +42,14 @@ class _UpdateAddressPageState extends State<UpdateAddressPage> {
     phoneController.text = widget.addressModel.phoneNumber;
     addressController.text = widget.addressModel.address;
     noteController.text = widget.addressModel.note ?? "";
-    isSwitched = widget.addressModel.isPrimary;
-
+    bool isSwitched = widget.addressModel.isPrimary;
     String? mark = widget.addressModel.mark;
+    int currentIndexMark = -1;
 
     if (mark == "Rumah") {
-      currentIndexMark = 1;
+      currentIndexMark = 0;
     } else if (mark == "Kantor") {
-      currentIndexMark = 2;
+      currentIndexMark = 1;
     }
 
     return WillPopScope(
@@ -177,9 +174,16 @@ class _UpdateAddressPageState extends State<UpdateAddressPage> {
                           builder: (context, changeState) => Row(
                             children: [
                               MyRadioListTile<int>(
-                                value: 1,
+                                value: 0,
                                 groupValue: currentIndexMark,
                                 onChanged: (index) {
+                                  if (nameController.text.isNotEmpty &&
+                                      phoneController.text.isNotEmpty &&
+                                      addressController.text.isNotEmpty) {
+                                    isExist.value = true;
+                                  } else {
+                                    isExist.value = false;
+                                  }
                                   currentIndexMark = index!;
                                   changeState(() {});
                                 },
@@ -187,7 +191,7 @@ class _UpdateAddressPageState extends State<UpdateAddressPage> {
                               ),
                               12.0.width,
                               MyRadioListTile<int>(
-                                value: 2,
+                                value: 1,
                                 groupValue: currentIndexMark,
                                 onChanged: (index) {
                                   if (nameController.text.isNotEmpty &&
@@ -254,9 +258,9 @@ class _UpdateAddressPageState extends State<UpdateAddressPage> {
               label: "Simpan",
               onPressed: value
                   ? () {
-                      if (currentIndexMark == 1) {
+                      if (currentIndexMark == 0) {
                         mark = "Rumah";
-                      } else if (currentIndexMark == 2) {
+                      } else if (currentIndexMark == 1) {
                         mark = "Kantor";
                       }
 
