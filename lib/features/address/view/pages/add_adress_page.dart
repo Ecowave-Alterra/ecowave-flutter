@@ -1,4 +1,3 @@
-import 'package:ecowave/features/address/model/address_user_model.dart';
 import 'package:ecowave/features/address/view/pages/address_page.dart';
 import 'package:ecowave/features/address/view/widget/form_field_widget.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +18,6 @@ class _AddressAddPageState extends State<AddressAddPage> {
   bool status = false;
   int value = 0;
   int _index = 0;
-  List users = <AddressUser>[];
   final TextEditingController nameController = TextEditingController();
   final TextEditingController telpController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
@@ -150,20 +148,7 @@ class _AddressAddPageState extends State<AddressAddPage> {
                   backgroundColor: AppColors.primary300,
                   onPressed: () {
                     setState(() {
-                      users.add(
-                        AddressUser(
-                          name: nameController.text,
-                          telp: telpController.text,
-                          address: addressController.text,
-                          place: (_index == 1) ? 'Rumah' : 'Kantor',
-                          notes: notesController.text,
-                        ),
-                      );
-                      context.push(
-                        AddressPage(
-                          listUser: users,
-                        ),
-                      );
+                      context.push(const AddressPage());
                     });
                   },
                 ),

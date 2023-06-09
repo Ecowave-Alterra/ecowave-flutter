@@ -2,7 +2,7 @@ part of 'payment_detail_bloc.dart';
 
 class PaymentDetailState {
   final DataStateStatus status;
-  final ShippingAddressModel? shippingAddressModel;
+  final AddressModel? addressModel;
   final ExpeditionModel? expeditionModel;
   final VoucherModel? voucherModel;
   final PaymentMethodModel? paymentMethodModel;
@@ -11,7 +11,7 @@ class PaymentDetailState {
 
   const PaymentDetailState({
     this.status = DataStateStatus.initial,
-    this.shippingAddressModel,
+    this.addressModel,
     this.expeditionModel,
     this.voucherModel,
     this.paymentMethodModel,
@@ -21,7 +21,7 @@ class PaymentDetailState {
 
   PaymentDetailState copyWith({
     DataStateStatus? status,
-    ShippingAddressModel? shippingAddressModel,
+    AddressModel? addressModel,
     ExpeditionModel? expeditionModel,
     VoucherModel? voucherModel,
     PaymentMethodModel? paymentMethodModel,
@@ -29,7 +29,7 @@ class PaymentDetailState {
   }) {
     return PaymentDetailState(
       status: status ?? this.status,
-      shippingAddressModel: shippingAddressModel ?? this.shippingAddressModel,
+      addressModel: addressModel ?? this.addressModel,
       expeditionModel: expeditionModel ?? this.expeditionModel,
       voucherModel: voucherModel ?? this.voucherModel,
       paymentMethodModel: paymentMethodModel ?? this.paymentMethodModel,

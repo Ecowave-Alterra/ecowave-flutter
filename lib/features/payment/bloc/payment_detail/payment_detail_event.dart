@@ -8,10 +8,10 @@ abstract class PaymentDetailEvent extends Equatable {
 }
 
 class ChangeShippingAddressEvent extends PaymentDetailEvent {
-  final ShippingAddressModel shippingAddressModel;
+  final AddressModel addressModel;
 
   const ChangeShippingAddressEvent({
-    required this.shippingAddressModel,
+    required this.addressModel,
   });
 }
 
@@ -48,7 +48,7 @@ class PointUsedEvent extends PaymentDetailEvent {
 }
 
 class CheckoutEvent extends PaymentDetailEvent {
-  final ShippingAddressModel shippingAddressModel;
+  final AddressModel addressModel;
   final PaymentMethodModel paymentMethodModel;
   final ExpeditionModel expeditionModel;
   final VoucherModel? voucherModel;
@@ -57,7 +57,7 @@ class CheckoutEvent extends PaymentDetailEvent {
   final int totalPayment;
 
   const CheckoutEvent({
-    required this.shippingAddressModel,
+    required this.addressModel,
     required this.paymentMethodModel,
     required this.expeditionModel,
     required this.voucherModel,
