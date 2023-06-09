@@ -1,37 +1,56 @@
 import 'package:ecowave/features/ecommerce/view/widgets/product_description_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core.dart';
 import '../../../payment/view/pages/payment_detail_page.dart';
+import '../../bloc/product_home/product_bloc.dart';
 import '../widgets/carousel_barang_widget.dart';
 
 class ProductDetail extends StatelessWidget {
-  const ProductDetail({super.key});
+  final int productId;
+  final int productCategoryId;
+  const ProductDetail(
+      {super.key, required this.productId, required this.productCategoryId});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.white,
       appBar: AppBar(
-        title: const Text("Detail Barang"),
-        actions: [
-          IconButton(
-            onPressed: () => context.push(const PaymentDetailPage()),
-            icon: const ImageIcon(
-              AppIcons.keranjang,
-              color: AppColors.primary500,
+          title: const Text("Detail Barang"),
+          actions: [
+            IconButton(
+              onPressed: () => context.push(const PaymentDetailPage()),
+              icon: const ImageIcon(
+                AppIcons.keranjang,
+                color: AppColors.primary500,
+              ),
+              iconSize: 18.0,
             ),
-            iconSize: 18.0,
-          ),
-        ],
-      ),
-      body: const SingleChildScrollView(
+          ],
+          leading: BackButton(
+            onPressed: () {
+              Navigator.pop(context);
+              context.read<ProductBloc>().add(GetProductEvent());
+            },
+          )),
+      body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CarouselBarang(),
-            ProductDescription(),
+            BlocBuilder<ProductBloc, ProductState>(
+              builder: (context, state) {
+                return CarouselBarang(
+                  productId: productId,
+                );
+              },
+            ),
+            ProductDescription(
+              productId: productId,
+              productCategoryId: productCategoryId,
+            ),
           ],
         ),
       ),

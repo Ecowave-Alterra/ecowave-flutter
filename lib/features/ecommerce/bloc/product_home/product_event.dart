@@ -27,3 +27,9 @@ class SortOnlyProductEvent extends ProductEvent {
 
   const SortOnlyProductEvent(this.sortFilter);
 }
+
+class GetProductDetailEvent extends ProductEvent {
+  final int productId;
+
+  const GetProductDetailEvent(this.productId);
+}

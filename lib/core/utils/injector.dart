@@ -1,3 +1,5 @@
+import 'package:ecowave/features/ecommerce/bloc/product_image/product_image_bloc.dart';
+import 'package:ecowave/features/ecommerce/model/services/product_image_service.dart';
 import 'package:ecowave/features/information/bloc/informatio/information_bloc.dart';
 import 'package:ecowave/features/information/model/services/information_service.dart';
 import 'package:ecowave/features/ecommerce/bloc/product_home/product_bloc.dart';
@@ -16,6 +18,9 @@ import 'package:ecowave/features/transaction/model/services/history_transaction_
 import 'package:ecowave/features/payment/model/services/voucher_service.dart';
 import 'package:get_it/get_it.dart';
 
+import '../../features/ecommerce/bloc/product_category/product_category_bloc.dart';
+import '../../features/ecommerce/model/services/product_category_service.dart';
+
 final GetIt locator = GetIt.instance;
 
 void init() {
@@ -29,6 +34,8 @@ void init() {
   locator.registerFactory(() => VoucherBloc(locator()));
   locator.registerFactory(() => InformationBloc(locator()));
   locator.registerFactory(() => ProductBloc(locator()));
+  locator.registerFactory(() => ProductCategoryBloc(locator()));
+  locator.registerFactory(() => ProductImageBloc(locator()));
 
   // service
   locator.registerLazySingleton<ShippingAddressService>(
@@ -41,4 +48,8 @@ void init() {
   locator.registerLazySingleton<VoucherService>(() => VoucherService());
   locator.registerLazySingleton<InformationService>(() => InformationService());
   locator.registerLazySingleton<ProductService>(() => ProductService());
+  locator
+      .registerLazySingleton<ProductImageService>(() => ProductImageService());
+  locator.registerLazySingleton<ProductCategoryService>(
+      () => ProductCategoryService());
 }
