@@ -16,7 +16,7 @@ class AddressPage extends StatelessWidget {
         title: const Text('Alamat Saya'),
         actions: [
           IconButton(
-            onPressed: () => context.pop(const AddressAddPage()),
+            onPressed: () => context.push(const AddressAddPage()),
             icon: const ImageIcon(
               AppIcons.add,
               size: 14.0,
