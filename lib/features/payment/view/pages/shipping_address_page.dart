@@ -26,7 +26,7 @@ class ShippingAddressPage extends StatelessWidget {
         title: const Text("Alamat Pengiriman"),
         actions: [
           IconButton(
-            onPressed: () => context.push(const AddressAddPage()),
+            onPressed: () => context.push(const AddAddressPage()),
             icon: const ImageIcon(
               AppIcons.add,
               size: 14.0,

@@ -1,4 +1,5 @@
 import 'package:ecowave/features/address/model/models/address_model.dart';
+import 'package:ecowave/features/address/model/models/address_request.dart';
 
 class AddressService {
   // late Dio _dio;
@@ -51,6 +52,17 @@ class AddressService {
       List<Map<String, dynamic>> datas = dummy["Data"];
 
       return datas.map((e) => AddressModel.fromJson(e)).toList();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<bool> createAddresses(AddressRequest request) async {
+    try {
+      // const String url = '................';
+      // final response = await _dio.get(url);
+
+      return true;
     } catch (e) {
       rethrow;
     }

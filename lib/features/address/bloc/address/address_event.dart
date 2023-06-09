@@ -8,3 +8,10 @@ abstract class AddressEvent extends Equatable {
 }
 
 class GetAddressesEvent extends AddressEvent {}
+
+class AddAddressesEvent extends AddressEvent {
+  final AddressRequest request;
+  const AddAddressesEvent({
+    required this.request,
+  });
+}

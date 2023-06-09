@@ -1,16 +1,19 @@
 import 'package:ecowave/core.dart';
+import 'package:ecowave/features/address/bloc/address/address_bloc.dart';
+import 'package:ecowave/features/address/model/models/address_request.dart';
 import 'package:ecowave/features/address/view/widget/place_button_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AddressAddPage extends StatefulWidget {
-  const AddressAddPage({super.key});
+class AddAddressPage extends StatefulWidget {
+  const AddAddressPage({super.key});
 
   @override
-  State<AddressAddPage> createState() => _AddressAddPageState();
+  State<AddAddressPage> createState() => _AddAddressPageState();
 }
 
-class _AddressAddPageState extends State<AddressAddPage> {
+class _AddAddressPageState extends State<AddAddressPage> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
@@ -208,7 +211,24 @@ class _AddressAddPageState extends State<AddressAddPage> {
               label: "Simpan",
               onPressed: value
                   ? () {
+                      String? mark;
+                      if (currentIndexMark == 1) {
+                        mark = "Rumah";
+                      } else if (currentIndexMark == 2) {
+                        mark = "Kantor";
+                      }
+
                       if (formKey.currentState!.validate()) {
+                        context.read<AddressBloc>().add(AddAddressesEvent(
+                              request: AddressRequest(
+                                recipient: nameController.text,
+                                phoneNumber: phoneController.text,
+                                address: addressController.text,
+                                note: noteController.text,
+                                mark: mark,
+                                isPrimary: isSwitched,
+                              ),
+                            ));
                         context.pop();
                         "Yey! Kamu berhasil menambahkan alamat"
                             .succeedBar(context);
