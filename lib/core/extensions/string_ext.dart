@@ -33,7 +33,7 @@ extension DialogExt on String {
           margin: const EdgeInsets.only(left: 8),
           decoration: BoxDecoration(
               color: Colors.white, borderRadius: BorderRadius.circular(50)),
-          child: const Icon(Icons.warning, color: AppColors.error500)),
+          child: const Icon(Icons.close, color: AppColors.error500)),
       backgroundColor: AppColors.error500,
       shouldIconPulse: false,
       message: this,

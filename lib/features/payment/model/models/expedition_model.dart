@@ -9,6 +9,7 @@ String expeditionModelToJson(ExpeditionModel data) =>
     json.encode(data.toJson());
 
 class ExpeditionModel {
+  final int id;
   final String name;
   final int price;
   final int estimate;
@@ -17,6 +18,7 @@ class ExpeditionModel {
   final String? deletedAt;
 
   ExpeditionModel({
+    required this.id,
     required this.name,
     required this.price,
     required this.estimate,
@@ -33,6 +35,7 @@ class ExpeditionModel {
 
   factory ExpeditionModel.fromJson(Map<String, dynamic> json) =>
       ExpeditionModel(
+        id: json["id"],
         name: json["name"],
         price: json["price"],
         estimate: json["estimate"],
@@ -42,6 +45,7 @@ class ExpeditionModel {
       );
 
   Map<String, dynamic> toJson() => {
+        "id": id,
         "name": name,
         "price": price,
         "estimate": estimate,

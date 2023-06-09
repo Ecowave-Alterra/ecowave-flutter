@@ -7,6 +7,7 @@ String paymentMethodModelToJson(PaymentMethodModel data) =>
     json.encode(data.toJson());
 
 class PaymentMethodModel {
+  final int id;
   final String name;
   final String type;
   final String iconUrl;
@@ -16,6 +17,7 @@ class PaymentMethodModel {
   final dynamic deletedAt;
 
   PaymentMethodModel({
+    required this.id,
     required this.name,
     required this.type,
     required this.iconUrl,
@@ -27,6 +29,7 @@ class PaymentMethodModel {
 
   factory PaymentMethodModel.fromJson(Map<String, dynamic> json) =>
       PaymentMethodModel(
+        id: json["id"],
         name: json["name"],
         type: json["type"],
         iconUrl: json["iconUrl"],
@@ -37,6 +40,7 @@ class PaymentMethodModel {
       );
 
   Map<String, dynamic> toJson() => {
+        "id": id,
         "name": name,
         "type": type,
         "iconUrl": iconUrl,

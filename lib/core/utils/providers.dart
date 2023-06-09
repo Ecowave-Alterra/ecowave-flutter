@@ -1,7 +1,9 @@
 import 'package:ecowave/core/utils/injector.dart' as di;
 import 'package:ecowave/features/cart/bloc/cart/cart_bloc.dart';
+import 'package:ecowave/features/ecommerce/bloc/product_home/product_bloc.dart';
 import 'package:ecowave/features/home/bloc/page_bloc.dart';
 import 'package:ecowave/features/payment/bloc/expedition/expedition_bloc.dart';
+import 'package:ecowave/features/payment/bloc/payment_detail/payment_detail_bloc.dart';
 import 'package:ecowave/features/payment/bloc/payment_method/payment_method_bloc.dart';
 import 'package:ecowave/features/payment/bloc/shipping_address/shipping_address_bloc.dart';
 import 'package:ecowave/features/payment/bloc/voucher/voucher_bloc.dart';
@@ -18,8 +20,11 @@ class Providers {
         create: (context) => di.locator<PaymentMethodBloc>()),
     BlocProvider<ExpeditionBloc>(
         create: (context) => di.locator<ExpeditionBloc>()),
+    BlocProvider<PaymentDetailBloc>(
+        create: (context) => di.locator<PaymentDetailBloc>()),
     BlocProvider<HistoryTransactionBloc>(
         create: (context) => di.locator<HistoryTransactionBloc>()),
     BlocProvider<VoucherBloc>(create: (context) => di.locator<VoucherBloc>()),
+    BlocProvider<ProductBloc>(create: (context) => di.locator<ProductBloc>()),
   ];
 }

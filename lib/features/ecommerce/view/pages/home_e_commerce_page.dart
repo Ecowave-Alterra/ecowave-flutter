@@ -1,8 +1,8 @@
 import 'package:ecowave/core.dart';
+import 'package:ecowave/features/cart/view/pages/cart_page.dart';
 import 'package:ecowave/features/ecommerce/view/widgets/card_product_widget.dart';
 import 'package:ecowave/features/ecommerce/view/widgets/carousel_widget.dart';
 import 'package:ecowave/features/ecommerce/view/widgets/searchbar_widget.dart';
-import 'package:ecowave/features/cart/view/pages/cart_page.dart';
 import 'package:flutter/material.dart';
 
 class HomeECommerce extends StatelessWidget {

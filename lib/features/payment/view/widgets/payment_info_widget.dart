@@ -39,7 +39,7 @@ class PaymentInfoWidget extends StatelessWidget {
           ),
           _PriceInfo(
             label: "Diskon",
-            price: paymentInfo.voucher?.discount.toInt() ?? 0,
+            price: paymentInfo.discount,
           ),
           const Divider(),
           _PriceInfo(
