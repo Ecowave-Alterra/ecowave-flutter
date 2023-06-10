@@ -55,67 +55,91 @@ class ProductDetail extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: Container(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(16.0),
         height: 80.0,
         child: Row(
           children: [
-            TextButton(
-              onPressed: () {},
-              child: Container(
+            Flexible(
+              child: EcoFormButtonIcon(
+                onPressed: () {},
+                label: "Keranjang",
+                image: const Image(
+                  image: AssetImage("assets/icons/keranjang.png"),
+                  width: AppSizes.primary,
+                  height: AppSizes.primary,
+                ),
                 height: 48.0,
-                width: 171.0,
-                decoration: BoxDecoration(
-                  border: Border.all(color: AppColors.primary50),
-                  borderRadius: BorderRadius.circular(100),
-                  color: AppColors.primary50,
-                ),
-                child: const Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      ImageIcon(
-                        AppIcons.keranjang,
-                        size: 15.0,
-                        color: AppColors.primary500,
-                      ),
-                      SizedBox(
-                        width: 6.5,
-                      ),
-                      Text(
-                        'Keranjang',
-                        style: TextStyle(
-                          color: AppColors.primary500,
-                          fontWeight: AppFontWeight.semibold,
-                          fontSize: AppSizes.buttonFontSize,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                backgroundColor: AppColors.primary50,
+                textColor: AppColors.primary500,
               ),
             ),
-            TextButton(
-              onPressed: () {},
-              child: Container(
+            const SizedBox(
+              width: AppSizes.primary,
+            ),
+            Flexible(
+              child: EcoFormButton(
+                onPressed: () {},
+                label: "Pesan Sekarang",
                 height: 48.0,
-                width: 171.0,
-                decoration: BoxDecoration(
-                  border: Border.all(color: AppColors.primary500),
-                  borderRadius: BorderRadius.circular(100),
-                  color: AppColors.primary500,
-                ),
-                child: const Center(
-                  child: Text(
-                    'Pesan Sekarang',
-                    style: TextStyle(
-                      color: AppColors.white,
-                      fontWeight: AppFontWeight.semibold,
-                      fontSize: AppSizes.buttonFontSize,
-                    ),
-                  ),
-                ),
               ),
             ),
+            // TextButton(
+            //   onPressed: () {},
+            //   child: Container(
+            //     height: 48.0,
+            //     width: 171.0,
+            //     decoration: BoxDecoration(
+            //       border: Border.all(color: AppColors.primary50),
+            //       borderRadius: BorderRadius.circular(100),
+            //       color: AppColors.primary50,
+            //     ),
+            //     child: const Center(
+            //       child: Row(
+            //         mainAxisAlignment: MainAxisAlignment.center,
+            //         children: [
+            //           ImageIcon(
+            //             AppIcons.keranjang,
+            //             size: 15.0,
+            //             color: AppColors.primary500,
+            //           ),
+            //           SizedBox(
+            //             width: 6.5,
+            //           ),
+            //           Text(
+            //             'Keranjang',
+            //             style: TextStyle(
+            //               color: AppColors.primary500,
+            //               fontWeight: AppFontWeight.semibold,
+            //               fontSize: AppSizes.buttonFontSize,
+            //             ),
+            //           ),
+            //         ],
+            //       ),
+            //     ),
+            //   ),
+            // ),
+            // TextButton(
+            //   onPressed: () {},
+            //   child: Container(
+            //     height: 48.0,
+            //     width: 171.0,
+            //     decoration: BoxDecoration(
+            //       border: Border.all(color: AppColors.primary500),
+            //       borderRadius: BorderRadius.circular(100),
+            //       color: AppColors.primary500,
+            //     ),
+            //     child: const Center(
+            //       child: Text(
+            //         'Pesan Sekarang',
+            //         style: TextStyle(
+            //           color: AppColors.white,
+            //           fontWeight: AppFontWeight.semibold,
+            //           fontSize: AppSizes.buttonFontSize,
+            //         ),
+            //       ),
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),
