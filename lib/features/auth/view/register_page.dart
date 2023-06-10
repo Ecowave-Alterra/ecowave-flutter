@@ -1,6 +1,9 @@
+import 'package:ecowave/features/auth/bloc/register/register_bloc.dart';
+import 'package:ecowave/features/auth/view/login_page.dart';
 import 'package:ecowave/features/auth/view/register_complate_page.dart';
 import 'package:flutter/material.dart';
 import 'package:ecowave/core.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -16,43 +19,32 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _noTelpController = TextEditingController();
-
-  bool _isLoginButtonDisabled = true;
-
-  void _checkLoginButtonStatus() {
-    final email = _emailController.text;
-    final password = _passwordController.text;
-    final username = _usernameController.text;
-    final noTelp = _noTelpController.text;
-    final name = _nameController.text;
-
-    setState(() {
-      _isLoginButtonDisabled = email.isEmpty ||
-          password.isEmpty ||
-          username.isEmpty ||
-          noTelp.isEmpty ||
-          name.isEmpty;
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _emailController.addListener(_checkLoginButtonStatus);
-    _passwordController.addListener(_checkLoginButtonStatus);
-    _usernameController.addListener(_checkLoginButtonStatus);
-    _nameController.addListener(_checkLoginButtonStatus);
-    _noTelpController.addListener(_checkLoginButtonStatus);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Daftar Sekarang'),
-          centerTitle: true,
-        ),
-        body: SingleChildScrollView(
+      appBar: AppBar(
+        title: const Text('Daftar Sekarang'),
+        centerTitle: true,
+      ),
+      body: BlocProvider(
+        create: (context) => RegisterBloc(
+            emailController: _emailController,
+            passwordController: _passwordController,
+            usernameController: _usernameController,
+            noTelpController: _noTelpController,
+            nameController: _nameController),
+        child: BlocConsumer<RegisterBloc, RegisterState>(
+            listener: (context, state) {
+          if (state is RegisterError) {
+          }
+          if (state is RegisterSuccess) {
+            context.push(LoginPage());
+          }
+        }, builder: (context, state) {
+          if (state is RegisterLoading) {
+            return const EcoLoading();
+          }
+          return SingleChildScrollView(
             padding: const EdgeInsets.all(10),
             child: Form(
               key: _formKey,
@@ -64,14 +56,18 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 20.0.height,
                 EcoFormInput(
-                  label: 'Nama',
-                  controller: _nameController,
-                  hint: 'Masukan Nama Anda',
-                  icon: const ImageIcon(
-                    AppIcons.name,
-                    color: AppColors.grey500,
-                  ),
-                ),
+                    label: 'Nama',
+                    controller: _nameController,
+                    hint: 'Masukan Nama Anda',
+                    icon: const ImageIcon(
+                      AppIcons.name,
+                      color: AppColors.grey500,
+                    ),
+                    onChanged: (value) {
+                      context
+                          .read<RegisterBloc>()
+                          .add(const RegisterInputChange());
+                    }),
                 20.0.height,
                 EcoFormInput(
                   label: 'Email',
@@ -88,13 +84,16 @@ class _RegisterPageState extends State<RegisterPage> {
                     return null;
                   },
                   onChanged: (value) {
-                    _checkLoginButtonStatus();
+                    context
+                        .read<RegisterBloc>()
+                        .add(const RegisterInputChange());
                   },
                   icon: const ImageIcon(
                     AppIcons.email,
                     color: AppColors.grey500,
                   ),
                 ),
+               
                 20.0.height,
                 EcoFormInput(
                   label: 'Username',
@@ -104,17 +103,34 @@ class _RegisterPageState extends State<RegisterPage> {
                     AppIcons.username,
                     color: AppColors.grey500,
                   ),
+                  onChanged: (value) {
+                    context
+                        .read<RegisterBloc>()
+                        .add(const RegisterInputChange());
+                  },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Username tidak boleh kosong';
+                    } 
+                    return null;
+                  },
                 ),
+              
                 20.0.height,
                 EcoFormInput(
                   label: 'No. Telepon',
                   controller: _noTelpController,
                   keyboardType: TextInputType.number,
-                  hint: 'Masukan Nama Anda',
+                  hint: 'Masukan Nomor telefon Anda',
                   icon: const ImageIcon(
-                    AppIcons.username,
+                    AppIcons.numberPhone,
                     color: AppColors.grey500,
                   ),
+                  onChanged: (value) {
+                    context
+                        .read<RegisterBloc>()
+                        .add(const RegisterInputChange());
+                  },
                 ),
                 20.0.height,
                 EcoFormInputPassword(
@@ -130,19 +146,25 @@ class _RegisterPageState extends State<RegisterPage> {
                     return null;
                   },
                   onChanged: (value) {
-                    _checkLoginButtonStatus();
+                    context
+                        .read<RegisterBloc>()
+                        .add(const RegisterInputChange());
                   },
                 ),
                 20.0.height,
                 // Other form inputs like email and password
                 EcoFormButton(
                   label: 'Register',
-                  onPressed: _isLoginButtonDisabled
+                  onPressed: state.isRegisterButtonDisabled
                       ? () {}
                       : () {
-                          if (_formKey.currentState!.validate()) {}
+                          if (_formKey.currentState!.validate()) {
+                            context
+                                .read<RegisterBloc>()
+                                .add(RegisterButtonPressed());
+                          }
                         },
-                  backgroundColor: _isLoginButtonDisabled
+                  backgroundColor: state.isRegisterButtonDisabled
                       ? AppColors.primary300
                       : AppColors.primary500,
                 ),
@@ -204,6 +226,10 @@ class _RegisterPageState extends State<RegisterPage> {
                   ],
                 )
               ]),
-            )));
+            ),
+          );
+        }),
+      ),
+    );
   }
 }
