@@ -1,3 +1,4 @@
+import 'package:ecowave/features/cart/bloc/cart/cart_bloc.dart';
 import 'package:ecowave/features/ecommerce/bloc/product_image/product_image_bloc.dart';
 import 'package:ecowave/features/ecommerce/model/services/product_image_service.dart';
 import 'package:ecowave/features/information/bloc/informatio/information_bloc.dart';
@@ -25,6 +26,7 @@ final GetIt locator = GetIt.instance;
 
 void init() {
   // state management
+  locator.registerFactory(() => CartBloc());
   locator.registerFactory(() => PageBloc());
   locator.registerFactory(() => ShippingAddressBloc(locator()));
   locator.registerFactory(() => PaymentMethodBloc(locator()));

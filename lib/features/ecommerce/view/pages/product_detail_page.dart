@@ -1,9 +1,12 @@
+import 'package:ecowave/features/cart/view/pages/cart_page.dart';
 import 'package:ecowave/features/ecommerce/view/widgets/product_description_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../../../core.dart';
-import '../../../payment/view/pages/payment_detail_page.dart';
+import '../../../cart/bloc/cart/cart_bloc.dart';
+import '../../../cart/model/models/cart_model.dart';
 import '../../bloc/product_home/product_bloc.dart';
 import '../widgets/carousel_barang_widget.dart';
 
@@ -21,7 +24,7 @@ class ProductDetail extends StatelessWidget {
           title: const Text("Detail Barang"),
           actions: [
             IconButton(
-              onPressed: () => context.push(const PaymentDetailPage()),
+              onPressed: () => context.push(const CartPage()),
               icon: const ImageIcon(
                 AppIcons.keranjang,
                 color: AppColors.primary500,
@@ -61,7 +64,21 @@ class ProductDetail extends StatelessWidget {
           children: [
             Flexible(
               child: EcoFormButtonIcon(
-                onPressed: () {},
+                onPressed: () {
+                  final String id = const Uuid().v1();
+                  context.read<CartBloc>().add(
+                        AddItemCart(
+                          cartModel: CartModel(
+                              id: id,
+                              nameItems: 'Tote Bag Putih Polos',
+                              detailItems: 'Kategori : Kantong',
+                              image: AppImages.productShop2,
+                              price: 5000,
+                              totalItems: 1,
+                              checkedItems: false),
+                        ),
+                      );
+                },
                 label: "Keranjang",
                 image: const Image(
                   image: AppIcons.keranjang,
