@@ -64,7 +64,7 @@ class ProductDetail extends StatelessWidget {
                 onPressed: () {},
                 label: "Keranjang",
                 image: const Image(
-                  image: AssetImage("assets/icons/keranjang.png"),
+                  image: AppIcons.keranjang,
                   width: AppSizes.primary,
                   height: AppSizes.primary,
                 ),
