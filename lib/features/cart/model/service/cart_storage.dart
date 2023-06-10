@@ -5,6 +5,7 @@ import '../models/cart_model.dart';
 class CartService {
   late SharedPreferences _preferences;
   List<CartModel> items = [];
+  double totalPayment = 0;
 
   CartService() {
     init();
@@ -13,6 +14,7 @@ class CartService {
   Future<void> init() async {
     _preferences = await SharedPreferences.getInstance();
     items = _getItemsFromLocalStorage() ?? [];
+    totalPayment = _getTotalPaymentFromLocalStorage() ?? 0;
   }
 
   List<CartModel>? _getItemsFromLocalStorage() {
@@ -25,12 +27,22 @@ class CartService {
     return null;
   }
 
+  double? _getTotalPaymentFromLocalStorage() {
+    final double? total = _preferences.getDouble('totalPayment');
+    if (total != null) {
+      return total;
+    }
+    return null;
+  }
+
   Future<void> saveToLocalStorage() async {
     await _preferences.setStringList(
       'items',
       items.map((item) => item.toJson()).toList(),
     );
     items = _getItemsFromLocalStorage() ?? [];
+    await _preferences.setDouble('totalPayment', getTotalPayment());
+    totalPayment = _getTotalPaymentFromLocalStorage() ?? 0;
   }
 
   void addItem(CartModel cartModel) {
@@ -62,5 +74,12 @@ class CartService {
   void deleteAllItems() {
     items.clear();
     saveToLocalStorage();
+  }
+
+  double getTotalPayment() {
+    for (CartModel item in items) {
+      totalPayment += (int.parse(item.price) * item.totalItems);
+    }
+    return totalPayment;
   }
 }

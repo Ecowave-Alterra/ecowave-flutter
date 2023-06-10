@@ -13,31 +13,31 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     on<AddItemCart>((event, emit) {
       emit(CartLoading());
       service.addItem(event.cartModel);
-      emit(CartSuccess(data: service.items));
+      emit(CartSuccess(data: service.items, total: service.totalPayment));
     });
     on<AddTotalItemCart>((event, emit) {
       emit(CartLoading());
       service.addTotalItem(event.id);
-      emit(CartSuccess(data: service.items));
+      emit(CartSuccess(data: service.items, total: service.totalPayment));
     });
     on<ReduceTotalItemCart>((event, emit) {
       emit(CartLoading());
       service.reduceTotalItem(event.id);
-      emit(CartSuccess(data: service.items));
+      emit(CartSuccess(data: service.items, total: service.totalPayment));
     });
     on<DeleteItemCart>((event, emit) {
       emit(CartLoading());
       service.deleteItem(event.id);
-      emit(CartSuccess(data: service.items));
+      emit(CartSuccess(data: service.items, total: service.totalPayment));
     });
     on<DeleteAllItemCart>((event, emit) {
       emit(CartLoading());
       service.deleteAllItems();
-      emit(CartSuccess(data: service.items));
+      emit(CartSuccess(data: service.items, total: service.totalPayment));
     });
     on<GetItemCart>((event, emit) {
       emit(CartLoading());
-      emit(CartSuccess(data: service.items));
+      emit(CartSuccess(data: service.items, total: service.totalPayment));
     });
 
     on<CheckedItemCart>((event, emit) {
@@ -48,7 +48,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       } else if (event.value == true) {
         service.items[targetIndex].checkedItems = true;
       }
-      emit(CartSuccess(data: service.items));
+      emit(CartSuccess(data: service.items, total: service.totalPayment));
     });
     on<CheckedAllItemCart>(
       (event, emit) {
@@ -62,17 +62,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
             service.items[i].checkedItems = true;
           }
         }
-        emit(CartSuccess(data: service.items));
-      },
-    );
-    on<GetTotalPayment>(
-      (event, emit) {
-        emit(CartLoading());
-        event.total = 0;
-        for (CartModel item in service.items) {
-          event.total += (int.parse(item.price) * item.totalItems);
-        }
-        emit(CartSuccess(data: service.items));
+        emit(CartSuccess(data: service.items, total: service.totalPayment));
       },
     );
   }

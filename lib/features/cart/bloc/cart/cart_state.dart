@@ -9,8 +9,9 @@ class CartLoading extends CartState {}
 
 class CartSuccess extends CartState {
   final List<CartModel> data;
+  final double total;
 
-  CartSuccess({required this.data});
+  CartSuccess({required this.data, required this.total});
 }
 
 class CartError extends CartState {}

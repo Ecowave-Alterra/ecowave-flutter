@@ -19,8 +19,6 @@ class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
     context.read<CartBloc>().add(GetItemCart());
-
-    context.read<CartBloc>().add(GetTotalPayment(total: totalPayment));
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -128,7 +126,7 @@ class _CartPageState extends State<CartPage> {
                       children: [
                         const Text('Total Pembayaran'),
                         Text(
-                          totalPayment.toString(),
+                          state.total.toString(),
                           style: const TextStyle(
                               fontWeight: AppFontWeight.semibold),
                         ),
