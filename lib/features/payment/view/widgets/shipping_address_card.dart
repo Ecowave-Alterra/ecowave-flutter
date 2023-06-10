@@ -80,7 +80,7 @@ class ShippingAddressCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 12.0),
               child: EcoFormButton(
-                width: 62.0,
+                width: 75.0,
                 label: "Ubah",
                 onPressed: () => context.push(UpdateAddressPage(
                   addressModel: addressModel,
