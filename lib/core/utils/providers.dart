@@ -1,4 +1,5 @@
 import 'package:ecowave/core/utils/injector.dart' as di;
+import 'package:ecowave/features/cart/bloc/cart/cart_bloc.dart';
 import 'package:ecowave/features/information/bloc/informatio/information_bloc.dart';
 import 'package:ecowave/features/ecommerce/bloc/product_home/product_bloc.dart';
 import 'package:ecowave/features/home/bloc/home/home_bloc.dart';
@@ -14,6 +15,7 @@ class Providers {
   static final List<BlocProvider> init = [
     BlocProvider<HomeBloc>(
         create: (context) => di.locator<HomeBloc>()),
+    BlocProvider<CartBloc>(create: (context) => di.locator<CartBloc>()),
     BlocProvider<ShippingAddressBloc>(
         create: (context) => di.locator<ShippingAddressBloc>()),
     BlocProvider<PaymentMethodBloc>(
