@@ -78,16 +78,10 @@ class _CartPageState extends State<CartPage> {
                       itemCount: state.data.length,
                       itemBuilder: (BuildContext context, int index) {
                         return ListItem(
-                          id: state.data[index].id,
-                          item: state.data[index].nameItems,
-                          detail: state.data[index].detailItems,
-                          price: state.data[index].price,
-                          image: state.data[index].image,
+                          cartModel: state.data[index],
                           onPressed: () => context
                               .read<CartBloc>()
                               .add(DeleteItemCart(id: state.data[index].id)),
-                          totalItems: state.data[index].totalItems,
-                          checkedItems: state.data[index].checkedItems,
                         );
                       },
                       separatorBuilder: (context, index) {
@@ -126,7 +120,7 @@ class _CartPageState extends State<CartPage> {
                       children: [
                         const Text('Total Pembayaran'),
                         Text(
-                          state.total.toString(),
+                          state.total.toInt().currencyFormatRp,
                           style: const TextStyle(
                               fontWeight: AppFontWeight.semibold),
                         ),

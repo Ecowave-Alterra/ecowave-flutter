@@ -3,22 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core.dart';
+import '../../model/models/cart_model.dart';
 
 class ListItem extends StatefulWidget {
-  const ListItem({
-    super.key,
-    required this.price,
-    required this.id,
-    required this.image,
-    required this.item,
-    required this.detail,
-    required this.onPressed,
-    required this.totalItems,
-    required this.checkedItems,
-  });
-  final String item, detail, image, price, id;
-  final int totalItems;
-  final bool checkedItems;
+  const ListItem({super.key, required this.cartModel, required this.onPressed});
+  final CartModel cartModel;
   final void Function() onPressed;
   @override
   State<ListItem> createState() => _ListItemState();
@@ -34,13 +23,13 @@ class _ListItemState extends State<ListItem> {
           children: [
             Checkbox(
               activeColor: AppColors.primary500,
-              value: widget.checkedItems,
+              value: widget.cartModel.checkedItems,
               onChanged: (value) => context.read<CartBloc>().add(
-                    CheckedItemCart(value: value!, id: widget.id),
+                    CheckedItemCart(value: value!, id: widget.cartModel.id),
                   ),
             ),
             Image.asset(
-              widget.image,
+              widget.cartModel.image,
               height: 55,
             ),
             16.0.width,
@@ -48,14 +37,14 @@ class _ListItemState extends State<ListItem> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  widget.item,
+                  widget.cartModel.nameItems,
                   style: const TextStyle(
                     fontWeight: AppFontWeight.semibold,
                   ),
                 ),
                 12.0.height,
                 Text(
-                  widget.detail,
+                  widget.cartModel.detailItems,
                   style: const TextStyle(
                     fontSize: 12,
                     fontWeight: AppFontWeight.regular,
@@ -63,7 +52,7 @@ class _ListItemState extends State<ListItem> {
                 ),
                 12.0.height,
                 Text(
-                  widget.price,
+                  widget.cartModel.price.currencyFormatRp,
                   style: const TextStyle(
                     fontSize: 12,
                     fontWeight: AppFontWeight.regular,
@@ -88,14 +77,14 @@ class _ListItemState extends State<ListItem> {
                     ),
                     onPressed: () => context
                         .read<CartBloc>()
-                        .add(ReduceTotalItemCart(id: widget.id))),
+                        .add(ReduceTotalItemCart(id: widget.cartModel.id))),
                 12.5.width,
                 BlocBuilder<CartBloc, CartState>(
                   builder: (context, state) {
                     if (state is CartLoading) {
                       return const EcoLoading();
                     } else if (state is CartSuccess) {
-                      return Text(widget.totalItems.toString());
+                      return Text(widget.cartModel.totalItems.toString());
                     } else if (state is CartError) {
                       return const Text('error');
                     } else {
@@ -107,7 +96,7 @@ class _ListItemState extends State<ListItem> {
                 IconButton(
                   onPressed: () => context
                       .read<CartBloc>()
-                      .add(AddTotalItemCart(id: widget.id)),
+                      .add(AddTotalItemCart(id: widget.cartModel.id)),
                   icon: const ImageIcon(
                     AppIcons.add,
                     size: 10,

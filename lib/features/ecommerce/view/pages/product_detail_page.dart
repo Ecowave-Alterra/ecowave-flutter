@@ -54,7 +54,7 @@ class ProductDetail extends StatelessWidget {
                             nameItems: 'Tote Bag Putih Polos',
                             detailItems: 'Kategori : Kantong',
                             image: AppImages.productShop2,
-                            price: 5000.currencyFormatRp,
+                            price: 5000,
                             totalItems: 1,
                             checkedItems: false),
                       ),

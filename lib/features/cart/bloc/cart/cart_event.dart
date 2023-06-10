@@ -44,9 +44,4 @@ class CheckedAllItemCart extends CartEvent {
   });
 }
 
-class GetTotalPayment extends CartEvent {
-  double total;
-  GetTotalPayment({
-    required this.total,
-  });
-}
+class GetTotalPayment extends CartEvent {}

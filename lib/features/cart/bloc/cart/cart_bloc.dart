@@ -13,31 +13,37 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     on<AddItemCart>((event, emit) {
       emit(CartLoading());
       service.addItem(event.cartModel);
-      emit(CartSuccess(data: service.items, total: service.totalPayment));
+
+      add(GetTotalPayment());
     });
     on<AddTotalItemCart>((event, emit) {
       emit(CartLoading());
       service.addTotalItem(event.id);
-      emit(CartSuccess(data: service.items, total: service.totalPayment));
+
+      add(GetTotalPayment());
     });
     on<ReduceTotalItemCart>((event, emit) {
       emit(CartLoading());
       service.reduceTotalItem(event.id);
-      emit(CartSuccess(data: service.items, total: service.totalPayment));
+
+      add(GetTotalPayment());
     });
     on<DeleteItemCart>((event, emit) {
       emit(CartLoading());
       service.deleteItem(event.id);
-      emit(CartSuccess(data: service.items, total: service.totalPayment));
+
+      add(GetTotalPayment());
     });
     on<DeleteAllItemCart>((event, emit) {
       emit(CartLoading());
       service.deleteAllItems();
-      emit(CartSuccess(data: service.items, total: service.totalPayment));
+
+      add(GetTotalPayment());
     });
     on<GetItemCart>((event, emit) {
       emit(CartLoading());
-      emit(CartSuccess(data: service.items, total: service.totalPayment));
+
+      add(GetTotalPayment());
     });
 
     on<CheckedItemCart>((event, emit) {
@@ -48,7 +54,9 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       } else if (event.value == true) {
         service.items[targetIndex].checkedItems = true;
       }
-      emit(CartSuccess(data: service.items, total: service.totalPayment));
+      emit(CartSuccess(
+        data: service.items,
+      ));
     });
     on<CheckedAllItemCart>(
       (event, emit) {
@@ -62,7 +70,19 @@ class CartBloc extends Bloc<CartEvent, CartState> {
             service.items[i].checkedItems = true;
           }
         }
-        emit(CartSuccess(data: service.items, total: service.totalPayment));
+        emit(CartSuccess(
+          data: service.items,
+        ));
+      },
+    );
+    on<GetTotalPayment>(
+      (event, emit) {
+        double totalPayment = 0;
+        for (CartModel item
+            in service.items.where((element) => element.checkedItems)) {
+          totalPayment += (item.price * item.totalItems);
+        }
+        emit(CartSuccess(data: service.items, total: totalPayment));
       },
     );
   }

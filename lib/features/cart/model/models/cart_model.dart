@@ -5,7 +5,7 @@ class CartModel {
   final String nameItems;
   final String detailItems;
   final String image;
-  final String price;
+  final int price;
   int totalItems;
   bool checkedItems;
   CartModel({
@@ -36,7 +36,7 @@ class CartModel {
       nameItems: map['nameItems'] ?? '',
       detailItems: map['detailItems'] ?? '',
       image: map['image'] ?? '',
-      price: map['price'] ?? '',
+      price: map['price'] ?? 0,
       totalItems: map['totalItems']?.toInt() ?? 0,
       checkedItems: map['checkedItems'] ?? false,
     );
@@ -52,7 +52,7 @@ class CartModel {
     String? nameItems,
     String? detailItems,
     String? image,
-    String? price,
+    int? price,
     int? totalItems,
     bool? checkedItems,
   }) {
