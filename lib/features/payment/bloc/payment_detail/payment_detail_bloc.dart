@@ -1,5 +1,5 @@
 import 'package:ecowave/core.dart';
-import 'package:ecowave/features/ecommerce/model/product_model.dart';
+import 'package:ecowave/features/ecommerce/model/models/product_model.dart';
 import 'package:ecowave/features/payment/model/models/expedition_model.dart';
 import 'package:ecowave/features/payment/model/models/payment_info.dart';
 import 'package:ecowave/features/payment/model/models/payment_method_model.dart';
