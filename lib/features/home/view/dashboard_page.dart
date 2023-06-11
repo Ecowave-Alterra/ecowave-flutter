@@ -196,7 +196,7 @@ class DashboardPage extends StatelessWidget {
                           ),
                           AppSizes.secondary.height,
                           const Padding(
-                            padding: const EdgeInsets.symmetric(
+                            padding: EdgeInsets.symmetric(
                                 horizontal: AppSizes.primary),
                             child: Text(
                               "Lagi nyari Product Ramah Lingkungan?",

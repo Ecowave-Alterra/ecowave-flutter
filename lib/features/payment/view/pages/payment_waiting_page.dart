@@ -1,5 +1,5 @@
 import 'package:ecowave/core.dart';
-import 'package:ecowave/features/home/bloc/page_bloc.dart';
+import 'package:ecowave/features/home/bloc/home/home_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -88,7 +88,7 @@ class PaymentWaitingPage extends StatelessWidget {
                     label: "Pesanan Saya",
                     onPressed: () {
                       context.popToRoot();
-                      context.read<PageBloc>().add(1);
+                      context.read<HomeBloc>().add(const OnBottomNavTap(1));
                     },
                     backgroundColor: Colors.transparent,
                     textColor: AppColors.primary500,

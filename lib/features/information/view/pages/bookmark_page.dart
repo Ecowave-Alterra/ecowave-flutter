@@ -1,4 +1,3 @@
-import 'package:ecowave/features/information/view/widget/list_information_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 

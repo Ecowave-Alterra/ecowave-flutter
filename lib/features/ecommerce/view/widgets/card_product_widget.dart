@@ -31,7 +31,10 @@ class CardProduct extends StatelessWidget {
                 itemBuilder: (context, index) {
                   final product = state.data[index];
                   return GestureDetector(
-                    onTap: () => context.push(const ProductDetail()),
+                    onTap: () => context.push(ProductDetail(
+                      productId: product.id,
+                      productCategoryId: product.productCategoryId,
+                    )),
                     child: Container(
                       width: 171,
                       height: 225,

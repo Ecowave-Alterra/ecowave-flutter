@@ -49,7 +49,7 @@ class _RegisterComplatePageState extends State<RegisterComplatePage> {
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.all(AppSizes.primary),
+        padding: const EdgeInsets.all(AppSizes.primary),
         child: Center(
             child: Form(
                 key: _formKey,
