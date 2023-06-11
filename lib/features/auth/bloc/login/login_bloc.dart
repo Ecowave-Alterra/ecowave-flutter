@@ -1,4 +1,4 @@
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ecowave/features/auth/model/models/login_model.dart';
 import 'package:ecowave/features/auth/model/services/login_services.dart';
 import 'package:equatable/equatable.dart';
@@ -38,7 +38,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           ));
         }
       } catch (error) {
-        print(error);
         await Future.delayed(const Duration(seconds: 2));
         emit(LoginError(
           isLoginButtonDisabled: false,

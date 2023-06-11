@@ -1,28 +1,31 @@
 import 'package:ecowave/core.dart';
 import 'package:ecowave/features/address/bloc/address/address_bloc.dart';
+import 'package:ecowave/features/address/model/models/address_model.dart';
 import 'package:ecowave/features/address/model/models/address_request.dart';
 import 'package:ecowave/features/address/view/widget/place_button_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AddAddressPage extends StatefulWidget {
-  const AddAddressPage({super.key});
+class UpdateAddressPage extends StatefulWidget {
+  final AddressModel addressModel;
+
+  const UpdateAddressPage({
+    super.key,
+    required this.addressModel,
+  });
 
   @override
-  State<AddAddressPage> createState() => _AddAddressPageState();
+  State<UpdateAddressPage> createState() => _UpdateAddressPageState();
 }
 
-class _AddAddressPageState extends State<AddAddressPage> {
+class _UpdateAddressPageState extends State<UpdateAddressPage> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
   final TextEditingController noteController = TextEditingController();
   final ValueNotifier<bool> isExist = ValueNotifier<bool>(false);
-
-  bool isSwitched = false;
-  int currentIndexMark = -1;
 
   @override
   void dispose() {
@@ -35,6 +38,20 @@ class _AddAddressPageState extends State<AddAddressPage> {
 
   @override
   Widget build(BuildContext context) {
+    nameController.text = widget.addressModel.recipient;
+    phoneController.text = widget.addressModel.phoneNumber;
+    addressController.text = widget.addressModel.address;
+    noteController.text = widget.addressModel.note ?? "";
+    bool isSwitched = widget.addressModel.isPrimary;
+    String? mark = widget.addressModel.mark;
+    int currentIndexMark = -1;
+
+    if (mark == "Rumah") {
+      currentIndexMark = 0;
+    } else if (mark == "Kantor") {
+      currentIndexMark = 1;
+    }
+
     return WillPopScope(
       onWillPop: () async {
         showConfirmation(
@@ -53,7 +70,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Tambah Alamat'),
+          title: const Text('Ubah Alamat'),
         ),
         body: Form(
           key: formKey,
@@ -129,6 +146,15 @@ class _AddAddressPageState extends State<AddAddressPage> {
                 label: 'Catatan untuk Kurir (Optional)',
                 hint: 'Catatan untuk Kurir (Optional)',
                 floatingLabelBehavior: FloatingLabelBehavior.auto,
+                onChanged: (value) {
+                  if (nameController.text.isNotEmpty &&
+                      phoneController.text.isNotEmpty &&
+                      addressController.text.isNotEmpty) {
+                    isExist.value = true;
+                  } else {
+                    isExist.value = false;
+                  }
+                },
               ),
               26.0.height,
               Padding(
@@ -151,6 +177,13 @@ class _AddAddressPageState extends State<AddAddressPage> {
                                 value: 0,
                                 groupValue: currentIndexMark,
                                 onChanged: (index) {
+                                  if (nameController.text.isNotEmpty &&
+                                      phoneController.text.isNotEmpty &&
+                                      addressController.text.isNotEmpty) {
+                                    isExist.value = true;
+                                  } else {
+                                    isExist.value = false;
+                                  }
                                   currentIndexMark = index!;
                                   changeState(() {});
                                 },
@@ -161,6 +194,13 @@ class _AddAddressPageState extends State<AddAddressPage> {
                                 value: 1,
                                 groupValue: currentIndexMark,
                                 onChanged: (index) {
+                                  if (nameController.text.isNotEmpty &&
+                                      phoneController.text.isNotEmpty &&
+                                      addressController.text.isNotEmpty) {
+                                    isExist.value = true;
+                                  } else {
+                                    isExist.value = false;
+                                  }
                                   currentIndexMark = index!;
                                   changeState(() {});
                                 },
@@ -188,6 +228,13 @@ class _AddAddressPageState extends State<AddAddressPage> {
                             activeColor: AppColors.primary500,
                             value: isSwitched,
                             onChanged: (value) {
+                              if (nameController.text.isNotEmpty &&
+                                  phoneController.text.isNotEmpty &&
+                                  addressController.text.isNotEmpty) {
+                                isExist.value = true;
+                              } else {
+                                isExist.value = false;
+                              }
                               isSwitched = value;
                               changeState(() {});
                             },
@@ -211,7 +258,6 @@ class _AddAddressPageState extends State<AddAddressPage> {
               label: "Simpan",
               onPressed: value
                   ? () {
-                      String? mark;
                       if (currentIndexMark == 0) {
                         mark = "Rumah";
                       } else if (currentIndexMark == 1) {
@@ -219,7 +265,8 @@ class _AddAddressPageState extends State<AddAddressPage> {
                       }
 
                       if (formKey.currentState!.validate()) {
-                        context.read<AddressBloc>().add(AddAddressesEvent(
+                        context.read<AddressBloc>().add(UpdateAddressesEvent(
+                              id: widget.addressModel.userAddress,
                               request: AddressRequest(
                                 recipient: nameController.text,
                                 phoneNumber: phoneController.text,
@@ -230,7 +277,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
                               ),
                             ));
                         context.pop();
-                        "Yey! Kamu berhasil menambahkan alamat"
+                        "Yey! Kamu berhasil memperbarui alamat"
                             .succeedBar(context);
                       }
                     }

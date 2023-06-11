@@ -51,18 +51,16 @@ class _CartPageState extends State<CartPage> {
                     controlAffinity: ListTileControlAffinity.leading,
                   ),
                 ),
-                SizedBox(
-                  child: OutlinedButton(
-                    onPressed: () =>
-                        context.read<CartBloc>().add(DeleteAllItemCart()),
-                    child: const Text(
-                      'Hapus',
-                      style: TextStyle(
-                        color: AppColors.primary500,
-                        fontWeight: AppFontWeight.semibold,
-                      ),
-                    ),
+                EcoFormButton(
+                  width: 90.0,
+                  label: "Hapus",
+                  onPressed: () =>
+                      context.read<CartBloc>().add(DeleteAllItemCart()),
+                  backgroundColor: Colors.transparent,
+                  border: Border.all(
+                    color: AppColors.primary500,
                   ),
+                  textColor: AppColors.primary500,
                 ),
               ],
             ),
@@ -131,7 +129,10 @@ class _CartPageState extends State<CartPage> {
                     flex: 1,
                     child: EcoFormButton(
                       label: 'Beli',
-                      onPressed: () => context.push(const PaymentDetailPage()),
+                      onPressed: state.total.toInt() == 0
+                          ? null
+                          : () => context
+                              .push(PaymentDetailPage(carts: state.data)),
                     ),
                   ),
                 ],

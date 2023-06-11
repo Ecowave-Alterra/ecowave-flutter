@@ -1,10 +1,11 @@
 import 'package:ecowave/core.dart';
-import 'package:ecowave/features/payment/model/models/shipping_address_model.dart';
+import 'package:ecowave/features/address/model/models/address_model.dart';
+import 'package:ecowave/features/address/view/pages/update_adress_page.dart';
 import 'package:flutter/material.dart';
 
 class ShippingAddressCard extends StatelessWidget {
   final int? selectedOption;
-  final ShippingAddressModel addressModel;
+  final AddressModel addressModel;
   final VoidCallback onTap;
 
   const ShippingAddressCard({
@@ -31,7 +32,7 @@ class ShippingAddressCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Radio(
-                    value: addressModel.id,
+                    value: addressModel.userAddress,
                     groupValue: selectedOption,
                     onChanged: (value) => onTap(),
                     activeColor: AppColors.primary500,
@@ -49,7 +50,7 @@ class ShippingAddressCard extends StatelessWidget {
                           ),
                         ),
                         6.0.height,
-                        Text(addressModel.phone),
+                        Text(addressModel.phoneNumber),
                         Text(addressModel.address),
                         6.0.height,
                         if (addressModel.isPrimary)
@@ -79,9 +80,11 @@ class ShippingAddressCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 12.0),
               child: EcoFormButton(
-                width: 62.0,
+                width: 75.0,
                 label: "Ubah",
-                onPressed: () {},
+                onPressed: () => context.push(UpdateAddressPage(
+                  addressModel: addressModel,
+                )),
                 backgroundColor: Colors.transparent,
                 border: Border.all(
                   color: AppColors.primary500,

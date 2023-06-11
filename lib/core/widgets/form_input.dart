@@ -8,6 +8,8 @@ class EcoFormInput extends StatelessWidget {
   final String? Function(String?)? validator;
   final Widget? icon;
   final void Function(String value)? onChanged;
+  final FloatingLabelBehavior? floatingLabelBehavior;
+
   const EcoFormInput({
     super.key,
     required this.hint,
@@ -17,6 +19,7 @@ class EcoFormInput extends StatelessWidget {
     this.validator,
     this.icon,
     this.onChanged,
+    this.floatingLabelBehavior = FloatingLabelBehavior.always,
   });
 
   @override
@@ -49,16 +52,16 @@ class EcoFormInput extends StatelessWidget {
           borderSide: const BorderSide(color: AppColors.error500),
         ),
         labelStyle: const TextStyle(
-          color: Colors.black,
+          color: AppColors.grey500,
         ),
-        floatingLabelBehavior: FloatingLabelBehavior.always,
+        floatingLabelBehavior: floatingLabelBehavior,
         labelText: label,
         hintText: hint,
         hintStyle: const TextStyle(color: AppColors.grey500),
-        prefixIcon: Transform.scale(      
-                  scale: 0.5,       
-                  child: icon,  
-               ),  
+        prefixIcon: Transform.scale(
+          scale: 0.5,
+          child: icon,
+        ),
       ),
     );
   }
