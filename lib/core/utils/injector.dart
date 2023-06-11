@@ -5,7 +5,7 @@ import 'package:ecowave/features/information/bloc/informatio/information_bloc.da
 import 'package:ecowave/features/information/model/services/information_service.dart';
 import 'package:ecowave/features/ecommerce/bloc/product_home/product_bloc.dart';
 import 'package:ecowave/features/ecommerce/model/services/product_service.dart';
-import 'package:ecowave/features/home/bloc/page_bloc.dart';
+import 'package:ecowave/features/home/bloc/home/home_bloc.dart';
 import 'package:ecowave/features/payment/bloc/expedition/expedition_bloc.dart';
 import 'package:ecowave/features/payment/bloc/payment_detail/payment_detail_bloc.dart';
 import 'package:ecowave/features/payment/bloc/payment_method/payment_method_bloc.dart';
@@ -26,8 +26,8 @@ final GetIt locator = GetIt.instance;
 
 void init() {
   // state management
+  locator.registerFactory(() => HomeBloc());
   locator.registerFactory(() => CartBloc());
-  locator.registerFactory(() => PageBloc());
   locator.registerFactory(() => ShippingAddressBloc(locator()));
   locator.registerFactory(() => PaymentMethodBloc(locator()));
   locator.registerFactory(() => ExpeditionBloc(locator()));

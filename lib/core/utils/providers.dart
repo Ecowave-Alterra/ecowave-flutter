@@ -4,7 +4,7 @@ import 'package:ecowave/features/cart/bloc/cart/cart_bloc.dart';
 import 'package:ecowave/features/ecommerce/bloc/product_image/product_image_bloc.dart';
 import 'package:ecowave/features/information/bloc/informatio/information_bloc.dart';
 import 'package:ecowave/features/ecommerce/bloc/product_home/product_bloc.dart';
-import 'package:ecowave/features/home/bloc/page_bloc.dart';
+import 'package:ecowave/features/home/bloc/home/home_bloc.dart';
 import 'package:ecowave/features/payment/bloc/expedition/expedition_bloc.dart';
 import 'package:ecowave/features/payment/bloc/payment_detail/payment_detail_bloc.dart';
 import 'package:ecowave/features/payment/bloc/payment_method/payment_method_bloc.dart';
@@ -17,8 +17,9 @@ import '../../features/ecommerce/bloc/product_category/product_category_bloc.dar
 
 class Providers {
   static final List<BlocProvider> init = [
+    BlocProvider<HomeBloc>(
+        create: (context) => di.locator<HomeBloc>()),
     BlocProvider<CartBloc>(create: (context) => di.locator<CartBloc>()),
-    BlocProvider<PageBloc>(create: (context) => di.locator<PageBloc>()),
     BlocProvider<ShippingAddressBloc>(
         create: (context) => di.locator<ShippingAddressBloc>()),
     BlocProvider<PaymentMethodBloc>(
