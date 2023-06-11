@@ -28,7 +28,6 @@ dependencies:
   dio: ^5.1.2
   equatable: ^2.0.5
   flutter_html: ^3.0.0-beta.2
-  uuid: ^3.0.7 
 
 flutter_launcher_icons:
   android: "launcher_icon"

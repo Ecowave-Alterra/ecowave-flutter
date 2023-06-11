@@ -1,8 +1,14 @@
 import 'package:ecowave/core.dart';
+import 'package:ecowave/features/cart/model/models/cart_model.dart';
 import 'package:flutter/material.dart';
 
 class SelectedProductCard extends StatelessWidget {
-  const SelectedProductCard({super.key});
+  final CartModel cartModel;
+
+  const SelectedProductCard({
+    super.key,
+    required this.cartModel,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -11,8 +17,8 @@ class SelectedProductCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.network(
-            "https://d1r7omh34z6onh.cloudfront.net/gk/production/9a09064d2bcf10b0f3292fea071406bb.jpg",
+          Image.asset(
+            cartModel.image,
             width: 55.0,
             height: 55.0,
             fit: BoxFit.cover,
@@ -21,19 +27,19 @@ class SelectedProductCard extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                "Nama Produk",
-                style: TextStyle(
+              Text(
+                cartModel.nameItems,
+                style: const TextStyle(
                   fontWeight: AppFontWeight.semibold,
                 ),
               ),
               12.0.height,
-              const Text("Detail : Rumah Tangga/Kain"),
+              Text("Detail : ${cartModel.detailItems}"),
               12.0.height,
-              const Text("1 Barang"),
+              Text("${cartModel.totalItems} Barang"),
               12.0.height,
               Text(
-                50000.currencyFormatRp,
+                cartModel.totalPrice.currencyFormatRp,
                 style: const TextStyle(
                   fontWeight: AppFontWeight.semibold,
                 ),

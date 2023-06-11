@@ -1,5 +1,6 @@
 import 'package:ecowave/core.dart';
 import 'package:ecowave/features/address/bloc/address/address_bloc.dart';
+import 'package:ecowave/features/cart/model/models/cart_model.dart';
 import 'package:ecowave/features/payment/bloc/payment_detail/payment_detail_bloc.dart';
 import 'package:ecowave/features/payment/bloc/voucher/voucher_bloc.dart';
 import 'package:ecowave/features/payment/bloc/expedition/expedition_bloc.dart';
@@ -20,11 +21,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PaymentDetailPage extends StatelessWidget {
-  const PaymentDetailPage({super.key});
+  final List<CartModel> carts;
+
+  const PaymentDetailPage({
+    super.key,
+    required this.carts,
+  });
 
   @override
   Widget build(BuildContext context) {
     context.read<PaymentDetailBloc>().add(const PointUsedEvent(pointUsed: 0));
+    context.read<PaymentDetailBloc>().add(GetCartsEvent(carts: carts));
     context.read<VoucherBloc>().add(GetVouchersEvent());
     context.read<ExpeditionBloc>().add(GetExpeditionsEvent());
     context.read<AddressBloc>().add(GetAddressesEvent());
@@ -85,7 +92,7 @@ class PaymentDetailPage extends StatelessWidget {
             padding: const EdgeInsets.all(AppSizes.primary),
             child: Column(
               children:
-                  [1, 2, 3].map((e) => const SelectedProductCard()).toList(),
+                  carts.map((e) => SelectedProductCard(cartModel: e)).toList(),
             ),
           ),
           BlocBuilder<PaymentDetailBloc, PaymentDetailState>(
@@ -197,7 +204,7 @@ class PaymentDetailPage extends StatelessWidget {
                                           state.paymentMethodModel!,
                                       expeditionModel: state.expeditionModel!,
                                       voucherModel: state.voucherModel,
-                                      products: const [],
+                                      products: carts,
                                       pointUsed: state.pointUsed,
                                       totalPayment:
                                           state.paymentInfo!.totalPayment,

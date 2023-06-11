@@ -7,6 +7,14 @@ abstract class PaymentDetailEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class GetCartsEvent extends PaymentDetailEvent {
+  final List<CartModel> carts;
+
+  const GetCartsEvent({
+    required this.carts,
+  });
+}
+
 class ChangeShippingAddressEvent extends PaymentDetailEvent {
   final AddressModel addressModel;
 
@@ -52,7 +60,7 @@ class CheckoutEvent extends PaymentDetailEvent {
   final PaymentMethodModel paymentMethodModel;
   final ExpeditionModel expeditionModel;
   final VoucherModel? voucherModel;
-  final List<ProductModel> products;
+  final List<CartModel> products;
   final int? pointUsed;
   final int totalPayment;
 

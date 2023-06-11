@@ -18,6 +18,8 @@ class CartModel {
     required this.checkedItems,
   });
 
+  int get totalPrice => price * totalItems;
+
   Map<String, dynamic> toMap() {
     return {
       'id': id,
