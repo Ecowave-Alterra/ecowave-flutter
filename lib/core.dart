@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 
+part 'core/constants/base_url.dart';
 part 'core/constants/colors.dart';
 part 'core/constants/font_weight.dart';
 part 'core/constants/icons.dart';
@@ -27,4 +28,3 @@ part 'package:ecowave/core/widgets/form_button_icon.dart';
 part 'package:ecowave/core/widgets/empty.dart';
 part 'package:ecowave/core/widgets/error.dart';
 part 'package:ecowave/core/widgets/loading.dart';
-

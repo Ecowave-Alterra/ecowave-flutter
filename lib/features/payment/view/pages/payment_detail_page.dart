@@ -1,10 +1,11 @@
 import 'package:ecowave/core.dart';
+import 'package:ecowave/features/address/bloc/address/address_bloc.dart';
+import 'package:ecowave/features/cart/model/models/cart_model.dart';
 import 'package:ecowave/features/payment/bloc/payment_detail/payment_detail_bloc.dart';
 import 'package:ecowave/features/payment/bloc/voucher/voucher_bloc.dart';
 import 'package:ecowave/features/payment/bloc/expedition/expedition_bloc.dart';
-import 'package:ecowave/features/payment/bloc/shipping_address/shipping_address_bloc.dart';
 import 'package:ecowave/features/payment/bloc/payment_method/payment_method_bloc.dart';
-import 'package:ecowave/features/payment/model/models/shipping_address_model.dart';
+import 'package:ecowave/features/address/model/models/address_model.dart';
 import 'package:ecowave/features/payment/view/pages/payment_page.dart';
 import 'package:ecowave/features/payment/view/pages/payment_waiting_page.dart';
 import 'package:ecowave/features/payment/view/pages/voucher_page.dart';
@@ -20,14 +21,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PaymentDetailPage extends StatelessWidget {
-  const PaymentDetailPage({super.key});
+  final List<CartModel> carts;
+
+  const PaymentDetailPage({
+    super.key,
+    required this.carts,
+  });
 
   @override
   Widget build(BuildContext context) {
     context.read<PaymentDetailBloc>().add(const PointUsedEvent(pointUsed: 0));
+    context.read<PaymentDetailBloc>().add(GetCartsEvent(carts: carts));
     context.read<VoucherBloc>().add(GetVouchersEvent());
     context.read<ExpeditionBloc>().add(GetExpeditionsEvent());
-    context.read<ShippingAddressBloc>().add(GetShippingAddressesEvent());
+    context.read<AddressBloc>().add(GetAddressesEvent());
     context.read<PaymentMethodBloc>().add(GetPaymentMethodsEvent());
 
     return Scaffold(
@@ -38,33 +45,32 @@ class PaymentDetailPage extends StatelessWidget {
         children: [
           BlocBuilder<PaymentDetailBloc, PaymentDetailState>(
             builder: (context, state) {
-              if (state.shippingAddressModel != null) {
+              if (state.addressModel != null) {
                 return AddressInfoWidget(
-                  addressModel: state.shippingAddressModel,
+                  addressModel: state.addressModel,
                   onChangeTap: () => context.push(ShippingAddressPage(
-                    currentAddress: state.shippingAddressModel,
+                    currentAddress: state.addressModel,
                   )),
                 );
               } else {
-                return BlocBuilder<ShippingAddressBloc, ShippingAddressState>(
+                return BlocBuilder<AddressBloc, AddressState>(
                   builder: (context, state) {
-                    if (state is ShippingAddressLoading) {
+                    if (state is AddressLoading) {
                       return const EcoLoading();
-                    } else if (state is ShippingAddressFailed) {
+                    } else if (state is AddressFailed) {
                       return EcoError(
                         errorMessage: state.meesage,
                         onRetry: () {},
                       );
-                    } else if (state is ShippingAddressSuccess) {
-                      final ShippingAddressModel shippingAddressModel = state
-                          .data
+                    } else if (state is AddressSuccess) {
+                      final AddressModel shippingAddressModel = state.data
                           .where((element) => element.isPrimary)
                           .first;
 
                       context
                           .read<PaymentDetailBloc>()
                           .add(ChangeShippingAddressEvent(
-                            shippingAddressModel: shippingAddressModel,
+                            addressModel: shippingAddressModel,
                           ));
 
                       return AddressInfoWidget(
@@ -86,7 +92,7 @@ class PaymentDetailPage extends StatelessWidget {
             padding: const EdgeInsets.all(AppSizes.primary),
             child: Column(
               children:
-                  [1, 2, 3].map((e) => const SelectedProductCard()).toList(),
+                  carts.map((e) => SelectedProductCard(cartModel: e)).toList(),
             ),
           ),
           BlocBuilder<PaymentDetailBloc, PaymentDetailState>(
@@ -184,7 +190,7 @@ class PaymentDetailPage extends StatelessWidget {
                 builder: (context, state) {
                   return EcoFormButton(
                     label: "Order Sekarang",
-                    onPressed: state.shippingAddressModel == null ||
+                    onPressed: state.addressModel == null ||
                             state.expeditionModel == null ||
                             state.paymentMethodModel == null
                         ? null
@@ -193,13 +199,12 @@ class PaymentDetailPage extends StatelessWidget {
                             if (context.mounted) {
                               context.read<PaymentDetailBloc>().add(
                                     CheckoutEvent(
-                                      shippingAddressModel:
-                                          state.shippingAddressModel!,
+                                      addressModel: state.addressModel!,
                                       paymentMethodModel:
                                           state.paymentMethodModel!,
                                       expeditionModel: state.expeditionModel!,
                                       voucherModel: state.voucherModel,
-                                      products: const [],
+                                      products: carts,
                                       pointUsed: state.pointUsed,
                                       totalPayment:
                                           state.paymentInfo!.totalPayment,

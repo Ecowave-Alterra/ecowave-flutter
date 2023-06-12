@@ -21,8 +21,10 @@ dependencies:
   carousel_slider: ^4.2.1
   flutter_countdown_timer: ^4.1.0
   flutter_rating_bar: ^4.0.1
-  flutter_switch: ^0.3.2
   file_picker: ^5.3.1
+  sqflite: ^2.2.8+4
+  path_provider: ^2.0.15
+  shared_preferences: ^2.1.1
   dio: ^5.1.2
   equatable: ^2.0.5
   shared_preferences: ^2.1.1

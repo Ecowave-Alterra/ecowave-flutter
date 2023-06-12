@@ -70,7 +70,7 @@ class _InformationPageState extends State<InformationPage> {
                 return const EcoLoading();
               } else if (state is InformationSuccess) {
                 return CarouselSlider.builder(
-                  itemCount: state.data.length - 3,
+                  itemCount: state.data.length,
                   itemBuilder: (context, index, realIndex) {
                     return CarouselCardInformation(
                       images: state.data[index].photoContentUrl,
@@ -81,7 +81,7 @@ class _InformationPageState extends State<InformationPage> {
                   carouselController: _controller,
                   options: CarouselOptions(
                     height: 150,
-                    initialPage: 1,
+                    initialPage: 0,
                     onPageChanged: (index, reason) {
                       setState(
                         () {

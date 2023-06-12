@@ -227,9 +227,7 @@ class ProfilePage extends StatelessWidget {
                     context.push(const EditProfilePage());
                   },
                   child: const Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: AppSizes.primary,
-                        vertical: AppSizes.primary / 2),
+                    padding: EdgeInsets.all(AppSizes.primary),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -260,15 +258,16 @@ class ProfilePage extends StatelessWidget {
                     ),
                   ),
                 ),
-                const Divider(
-                  color: AppColors.grey50,
+                const SizedBox(
+                  height: 8,
+                  child: Divider(
+                    color: AppColors.grey50,
+                  ),
                 ),
                 InkWell(
-                    onTap: () => context.push(const AddressPage(listUser: [])),
+                    onTap: () => context.push(const AddressPage()),
                     child: const Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: AppSizes.primary,
-                          vertical: AppSizes.primary / 2),
+                      padding: EdgeInsets.all(AppSizes.primary),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -324,9 +323,7 @@ class ProfilePage extends StatelessWidget {
                     context.push(const ChangePasswordUserPage());
                   },
                   child: const Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: AppSizes.primary,
-                        vertical: AppSizes.primary / 2),
+                    padding: EdgeInsets.all(AppSizes.primary),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

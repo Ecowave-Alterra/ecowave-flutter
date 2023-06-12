@@ -39,7 +39,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
             user: userModel,
           ));
         } else {
-          emit(LoginError(
+          emit(const LoginError(
             isLoginButtonDisabled: false,
             errorMessage: "Gagal melakukan login",
           ));
@@ -58,12 +58,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       state.isLoginButtonDisabled == true;
       if (emailController.text.isNotEmpty &&
           passwordController.text.isNotEmpty) {
-        emit(LoginState(
+        emit(const LoginState(
           isLoginButtonDisabled: false,
         ));
       } else if (emailController.text.isEmpty ||
           passwordController.text.isEmpty) {
-        emit(LoginState(
+        emit(const LoginState(
           isLoginButtonDisabled: true,
         ));
       }

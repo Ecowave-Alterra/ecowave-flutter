@@ -68,5 +68,16 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       }
       emit(ProductSuccess(data: sortResult));
     });
+
+    on<GetProductDetailEvent>((event, emit) async {
+      emit(ProductInitial());
+      List<ProductModel> searchResult = [];
+      for (var element in products) {
+        if (element.id.toString().contains(event.productId.toString())) {
+          searchResult.add(element);
+        }
+      }
+      emit(ProductSuccess(data: searchResult));
+    });
   }
 }

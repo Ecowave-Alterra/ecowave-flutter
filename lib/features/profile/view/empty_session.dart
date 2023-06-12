@@ -56,7 +56,7 @@ class _EmptyUserPageState extends State<EmptyUserPage> {
                   label: 'Login',
                   textColor: AppColors.primary500,
                   onPressed: () {
-                    context.push(LoginPage());
+                    context.push(const LoginPage());
                   },
                   backgroundColor: AppColors.primary50,
                 ),

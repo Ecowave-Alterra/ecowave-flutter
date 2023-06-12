@@ -37,27 +37,26 @@ class EcoFormButtonIcon extends StatelessWidget {
       child: TextButton(
         onPressed: onPressed,
         child: Row(
-        mainAxisAlignment: MainAxisAlignment.center, 
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-           SizedBox(  
-             width: 20,       
-             height: 20,       
-             child: image,    
-           ), 
-           8.0.width, 
-           Text(
-            label,
-            style: TextStyle(
-              color: textColor ?? AppColors.white,
-              fontWeight: AppFontWeight.semibold,
-              fontSize: AppSizes.buttonFontSize,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(
+              width: AppSizes.primary,
+              height: AppSizes.primary,
+              child: image,
             ),
-          ),
-        ],
+            8.0.width,
+            Text(
+              label,
+              style: TextStyle(
+                color: textColor ?? AppColors.white,
+                fontWeight: AppFontWeight.semibold,
+                fontSize: AppSizes.buttonFontSize,
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
 }
-

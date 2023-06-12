@@ -1,4 +1,4 @@
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ecowave/features/information/model/models/information_model.dart';
 import 'package:ecowave/features/information/model/services/information_service.dart';
 import 'package:equatable/equatable.dart';
