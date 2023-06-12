@@ -6,99 +6,53 @@ class VoucherService {
   //   _dio = Dio();
   // }
 
-  List dummy = [
-    {
-      "id": 1,
-      "minimum_purchase": 100000,
-      "maximum_discount": 10000,
-      "discount": 0.1,
-      "expired_date": "2023-06-30T11:00:00Z",
-      "photo_content_url":
-          "https://github.com/Ecowave-Alterra/ecowave-flutter/assets/74108522/bbbd7877-fc15-47ba-94fe-274f7a4954fd",
-      "term_condition": "Syarat dan ketentuan A",
-      "type": "Diskon",
-      "created_at": "2023-05-30T11:00:00Z",
-      "updated_at": "2023-05-30T11:00:00Z",
-      "deleted_at": null
-    },
-    {
-      "id": 2,
-      "minimum_purchase": 150000,
-      "maximum_discount": 20000,
-      "discount": 0.2,
-      "expired_date": "2023-06-30T11:00:00Z",
-      "photo_content_url":
-          "https://github.com/Ecowave-Alterra/ecowave-flutter/assets/74108522/bbbd7877-fc15-47ba-94fe-274f7a4954fd",
-      "term_condition": "Syarat dan ketentuan B",
-      "type": "Diskon",
-      "created_at": "2023-05-30T11:00:00Z",
-      "updated_at": "2023-05-30T11:00:00Z",
-      "deleted_at": null
-    },
-    {
-      "id": 3,
-      "minimum_purchase": 200000,
-      "maximum_discount": 30000,
-      "discount": 0.5,
-      "expired_date": "2023-06-30T11:00:00Z",
-      "photo_content_url":
-          "https://github.com/Ecowave-Alterra/ecowave-flutter/assets/74108522/bbbd7877-fc15-47ba-94fe-274f7a4954fd",
-      "term_condition": "Syarat dan ketentuan C",
-      "type": "Diskon",
-      "created_at": "2023-05-30T11:00:00Z",
-      "updated_at": "2023-05-30T11:00:00Z",
-      "deleted_at": null
-    },
-    {
-      "id": 4,
-      "minimum_purchase": 1000000,
-      "maximum_discount": 40000,
-      "discount": 0.05,
-      "expired_date": "2023-06-30T11:00:00Z",
-      "photo_content_url":
-          "https://github.com/Ecowave-Alterra/ecowave-flutter/assets/74108522/bbbd7877-fc15-47ba-94fe-274f7a4954fd",
-      "term_condition": "Syarat dan ketentuan D",
-      "type": "Diskon",
-      "created_at": "2023-05-30T11:00:00Z",
-      "updated_at": "2023-05-30T11:00:00Z",
-      "deleted_at": null
-    },
-    {
-      "id": 5,
-      "minimum_purchase": 12000000,
-      "maximum_discount": 20000,
-      "discount": 200000,
-      "expired_date": "2023-06-30T11:00:00Z",
-      "photo_content_url":
-          "https://github.com/Ecowave-Alterra/ecowave-flutter/assets/74108522/bbbd7877-fc15-47ba-94fe-274f7a4954fd",
-      "term_condition": "Syarat dan ketentuan E",
-      "type": "Gratis Ongkir",
-      "created_at": "2023-05-30T11:00:00Z",
-      "updated_at": "2023-05-30T11:00:00Z",
-      "deleted_at": null
-    },
-    {
-      "id": 6,
-      "minimum_purchase": 0,
-      "maximum_discount": 30000,
-      "discount": 40000,
-      "expired_date": "2023-06-30T11:00:00Z",
-      "photo_content_url":
-          "https://github.com/Ecowave-Alterra/ecowave-flutter/assets/74108522/bbbd7877-fc15-47ba-94fe-274f7a4954fd",
-      "term_condition": "Syarat dan ketentuan F",
-      "type": "Gratis Ongkir",
-      "created_at": "2023-05-30T11:00:00Z",
-      "updated_at": "2023-05-30T11:00:00Z",
-      "deleted_at": null
-    },
-  ];
+  Map<String, dynamic> dummy = {
+    "Vouchers": [
+      {
+        "Id": 1,
+        "Type": "Diskon Belanja",
+        "MinimumPurchase": 50000,
+        "MaximumDiscount": 15000,
+        "DiscountPercent": 20,
+        "MaxClaimLimit": 2,
+        "ClaimableCount": 1000,
+        "StartDate": "2023-05-30T11:00:00Z",
+        "EndDate": "2023-06-30T11:00:00Z"
+      },
+      {
+        "Id": 2,
+        "Type": "Gratis Ongkir",
+        "ClaimableCount": 1000,
+        "MaxClaimLimit": 2,
+        "StartDate": "2023-05-30T11:00:00Z",
+        "EndDate": "2023-06-30T11:00:00Z"
+      },
+      {
+        "Id": 3,
+        "Type": "Gratis Ongkir",
+        "MinimumPurchase": 100000,
+        "ClaimableCount": 1000,
+        "MaxClaimLimit": 2,
+        "StartDate": "2023-05-30T11:00:00Z",
+        "EndDate": "2023-06-30T11:00:00Z"
+      }
+    ],
+    "Page": 1,
+    "Status": 200,
+    "TotalPage": 1
+  };
 
   Future<List<VoucherModel>> getVouchers() async {
     try {
-      // const String url = '................';
+      // const String url = '${BaseURL.api}user/payment/vouchers';
       // final response = await _dio.get(url);
 
-      return dummy.map((e) => VoucherModel.fromJson(e)).toList();
+      if (dummy["Status"] == 200) {
+        final List<Map<String, dynamic>> datas = dummy["Vouchers"];
+        return datas.map((e) => VoucherModel.fromJson(e)).toList();
+      } else {
+        throw "get vouchers not successfully";
+      }
     } catch (e) {
       rethrow;
     }

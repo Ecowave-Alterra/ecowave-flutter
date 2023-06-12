@@ -14,14 +14,15 @@ class PaymentInfo {
   });
 
   int get discount {
-    int discountUsed = voucher?.discount.toInt() ?? 0;
+    int discountUsed = (voucher?.discountPercent ?? 0).toInt();
 
-    if (voucher?.type == "Diskon") {
-      discountUsed = ((voucher?.discount ?? 0) * productPrice).toInt();
+    if (voucher?.type == "Diskon Belanja") {
+      discountUsed =
+          ((voucher?.discountPercent ?? 0) / 100 * productPrice).toInt();
       if (discountUsed > (voucher?.maximumDiscount ?? 0)) {
-        discountUsed = voucher!.maximumDiscount;
+        discountUsed = voucher?.maximumDiscount ?? 0;
       }
-    } else if (discountUsed > shippingPrice) {
+    } else {
       discountUsed = shippingPrice;
     }
 

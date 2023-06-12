@@ -2,76 +2,69 @@ import 'dart:convert';
 
 import 'package:ecowave/core.dart';
 
-VoucherModel voucherModelFromJson(String str) =>
-    VoucherModel.fromJson(json.decode(str));
+List<VoucherModel> voucherModelFromJson(String str) => List<VoucherModel>.from(
+    json.decode(str).map((x) => VoucherModel.fromJson(x)));
 
-String voucherModelToJson(VoucherModel data) => json.encode(data.toJson());
+String voucherModelToJson(List<VoucherModel> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class VoucherModel {
   final int id;
-  final int maximumDiscount;
-  final int minimumPurchase;
-  final double discount;
-  final String expiredDate;
-  final String photoContentUrl;
-  final String termCondition;
   final String type;
-  final String createdAt;
-  final String updatedAt;
-  final String? deletedAt;
+  final int? minimumPurchase;
+  final int? maximumDiscount;
+  final int? discountPercent;
+  final int maxClaimLimit;
+  final int claimableCount;
+  final String startDate;
+  final String endDate;
 
   VoucherModel({
     required this.id,
-    required this.maximumDiscount,
-    required this.minimumPurchase,
-    required this.discount,
-    required this.expiredDate,
-    required this.photoContentUrl,
-    required this.termCondition,
     required this.type,
-    required this.createdAt,
-    required this.updatedAt,
-    this.deletedAt,
+    this.minimumPurchase,
+    this.maximumDiscount,
+    this.discountPercent,
+    required this.maxClaimLimit,
+    required this.claimableCount,
+    required this.startDate,
+    required this.endDate,
   });
 
   String get name {
-    if (type == "Gratis Ongkir") {
-      return type;
+    if (type == "Diskon Belanja") {
+      return "$type ${discountPercent!.toInt()}%";
     } else {
-      return "$type ${(discount * 100).toInt()}%";
+      return type;
     }
   }
 
   String get minimumPurchaseFormat =>
-      "Min. Blj ${minimumPurchase.currencyFormatSimpleRp}";
+      "Min. Blj ${(minimumPurchase ?? 0).currencyFormatSimpleRp}";
   String get expiredDateFormatString =>
-      DateTime.parse(expiredDate).toFormattedDate();
+      DateTime.parse(endDate).toFormattedDate();
 
   factory VoucherModel.fromJson(Map<String, dynamic> json) => VoucherModel(
-        id: json["id"],
-        maximumDiscount: json["maximum_discount"],
-        minimumPurchase: json["minimum_purchase"],
-        discount: json["discount"]?.toDouble(),
-        expiredDate: json["expired_date"],
-        photoContentUrl: json["photo_content_url"],
-        termCondition: json["term_condition"],
-        type: json["type"],
-        createdAt: json["created_at"],
-        updatedAt: json["updated_at"],
-        deletedAt: json["deleted_at"],
+        id: json["Id"],
+        type: json["Type"],
+        minimumPurchase: json["MinimumPurchase"],
+        maximumDiscount: json["MaximumDiscount"],
+        discountPercent: json["DiscountPercent"],
+        maxClaimLimit: json["MaxClaimLimit"],
+        claimableCount: json["ClaimableCount"],
+        startDate: json["StartDate"],
+        endDate: json["EndDate"],
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "maximum_discount": maximumDiscount,
-        "minimum_purchase": minimumPurchase,
-        "discount": discount,
-        "expired_date": expiredDate,
-        "photo_content_url": photoContentUrl,
-        "term_condition": termCondition,
-        "type": type,
-        "created_at": createdAt,
-        "updated_at": updatedAt,
-        "deleted_at": deletedAt,
+        "Id": id,
+        "Type": type,
+        "MinimumPurchase": minimumPurchase,
+        "MaximumDiscount": maximumDiscount,
+        "DiscountPercent": discountPercent,
+        "MaxClaimLimit": maxClaimLimit,
+        "ClaimableCount": claimableCount,
+        "StartDate": startDate,
+        "EndDate": endDate,
       };
 }

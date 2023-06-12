@@ -15,7 +15,8 @@ class VoucherBloc extends Bloc<VoucherEvent, VoucherState> {
     on<VoucherEvent>((event, emit) async {
       try {
         final List<VoucherModel> result = await service.getVouchers();
-        result.sort((a, b) => a.minimumPurchase.compareTo(b.minimumPurchase));
+        result.sort((a, b) =>
+            (a.minimumPurchase ?? 0).compareTo(b.minimumPurchase ?? 0));
         emit(VoucherSuccess(data: result));
       } catch (e) {
         emit(VoucherFailed(meesage: e.toString()));
