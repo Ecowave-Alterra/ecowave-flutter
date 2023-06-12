@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:ecowave/features/auth/model/models/login_model.dart';
+import 'package:ecowave/features/profile/models/user_model.dart';
 import 'package:ecowave/features/auth/model/services/login_services.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -20,19 +21,25 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       try {
         emit(const LoginLoading(isLoginButtonDisabled: true, isLoading: true));
 
-        final userId = await LoginService().login(Login(
-            email: emailController.text, password: passwordController.text));
+        final userData = await LoginService().login(LoginModel(
+          email: emailController.text,
+          password: passwordController.text,
+        ));
+        print(userData);
+        if (userData['Status'] == 200) {
+          final data = userData;
+          final userModel = UserModel.fromJson(data);
 
-        if (userId != null) {
           SharedPreferences prefs = await SharedPreferences.getInstance();
-          await prefs.setString('userId', userId.toString());
+          prefs.setString('token', userModel.token);
 
-          emit(const LoginSuccess(
+          emit(LoginSuccess(
             isLoginButtonDisabled: false,
             message: "Login Sukses",
+            user: userModel,
           ));
         } else {
-          emit(const LoginError(
+          emit(LoginError(
             isLoginButtonDisabled: false,
             errorMessage: "Gagal melakukan login",
           ));
@@ -51,12 +58,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       state.isLoginButtonDisabled == true;
       if (emailController.text.isNotEmpty &&
           passwordController.text.isNotEmpty) {
-        emit(const LoginState(
+        emit(LoginState(
           isLoginButtonDisabled: false,
         ));
       } else if (emailController.text.isEmpty ||
           passwordController.text.isEmpty) {
-        emit(const LoginState(
+        emit(LoginState(
           isLoginButtonDisabled: true,
         ));
       }

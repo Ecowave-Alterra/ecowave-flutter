@@ -19,6 +19,16 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _noTelpController = TextEditingController();
+
+   @override
+  void dispose() {
+    _emailController.dispose();
+    _nameController.dispose();
+    _passwordController.dispose();
+    _usernameController.dispose();
+    _noTelpController.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,9 +45,9 @@ class _RegisterPageState extends State<RegisterPage> {
             nameController: _nameController),
         child: BlocConsumer<RegisterBloc, RegisterState>(
             listener: (context, state) {
-          if (state is RegisterError) {
-          }
+          if (state is RegisterError) {}
           if (state is RegisterSuccess) {
+            dispose();
             context.push(LoginPage());
           }
         }, builder: (context, state) {
@@ -48,184 +58,193 @@ class _RegisterPageState extends State<RegisterPage> {
             padding: const EdgeInsets.all(10),
             child: Form(
               key: _formKey,
-              child: Column(children: [
-                Image.asset(
-                  AppImages.logo,
-                  width: 200,
-                  height: 200,
-                ),
-                20.0.height,
-                EcoFormInput(
-                    label: 'Nama',
-                    controller: _nameController,
+              child: Column(
+                children: [
+                  Image.asset(
+                    AppImages.logo,
+                    width: 200,
+                    height: 200,
+                  ),
+                  20.0.height,
+                  EcoFormInput(
+                      label: 'Nama',
+                      controller: _nameController,
+                      hint: 'Masukan Nama Anda',
+                      icon: const ImageIcon(
+                        AppIcons.name,
+                        color: AppColors.grey500,
+                      ),
+                      onChanged: (value) {
+                        context
+                            .read<RegisterBloc>()
+                            .add(const RegisterInputChange());
+                      }),
+                  20.0.height,
+                  EcoFormInput(
+                    label: 'Email',
+                    hint: 'Masukkan alamat email',
+                    keyboardType: TextInputType.emailAddress,
+                    controller: _emailController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Email tidak boleh kosong';
+                      } else if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                          .hasMatch(value)) {
+                        return 'Alamat email tidak valid';
+                      }
+                      return null;
+                    },
+                    onChanged: (value) {
+                      context
+                          .read<RegisterBloc>()
+                          .add(const RegisterInputChange());
+                    },
+                    icon: const ImageIcon(
+                      AppIcons.email,
+                      color: AppColors.grey500,
+                    ),
+                  ),
+
+                  20.0.height,
+                  EcoFormInput(
+                    label: 'Username',
+                    controller: _usernameController,
                     hint: 'Masukan Nama Anda',
                     icon: const ImageIcon(
-                      AppIcons.name,
+                      AppIcons.username,
                       color: AppColors.grey500,
                     ),
                     onChanged: (value) {
                       context
                           .read<RegisterBloc>()
                           .add(const RegisterInputChange());
-                    }),
-                20.0.height,
-                EcoFormInput(
-                  label: 'Email',
-                  hint: 'Masukkan alamat email',
-                  keyboardType: TextInputType.emailAddress,
-                  controller: _emailController,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Email tidak boleh kosong';
-                    } else if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
-                        .hasMatch(value)) {
-                      return 'Alamat email tidak valid';
-                    }
-                    return null;
-                  },
-                  onChanged: (value) {
-                    context
-                        .read<RegisterBloc>()
-                        .add(const RegisterInputChange());
-                  },
-                  icon: const ImageIcon(
-                    AppIcons.email,
-                    color: AppColors.grey500,
+                    },
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Username tidak boleh kosong';
+                      }
+                      return null;
+                    },
                   ),
-                ),
-               
-                20.0.height,
-                EcoFormInput(
-                  label: 'Username',
-                  controller: _usernameController,
-                  hint: 'Masukan Nama Anda',
-                  icon: const ImageIcon(
-                    AppIcons.username,
-                    color: AppColors.grey500,
-                  ),
-                  onChanged: (value) {
-                    context
-                        .read<RegisterBloc>()
-                        .add(const RegisterInputChange());
-                  },
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Username tidak boleh kosong';
-                    } 
-                    return null;
-                  },
-                ),
-              
-                20.0.height,
-                EcoFormInput(
-                  label: 'No. Telepon',
-                  controller: _noTelpController,
-                  keyboardType: TextInputType.number,
-                  hint: 'Masukan Nomor telefon Anda',
-                  icon: const ImageIcon(
-                    AppIcons.numberPhone,
-                    color: AppColors.grey500,
-                  ),
-                  onChanged: (value) {
-                    context
-                        .read<RegisterBloc>()
-                        .add(const RegisterInputChange());
-                  },
-                ),
-                20.0.height,
-                EcoFormInputPassword(
-                  label: 'Password',
-                  hint: 'Masukkan password',
-                  controller: _passwordController,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Password tidak boleh kosong';
-                    } else if (value.length < 8) {
-                      return 'Password harus memiliki setidaknya 8 karakter';
-                    }
-                    return null;
-                  },
-                  onChanged: (value) {
-                    context
-                        .read<RegisterBloc>()
-                        .add(const RegisterInputChange());
-                  },
-                ),
-                20.0.height,
-                // Other form inputs like email and password
-                EcoFormButton(
-                  label: 'Register',
-                  onPressed: state.isRegisterButtonDisabled
-                      ? () {}
-                      : () {
-                          if (_formKey.currentState!.validate()) {
-                            context
-                                .read<RegisterBloc>()
-                                .add(RegisterButtonPressed());
-                          }
-                        },
-                  backgroundColor: state.isRegisterButtonDisabled
-                      ? AppColors.primary300
-                      : AppColors.primary500,
-                ),
-                36.0.height,
-                const Row(
-                  children: [
-                    Expanded(
-                      child: Divider(
-                        thickness: 1.0,
-                        color: AppColors.grey500,
-                      ),
+
+                  20.0.height,
+                  EcoFormInput(
+                    label: 'No. Telepon',
+                    controller: _noTelpController,
+                    keyboardType: TextInputType.number,
+                    hint: 'Masukan Nomor telefon Anda',
+                    icon: const ImageIcon(
+                      AppIcons.numberPhone,
+                      color: AppColors.grey500,
                     ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Text(
-                        'ATAU',
-                        style: TextStyle(
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.bold,
+                    onChanged: (value) {
+                      context
+                          .read<RegisterBloc>()
+                          .add(const RegisterInputChange());
+                    },
+                  ),
+                  20.0.height,
+                  EcoFormInputPassword(
+                    label: 'Password',
+                    hint: 'Masukkan password',
+                    controller: _passwordController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Password tidak boleh kosong';
+                      } else if (value.length < 8) {
+                        return 'Password harus memiliki setidaknya 8 karakter';
+                      }
+                      return null;
+                    },
+                    onChanged: (value) {
+                      context
+                          .read<RegisterBloc>()
+                          .add(const RegisterInputChange());
+                    },
+                  ),
+                  20.0.height,
+                  // Other form inputs like email and password
+                  EcoFormButton(
+                    label: 'Register',
+                    onPressed: state.isRegisterButtonDisabled
+                        ? () {}
+                        : () {
+                            if (_formKey.currentState!.validate()) {
+                              context
+                                  .read<RegisterBloc>()
+                                  .add(RegisterButtonPressed());
+                            }
+                          },
+                    backgroundColor: state.isRegisterButtonDisabled
+                        ? AppColors.primary300
+                        : AppColors.primary500,
+                  ),
+                  36.0.height,
+                  const Row(
+                    children: [
+                      Expanded(
+                        child: Divider(
+                          thickness: 1.0,
                           color: AppColors.grey500,
                         ),
                       ),
-                    ),
-                    Expanded(
-                      child: Divider(
-                        thickness: 1.0,
-                        color: AppColors.grey500,
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Text(
+                          'ATAU',
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.grey500,
+                          ),
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                36.0.height,
-                EcoFormButtonIcon(
-                  label: 'Lanjutkan menggunakan Google',
-                  onPressed: () {
-                    context.push(const RegisterComplatePage());
-                    // aksi yang dilakukan ketika tombol ditekan
-                  },
-                  backgroundColor: Colors.white,
-                  textColor: Colors.black,
-                  border: Border.all(
-                    color: AppColors.grey300,
+                      Expanded(
+                        child: Divider(
+                          thickness: 1.0,
+                          color: AppColors.grey500,
+                        ),
+                      ),
+                    ],
                   ),
-                  image: const Image(image: AppIcons.google),
-                  height: 48.0,
-                  width: MediaQuery.of(context).size.width,
-                ),
-                36.0.height,
-                const Text(
-                  "Dengan daftar ke EcoWave. Anda setuju dngan",
-                  style: TextStyle(color: AppColors.grey500),
-                ),
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text("Persyaratan dan Ketentuan & Kebijakan Privasi",
-                        style: TextStyle(color: AppColors.primary500)),
-                    Text(" kami", style: TextStyle(color: AppColors.grey500))
-                  ],
-                )
-              ]),
+                  36.0.height,
+                  EcoFormButtonIcon(
+                    label: 'Lanjutkan menggunakan Google',
+                    onPressed: () {
+                      context.push(const RegisterComplatePage());
+                      // aksi yang dilakukan ketika tombol ditekan
+                    },
+                    backgroundColor: Colors.white,
+                    textColor: Colors.black,
+                    border: Border.all(
+                      color: AppColors.grey300,
+                    ),
+                    image: const Image(image: AppIcons.google),
+                    height: 48.0,
+                    width: MediaQuery.of(context).size.width,
+                  ),
+                  36.0.height,
+                  const Text.rich(
+                    TextSpan(
+                      children: [
+                        TextSpan(
+                          text: "Dengan daftar ke EcoWave. Anda setuju dengan ",
+                          style: TextStyle(color: AppColors.grey500),
+                        ),
+                        TextSpan(
+                          text: "Persyaratan dan Ketentuan & Kebijakan Privasi",
+                          style: TextStyle(color: AppColors.primary500),
+                        ),
+                        TextSpan(
+                          text: " kami",
+                          style: TextStyle(color: AppColors.grey500),
+                        ),
+                      ],
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
             ),
           );
         }),

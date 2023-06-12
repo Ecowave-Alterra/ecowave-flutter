@@ -1,25 +1,39 @@
 import 'package:dio/dio.dart';
 import 'package:ecowave/features/auth/model/models/login_model.dart';
 
-
 class LoginService {
- 
+  static const String baseUrl = 'https://a6855c2e-9a93-4072-b204-d5b98fb5ddfa.mock.pstmn.io';
 
-  Future<int?> login(Login login) async {
+  final Dio dio = Dio();
+
+  Future<Map<String, dynamic>> login(LoginModel model) async {
     try {
-      Dio dio = Dio();
       final response = await dio.post(
-          'https://galonin.temanhorizon.com/api/login',
-          data: login.toJson());
+        '$baseUrl/user/login',
+        data: model.toJson(),
+        options: Options(
+          headers: {'Content-Type': 'application/json'},
+        ),
+      );
 
-      print(response);
-      if (response.data != null) {
-        return response.data['data']['userId'];
+
+      if (response.statusCode == 200) {
+        return response.data as Map<String, dynamic>;
       } else {
-        return null;
+        print('Login failed.');
+        return {
+          'success': false,
+          'message': 'Login failed',
+          'data': null,
+        };
       }
     } catch (e) {
-      return null;
+      print('Error: $e');
+      return {
+        'success': false,
+        'message': 'Error: $e',
+        'data': null,
+      };
     }
   }
 }

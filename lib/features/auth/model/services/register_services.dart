@@ -1,49 +1,29 @@
-import 'dart:async';
+import 'package:dio/dio.dart';
 import 'package:ecowave/features/auth/model/models/register_model.dart';
 
 class RegisterService {
-  List<RegisterModel> registeredUsers = [
-    RegisterModel(
-      name: 'John Doe',
-      username: 'johndoe',
-      email: 'johndoe@example.com',
-      phoneNumber: '1234567890',
-      password: 'password123',
-    ),
-    RegisterModel(
-      name: 'Jane Smith',
-      username: 'janesmith',
-      email: 'janesmith@example.com',
-      phoneNumber: '0987654321',
-      password: 'password456',
-    ),
-  ];
+  static const String baseUrl = 'https://a6855c2e-9a93-4072-b204-d5b98fb5ddfa.mock.pstmn.io';
 
-  Future<bool> register(RegisterModel registerData) async {
-    // Simulasikan proses registrasi ke server
-    await Future.delayed(Duration(seconds: 2));
+  final Dio dio = Dio();
 
-    bool isDuplicateEmail = checkDuplicateEmail(registerData.email);
-    bool isDuplicateUsername = checkDuplicateUsername(registerData.username);
+  Future<bool> Register(RegisterModel user) async {
+    try {
 
-    if (isDuplicateEmail || isDuplicateUsername) {
-      return false;
+       await dio.post(
+        '$baseUrl/users',
+        data: user.toJson(),
+        options: Options(
+          headers: {'Content-Type': 'application/json'},
+        ),
+      );
+       return true;
+      // Tambahkan logika untuk menangani respons di sini
+    } catch (e) {
+      // Tangani kesalahan yang terjadi
+      print('Error: $e');
+       return false;
     }
-    bool isSuccess = true;
-
-    if (isSuccess) {
-      registeredUsers.add(registerData);
-    }
-
-    return isSuccess;
   }
 
-  bool checkDuplicateEmail(String email) {
-    return registeredUsers.any((user) => user.email == email);
-  }
 
-  bool checkDuplicateUsername(String username) {
-    return registeredUsers.any((user) => user.username == username);
-  }
 }
-
