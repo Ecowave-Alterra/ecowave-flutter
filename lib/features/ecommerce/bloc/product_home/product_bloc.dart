@@ -35,9 +35,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       emit(ProductInitial());
       List<ProductModel> filterSortResult = [];
       for (var element in products) {
-        if (element.productCategoryId
-            .toString()
-            .contains(event.idFilter.toString())) {
+        if (element.category.contains(event.categoryFilter)) {
           filterSortResult.add(element);
         }
       }
@@ -72,10 +70,9 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     on<GetProductDetailEvent>((event, emit) async {
       emit(ProductInitial());
       List<ProductModel> searchResult = [];
-      for (var element in products) {
-        if (element.id.toString().contains(event.productId.toString())) {
-          searchResult.add(element);
-        }
+      products = await service.getProduct();
+      if (products.contains(event.productModel)) {
+        searchResult.add(products.first);
       }
       emit(ProductSuccess(data: searchResult));
     });
