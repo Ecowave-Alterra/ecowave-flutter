@@ -32,7 +32,7 @@ class ShippingAddressCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Radio(
-                    value: addressModel.userAddress,
+                    value: addressModel.id,
                     groupValue: selectedOption,
                     onChanged: (value) => onTap(),
                     activeColor: AppColors.primary500,

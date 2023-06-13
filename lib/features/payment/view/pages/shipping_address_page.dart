@@ -62,7 +62,7 @@ class ShippingAddressPage extends StatelessWidget {
                     separatorBuilder: (context, index) => const Divider(),
                     itemCount: state.data.length,
                     itemBuilder: (context, index) => ShippingAddressCard(
-                      selectedOption: selectedOption?.userAddress,
+                      selectedOption: selectedOption?.id,
                       addressModel: state.data[index],
                       onTap: () {
                         selectedOption = state.data[index];

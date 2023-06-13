@@ -266,7 +266,7 @@ class _UpdateAddressPageState extends State<UpdateAddressPage> {
 
                       if (formKey.currentState!.validate()) {
                         context.read<AddressBloc>().add(UpdateAddressesEvent(
-                              id: widget.addressModel.userAddress,
+                              id: widget.addressModel.id,
                               request: AddressRequest(
                                 recipient: nameController.text,
                                 phoneNumber: phoneController.text,
