@@ -14,6 +14,7 @@ class VoucherBloc extends Bloc<VoucherEvent, VoucherState> {
   ) : super(VoucherInitial()) {
     on<VoucherEvent>((event, emit) async {
       try {
+        emit(VoucherLoading());
         final List<VoucherModel> result = await service.getVouchers();
         final List<VoucherModel> voucherActive = result
             .where((element) =>
