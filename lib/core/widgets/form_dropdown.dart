@@ -1,14 +1,14 @@
 part of 'package:ecowave/core.dart';
 
 class EcoFormDropdown extends StatelessWidget {
-  final String hint;
+  final String label;
   final List<String> options;
   final String? initialValue;
   final void Function(String? value)? onChanged;
 
   const EcoFormDropdown({
     super.key,
-    required this.hint,
+    required this.label,
     required this.options,
     this.initialValue,
     this.onChanged,
@@ -40,8 +40,9 @@ class EcoFormDropdown extends StatelessWidget {
           borderRadius: BorderRadius.circular(AppSizes.radiusForm),
           borderSide: const BorderSide(color: AppColors.error500),
         ),
-        hintText: hint,
-        hintStyle: const TextStyle(color: AppColors.grey500),
+        labelText: label,
+        labelStyle: const TextStyle(color: AppColors.grey500),
+        floatingLabelBehavior: FloatingLabelBehavior.never,
       ),
       items: options.map((option) {
         return DropdownMenuItem<String>(
