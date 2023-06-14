@@ -44,11 +44,14 @@ class _RegisterPageState extends State<RegisterPage> {
             noTelpController: _noTelpController,
             nameController: _nameController),
         child: BlocConsumer<RegisterBloc, RegisterState>(
-            listener: (context, state) {
+            listener: (context, state)async {
           if (state is RegisterError) {}
           if (state is RegisterSuccess) {
+            
+           await context.push(LoginPage());
+           if(context.mounted){
             dispose();
-            context.push(LoginPage());
+           }
           }
         }, builder: (context, state) {
           if (state is RegisterLoading) {
