@@ -1,3 +1,7 @@
+// To parse this JSON data, do
+//
+//     final addressModel = addressModelFromJson(jsonString);
+
 import 'dart:convert';
 
 List<AddressModel> addressModelFromJson(String str) => List<AddressModel>.from(
@@ -10,6 +14,10 @@ class AddressModel {
   final int id;
   final String recipient;
   final String phoneNumber;
+  final int provinceId;
+  final String provinceName;
+  final int cityId;
+  final String cityName;
   final String address;
   final String? note;
   final String? mark;
@@ -20,6 +28,10 @@ class AddressModel {
     required this.id,
     required this.recipient,
     required this.phoneNumber,
+    required this.provinceId,
+    required this.provinceName,
+    required this.cityId,
+    required this.cityName,
     required this.address,
     this.note,
     this.mark,
@@ -31,6 +43,10 @@ class AddressModel {
         id: json["Id"],
         recipient: json["Recipient"],
         phoneNumber: json["PhoneNumber"],
+        provinceId: json["ProvinceId"],
+        provinceName: json["ProvinceName"],
+        cityId: json["CityId"],
+        cityName: json["CityName"],
         address: json["Address"],
         note: json["Note"],
         mark: json["Mark"],
@@ -42,6 +58,10 @@ class AddressModel {
         "Id": id,
         "Recipient": recipient,
         "PhoneNumber": phoneNumber,
+        "ProvinceId": provinceId,
+        "ProvinceName": provinceName,
+        "CityId": cityId,
+        "CityName": cityName,
         "Address": address,
         "Note": note,
         "Mark": mark,

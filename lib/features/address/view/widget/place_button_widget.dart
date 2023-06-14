@@ -35,7 +35,7 @@ class MyRadioListTile<T> extends StatelessWidget {
                 borderRadius: BorderRadius.circular(5),
               ),
               side: const BorderSide(
-                color: AppColors.grey700,
+                color: AppColors.grey500,
               )),
       child: Text(
         leading,

@@ -21,6 +21,8 @@ class UpdateAddressPage extends StatefulWidget {
 
 class _UpdateAddressPageState extends State<UpdateAddressPage> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final TextEditingController provinceController = TextEditingController();
+  final TextEditingController cityController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
@@ -29,10 +31,12 @@ class _UpdateAddressPageState extends State<UpdateAddressPage> {
 
   @override
   void dispose() {
-    nameController.clear();
-    phoneController.clear();
-    addressController.clear();
-    noteController.clear();
+    provinceController.dispose();
+    cityController.dispose();
+    nameController.dispose();
+    phoneController.dispose();
+    addressController.dispose();
+    noteController.dispose();
     super.dispose();
   }
 
@@ -77,6 +81,38 @@ class _UpdateAddressPageState extends State<UpdateAddressPage> {
           child: ListView(
             padding: const EdgeInsets.all(16.0),
             children: [
+              EcoFormDropdown(
+                hint: "Cari Provinsi",
+                options: const ["options 1", "options 2"],
+                onChanged: (value) {
+                  provinceController.text = value!;
+                  if (nameController.text.isNotEmpty &&
+                      addressController.text.isNotEmpty &&
+                      provinceController.text.isNotEmpty &&
+                      cityController.text.isNotEmpty) {
+                    isExist.value = true;
+                  } else {
+                    isExist.value = false;
+                  }
+                },
+              ),
+              16.0.height,
+              EcoFormDropdown(
+                hint: "Cari Kota",
+                options: const ["options 1", "options 2"],
+                onChanged: (value) {
+                  cityController.text = value!;
+                  if (nameController.text.isNotEmpty &&
+                      addressController.text.isNotEmpty &&
+                      provinceController.text.isNotEmpty &&
+                      cityController.text.isNotEmpty) {
+                    isExist.value = true;
+                  } else {
+                    isExist.value = false;
+                  }
+                },
+              ),
+              16.0.height,
               EcoFormInput(
                 controller: nameController,
                 icon: const ImageIcon(AppIcons.name),
@@ -87,7 +123,9 @@ class _UpdateAddressPageState extends State<UpdateAddressPage> {
                 onChanged: (value) {
                   if (value.isNotEmpty &&
                       phoneController.text.isNotEmpty &&
-                      addressController.text.isNotEmpty) {
+                      addressController.text.isNotEmpty &&
+                      provinceController.text.isNotEmpty &&
+                      cityController.text.isNotEmpty) {
                     isExist.value = true;
                   } else {
                     isExist.value = false;
@@ -105,7 +143,9 @@ class _UpdateAddressPageState extends State<UpdateAddressPage> {
                 onChanged: (value) {
                   if (value.isNotEmpty &&
                       nameController.text.isNotEmpty &&
-                      addressController.text.isNotEmpty) {
+                      addressController.text.isNotEmpty &&
+                      provinceController.text.isNotEmpty &&
+                      cityController.text.isNotEmpty) {
                     isExist.value = true;
                   } else {
                     isExist.value = false;
@@ -132,7 +172,9 @@ class _UpdateAddressPageState extends State<UpdateAddressPage> {
                 onChanged: (value) {
                   if (value.isNotEmpty &&
                       phoneController.text.isNotEmpty &&
-                      nameController.text.isNotEmpty) {
+                      nameController.text.isNotEmpty &&
+                      provinceController.text.isNotEmpty &&
+                      cityController.text.isNotEmpty) {
                     isExist.value = true;
                   } else {
                     isExist.value = false;
@@ -149,7 +191,9 @@ class _UpdateAddressPageState extends State<UpdateAddressPage> {
                 onChanged: (value) {
                   if (nameController.text.isNotEmpty &&
                       phoneController.text.isNotEmpty &&
-                      addressController.text.isNotEmpty) {
+                      addressController.text.isNotEmpty &&
+                      provinceController.text.isNotEmpty &&
+                      cityController.text.isNotEmpty) {
                     isExist.value = true;
                   } else {
                     isExist.value = false;
@@ -179,7 +223,9 @@ class _UpdateAddressPageState extends State<UpdateAddressPage> {
                                 onChanged: (index) {
                                   if (nameController.text.isNotEmpty &&
                                       phoneController.text.isNotEmpty &&
-                                      addressController.text.isNotEmpty) {
+                                      addressController.text.isNotEmpty &&
+                                      provinceController.text.isNotEmpty &&
+                                      cityController.text.isNotEmpty) {
                                     isExist.value = true;
                                   } else {
                                     isExist.value = false;
@@ -196,7 +242,9 @@ class _UpdateAddressPageState extends State<UpdateAddressPage> {
                                 onChanged: (index) {
                                   if (nameController.text.isNotEmpty &&
                                       phoneController.text.isNotEmpty &&
-                                      addressController.text.isNotEmpty) {
+                                      addressController.text.isNotEmpty &&
+                                      provinceController.text.isNotEmpty &&
+                                      cityController.text.isNotEmpty) {
                                     isExist.value = true;
                                   } else {
                                     isExist.value = false;
@@ -230,7 +278,9 @@ class _UpdateAddressPageState extends State<UpdateAddressPage> {
                             onChanged: (value) {
                               if (nameController.text.isNotEmpty &&
                                   phoneController.text.isNotEmpty &&
-                                  addressController.text.isNotEmpty) {
+                                  addressController.text.isNotEmpty &&
+                                  provinceController.text.isNotEmpty &&
+                                  cityController.text.isNotEmpty) {
                                 isExist.value = true;
                               } else {
                                 isExist.value = false;
@@ -270,6 +320,10 @@ class _UpdateAddressPageState extends State<UpdateAddressPage> {
                               request: AddressRequest(
                                 recipient: nameController.text,
                                 phoneNumber: phoneController.text,
+                                provinceId: 1,
+                                provinceName: "",
+                                cityId: 1,
+                                cityName: "",
                                 address: addressController.text,
                                 note: noteController.text,
                                 mark: mark,
