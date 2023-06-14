@@ -93,21 +93,18 @@ class _AddAddressPageState extends State<AddAddressPage> {
                             .map((e) => e.province)
                             .toSet()
                             .toList(),
-                        onChanged: cityController.text.isNotEmpty
-                            ? null
-                            : (value) {
-                                provinceController.text = value!;
-                                final String provinceId = state.provinces!
-                                    .where(
-                                        (element) => element.province == value)
-                                    .first
-                                    .provinceId;
+                        onChanged: (value) {
+                          provinceController.text = value!;
+                          final String provinceId = state.provinces!
+                              .where((element) => element.province == value)
+                              .first
+                              .provinceId;
 
-                                context.read<AddressBloc>().add(GetCityEvent(
-                                    provinceId: int.parse(provinceId)));
+                          context.read<AddressBloc>().add(
+                              GetCityEvent(provinceId: int.parse(provinceId)));
 
-                                isExist.value = checkDataExists;
-                              },
+                          isExist.value = checkDataExists;
+                        },
                       ),
                     );
                   } else {
@@ -124,18 +121,19 @@ class _AddAddressPageState extends State<AddAddressPage> {
                           horizontal: AppSizes.primary),
                       child: EcoFormDropdown(
                         label: "Cari Kota",
-                        options: state.cities
-                                ?.map((e) => e.cityName)
-                                .toSet()
-                                .toList() ??
-                            [],
+                        options: [
+                          cityController.text,
+                          ...?state.cities
+                              ?.map((e) => e.cityName)
+                              .where((city) => city != cityController.text)
+                              .toSet()
+                              .toList(),
+                        ],
                         onChanged: (value) {
                           cityController.text = value!;
                           cityModel = state.cities!
                               .where((element) => element.cityName == value)
                               .first;
-                          context.read<AddressBloc>().add(GetCityEvent(
-                              provinceId: int.parse(cityModel.provinceId)));
 
                           isExist.value = checkDataExists;
                         },

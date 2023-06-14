@@ -32,9 +32,6 @@ class _UpdateAddressPageState extends State<UpdateAddressPage> {
 
   @override
   void initState() {
-    context
-        .read<AddressBloc>()
-        .add(GetCityEvent(provinceId: widget.addressModel.provinceId));
     provinceController.text = widget.addressModel.provinceName;
     cityController.text = widget.addressModel.cityName;
     nameController.text = widget.addressModel.recipient;
@@ -65,6 +62,10 @@ class _UpdateAddressPageState extends State<UpdateAddressPage> {
 
   @override
   Widget build(BuildContext context) {
+    context
+        .read<AddressBloc>()
+        .add(GetCityEvent(provinceId: widget.addressModel.provinceId));
+
     bool isSwitched = widget.addressModel.isPrimary;
     String? mark = widget.addressModel.mark;
     int currentIndexMark = -1;
@@ -108,15 +109,37 @@ class _UpdateAddressPageState extends State<UpdateAddressPage> {
                 child: const Text("Alamat"),
               ),
               16.0.height,
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: AppSizes.primary),
-                child: EcoFormDropdown(
-                  label: "Cari Provinsi",
-                  options: [provinceController.text],
-                  initialValue: provinceController.text,
-                  onChanged: null,
-                ),
+              BlocBuilder<AddressBloc, AddressState>(
+                builder: (context, state) {
+                  if (state is AddressSuccess) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: AppSizes.primary),
+                      child: EcoFormDropdown(
+                        initialValue: provinceController.text,
+                        label: "Cari Provinsi",
+                        options: state.provinces!
+                            .map((e) => e.province)
+                            .toSet()
+                            .toList(),
+                        onChanged: (value) {
+                          provinceController.text = value!;
+                          final String provinceId = state.provinces!
+                              .where((element) => element.province == value)
+                              .first
+                              .provinceId;
+
+                          context.read<AddressBloc>().add(
+                              GetCityEvent(provinceId: int.parse(provinceId)));
+
+                          isExist.value = checkDataExists;
+                        },
+                      ),
+                    );
+                  } else {
+                    return const SizedBox.shrink();
+                  }
+                },
               ),
               16.0.height,
               BlocBuilder<AddressBloc, AddressState>(
@@ -126,13 +149,16 @@ class _UpdateAddressPageState extends State<UpdateAddressPage> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: AppSizes.primary),
                       child: EcoFormDropdown(
-                        label: "Cari Kota",
-                        options: state.cities
-                                ?.map((e) => e.cityName)
-                                .toSet()
-                                .toList() ??
-                            [],
                         initialValue: cityController.text,
+                        label: "Cari Kota",
+                        options: [
+                          cityController.text,
+                          ...?state.cities
+                              ?.map((e) => e.cityName)
+                              .where((city) => city != cityController.text)
+                              .toSet()
+                              .toList(),
+                        ],
                         onChanged: (value) {
                           cityController.text = value!;
                           cityModel = state.cities!
