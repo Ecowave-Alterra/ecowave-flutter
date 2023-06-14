@@ -16,7 +16,7 @@ class PaymentInfo {
   int get discount {
     int discountUsed = (voucher?.discountPercent ?? 0).toInt();
 
-    if (voucher?.type == "Diskon Belanja") {
+    if (voucher?.voucherType.type == "Diskon Belanja") {
       discountUsed =
           ((voucher?.discountPercent ?? 0) / 100 * productPrice).toInt();
       if (discountUsed > (voucher?.maximumDiscount ?? 0)) {

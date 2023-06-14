@@ -10,14 +10,12 @@ class VoucherService {
 
   Future<List<VoucherModel>> getVouchers() async {
     try {
-      const String url = '${BaseURL.mock}user/payment/vouchers';
+      const String url = '${BaseURL.mock}user/transaction/voucher';
       final response = await _dio.get(url);
 
       if (response.statusCode == 200) {
-        final List datas = response.data["Vouchers"];
-        return datas
-            .map((e) => VoucherModel.fromJson(e as Map<String, dynamic>))
-            .toList();
+        final List datas = response.data["Voucher"];
+        return datas.map((e) => VoucherModel.fromJson(e)).toList();
       } else {
         throw "get vouchers not successfully";
       }

@@ -93,8 +93,9 @@ class TermAndConditionPage extends StatelessWidget {
                     ),
                   ],
                 ),
-                if (voucherModel.type == "Diskon Belanja") 8.0.height,
-                if (voucherModel.type == "Diskon Belanja")
+                if (voucherModel.voucherType.type == "Diskon Belanja")
+                  8.0.height,
+                if (voucherModel.voucherType.type == "Diskon Belanja")
                   Row(
                     children: [
                       const ImageIcon(
@@ -124,7 +125,7 @@ class TermAndConditionPage extends StatelessWidget {
                 ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount: voucherModel.type == "Gratis Ongkir"
+                  itemCount: voucherModel.voucherType.type == "Gratis Ongkir"
                       ? termAndConditionFreeShipping.length
                       : termAndConditionDiscount.length,
                   itemBuilder: (context, index) => Row(
@@ -132,9 +133,10 @@ class TermAndConditionPage extends StatelessWidget {
                     children: [
                       Text("${index + 1}. "),
                       Flexible(
-                        child: Text(voucherModel.type == "Gratis Ongkir"
-                            ? termAndConditionFreeShipping[index]
-                            : termAndConditionDiscount[index]),
+                        child: Text(
+                            voucherModel.voucherType.type == "Gratis Ongkir"
+                                ? termAndConditionFreeShipping[index]
+                                : termAndConditionDiscount[index]),
                       ),
                     ],
                   ),
