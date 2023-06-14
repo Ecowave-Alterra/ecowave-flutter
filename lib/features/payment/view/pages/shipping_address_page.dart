@@ -45,7 +45,7 @@ class ShippingAddressPage extends StatelessWidget {
                   context.read<AddressBloc>().add(GetAddressesEvent()),
             );
           } else if (state is AddressSuccess) {
-            if (state.data.isEmpty) {
+            if (state.addresses!.isEmpty) {
               return SizedBox(
                 width: context.fullWidth,
                 height: context.fullHeight / 1.4,
@@ -60,12 +60,12 @@ class ShippingAddressPage extends StatelessWidget {
                 builder: (context, changeState) {
                   return ListView.separated(
                     separatorBuilder: (context, index) => const Divider(),
-                    itemCount: state.data.length,
+                    itemCount: state.addresses!.length,
                     itemBuilder: (context, index) => ShippingAddressCard(
                       selectedOption: selectedOption?.id,
-                      addressModel: state.data[index],
+                      addressModel: state.addresses![index],
                       onTap: () {
-                        selectedOption = state.data[index];
+                        selectedOption = state.addresses![index];
                         isExist.value = true;
                         changeState(() {});
                       },

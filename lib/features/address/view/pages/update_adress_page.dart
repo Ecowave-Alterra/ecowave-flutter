@@ -2,6 +2,7 @@ import 'package:ecowave/core.dart';
 import 'package:ecowave/features/address/bloc/address/address_bloc.dart';
 import 'package:ecowave/features/address/model/models/address_model.dart';
 import 'package:ecowave/features/address/model/models/address_request.dart';
+import 'package:ecowave/features/address/model/models/city_model.dart';
 import 'package:ecowave/features/address/view/widget/place_button_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +31,20 @@ class _UpdateAddressPageState extends State<UpdateAddressPage> {
   final ValueNotifier<bool> isExist = ValueNotifier<bool>(false);
 
   @override
+  void initState() {
+    context
+        .read<AddressBloc>()
+        .add(GetCityEvent(provinceId: widget.addressModel.provinceId));
+    provinceController.text = widget.addressModel.provinceName;
+    cityController.text = widget.addressModel.cityName;
+    nameController.text = widget.addressModel.recipient;
+    phoneController.text = widget.addressModel.phoneNumber;
+    addressController.text = widget.addressModel.address;
+    noteController.text = widget.addressModel.note ?? "";
+    super.initState();
+  }
+
+  @override
   void dispose() {
     provinceController.dispose();
     cityController.dispose();
@@ -40,15 +55,20 @@ class _UpdateAddressPageState extends State<UpdateAddressPage> {
     super.dispose();
   }
 
+  bool get checkDataExists {
+    return nameController.text.isNotEmpty &&
+        addressController.text.isNotEmpty &&
+        phoneController.text.isNotEmpty &&
+        provinceController.text.isNotEmpty &&
+        cityController.text.isNotEmpty;
+  }
+
   @override
   Widget build(BuildContext context) {
-    nameController.text = widget.addressModel.recipient;
-    phoneController.text = widget.addressModel.phoneNumber;
-    addressController.text = widget.addressModel.address;
-    noteController.text = widget.addressModel.note ?? "";
     bool isSwitched = widget.addressModel.isPrimary;
     String? mark = widget.addressModel.mark;
     int currentIndexMark = -1;
+    CityModel? cityModel;
 
     if (mark == "Rumah") {
       currentIndexMark = 0;
@@ -79,130 +99,131 @@ class _UpdateAddressPageState extends State<UpdateAddressPage> {
         body: Form(
           key: formKey,
           child: ListView(
-            padding: const EdgeInsets.all(16.0),
             children: [
-              EcoFormDropdown(
-                hint: "Cari Provinsi",
-                options: const ["options 1", "options 2"],
-                onChanged: (value) {
-                  provinceController.text = value!;
-                  if (nameController.text.isNotEmpty &&
-                      addressController.text.isNotEmpty &&
-                      provinceController.text.isNotEmpty &&
-                      cityController.text.isNotEmpty) {
-                    isExist.value = true;
+              Container(
+                padding: const EdgeInsets.symmetric(
+                    vertical: AppSizes.primary / 2,
+                    horizontal: AppSizes.primary),
+                color: AppColors.grey50,
+                child: const Text("Alamat"),
+              ),
+              16.0.height,
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: AppSizes.primary),
+                child: EcoFormDropdown(
+                  label: "Cari Provinsi",
+                  options: [provinceController.text],
+                  initialValue: provinceController.text,
+                  onChanged: null,
+                ),
+              ),
+              16.0.height,
+              BlocBuilder<AddressBloc, AddressState>(
+                builder: (context, state) {
+                  if (state is AddressSuccess) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: AppSizes.primary),
+                      child: EcoFormDropdown(
+                        label: "Cari Kota",
+                        options: state.cities
+                                ?.map((e) => e.cityName)
+                                .toSet()
+                                .toList() ??
+                            [],
+                        initialValue: cityController.text,
+                        onChanged: (value) {
+                          cityController.text = value!;
+                          cityModel = state.cities!
+                              .where((element) => element.cityName == value)
+                              .first;
+
+                          isExist.value = checkDataExists;
+                        },
+                      ),
+                    );
                   } else {
-                    isExist.value = false;
+                    return const SizedBox.shrink();
                   }
                 },
               ),
               16.0.height,
-              EcoFormDropdown(
-                hint: "Cari Kota",
-                options: const ["options 1", "options 2"],
-                onChanged: (value) {
-                  cityController.text = value!;
-                  if (nameController.text.isNotEmpty &&
-                      addressController.text.isNotEmpty &&
-                      provinceController.text.isNotEmpty &&
-                      cityController.text.isNotEmpty) {
-                    isExist.value = true;
-                  } else {
-                    isExist.value = false;
-                  }
-                },
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: AppSizes.primary),
+                child: EcoFormInput(
+                  controller: addressController,
+                  icon: const ImageIcon(AppIcons.alamat),
+                  label: 'Alamat Lengkap',
+                  hint: 'Alamat Lengkap',
+                  keyboardType: TextInputType.streetAddress,
+                  floatingLabelBehavior: FloatingLabelBehavior.auto,
+                  onChanged: (value) => isExist.value = checkDataExists,
+                ),
               ),
               16.0.height,
-              EcoFormInput(
-                controller: nameController,
-                icon: const ImageIcon(AppIcons.name),
-                label: 'Nama Penerima',
-                hint: 'Nama Penerima',
-                keyboardType: TextInputType.name,
-                floatingLabelBehavior: FloatingLabelBehavior.auto,
-                onChanged: (value) {
-                  if (value.isNotEmpty &&
-                      phoneController.text.isNotEmpty &&
-                      addressController.text.isNotEmpty &&
-                      provinceController.text.isNotEmpty &&
-                      cityController.text.isNotEmpty) {
-                    isExist.value = true;
-                  } else {
-                    isExist.value = false;
-                  }
-                },
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: AppSizes.primary),
+                child: EcoFormInput(
+                  controller: noteController,
+                  icon: const ImageIcon(AppIcons.catatan),
+                  label: 'Catatan untuk Kurir (Optional)',
+                  hint: 'Catatan untuk Kurir (Optional)',
+                  floatingLabelBehavior: FloatingLabelBehavior.auto,
+                  onChanged: (value) => isExist.value = checkDataExists,
+                ),
               ),
               16.0.height,
-              EcoFormInput(
-                controller: phoneController,
-                icon: const ImageIcon(AppIcons.numberPhone),
-                label: 'No Telepon',
-                hint: 'No Telepon',
-                keyboardType: TextInputType.phone,
-                floatingLabelBehavior: FloatingLabelBehavior.auto,
-                onChanged: (value) {
-                  if (value.isNotEmpty &&
-                      nameController.text.isNotEmpty &&
-                      addressController.text.isNotEmpty &&
-                      provinceController.text.isNotEmpty &&
-                      cityController.text.isNotEmpty) {
-                    isExist.value = true;
-                  } else {
-                    isExist.value = false;
-                  }
-                },
-                validator: (value) {
-                  if (value!.length > 13) {
-                    return "Nomor telepon tidak boleh lebih dari 13 digit";
-                  } else if (value.isNotValidPhoneNumber()) {
-                    return "Nomor telepon tidak valid";
-                  } else {
-                    return null;
-                  }
-                },
+              Container(
+                padding: const EdgeInsets.symmetric(
+                    vertical: AppSizes.primary / 2,
+                    horizontal: AppSizes.primary),
+                color: AppColors.grey50,
+                child: const Text("Kontak"),
               ),
               16.0.height,
-              EcoFormInput(
-                controller: addressController,
-                icon: const ImageIcon(AppIcons.alamat),
-                label: 'Alamat Lengkap',
-                hint: 'Alamat Lengkap',
-                keyboardType: TextInputType.streetAddress,
-                floatingLabelBehavior: FloatingLabelBehavior.auto,
-                onChanged: (value) {
-                  if (value.isNotEmpty &&
-                      phoneController.text.isNotEmpty &&
-                      nameController.text.isNotEmpty &&
-                      provinceController.text.isNotEmpty &&
-                      cityController.text.isNotEmpty) {
-                    isExist.value = true;
-                  } else {
-                    isExist.value = false;
-                  }
-                },
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: AppSizes.primary),
+                child: EcoFormInput(
+                  controller: nameController,
+                  icon: const ImageIcon(AppIcons.name),
+                  label: 'Nama Penerima',
+                  hint: 'Nama Penerima',
+                  keyboardType: TextInputType.name,
+                  floatingLabelBehavior: FloatingLabelBehavior.auto,
+                  onChanged: (value) => isExist.value = checkDataExists,
+                ),
               ),
               16.0.height,
-              EcoFormInput(
-                controller: noteController,
-                icon: const ImageIcon(AppIcons.catatan),
-                label: 'Catatan untuk Kurir (Optional)',
-                hint: 'Catatan untuk Kurir (Optional)',
-                floatingLabelBehavior: FloatingLabelBehavior.auto,
-                onChanged: (value) {
-                  if (nameController.text.isNotEmpty &&
-                      phoneController.text.isNotEmpty &&
-                      addressController.text.isNotEmpty &&
-                      provinceController.text.isNotEmpty &&
-                      cityController.text.isNotEmpty) {
-                    isExist.value = true;
-                  } else {
-                    isExist.value = false;
-                  }
-                },
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: AppSizes.primary),
+                child: EcoFormInput(
+                  controller: phoneController,
+                  icon: const ImageIcon(AppIcons.numberPhone),
+                  label: 'No Telepon',
+                  hint: 'No Telepon',
+                  keyboardType: TextInputType.phone,
+                  floatingLabelBehavior: FloatingLabelBehavior.auto,
+                  onChanged: (value) => isExist.value = checkDataExists,
+                  validator: (value) {
+                    if (value!.length > 13) {
+                      return "Nomor telepon tidak boleh lebih dari 13 digit";
+                    } else if (value.isNotValidPhoneNumber()) {
+                      return "Nomor telepon tidak valid";
+                    } else {
+                      return null;
+                    }
+                  },
+                ),
               ),
               26.0.height,
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: AppSizes.primary * 2),
                 child: Column(
                   children: [
                     Row(
@@ -221,15 +242,7 @@ class _UpdateAddressPageState extends State<UpdateAddressPage> {
                                 value: 0,
                                 groupValue: currentIndexMark,
                                 onChanged: (index) {
-                                  if (nameController.text.isNotEmpty &&
-                                      phoneController.text.isNotEmpty &&
-                                      addressController.text.isNotEmpty &&
-                                      provinceController.text.isNotEmpty &&
-                                      cityController.text.isNotEmpty) {
-                                    isExist.value = true;
-                                  } else {
-                                    isExist.value = false;
-                                  }
+                                  isExist.value = checkDataExists;
                                   currentIndexMark = index!;
                                   changeState(() {});
                                 },
@@ -240,15 +253,7 @@ class _UpdateAddressPageState extends State<UpdateAddressPage> {
                                 value: 1,
                                 groupValue: currentIndexMark,
                                 onChanged: (index) {
-                                  if (nameController.text.isNotEmpty &&
-                                      phoneController.text.isNotEmpty &&
-                                      addressController.text.isNotEmpty &&
-                                      provinceController.text.isNotEmpty &&
-                                      cityController.text.isNotEmpty) {
-                                    isExist.value = true;
-                                  } else {
-                                    isExist.value = false;
-                                  }
+                                  isExist.value = checkDataExists;
                                   currentIndexMark = index!;
                                   changeState(() {});
                                 },
@@ -276,15 +281,7 @@ class _UpdateAddressPageState extends State<UpdateAddressPage> {
                             activeColor: AppColors.primary500,
                             value: isSwitched,
                             onChanged: (value) {
-                              if (nameController.text.isNotEmpty &&
-                                  phoneController.text.isNotEmpty &&
-                                  addressController.text.isNotEmpty &&
-                                  provinceController.text.isNotEmpty &&
-                                  cityController.text.isNotEmpty) {
-                                isExist.value = true;
-                              } else {
-                                isExist.value = false;
-                              }
+                              isExist.value = checkDataExists;
                               isSwitched = value;
                               changeState(() {});
                             },
@@ -320,10 +317,14 @@ class _UpdateAddressPageState extends State<UpdateAddressPage> {
                               request: AddressRequest(
                                 recipient: nameController.text,
                                 phoneNumber: phoneController.text,
-                                provinceId: 1,
-                                provinceName: "",
-                                cityId: 1,
-                                cityName: "",
+                                provinceId: int.parse(cityModel?.provinceId ??
+                                    widget.addressModel.provinceId.toString()),
+                                provinceName: cityModel?.province ??
+                                    widget.addressModel.provinceName,
+                                cityId: int.parse(cityModel?.cityId ??
+                                    widget.addressModel.cityId.toString()),
+                                cityName: cityModel?.cityName ??
+                                    widget.addressModel.cityName,
                                 address: addressController.text,
                                 note: noteController.text,
                                 mark: mark,
