@@ -29,17 +29,23 @@ class ShippingOptionsPage extends StatelessWidget {
           BlocBuilder<ExpeditionBloc, ExpeditionState>(
             builder: (context, state) {
               if (state is ExpeditionLoading) {
-                return const EcoLoading();
+                return SizedBox(
+                  height: context.fullHeight / 1.3,
+                  child: const EcoLoading(),
+                );
               } else if (state is ExpeditionFailed) {
-                return EcoError(
-                  errorMessage: state.meesage,
-                  onRetry: () =>
-                      context.read<ExpeditionBloc>().add(GetExpeditionsEvent(
-                            request: ExpeditionRequest(
-                              cityId: 12.toString(),
-                              weight: 1,
-                            ),
-                          )),
+                return SizedBox(
+                  height: context.fullHeight / 1.3,
+                  child: EcoError(
+                    errorMessage: state.meesage,
+                    onRetry: () =>
+                        context.read<ExpeditionBloc>().add(GetExpeditionsEvent(
+                              request: ExpeditionRequest(
+                                cityId: 12.toString(),
+                                weight: 1,
+                              ),
+                            )),
+                  ),
                 );
               } else if (state is ExpeditionSuccess) {
                 return StatefulBuilder(

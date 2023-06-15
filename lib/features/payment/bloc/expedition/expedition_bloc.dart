@@ -14,6 +14,7 @@ class ExpeditionBloc extends Bloc<ExpeditionEvent, ExpeditionState> {
     this.service,
   ) : super(ExpeditionInitial()) {
     on<GetExpeditionsEvent>((event, emit) async {
+      emit(ExpeditionLoading());
       try {
         final List<ExpeditionModel> result =
             await service.getExpeditions(event.request);

@@ -15,12 +15,16 @@ class ExpeditionService {
     try {
       const String url = '${BaseURL.mock}user/transaction/shipping-options';
       final response = await _dio.post(url, data: request.toJson());
-      final List datas = response.data["Options"];
 
-      List<ExpeditionResponseModel> result =
-          datas.map((e) => ExpeditionResponseModel.fromJson(e)).toList();
+      if (response.statusCode == 200) {
+        final List datas = response.data["Options"];
+        final List<ExpeditionResponseModel> result =
+            datas.map((e) => ExpeditionResponseModel.fromJson(e)).toList();
 
-      return result.map((e) => e.toModelEntity()).toList();
+        return result.map((e) => e.toModelEntity()).toList();
+      } else {
+        throw "post shipping options not successfully";
+      }
     } catch (e) {
       rethrow;
     }
