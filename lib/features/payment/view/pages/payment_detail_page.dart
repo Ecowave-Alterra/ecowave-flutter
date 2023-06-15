@@ -6,6 +6,7 @@ import 'package:ecowave/features/payment/bloc/voucher/voucher_bloc.dart';
 import 'package:ecowave/features/payment/bloc/expedition/expedition_bloc.dart';
 import 'package:ecowave/features/payment/bloc/payment_method/payment_method_bloc.dart';
 import 'package:ecowave/features/address/model/models/address_model.dart';
+import 'package:ecowave/features/payment/model/models/expedition_request.dart';
 import 'package:ecowave/features/payment/view/pages/payment_page.dart';
 import 'package:ecowave/features/payment/view/pages/payment_waiting_page.dart';
 import 'package:ecowave/features/payment/view/pages/voucher_page.dart';
@@ -33,7 +34,6 @@ class PaymentDetailPage extends StatelessWidget {
     context.read<PaymentDetailBloc>().add(const PointUsedEvent(pointUsed: 0));
     context.read<PaymentDetailBloc>().add(GetCartsEvent(carts: carts));
     context.read<VoucherBloc>().add(GetVouchersEvent());
-    context.read<ExpeditionBloc>().add(GetExpeditionsEvent());
     context.read<AddressBloc>().add(GetAddressesEvent());
     context.read<PaymentMethodBloc>().add(GetPaymentMethodsEvent());
 
@@ -101,9 +101,18 @@ class PaymentDetailPage extends StatelessWidget {
                 value: state.expeditionModel?.name,
                 label: "Pilih Opsi Pengiriman",
                 icon: AppIcons.shipping,
-                onPressed: () => context.push(ShippingOptionsPage(
-                  shipping: state.expeditionModel,
-                )),
+                onPressed: () {
+                  // TODO : implement cityId dan weight
+                  context.read<ExpeditionBloc>().add(GetExpeditionsEvent(
+                        request: ExpeditionRequest(
+                          cityId: 12.toString(),
+                          weight: 1,
+                        ),
+                      ));
+                  context.push(ShippingOptionsPage(
+                    shipping: state.expeditionModel,
+                  ));
+                },
               );
             },
           ),

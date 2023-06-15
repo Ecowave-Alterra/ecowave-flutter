@@ -2,6 +2,7 @@ import 'package:ecowave/core.dart';
 import 'package:ecowave/features/payment/bloc/expedition/expedition_bloc.dart';
 import 'package:ecowave/features/payment/bloc/payment_detail/payment_detail_bloc.dart';
 import 'package:ecowave/features/payment/model/models/expedition_model.dart';
+import 'package:ecowave/features/payment/model/models/expedition_request.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -32,7 +33,13 @@ class ShippingOptionsPage extends StatelessWidget {
               } else if (state is ExpeditionFailed) {
                 return EcoError(
                   errorMessage: state.meesage,
-                  onRetry: () {},
+                  onRetry: () =>
+                      context.read<ExpeditionBloc>().add(GetExpeditionsEvent(
+                            request: ExpeditionRequest(
+                              cityId: 12.toString(),
+                              weight: 1,
+                            ),
+                          )),
                 );
               } else if (state is ExpeditionSuccess) {
                 return StatefulBuilder(
@@ -56,8 +63,8 @@ class ShippingOptionsPage extends StatelessWidget {
                             child: Row(
                               children: [
                                 Radio(
-                                  value: shipping.id,
-                                  groupValue: selectedOption?.id,
+                                  value: shipping.code,
+                                  groupValue: selectedOption?.code,
                                   onChanged: (value) {
                                     selectedOption = shipping;
                                     isExist.value = true;
@@ -72,6 +79,12 @@ class ShippingOptionsPage extends StatelessWidget {
                                       shipping.name,
                                       style: const TextStyle(
                                         fontWeight: AppFontWeight.semibold,
+                                      ),
+                                    ),
+                                    Text(
+                                      shipping.description,
+                                      style: const TextStyle(
+                                        color: AppColors.grey500,
                                       ),
                                     ),
                                     Text(

@@ -1,47 +1,26 @@
+import 'package:dio/dio.dart';
+import 'package:ecowave/core.dart';
 import 'package:ecowave/features/payment/model/models/expedition_model.dart';
+import 'package:ecowave/features/payment/model/models/expedition_request.dart';
+import 'package:ecowave/features/payment/model/models/expedition_response_model.dart';
 
 class ExpeditionService {
-  // late Dio _dio;
-  // AddressRemoteDatasourceImpl() {
-  //   _dio = Dio();
-  // }
+  late Dio _dio;
+  ExpeditionService() {
+    _dio = Dio();
+  }
 
-  List dummy = [
-    {
-      "id": 1,
-      "name": "JNE",
-      "price": 10000,
-      "estimate": 7,
-      "created_at": "2023-05-30T10:00:00Z",
-      "updated_at": "2023-05-30T10:00:00Z",
-      "deleted_at": null
-    },
-    {
-      "id": 2,
-      "name": "JNT",
-      "price": 12000,
-      "estimate": 4,
-      "created_at": "2023-05-30T11:00:00Z",
-      "updated_at": "2023-05-30T11:00:00Z",
-      "deleted_at": null
-    },
-    {
-      "id": 3,
-      "name": "SiCepat",
-      "price": 16000,
-      "estimate": 2,
-      "created_at": "2023-05-30T12:00:00Z",
-      "updated_at": "2023-05-30T12:00:00Z",
-      "deleted_at": null
-    },
-  ];
-
-  Future<List<ExpeditionModel>> getExpeditions() async {
+  Future<List<ExpeditionModel>> getExpeditions(
+      ExpeditionRequest request) async {
     try {
-      // const String url = '................';
-      // final response = await _dio.get(url);
+      const String url = '${BaseURL.mock}user/transaction/shipping-options';
+      final response = await _dio.post(url, data: request.toJson());
+      final List datas = response.data["Options"];
 
-      return dummy.map((e) => ExpeditionModel.fromJson(e)).toList();
+      List<ExpeditionResponseModel> result =
+          datas.map((e) => ExpeditionResponseModel.fromJson(e)).toList();
+
+      return result.map((e) => e.toModelEntity()).toList();
     } catch (e) {
       rethrow;
     }
