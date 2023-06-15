@@ -10,10 +10,9 @@ import 'package:ecowave/features/ecommerce/model/services/product_service.dart';
 import 'package:ecowave/features/home/bloc/home/home_bloc.dart';
 import 'package:ecowave/features/payment/bloc/expedition/expedition_bloc.dart';
 import 'package:ecowave/features/payment/bloc/payment_detail/payment_detail_bloc.dart';
-import 'package:ecowave/features/payment/bloc/payment_method/payment_method_bloc.dart';
 import 'package:ecowave/features/payment/bloc/voucher/voucher_bloc.dart';
 import 'package:ecowave/features/payment/model/services/expedition_service.dart';
-import 'package:ecowave/features/payment/model/services/payment_method_service.dart';
+import 'package:ecowave/features/payment/model/services/transaction_service.dart';
 import 'package:ecowave/features/transaction/bloc/history_transaction/history_transaction_bloc.dart';
 import 'package:ecowave/features/transaction/model/services/history_transaction_service.dart';
 import 'package:ecowave/features/payment/model/services/voucher_service.dart';
@@ -29,9 +28,8 @@ void init() {
   locator.registerFactory(() => AddressBloc(locator()));
   locator.registerFactory(() => HomeBloc());
   locator.registerFactory(() => CartBloc());
-  locator.registerFactory(() => PaymentMethodBloc(locator()));
   locator.registerFactory(() => ExpeditionBloc(locator()));
-  locator.registerFactory(() => PaymentDetailBloc());
+  locator.registerFactory(() => PaymentDetailBloc(locator()));
   locator.registerFactory(() => HistoryTransactionBloc(locator()));
   locator.registerFactory(() => VoucherBloc(locator()));
   locator.registerFactory(() => InformationBloc(locator()));
@@ -41,9 +39,8 @@ void init() {
 
   // service
   locator.registerLazySingleton<AddressService>(() => AddressService());
-  locator.registerLazySingleton<PaymentMethodService>(
-      () => PaymentMethodService());
   locator.registerLazySingleton<ExpeditionService>(() => ExpeditionService());
+  locator.registerLazySingleton<TransactionService>(() => TransactionService());
   locator.registerLazySingleton<HistoryTransactionService>(
       () => HistoryTransactionService());
   locator.registerLazySingleton<VoucherService>(() => VoucherService());

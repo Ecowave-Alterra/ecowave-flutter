@@ -7,9 +7,10 @@ class PaymentDetailState {
   final int? productsPrice;
   final ExpeditionModel? expeditionModel;
   final VoucherModel? voucherModel;
-  final PaymentMethodModel? paymentMethodModel;
   final PaymentInfo? paymentInfo;
   final int pointUsed;
+  final TransactionModel? transactionModel;
+  final String errorMessage;
 
   const PaymentDetailState({
     this.status = DataStateStatus.initial,
@@ -18,9 +19,10 @@ class PaymentDetailState {
     this.productsPrice,
     this.expeditionModel,
     this.voucherModel,
-    this.paymentMethodModel,
     this.paymentInfo,
     this.pointUsed = 0,
+    this.transactionModel,
+    this.errorMessage = "",
   });
 
   PaymentDetailState copyWith({
@@ -30,8 +32,8 @@ class PaymentDetailState {
     int? productsPrice,
     ExpeditionModel? expeditionModel,
     VoucherModel? voucherModel,
-    PaymentMethodModel? paymentMethodModel,
     int? pointUsed,
+    String? errorMessage,
   }) {
     return PaymentDetailState(
       status: status ?? this.status,
@@ -40,7 +42,7 @@ class PaymentDetailState {
       productsPrice: productsPrice ?? this.productsPrice,
       expeditionModel: expeditionModel ?? this.expeditionModel,
       voucherModel: voucherModel ?? this.voucherModel,
-      paymentMethodModel: paymentMethodModel ?? this.paymentMethodModel,
+      errorMessage: errorMessage ?? this.errorMessage,
       paymentInfo: PaymentInfo(
         productPrice: productsPrice ?? this.productsPrice ?? 0,
         shippingPrice:
