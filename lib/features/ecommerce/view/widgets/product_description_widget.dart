@@ -1,23 +1,16 @@
 import 'package:ecowave/core.dart';
 import 'package:ecowave/features/ecommerce/bloc/product_home/product_bloc.dart';
+import 'package:ecowave/features/ecommerce/model/models/product_model.dart';
 import 'package:ecowave/features/ecommerce/view/pages/product_review_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../bloc/product_category/product_category_bloc.dart';
-
 class ProductDescription extends StatelessWidget {
-  final int productId;
-  final int productCategoryId;
-  const ProductDescription(
-      {super.key, required this.productId, required this.productCategoryId});
+  final ProductModel productModel;
+  const ProductDescription({super.key, required this.productModel});
 
   @override
   Widget build(BuildContext context) {
-    context
-        .read<ProductCategoryBloc>()
-        .add(GetProductCategoryEvent(productCategoryId));
-    context.read<ProductBloc>().add(GetProductDetailEvent(productId));
     return BlocBuilder<ProductBloc, ProductState>(
       builder: (context, state) {
         if (state is ProductLoading) {
@@ -25,14 +18,13 @@ class ProductDescription extends StatelessWidget {
         } else if (state is ProductFailed) {
           return EcoError(errorMessage: state.message, onRetry: () {});
         } else if (state is ProductSuccess) {
-          final product = state.data[0];
           return Column(
             children: [
               Container(
                 padding: const EdgeInsets.only(left: AppSizes.primary),
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  product.name,
+                  productModel.name,
                   style: const TextStyle(
                     fontSize: AppSizes.primary,
                     fontWeight: AppFontWeight.regular,
@@ -49,7 +41,7 @@ class ProductDescription extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.fromLTRB(0, 10.0, 0, 10.0),
                       child: Text(
-                        product.price.toInt().currencyFormatRp,
+                        productModel.price.toInt().currencyFormatRp,
                         style: const TextStyle(
                           fontSize: AppSizes.primary,
                           fontWeight: AppFontWeight.bold,
@@ -71,7 +63,7 @@ class ProductDescription extends StatelessWidget {
                           Container(
                             padding: const EdgeInsets.only(right: 5.0),
                             child: Text(
-                              product.rating.toString(),
+                              productModel.rating[0].rating.toString(),
                               style: const TextStyle(
                                 fontSize: AppSizes.primary,
                                 fontWeight: AppFontWeight.medium,
@@ -115,7 +107,7 @@ class ProductDescription extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      product.stock.toString(),
+                      productModel.stock.toString(),
                       style: const TextStyle(
                         fontSize: AppSizes.primary,
                         fontWeight: AppFontWeight.regular,
@@ -139,28 +131,12 @@ class ProductDescription extends StatelessWidget {
                         fontWeight: AppFontWeight.regular,
                       ),
                     ),
-                    BlocBuilder<ProductCategoryBloc, ProductCategoryState>(
-                      builder: (context, state) {
-                        if (state is ProductCategoryLoading) {
-                          return const EcoLoading();
-                        } else if (state is ProductCategoryFailed) {
-                          return EcoError(
-                            errorMessage: state.message,
-                            onRetry: () {},
-                          );
-                        } else if (state is ProductCategorySuccess) {
-                          final category = state.data[0];
-                          return Text(
-                            category.category,
-                            style: const TextStyle(
-                                fontSize: AppSizes.primary,
-                                fontWeight: AppFontWeight.medium,
-                                color: AppColors.primary500),
-                          );
-                        } else {
-                          return const SizedBox.shrink();
-                        }
-                      },
+                    Text(
+                      productModel.category,
+                      style: const TextStyle(
+                          fontSize: AppSizes.primary,
+                          fontWeight: AppFontWeight.medium,
+                          color: AppColors.primary500),
                     ),
                   ],
                 ),
@@ -181,7 +157,7 @@ class ProductDescription extends StatelessWidget {
                     left: AppSizes.primary, right: AppSizes.primary),
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  product.productDescription,
+                  productModel.description,
                   style: const TextStyle(
                     fontSize: AppSizes.primary,
                     fontWeight: AppFontWeight.regular,
@@ -201,7 +177,9 @@ class ProductDescription extends StatelessWidget {
                       ),
                     ),
                     TextButton(
-                      onPressed: () => context.push(const ProductReview()),
+                      onPressed: () => context.push(ProductReview(
+                        productModel: productModel,
+                      )),
                       child: const Text(
                         'Lihat Semua',
                         style: TextStyle(
@@ -226,7 +204,7 @@ class ProductDescription extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.only(left: 4.0),
                       child: Text(
-                        product.rating.toString(),
+                        productModel.averageRating.toString(),
                         style: const TextStyle(
                             fontSize: AppSizes.primary,
                             fontWeight: AppFontWeight.semibold,
@@ -236,9 +214,9 @@ class ProductDescription extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.only(
                           left: 8.0, top: 2.0, bottom: 2.0),
-                      child: const Text(
-                        '599 penilaian',
-                        style: TextStyle(
+                      child: Text(
+                        '${productModel.rating.length} penilaian',
+                        style: const TextStyle(
                             fontSize: 14,
                             fontWeight: AppFontWeight.medium,
                             color: AppColors.grey700),
@@ -251,18 +229,19 @@ class ProductDescription extends StatelessWidget {
                 padding: const EdgeInsets.only(left: AppSizes.primary),
                 child: Row(
                   children: [
-                    const SizedBox(
+                    SizedBox(
                       width: 30.0,
                       height: 40.0,
                       child: CircleAvatar(
-                        backgroundImage: AssetImage(AppImages.cardInfo4),
+                        backgroundImage: NetworkImage(
+                            productModel.rating[0].photoProfileUrl),
                       ),
                     ),
                     Container(
                       padding: const EdgeInsets.only(left: 10.0),
-                      child: const Text(
-                        'Muhammad Nabil',
-                        style: TextStyle(
+                      child: Text(
+                        productModel.rating[0].name,
+                        style: const TextStyle(
                             fontSize: 12.0,
                             fontWeight: AppFontWeight.medium,
                             color: AppColors.black),
@@ -322,9 +301,9 @@ class ProductDescription extends StatelessWidget {
                 padding: const EdgeInsets.only(
                     left: AppSizes.primary, right: AppSizes.primary),
                 alignment: Alignment.centerLeft,
-                child: const Text(
-                  'Menjelaskan produk ini dapat digunakan untuk apa dan apa manfaat dari produk ini.',
-                  style: TextStyle(
+                child: Text(
+                  productModel.rating[0].comment,
+                  style: const TextStyle(
                     fontSize: AppSizes.primary,
                     fontWeight: AppFontWeight.regular,
                   ),

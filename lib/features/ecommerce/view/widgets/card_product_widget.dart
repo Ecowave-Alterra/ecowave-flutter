@@ -33,8 +33,6 @@ class CardProduct extends StatelessWidget {
                   return GestureDetector(
                     onTap: () => context.push(ProductDetail(
                       productModel: state.data[index],
-                      productId: product.id,
-                      productCategoryId: product.productCategoryId,
                     )),
                     child: Container(
                       width: 171,
@@ -52,8 +50,8 @@ class CardProduct extends StatelessWidget {
                           ClipRRect(
                             borderRadius:
                                 BorderRadius.circular(AppSizes.radius),
-                            child: Image.asset(
-                              'assets/images/productShop${product.id}.png',
+                            child: Image.network(
+                              product.productImageUrl[0],
                               height: 126,
                               fit: BoxFit.fill,
                             ),
@@ -97,7 +95,7 @@ class CardProduct extends StatelessWidget {
                                     size: 12,
                                   ),
                                   Text(
-                                    product.rating.toString(),
+                                    product.averageRating.toString(),
                                     style: const TextStyle(
                                       fontWeight: AppFontWeight.medium,
                                       color: AppColors.grey700,

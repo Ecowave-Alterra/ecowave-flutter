@@ -1,10 +1,12 @@
+import 'package:ecowave/features/ecommerce/model/models/product_model.dart';
 import 'package:ecowave/features/ecommerce/view/widgets/review_list_widget.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core.dart';
 
 class ProductReview extends StatelessWidget {
-  const ProductReview({super.key});
+  final ProductModel productModel;
+  const ProductReview({super.key, required this.productModel});
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +29,9 @@ class ProductReview extends StatelessWidget {
                 ),
                 Container(
                   padding: const EdgeInsets.only(left: 4.0),
-                  child: const Text(
-                    '4.5',
-                    style: TextStyle(
+                  child: Text(
+                    productModel.averageRating.toString(),
+                    style: const TextStyle(
                         fontSize: AppSizes.primary,
                         fontWeight: AppFontWeight.semibold,
                         color: AppColors.black),
@@ -38,9 +40,9 @@ class ProductReview extends StatelessWidget {
                 Container(
                   padding:
                       const EdgeInsets.only(left: 8.0, top: 2.0, bottom: 2.0),
-                  child: const Text(
-                    '2 penilaian',
-                    style: TextStyle(
+                  child: Text(
+                    '${productModel.rating.length} penilaian',
+                    style: const TextStyle(
                         fontSize: 14,
                         fontWeight: AppFontWeight.medium,
                         color: AppColors.grey700),
@@ -49,7 +51,7 @@ class ProductReview extends StatelessWidget {
               ],
             ),
           ),
-          const ReviewListWidget(),
+          ReviewListWidget(review: productModel),
         ],
       ),
     );
