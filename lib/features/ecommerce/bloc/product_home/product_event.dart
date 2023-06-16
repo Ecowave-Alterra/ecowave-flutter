@@ -16,10 +16,10 @@ class SearchProductEvent extends ProductEvent {
 }
 
 class FilterProductEvent extends ProductEvent {
-  final int idFilter;
+  final String categoryFilter;
   final String sortFilter;
 
-  const FilterProductEvent(this.idFilter, this.sortFilter);
+  const FilterProductEvent(this.categoryFilter, this.sortFilter);
 }
 
 class SortOnlyProductEvent extends ProductEvent {
@@ -29,7 +29,7 @@ class SortOnlyProductEvent extends ProductEvent {
 }
 
 class GetProductDetailEvent extends ProductEvent {
-  final int productId;
+  final ProductModel productModel;
 
-  const GetProductDetailEvent(this.productId);
+  const GetProductDetailEvent(this.productModel);
 }

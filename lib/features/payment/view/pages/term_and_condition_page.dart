@@ -22,7 +22,7 @@ class TermAndConditionPage extends StatelessWidget {
     ];
     final List<String> termAndConditionDiscount = [
       "Voucher hanya berlaku apabila pembelian pengguna sudah memenuhi syarat dan ketentuan yang tertera pada voucher.",
-      "Nominal yang didapatkan sebesar maksimal ${voucherModel.maximumDiscount.currencyFormatRp}.",
+      "Nominal yang didapatkan sebesar maksimal ${voucherModel.maximumDiscount?.currencyFormatRp}.",
       "Jika transaksi dibatalkan atau masuk ke pusat resolusi, dana yang kembali ke pembeli akan sesuai dengan nominal pembayaran yang dilakukan.",
       "Ecowave berhak melakukan tindakan yang diperlukan apabila diduga terjadi tindakan kecurangan yang dilakukan oleh pengguna yang melanggra syarat dan ketentuan dan merugikan Ecowave.",
       "Dengan menggunakan voucher ini, pengguna dianggap telah memahami dan meyetujui semua Syarat dan Ketentuan yang berlaku.",
@@ -36,8 +36,8 @@ class TermAndConditionPage extends StatelessWidget {
       ),
       body: ListView(
         children: [
-          Image.network(
-            voucherModel.photoContentUrl,
+          Image.asset(
+            AppImages.voucher,
             width: context.fullWidth,
             height: 120.0,
             fit: BoxFit.cover,
@@ -86,15 +86,16 @@ class TermAndConditionPage extends StatelessWidget {
                     const Text("Min. belanja"),
                     const Spacer(),
                     Text(
-                      voucherModel.minimumPurchase.currencyFormatRp,
+                      (voucherModel.minimumPurchase ?? 0).currencyFormatRp,
                       style: const TextStyle(
                         fontWeight: AppFontWeight.semibold,
                       ),
                     ),
                   ],
                 ),
-                if (voucherModel.type == "Diskon") 8.0.height,
-                if (voucherModel.type == "Diskon")
+                if (voucherModel.voucherType.type == "Diskon Belanja")
+                  8.0.height,
+                if (voucherModel.voucherType.type == "Diskon Belanja")
                   Row(
                     children: [
                       const ImageIcon(
@@ -106,7 +107,7 @@ class TermAndConditionPage extends StatelessWidget {
                       const Text("Maks. potongan belanja"),
                       const Spacer(),
                       Text(
-                        voucherModel.maximumDiscount.currencyFormatRp,
+                        (voucherModel.maximumDiscount ?? 0).currencyFormatRp,
                         style: const TextStyle(
                           fontWeight: AppFontWeight.semibold,
                         ),
@@ -124,7 +125,7 @@ class TermAndConditionPage extends StatelessWidget {
                 ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount: voucherModel.type == "Gratis Ongkir"
+                  itemCount: voucherModel.voucherType.type == "Gratis Ongkir"
                       ? termAndConditionFreeShipping.length
                       : termAndConditionDiscount.length,
                   itemBuilder: (context, index) => Row(
@@ -132,9 +133,10 @@ class TermAndConditionPage extends StatelessWidget {
                     children: [
                       Text("${index + 1}. "),
                       Flexible(
-                        child: Text(voucherModel.type == "Gratis Ongkir"
-                            ? termAndConditionFreeShipping[index]
-                            : termAndConditionDiscount[index]),
+                        child: Text(
+                            voucherModel.voucherType.type == "Gratis Ongkir"
+                                ? termAndConditionFreeShipping[index]
+                                : termAndConditionDiscount[index]),
                       ),
                     ],
                   ),

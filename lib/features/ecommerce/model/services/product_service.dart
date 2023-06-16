@@ -8,89 +8,179 @@ class ProductService {
 
   List dummy = [
     {
-      "id": 1,
-      "product_category_id": 1,
-      "name": "Tempat Minum Reusable",
-      "stock": 100,
-      "price": 59000,
-      "rating": 5,
-      "product_description": "deskripsi Tempat Minum Reusable",
-      "created_at": "2023-06-01",
-      "updated_at": "2023-06-02",
-      "deleted_at": null
+      "ProductId": 1,
+      "Name": "Botol",
+      "Category": "Perabot",
+      "Stock": 10,
+      "Price": 50000,
+      "Status": "Tersedia",
+      "Description":
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sed elementum tempus egestas sed. Aliquam malesuada bibendum arcu vitae. Id diam maecenas ultricies mi eget mauris pharetra et ultrices. Congue quisque egestas diam in arcu cursus. Lacus luctus accumsan tortor posuere ac ut consequat. Nulla at volutpat diam ut venenatis tellus in. Consequat nisl vel pretium lectus quam id leo in. Maecenas pharetra convallis posuere morbi. Eget arcu dictum varius duis at. Lorem sed risus ultricies tristique. In nibh mauris cursus mattis molestie a. Vitae congue eu consequat ac felis donec et odio. Maecenas volutpat blandit aliquam etiam erat velit scelerisque in. Enim diam vulputate ut pharetra sit amet aliquam id. At lectus urna duis convallis. Est velit egestas dui id ornare arcu odio ut. Tempor id eu nisl nunc. Tristique senectus et netus et malesuada fames. Netus et malesuada fames ac",
+      "ProductImageUrl": [
+        "https://storage.googleapis.com/ecowave/img/products/bottle.png",
+        "https://storage.googleapis.com/ecowave/img/products/bottle.png",
+        "https://storage.googleapis.com/ecowave/img/products/bottle.png"
+      ],
+      "AverageRating": 4.5,
+      "Rating": [
+        {
+          "Name": "Nadira",
+          "PhotoProfileUrl":
+              "https://storage.googleapis.com/ecowave/img/users/profile/profile.png",
+          "Rating": 4.5,
+          "Comment": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+          "CommentAdmin":
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+          "PhotoUrl":
+              "https://storage.googleapis.com/ecowave/img/products/bottle.png",
+          "VideoUrl":
+              "https://storage.googleapis.com/ecowave/img/products/bottle.png"
+        },
+        {
+          "Name": "Adiva",
+          "PhotoProfileUrl":
+              "https://storage.googleapis.com/ecowave/img/users/profile/profile.png",
+          "Rating": 4.5,
+          "Comment": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+          "CommentAdmin":
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+          "PhotoUrl":
+              "https://storage.googleapis.com/ecowave/img/products/bottle.png",
+          "VideoUrl":
+              "https://storage.googleapis.com/ecowave/img/products/bottle.png"
+        }
+      ]
     },
     {
-      "id": 2,
-      "product_category_id": 2,
-      "name": "Tote Putih Polos",
-      "stock": 0,
-      "price": 5000,
-      "rating": 4.9,
-      "product_description": "deskripsi Tote Putih Polos",
-      "created_at": "2023-06-02",
-      "updated_at": "2023-06-03",
-      "deleted_at": null
+      "ProductId": 2,
+      "Name": "Botol 2",
+      "Category": "Perabot",
+      "Stock": 10,
+      "Price": 55000,
+      "Status": "Tersedia",
+      "Description":
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sed elementum tempus egestas sed. Aliquam malesuada bibendum arcu vitae. Id diam maecenas ultricies mi eget mauris pharetra et ultrices. Congue quisque egestas diam in arcu cursus. Lacus luctus accumsan tortor posuere ac ut consequat. Nulla at volutpat diam ut venenatis tellus in. Consequat nisl vel pretium lectus quam id leo in. Maecenas pharetra convallis posuere morbi. Eget arcu dictum varius duis at. Lorem sed risus ultricies tristique. In nibh mauris cursus mattis molestie a. Vitae congue eu consequat ac felis donec et odio. Maecenas volutpat blandit aliquam etiam erat velit scelerisque in. Enim diam vulputate ut pharetra sit amet aliquam id. At lectus urna duis convallis. Est velit egestas dui id ornare arcu odio ut. Tempor id eu nisl nunc. Tristique senectus et netus et malesuada fames. Netus et malesuada fames ac",
+      "ProductImageUrl": [
+        "https://storage.googleapis.com/ecowave/img/products/bottle.png",
+        "https://storage.googleapis.com/ecowave/img/products/bottle.png",
+        "https://storage.googleapis.com/ecowave/img/products/bottle.png"
+      ],
+      "AverageRating": 4.5,
+      "Rating": [
+        {
+          "Name": "Nadira",
+          "PhotoProfileUrl":
+              "https://storage.googleapis.com/ecowave/img/users/profile/profile.png",
+          "Rating": 4.5,
+          "Comment": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+          "CommentAdmin":
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+          "PhotoUrl":
+              "https://storage.googleapis.com/ecowave/img/products/bottle.png",
+          "VideoUrl":
+              "https://storage.googleapis.com/ecowave/img/products/bottle.png"
+        },
+        {
+          "Name": "Adiva",
+          "PhotoProfileUrl":
+              "https://storage.googleapis.com/ecowave/img/users/profile/profile.png",
+          "Rating": 4.5,
+          "Comment": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+          "CommentAdmin":
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+          "PhotoUrl":
+              "https://storage.googleapis.com/ecowave/img/products/bottle.png",
+          "VideoUrl":
+              "https://storage.googleapis.com/ecowave/img/products/bottle.png"
+        }
+      ]
     },
     {
-      "id": 3,
-      "product_category_id": 1,
-      "name": "Sendok Stainless Steel 8pcs",
-      "stock": 50,
-      "price": 30000,
-      "rating": 3.8,
-      "product_description": "deskripsi Sendok Stainless Steel 8pcs",
-      "created_at": "2023-05-28",
-      "updated_at": "2023-06-02",
-      "deleted_at": null
+      "ProductId": 3,
+      "Name": "Kantong",
+      "Category": "Kantong",
+      "Stock": 10,
+      "Price": 50000,
+      "Status": "Tersedia",
+      "Description":
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sed elementum tempus egestas sed. Aliquam malesuada bibendum arcu vitae. Id diam maecenas ultricies mi eget mauris pharetra et ultrices. Congue quisque egestas diam in arcu cursus. Lacus luctus accumsan tortor posuere ac ut consequat. Nulla at volutpat diam ut venenatis tellus in. Consequat nisl vel pretium lectus quam id leo in. Maecenas pharetra convallis posuere morbi. Eget arcu dictum varius duis at. Lorem sed risus ultricies tristique. In nibh mauris cursus mattis molestie a. Vitae congue eu consequat ac felis donec et odio. Maecenas volutpat blandit aliquam etiam erat velit scelerisque in. Enim diam vulputate ut pharetra sit amet aliquam id. At lectus urna duis convallis. Est velit egestas dui id ornare arcu odio ut. Tempor id eu nisl nunc. Tristique senectus et netus et malesuada fames. Netus et malesuada fames ac",
+      "ProductImageUrl": [
+        "https://storage.googleapis.com/ecowave/img/products/bottle.png",
+        "https://storage.googleapis.com/ecowave/img/products/bottle.png",
+        "https://storage.googleapis.com/ecowave/img/products/bottle.png"
+      ],
+      "AverageRating": 4.5,
+      "Rating": [
+        {
+          "Name": "Nadira",
+          "PhotoProfileUrl":
+              "https://storage.googleapis.com/ecowave/img/users/profile/profile.png",
+          "Rating": 4.5,
+          "Comment": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+          "CommentAdmin":
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+          "PhotoUrl":
+              "https://storage.googleapis.com/ecowave/img/products/bottle.png",
+          "VideoUrl":
+              "https://storage.googleapis.com/ecowave/img/products/bottle.png"
+        },
+        {
+          "Name": "Adiva",
+          "PhotoProfileUrl":
+              "https://storage.googleapis.com/ecowave/img/users/profile/profile.png",
+          "Rating": 4.5,
+          "Comment": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+          "CommentAdmin":
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+          "PhotoUrl":
+              "https://storage.googleapis.com/ecowave/img/products/bottle.png",
+          "VideoUrl":
+              "https://storage.googleapis.com/ecowave/img/products/bottle.png"
+        }
+      ]
     },
     {
-      "id": 4,
-      "product_category_id": 1,
-      "name": "Gelas Kertas 8pcs",
-      "stock": 75,
-      "price": 10500,
-      "rating": 4.9,
-      "product_description": "deskripsi Gelas Kertas 8pcs",
-      "created_at": "2023-06-02",
-      "updated_at": "2023-06-03",
-      "deleted_at": null
-    },
-    {
-      "id": 5,
-      "product_category_id": 2,
-      "name": "Tote Bag Putih Polos",
-      "stock": 75,
-      "price": 7500,
-      "rating": 4.2,
-      "product_description": "deskripsi Tote Bag Putih Polos",
-      "created_at": "2023-06-02",
-      "updated_at": "2023-06-03",
-      "deleted_at": null
-    },
-    {
-      "id": 6,
-      "product_category_id": 2,
-      "name": "Tote Bag Hitam Polos",
-      "stock": 200,
-      "price": 15000,
-      "rating": 4.4,
-      "product_description": "deskripsi Tote Putih Polos",
-      "created_at": "2023-05-30",
-      "updated_at": "2023-06-03",
-      "deleted_at": null
-    },
-    {
-      "id": 7,
-      "product_category_id": 2,
-      "name": "Tote Bag Bahan Cotton Polos",
-      "stock": 200,
-      "price": 25000,
-      "rating": 4.0,
-      "product_description": "deskripsi Tote Bag Bahan Cotton Polos",
-      "created_at": "2023-05-30",
-      "updated_at": "2023-06-03",
-      "deleted_at": null
-    },
+      "ProductId": 4,
+      "Name": "Kantong 2",
+      "Category": "Kantong",
+      "Stock": 10,
+      "Price": 55000,
+      "Status": "Tersedia",
+      "Description":
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sed elementum tempus egestas sed. Aliquam malesuada bibendum arcu vitae. Id diam maecenas ultricies mi eget mauris pharetra et ultrices. Congue quisque egestas diam in arcu cursus. Lacus luctus accumsan tortor posuere ac ut consequat. Nulla at volutpat diam ut venenatis tellus in. Consequat nisl vel pretium lectus quam id leo in. Maecenas pharetra convallis posuere morbi. Eget arcu dictum varius duis at. Lorem sed risus ultricies tristique. In nibh mauris cursus mattis molestie a. Vitae congue eu consequat ac felis donec et odio. Maecenas volutpat blandit aliquam etiam erat velit scelerisque in. Enim diam vulputate ut pharetra sit amet aliquam id. At lectus urna duis convallis. Est velit egestas dui id ornare arcu odio ut. Tempor id eu nisl nunc. Tristique senectus et netus et malesuada fames. Netus et malesuada fames ac",
+      "ProductImageUrl": [
+        "https://storage.googleapis.com/ecowave/img/products/bottle.png",
+        "https://storage.googleapis.com/ecowave/img/products/bottle.png",
+        "https://storage.googleapis.com/ecowave/img/products/bottle.png"
+      ],
+      "AverageRating": 4.5,
+      "Rating": [
+        {
+          "Name": "Nadira",
+          "PhotoProfileUrl":
+              "https://storage.googleapis.com/ecowave/img/users/profile/profile.png",
+          "Rating": 4.5,
+          "Comment": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+          "CommentAdmin":
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+          "VideoUrl":
+              "https://storage.googleapis.com/ecowave/img/products/bottle.png"
+        },
+        {
+          "Name": "Adiva",
+          "PhotoProfileUrl":
+              "https://storage.googleapis.com/ecowave/img/users/profile/profile.png",
+          "Rating": 4.5,
+          "Comment": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+          "CommentAdmin":
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+          "PhotoUrl":
+              "https://storage.googleapis.com/ecowave/img/products/bottle.png",
+          "VideoUrl":
+              "https://storage.googleapis.com/ecowave/img/products/bottle.png"
+        }
+      ]
+    }
   ];
 
   Future<List<ProductModel>> getProduct() async {
@@ -99,6 +189,17 @@ class ProductService {
       // final response = await _dio.get(url);
 
       return dummy.map((e) => ProductModel.fromJson(e)).toList();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<List<Rating>> getProductRating() async {
+    try {
+      // const String url = '................';
+      // final response = await _dio.get(url);
+
+      return dummy.map((e) => Rating.fromJson(e)).toList();
     } catch (e) {
       rethrow;
     }
