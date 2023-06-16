@@ -9,8 +9,8 @@ class ReviewListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<Rating> reviews =
-        List.generate(review.rating.length, (index) => review.rating[index]);
+    final List<Review> reviews =
+        List.generate(review.review.length, (index) => review.review[index]);
     return ListView.builder(
       shrinkWrap: true,
       itemCount: reviews.length,
@@ -28,13 +28,13 @@ class ReviewListWidget extends StatelessWidget {
                     height: 40.0,
                     child: CircleAvatar(
                       backgroundImage:
-                          NetworkImage(reviews[index].photoProfileUrl),
+                          NetworkImage(reviews[index].profilePhotoUrl),
                     ),
                   ),
                   Container(
                     padding: const EdgeInsets.only(left: 10.0),
                     child: Text(
-                      reviews[index].name,
+                      reviews[index].fullName,
                       style: const TextStyle(
                           fontSize: 12.0,
                           fontWeight: AppFontWeight.medium,

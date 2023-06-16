@@ -20,7 +20,6 @@ class _CarouselBarangState extends State<CarouselBarang> {
 
   @override
   Widget build(BuildContext context) {
-    context.read<ProductBloc>().add(GetProductEvent());
     return BlocBuilder<ProductBloc, ProductState>(
       builder: (context, state) {
         if (state is ProductLoading) {
@@ -56,6 +55,7 @@ class _CarouselBarangState extends State<CarouselBarang> {
                         height: 358,
                         autoPlay: true,
                         enlargeCenterPage: false,
+                        pauseAutoPlayOnTouch: true,
                         viewportFraction: 1.0,
                         aspectRatio: 2.0,
                         onPageChanged: (index, reason) {

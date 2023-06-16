@@ -10,7 +10,7 @@ ProductModel productModelFromJson(String str) =>
 String productModelToJson(ProductModel data) => json.encode(data.toJson());
 
 class ProductModel {
-  final int productId;
+  final String productId;
   final String name;
   final String category;
   final int stock;
@@ -19,7 +19,7 @@ class ProductModel {
   final String description;
   final List<String> productImageUrl;
   final double averageRating;
-  final List<Rating> rating;
+  final List<Review> review;
 
   ProductModel({
     required this.productId,
@@ -31,7 +31,7 @@ class ProductModel {
     required this.description,
     required this.productImageUrl,
     required this.averageRating,
-    required this.rating,
+    required this.review,
   });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
@@ -45,8 +45,8 @@ class ProductModel {
         productImageUrl:
             List<String>.from(json["ProductImageUrl"].map((x) => x)),
         averageRating: json["AverageRating"]?.toDouble(),
-        rating:
-            List<Rating>.from(json["Rating"].map((x) => Rating.fromJson(x))),
+        review:
+            List<Review>.from(json["Review"].map((x) => Review.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -59,32 +59,32 @@ class ProductModel {
         "Description": description,
         "ProductImageUrl": List<dynamic>.from(productImageUrl.map((x) => x)),
         "AverageRating": averageRating,
-        "Rating": List<dynamic>.from(rating.map((x) => x.toJson())),
+        "Review": List<dynamic>.from(review.map((x) => x.toJson())),
       };
 }
 
-class Rating {
-  final String name;
-  final String photoProfileUrl;
+class Review {
+  final String fullName;
+  final String profilePhotoUrl;
   final double rating;
   final String comment;
   final String commentAdmin;
-  String? photoUrl;
-  String? videoUrl;
+  final String photoUrl;
+  final String videoUrl;
 
-  Rating({
-    required this.name,
-    required this.photoProfileUrl,
+  Review({
+    required this.fullName,
+    required this.profilePhotoUrl,
     required this.rating,
     required this.comment,
     required this.commentAdmin,
-    this.photoUrl,
-    this.videoUrl,
+    required this.photoUrl,
+    required this.videoUrl,
   });
 
-  factory Rating.fromJson(Map<String, dynamic> json) => Rating(
-        name: json["Name"],
-        photoProfileUrl: json["PhotoProfileUrl"],
+  factory Review.fromJson(Map<String, dynamic> json) => Review(
+        fullName: json["FullName"],
+        profilePhotoUrl: json["ProfilePhotoUrl"],
         rating: json["Rating"]?.toDouble(),
         comment: json["Comment"],
         commentAdmin: json["CommentAdmin"],
@@ -93,8 +93,8 @@ class Rating {
       );
 
   Map<String, dynamic> toJson() => {
-        "Name": name,
-        "PhotoProfileUrl": photoProfileUrl,
+        "FullName": fullName,
+        "ProfilePhotoUrl": profilePhotoUrl,
         "Rating": rating,
         "Comment": comment,
         "CommentAdmin": commentAdmin,
