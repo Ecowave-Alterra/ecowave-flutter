@@ -1,7 +1,9 @@
 import 'package:ecowave/features/address/bloc/address/address_bloc.dart';
 import 'package:ecowave/features/address/model/services/address_service.dart';
 import 'package:ecowave/features/cart/bloc/cart/cart_bloc.dart';
+import 'package:ecowave/features/ecommerce/bloc/product_category/product_category_bloc.dart';
 import 'package:ecowave/features/ecommerce/bloc/product_image/product_image_bloc.dart';
+import 'package:ecowave/features/ecommerce/model/services/product_category_service.dart';
 import 'package:ecowave/features/ecommerce/model/services/product_image_service.dart';
 import 'package:ecowave/features/information/bloc/bookmark/bookmark_bloc.dart';
 import 'package:ecowave/features/information/bloc/information/information_bloc.dart';
@@ -20,9 +22,6 @@ import 'package:ecowave/features/transaction/bloc/history_transaction/history_tr
 import 'package:ecowave/features/transaction/model/services/history_transaction_service.dart';
 import 'package:ecowave/features/payment/model/services/voucher_service.dart';
 import 'package:get_it/get_it.dart';
-
-import '../../features/ecommerce/bloc/product_category/product_category_bloc.dart';
-import '../../features/ecommerce/model/services/product_category_service.dart';
 
 final GetIt locator = GetIt.instance;
 

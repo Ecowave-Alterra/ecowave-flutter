@@ -1,6 +1,7 @@
 import 'package:ecowave/core/utils/injector.dart' as di;
 import 'package:ecowave/features/address/bloc/address/address_bloc.dart';
 import 'package:ecowave/features/cart/bloc/cart/cart_bloc.dart';
+import 'package:ecowave/features/ecommerce/bloc/product_category/product_category_bloc.dart';
 
 import 'package:ecowave/features/ecommerce/bloc/product_image/product_image_bloc.dart';
 import 'package:ecowave/features/information/bloc/bookmark/bookmark_bloc.dart';
@@ -13,8 +14,6 @@ import 'package:ecowave/features/payment/bloc/payment_method/payment_method_bloc
 import 'package:ecowave/features/payment/bloc/voucher/voucher_bloc.dart';
 import 'package:ecowave/features/transaction/bloc/history_transaction/history_transaction_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../features/ecommerce/bloc/product_category/product_category_bloc.dart';
 
 class Providers {
   static final List<BlocProvider> init = [
