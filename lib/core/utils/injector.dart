@@ -1,13 +1,10 @@
 import 'package:ecowave/features/address/bloc/address/address_bloc.dart';
 import 'package:ecowave/features/address/model/services/address_service.dart';
 import 'package:ecowave/features/cart/bloc/cart/cart_bloc.dart';
-import 'package:ecowave/features/ecommerce/bloc/product_category/product_category_bloc.dart';
-import 'package:ecowave/features/ecommerce/bloc/product_image/product_image_bloc.dart';
-import 'package:ecowave/features/ecommerce/model/services/product_category_service.dart';
-import 'package:ecowave/features/ecommerce/model/services/product_image_service.dart';
 import 'package:ecowave/features/information/bloc/bookmark/bookmark_bloc.dart';
 import 'package:ecowave/features/information/bloc/information/information_bloc.dart';
-import 'package:ecowave/features/information/model/services/bookmark_storage.dart';
+import 'package:ecowave/features/information/bloc/isBookmark/is_bookmark_bloc.dart';
+import 'package:ecowave/features/information/model/services/bookmark_service.dart';
 import 'package:ecowave/features/information/model/services/information_service.dart';
 import 'package:ecowave/features/ecommerce/bloc/product_home/product_bloc.dart';
 import 'package:ecowave/features/ecommerce/model/services/product_service.dart';
@@ -37,9 +34,8 @@ void init() {
   locator.registerFactory(() => VoucherBloc(locator()));
   locator.registerFactory(() => InformationBloc(locator()));
   locator.registerFactory(() => ProductBloc(locator()));
-  locator.registerFactory(() => ProductCategoryBloc(locator()));
-  locator.registerFactory(() => ProductImageBloc(locator()));
-  locator.registerFactory(() => BookmarkBloc());
+  locator.registerFactory(() => BookmarkBloc(locator()));
+  locator.registerFactory(() => IsBookmarkBloc(locator()));
 
   // service
   locator.registerLazySingleton<AddressService>(() => AddressService());
@@ -51,9 +47,5 @@ void init() {
   locator.registerLazySingleton<VoucherService>(() => VoucherService());
   locator.registerLazySingleton<InformationService>(() => InformationService());
   locator.registerLazySingleton<ProductService>(() => ProductService());
-  locator
-      .registerLazySingleton<ProductImageService>(() => ProductImageService());
-  locator.registerLazySingleton<ProductCategoryService>(
-      () => ProductCategoryService());
   locator.registerLazySingleton<BookmarkService>(() => BookmarkService());
 }

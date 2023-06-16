@@ -15,7 +15,7 @@ class BookmarkService {
   }
 
   List<InformationModel>? _getItemsFromLocalStorage() {
-    final List<String>? itemStrings = _preferences.getStringList('items');
+    final List<String>? itemStrings = _preferences.getStringList('bookmarks');
     if (itemStrings != null) {
       return itemStrings
           .map((itemString) => informationModelFromJson(itemString))
@@ -26,13 +26,14 @@ class BookmarkService {
 
   Future<void> saveToLocalStorage() async {
     await _preferences.setStringList(
-      'items',
+      'bookmarks',
       items.map((item) => informationModelToJson(item)).toList(),
     );
     items = _getItemsFromLocalStorage() ?? [];
   }
 
   void addItem(InformationModel informationModel) {
+    print(informationModel.id);
     items.add(informationModel);
     saveToLocalStorage();
   }
@@ -42,5 +43,15 @@ class BookmarkService {
       (element) => element.id == id,
     );
     saveToLocalStorage();
+  }
+
+  bool isBookmark(InformationModel informationModel) {
+    if (items.indexWhere((element) => element.id == informationModel.id) ==
+        -1) {
+      print('false = ${items.map((e) => e.id).toList()}');
+      return false;
+    } else {
+      return true;
+    }
   }
 }

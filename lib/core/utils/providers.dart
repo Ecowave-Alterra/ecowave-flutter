@@ -1,13 +1,11 @@
 import 'package:ecowave/core/utils/injector.dart' as di;
 import 'package:ecowave/features/address/bloc/address/address_bloc.dart';
 import 'package:ecowave/features/cart/bloc/cart/cart_bloc.dart';
-import 'package:ecowave/features/ecommerce/bloc/product_category/product_category_bloc.dart';
-
-import 'package:ecowave/features/ecommerce/bloc/product_image/product_image_bloc.dart';
 import 'package:ecowave/features/information/bloc/bookmark/bookmark_bloc.dart';
 import 'package:ecowave/features/information/bloc/information/information_bloc.dart';
 import 'package:ecowave/features/ecommerce/bloc/product_home/product_bloc.dart';
 import 'package:ecowave/features/home/bloc/home/home_bloc.dart';
+import 'package:ecowave/features/information/bloc/isBookmark/is_bookmark_bloc.dart';
 import 'package:ecowave/features/payment/bloc/expedition/expedition_bloc.dart';
 import 'package:ecowave/features/payment/bloc/payment_detail/payment_detail_bloc.dart';
 import 'package:ecowave/features/payment/bloc/payment_method/payment_method_bloc.dart';
@@ -32,10 +30,8 @@ class Providers {
     BlocProvider<InformationBloc>(
         create: (context) => di.locator<InformationBloc>()),
     BlocProvider<ProductBloc>(create: (context) => di.locator<ProductBloc>()),
-    BlocProvider<ProductCategoryBloc>(
-        create: (context) => di.locator<ProductCategoryBloc>()),
-    BlocProvider<ProductImageBloc>(
-        create: (context) => di.locator<ProductImageBloc>()),
     BlocProvider<BookmarkBloc>(create: (context) => di.locator<BookmarkBloc>()),
+    BlocProvider<IsBookmarkBloc>(
+        create: (context) => di.locator<IsBookmarkBloc>()),
   ];
 }
