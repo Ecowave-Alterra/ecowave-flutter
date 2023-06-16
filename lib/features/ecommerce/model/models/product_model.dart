@@ -1,64 +1,104 @@
 // To parse this JSON data, do
 //
-//     final productImageModel = productImageModelFromJson(jsonString);
+//     final productModel = productModelFromJson(jsonString);
 
 import 'dart:convert';
 
-ProductModel productImageModelFromJson(String str) =>
+ProductModel productModelFromJson(String str) =>
     ProductModel.fromJson(json.decode(str));
 
-String productImageModelToJson(ProductModel data) => json.encode(data.toJson());
+String productModelToJson(ProductModel data) => json.encode(data.toJson());
 
 class ProductModel {
-  final int id;
-  final int productCategoryId;
+  final int productId;
   final String name;
+  final String category;
   final int stock;
-  final double price;
-  final double rating;
-  final String productDescription;
-  final DateTime createdAt;
-  final DateTime updatedAt;
-  final dynamic deletedAt;
+  final int price;
+  final String status;
+  final String description;
+  final List<String> productImageUrl;
+  final double averageRating;
+  final List<Rating> rating;
 
   ProductModel({
-    required this.id,
-    required this.productCategoryId,
+    required this.productId,
     required this.name,
+    required this.category,
     required this.stock,
     required this.price,
+    required this.status,
+    required this.description,
+    required this.productImageUrl,
+    required this.averageRating,
     required this.rating,
-    required this.productDescription,
-    required this.createdAt,
-    required this.updatedAt,
-    this.deletedAt,
   });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
-        id: json["id"],
-        productCategoryId: json["product_category_id"],
-        name: json["name"],
-        stock: json["stock"],
-        price: json["price"]?.toDouble(),
-        rating: json["rating"]?.toDouble(),
-        productDescription: json["product_description"],
-        createdAt: DateTime.parse(json["created_at"]),
-        updatedAt: DateTime.parse(json["updated_at"]),
-        deletedAt: json["deleted_at"],
+        productId: json["ProductId"],
+        name: json["Name"],
+        category: json["Category"],
+        stock: json["Stock"],
+        price: json["Price"],
+        status: json["Status"],
+        description: json["Description"],
+        productImageUrl:
+            List<String>.from(json["ProductImageUrl"].map((x) => x)),
+        averageRating: json["AverageRating"]?.toDouble(),
+        rating:
+            List<Rating>.from(json["Rating"].map((x) => Rating.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "product_category_id": productCategoryId,
-        "name": name,
-        "stock": stock,
-        "price": price,
-        "rating": rating,
-        "product_description": productDescription,
-        "created_at":
-            "${createdAt.year.toString().padLeft(4, '0')}-${createdAt.month.toString().padLeft(2, '0')}-${createdAt.day.toString().padLeft(2, '0')}",
-        "updated_at":
-            "${updatedAt.year.toString().padLeft(4, '0')}-${updatedAt.month.toString().padLeft(2, '0')}-${updatedAt.day.toString().padLeft(2, '0')}",
-        "deleted_at": deletedAt,
+        "ProductId": productId,
+        "Name": name,
+        "Category": category,
+        "Stock": stock,
+        "Price": price,
+        "Status": status,
+        "Description": description,
+        "ProductImageUrl": List<dynamic>.from(productImageUrl.map((x) => x)),
+        "AverageRating": averageRating,
+        "Rating": List<dynamic>.from(rating.map((x) => x.toJson())),
+      };
+}
+
+class Rating {
+  final String name;
+  final String photoProfileUrl;
+  final double rating;
+  final String comment;
+  final String commentAdmin;
+  String? photoUrl;
+  String? videoUrl;
+
+  Rating({
+    required this.name,
+    required this.photoProfileUrl,
+    required this.rating,
+    required this.comment,
+    required this.commentAdmin,
+    this.photoUrl,
+    this.videoUrl,
+  });
+
+  factory Rating.fromJson(Map<String, dynamic> json) => Rating(
+        name: json["Name"],
+        photoProfileUrl: json["PhotoProfileUrl"],
+        rating: json["Rating"]?.toDouble(),
+        comment: json["Comment"],
+        commentAdmin: json["CommentAdmin"],
+        photoUrl: json["PhotoUrl"],
+        videoUrl: json["VideoUrl"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "Name": name,
+        "PhotoProfileUrl": photoProfileUrl,
+        "Rating": rating,
+        "Comment": comment,
+        "CommentAdmin": commentAdmin,
+        "PhotoUrl": photoUrl,
+        "VideoUrl": videoUrl,
       };
 }
