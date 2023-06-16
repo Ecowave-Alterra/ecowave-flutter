@@ -1,5 +1,5 @@
 import 'package:ecowave/core.dart';
-import 'package:ecowave/features/information/bloc/informatio/information_bloc.dart';
+import 'package:ecowave/features/information/bloc/information/information_bloc.dart';
 import 'package:ecowave/features/information/view/pages/bookmark_page.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -73,8 +73,6 @@ class _InformationPageState extends State<InformationPage> {
                   itemCount: state.data.length,
                   itemBuilder: (context, index, realIndex) {
                     return CarouselCardInformation(
-                      images: state.data[index].photoContentUrl,
-                      info: state.data[index].title,
                       informationModel: state.data[index],
                     );
                   },
@@ -137,11 +135,6 @@ class _InformationPageState extends State<InformationPage> {
                     itemCount: state.data.length,
                     itemBuilder: (context, index) {
                       return ListInformation(
-                        image: state.data[index].photoContentUrl,
-                        date: DateFormat.yMMMMd().format(DateTime.parse(
-                          state.data[index].createdAt,
-                        )),
-                        info: state.data[index].title,
                         informationModel: state.data[index],
                       );
                     },

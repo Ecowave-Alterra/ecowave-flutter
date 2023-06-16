@@ -1,4 +1,4 @@
-import 'package:ecowave/features/information/bloc/informatio/information_bloc.dart';
+import 'package:ecowave/features/information/bloc/information/information_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';

@@ -6,11 +6,8 @@ import 'package:flutter/material.dart';
 class CarouselCardInformation extends StatelessWidget {
   const CarouselCardInformation({
     super.key,
-    required this.images,
-    required this.info,
     required this.informationModel,
   });
-  final String images, info;
   final InformationModel informationModel;
   @override
   Widget build(BuildContext context) {
@@ -29,7 +26,7 @@ class CarouselCardInformation extends StatelessWidget {
           height: 150,
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage(images),
+              image: AssetImage(informationModel.photoContentUrl),
               fit: BoxFit.cover,
               alignment: Alignment.topCenter,
             ),
@@ -53,7 +50,7 @@ class CarouselCardInformation extends StatelessWidget {
                   bottom: 6,
                 ),
                 child: Text(
-                  info,
+                  informationModel.title,
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: AppFontWeight.semibold,

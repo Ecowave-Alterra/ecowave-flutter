@@ -3,7 +3,8 @@ import 'package:ecowave/features/address/bloc/address/address_bloc.dart';
 import 'package:ecowave/features/cart/bloc/cart/cart_bloc.dart';
 
 import 'package:ecowave/features/ecommerce/bloc/product_image/product_image_bloc.dart';
-import 'package:ecowave/features/information/bloc/informatio/information_bloc.dart';
+import 'package:ecowave/features/information/bloc/bookmark/bookmark_bloc.dart';
+import 'package:ecowave/features/information/bloc/information/information_bloc.dart';
 import 'package:ecowave/features/ecommerce/bloc/product_home/product_bloc.dart';
 import 'package:ecowave/features/home/bloc/home/home_bloc.dart';
 import 'package:ecowave/features/payment/bloc/expedition/expedition_bloc.dart';
@@ -36,5 +37,6 @@ class Providers {
         create: (context) => di.locator<ProductCategoryBloc>()),
     BlocProvider<ProductImageBloc>(
         create: (context) => di.locator<ProductImageBloc>()),
+    BlocProvider<BookmarkBloc>(create: (context) => di.locator<BookmarkBloc>()),
   ];
 }
