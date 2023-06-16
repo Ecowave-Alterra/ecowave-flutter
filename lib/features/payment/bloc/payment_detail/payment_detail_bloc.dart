@@ -53,9 +53,15 @@ class PaymentDetailBloc extends Bloc<PaymentDetailEvent, PaymentDetailState> {
     });
 
     on<PointUsedEvent>((event, emit) {
+      int pointUsed = 0;
+      if (state.paymentInfo!.totalPayment < event.pointUsed) {
+        pointUsed = state.paymentInfo!.totalPayment;
+      } else {
+        pointUsed = event.pointUsed;
+      }
       emit(state.copyWith(
         status: DataStateStatus.success,
-        pointUsed: -event.pointUsed,
+        pointUsed: -pointUsed,
       ));
     });
 
