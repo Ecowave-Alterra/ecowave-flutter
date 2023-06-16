@@ -21,7 +21,7 @@ class VoucherCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: productPrice < voucherModel.minimumPurchase
+      onTap: productPrice < (voucherModel.minimumPurchase ?? 0)
           ? () => "Maaf, kamu belum memenuhi syarat dan ketentuan"
               .failedBar(context)
           : onTap,
@@ -41,9 +41,11 @@ class VoucherCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Opacity(
-              opacity: productPrice < voucherModel.minimumPurchase ? 0.2 : 1.0,
-              child: Image.network(
-                voucherModel.photoContentUrl,
+              opacity: productPrice < (voucherModel.minimumPurchase ?? 0)
+                  ? 0.2
+                  : 1.0,
+              child: Image.asset(
+                AppImages.voucher,
                 width: context.fullWidth,
                 height: 120.0,
                 fit: BoxFit.cover,
