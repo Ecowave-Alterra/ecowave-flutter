@@ -73,8 +73,6 @@ class _InformationPageState extends State<InformationPage> {
                   itemCount: state.data.length,
                   itemBuilder: (context, index, realIndex) {
                     return CarouselCardInformation(
-                      images: state.data[index].photoContentUrl,
-                      info: state.data[index].title,
                       informationModel: state.data[index],
                     );
                   },
@@ -137,11 +135,6 @@ class _InformationPageState extends State<InformationPage> {
                     itemCount: state.data.length,
                     itemBuilder: (context, index) {
                       return ListInformation(
-                        image: state.data[index].photoContentUrl,
-                        date: DateFormat.yMMMMd().format(DateTime.parse(
-                          state.data[index].createdAt,
-                        )),
-                        info: state.data[index].title,
                         informationModel: state.data[index],
                       );
                     },
