@@ -7,9 +7,11 @@ import 'package:ecowave/features/ecommerce/bloc/product_home/product_bloc.dart';
 import 'package:ecowave/features/ecommerce/model/services/product_service.dart';
 import 'package:ecowave/features/home/bloc/home/home_bloc.dart';
 import 'package:ecowave/features/payment/bloc/expedition/expedition_bloc.dart';
+import 'package:ecowave/features/payment/bloc/get_point/get_point_bloc.dart';
 import 'package:ecowave/features/payment/bloc/payment_detail/payment_detail_bloc.dart';
 import 'package:ecowave/features/payment/bloc/voucher/voucher_bloc.dart';
 import 'package:ecowave/features/payment/model/services/expedition_service.dart';
+import 'package:ecowave/features/payment/model/services/get_point_service.dart';
 import 'package:ecowave/features/payment/model/services/transaction_service.dart';
 import 'package:ecowave/features/transaction/bloc/history_transaction/history_transaction_bloc.dart';
 import 'package:ecowave/features/transaction/model/services/history_transaction_service.dart';
@@ -23,6 +25,7 @@ void init() {
   locator.registerFactory(() => AddressBloc(locator()));
   locator.registerFactory(() => HomeBloc());
   locator.registerFactory(() => CartBloc());
+  locator.registerFactory(() => GetPointBloc(locator()));
   locator.registerFactory(() => ExpeditionBloc(locator()));
   locator.registerFactory(() => PaymentDetailBloc(locator()));
   locator.registerFactory(() => HistoryTransactionBloc(locator()));
@@ -32,6 +35,7 @@ void init() {
 
   // service
   locator.registerLazySingleton<AddressService>(() => AddressService());
+  locator.registerLazySingleton<GetPointService>(() => GetPointService());
   locator.registerLazySingleton<ExpeditionService>(() => ExpeditionService());
   locator.registerLazySingleton<TransactionService>(() => TransactionService());
   locator.registerLazySingleton<HistoryTransactionService>(

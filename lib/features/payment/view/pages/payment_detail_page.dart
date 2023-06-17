@@ -1,6 +1,7 @@
 import 'package:ecowave/core.dart';
 import 'package:ecowave/features/address/bloc/address/address_bloc.dart';
 import 'package:ecowave/features/cart/model/models/cart_model.dart';
+import 'package:ecowave/features/payment/bloc/get_point/get_point_bloc.dart';
 import 'package:ecowave/features/payment/bloc/payment_detail/payment_detail_bloc.dart';
 import 'package:ecowave/features/payment/bloc/voucher/voucher_bloc.dart';
 import 'package:ecowave/features/payment/bloc/expedition/expedition_bloc.dart';
@@ -31,6 +32,7 @@ class PaymentDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     context.read<PaymentDetailBloc>().add(const PointUsedEvent(pointUsed: 0));
     context.read<PaymentDetailBloc>().add(GetCartsEvent(carts: carts));
+    context.read<GetPointBloc>().add(0);
     context.read<VoucherBloc>().add(GetVouchersEvent());
     context.read<ExpeditionBloc>().add(GetExpeditionsEvent());
     context.read<AddressBloc>().add(GetAddressesEvent());
@@ -121,12 +123,16 @@ class PaymentDetailPage extends StatelessWidget {
             },
           ),
           16.0.height,
-          CheckoutSettingSwitch(
-            currentPoint: 9000,
-            label: "Tukarkan Point",
-            onChanged: (value) => context
-                .read<PaymentDetailBloc>()
-                .add(PointUsedEvent(pointUsed: value)),
+          BlocBuilder<GetPointBloc, int>(
+            builder: (context, state) {
+              return CheckoutSettingSwitch(
+                currentPoint: state,
+                label: "Tukarkan Point",
+                onChanged: (value) => context
+                    .read<PaymentDetailBloc>()
+                    .add(PointUsedEvent(pointUsed: value)),
+              );
+            },
           ),
           16.0.height,
           BlocBuilder<PaymentDetailBloc, PaymentDetailState>(
