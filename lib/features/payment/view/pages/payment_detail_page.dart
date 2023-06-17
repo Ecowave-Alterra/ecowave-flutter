@@ -37,6 +37,8 @@ class PaymentDetailPage extends StatelessWidget {
     context.read<ExpeditionBloc>().add(GetExpeditionsEvent());
     context.read<AddressBloc>().add(GetAddressesEvent());
 
+    int totalPayment = 0;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Detail Pembayaran"),
@@ -183,8 +185,9 @@ class PaymentDetailPage extends StatelessWidget {
                     await context.push(PaymentPage(
                         paymentUrl: state.transactionModel!.paymentUrl));
                     if (context.mounted) {
-                      context.pushAndRemoveUntil<bool>(
-                          const PaymentWaitingPage(), (route) => route.isFirst);
+                      context.pushAndRemoveUntil(
+                          PaymentWaitingPage(totalPayment: totalPayment),
+                          (route) => route.isFirst);
                     }
                   }
                 },
@@ -196,6 +199,7 @@ class PaymentDetailPage extends StatelessWidget {
                             state.carts == null
                         ? null
                         : () async {
+                            totalPayment = state.paymentInfo!.totalPayment;
                             context.read<PaymentDetailBloc>().add(CheckoutEvent(
                                   request: TransactionRequest(
                                     addressId: state.addressModel!.userAddress,

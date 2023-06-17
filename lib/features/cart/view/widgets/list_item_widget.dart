@@ -24,7 +24,7 @@ class ListItem extends StatelessWidget {
                     CheckedItemCart(value: value!, id: cartModel.id),
                   ),
             ),
-            Image.asset(
+            Image.network(
               cartModel.image,
               height: 55,
             ),
