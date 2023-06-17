@@ -1,5 +1,6 @@
 import 'package:ecowave/core.dart';
 import 'package:ecowave/features/address/bloc/address/address_bloc.dart';
+import 'package:ecowave/features/cart/bloc/cart/cart_bloc.dart';
 import 'package:ecowave/features/cart/model/models/cart_model.dart';
 import 'package:ecowave/features/payment/bloc/get_point/get_point_bloc.dart';
 import 'package:ecowave/features/payment/bloc/payment_detail/payment_detail_bloc.dart';
@@ -222,6 +223,11 @@ class PaymentDetailPage extends StatelessWidget {
                                     voucherId: state.voucherModel?.id,
                                   ),
                                 ));
+                            for (CartModel element in carts) {
+                              context
+                                  .read<CartBloc>()
+                                  .add(DeleteItemCart(id: element.id));
+                            }
                           },
                   );
                 },
