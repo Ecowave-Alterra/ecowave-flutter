@@ -184,8 +184,7 @@ class PaymentDetailPage extends StatelessWidget {
                 listener: (context, state) async {
                   if (state.transactionModel != null) {
                     await context.push(PaymentPage(
-                      // TODO: ubah paymentId
-                      paymentId: "eco22023061514070654",
+                      paymentId: state.transactionModel!.transactionId,
                       paymentUrl: state.transactionModel!.paymentUrl,
                     ));
                     if (context.mounted) {

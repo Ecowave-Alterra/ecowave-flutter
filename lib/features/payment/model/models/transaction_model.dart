@@ -14,11 +14,13 @@ class TransactionModel {
   final String message;
   final String paymentUrl;
   final int status;
+  final String transactionId;
 
   TransactionModel({
     required this.message,
     required this.paymentUrl,
     required this.status,
+    required this.transactionId,
   });
 
   factory TransactionModel.fromJson(Map<String, dynamic> json) =>
@@ -26,11 +28,13 @@ class TransactionModel {
         message: json["Message"],
         paymentUrl: json["Payment_url"],
         status: json["Status"],
+        transactionId: json["Transaction_Id"],
       );
 
   Map<String, dynamic> toJson() => {
         "Message": message,
         "Payment_url": paymentUrl,
         "Status": status,
+        "Transaction_Id": transactionId,
       };
 }
