@@ -32,9 +32,10 @@ class _PaymentPageState extends State<PaymentPage> {
     debugPrint("paymentStatus: $paymentStatus");
 
     if (paymentStatus == "settlemet") {
-      "Pembayaran berhasil".succeedBar(context);
       context.read<HomeBloc>().add(const OnBottomNavTap(1));
+      // TODO: arahkan ke tab pesanan Dikemas
       context.pushAndRemoveUntil<bool>(const MyHomePage(), (route) => false);
+      "Pembayaran berhasil".succeedBar(context);
     }
   }
 
@@ -76,7 +77,8 @@ class _PaymentPageState extends State<PaymentPage> {
           );
         },
       )
-      ..loadRequest(Uri.parse(widget.paymentUrl));
+      ..loadRequest(Uri.parse(
+          "https://app.sandbox.midtrans.com/snap/v3/redirection/33d0518d-2258-41bf-8331-974d48a702cc"));
 
     timer = Timer.periodic(
         const Duration(seconds: 10), (Timer t) => checkPaymentStatus());
