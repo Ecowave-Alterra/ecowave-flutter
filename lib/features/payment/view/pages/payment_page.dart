@@ -3,13 +3,20 @@ import 'dart:async';
 import 'package:ecowave/core.dart';
 import 'package:ecowave/features/home/bloc/home/home_bloc.dart';
 import 'package:ecowave/features/home/view/home_page.dart';
+import 'package:ecowave/features/payment/bloc/payment_status/payment_status_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class PaymentPage extends StatefulWidget {
+  final String paymentId;
   final String paymentUrl;
-  const PaymentPage({super.key, required this.paymentUrl});
+
+  const PaymentPage({
+    super.key,
+    required this.paymentId,
+    required this.paymentUrl,
+  });
 
   @override
   State<PaymentPage> createState() => _PaymentPageState();
@@ -20,9 +27,12 @@ class _PaymentPageState extends State<PaymentPage> {
   late Timer timer;
 
   void checkPaymentStatus() {
-    String paymentStatus = "success";
+    context.read<PaymentStatusBloc>().add(widget.paymentId);
+    final String paymentStatus = context.read<PaymentStatusBloc>().state;
     debugPrint("paymentStatus: $paymentStatus");
-    if (paymentStatus == "success") {
+
+    if (paymentStatus == "settlemet") {
+      "Pembayaran berhasil".succeedBar(context);
       context.read<HomeBloc>().add(const OnBottomNavTap(1));
       context.pushAndRemoveUntil<bool>(const MyHomePage(), (route) => false);
     }

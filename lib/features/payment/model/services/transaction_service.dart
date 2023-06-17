@@ -9,6 +9,22 @@ class TransactionService {
     _dio = Dio();
   }
 
+  Future<String> getPaymentStatus(String id) async {
+    try {
+      final String url =
+          '${BaseURL.mock}user/transaction/status-payment?id=$id';
+      final response = await _dio.get(url);
+
+      if (response.statusCode == 200) {
+        return response.data["Payment Status"];
+      } else {
+        throw "get provinces not successfully";
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   Future<TransactionModel> createTransaction(TransactionRequest request) async {
     try {
       const String url = '${BaseURL.mock}user/transaction';

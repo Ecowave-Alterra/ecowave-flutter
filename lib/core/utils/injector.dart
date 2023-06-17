@@ -9,6 +9,7 @@ import 'package:ecowave/features/home/bloc/home/home_bloc.dart';
 import 'package:ecowave/features/payment/bloc/expedition/expedition_bloc.dart';
 import 'package:ecowave/features/payment/bloc/get_point/get_point_bloc.dart';
 import 'package:ecowave/features/payment/bloc/payment_detail/payment_detail_bloc.dart';
+import 'package:ecowave/features/payment/bloc/payment_status/payment_status_bloc.dart';
 import 'package:ecowave/features/payment/bloc/voucher/voucher_bloc.dart';
 import 'package:ecowave/features/payment/model/services/expedition_service.dart';
 import 'package:ecowave/features/payment/model/services/get_point_service.dart';
@@ -28,6 +29,7 @@ void init() {
   locator.registerFactory(() => GetPointBloc(locator()));
   locator.registerFactory(() => ExpeditionBloc(locator()));
   locator.registerFactory(() => PaymentDetailBloc(locator()));
+  locator.registerFactory(() => PaymentStatusBloc(locator()));
   locator.registerFactory(() => HistoryTransactionBloc(locator()));
   locator.registerFactory(() => VoucherBloc(locator()));
   locator.registerFactory(() => InformationBloc(locator()));
