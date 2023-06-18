@@ -43,7 +43,7 @@ class ContentInformation extends StatelessWidget {
                   ),
                   8.0.height,
                   Text(
-                    'by ecoInfo  |  ${DateFormat.yMMMMd().format(DateTime.parse(informationModel.createdAt))}',
+                    'by ecoInfo  |  ${DateFormat.yMMMMd().format(DateTime.parse(informationModel.date))}',
                     style: const TextStyle(
                       fontSize: 12,
                       fontWeight: AppFontWeight.regular,
@@ -51,12 +51,12 @@ class ContentInformation extends StatelessWidget {
                     ),
                   ),
                   16.0.height,
-                  Image.asset(
+                  Image.network(
                     informationModel.photoContentUrl,
                   ),
                   16.0.height,
                   Html(
-                    data: informationModel.writingContent,
+                    data: informationModel.content,
                   ),
                 ],
               );
