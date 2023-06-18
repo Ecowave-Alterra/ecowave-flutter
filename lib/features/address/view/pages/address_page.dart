@@ -1,7 +1,7 @@
 import 'package:ecowave/core.dart';
 import 'package:ecowave/features/address/bloc/address/address_bloc.dart';
-import 'package:ecowave/features/address/view/pages/add_adress_page.dart';
-import 'package:ecowave/features/address/view/pages/update_adress_page.dart';
+import 'package:ecowave/features/address/view/pages/add_address_page.dart';
+import 'package:ecowave/features/address/view/pages/update_address_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

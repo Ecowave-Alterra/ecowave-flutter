@@ -1,6 +1,6 @@
 import 'package:ecowave/core.dart';
 import 'package:ecowave/features/address/bloc/address/address_bloc.dart';
-import 'package:ecowave/features/address/view/pages/add_adress_page.dart';
+import 'package:ecowave/features/address/view/pages/add_address_page.dart';
 import 'package:ecowave/features/payment/bloc/payment_detail/payment_detail_bloc.dart';
 import 'package:ecowave/features/address/model/models/address_model.dart';
 import 'package:ecowave/features/payment/view/widgets/shipping_address_card.dart';

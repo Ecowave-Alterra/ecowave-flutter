@@ -222,35 +222,45 @@ class _AddAddressPageState extends State<AddAddressPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
-                          'Tandai Sebagai : ',
-                          style: TextStyle(
-                            color: AppColors.grey700,
+                        const Flexible(
+                          child: Text(
+                            'Tandai Sebagai : ',
+                            style: TextStyle(
+                              color: AppColors.grey700,
+                            ),
                           ),
                         ),
-                        StatefulBuilder(
-                          builder: (context, changeState) => Row(
-                            children: [
-                              MyRadioListTile<int>(
-                                value: 0,
-                                groupValue: currentIndexMark,
-                                onChanged: (index) {
-                                  currentIndexMark = index!;
-                                  changeState(() {});
-                                },
-                                leading: 'Rumah',
-                              ),
-                              12.0.width,
-                              MyRadioListTile<int>(
-                                value: 1,
-                                groupValue: currentIndexMark,
-                                onChanged: (index) {
-                                  currentIndexMark = index!;
-                                  changeState(() {});
-                                },
-                                leading: 'Kantor',
-                              ),
-                            ],
+                        Flexible(
+                          flex: 2,
+                          child: StatefulBuilder(
+                            builder: (context, changeState) => Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Flexible(
+                                  child: MyRadioListTile<int>(
+                                    value: 0,
+                                    groupValue: currentIndexMark,
+                                    onChanged: (index) {
+                                      currentIndexMark = index!;
+                                      changeState(() {});
+                                    },
+                                    leading: 'Rumah',
+                                  ),
+                                ),
+                                12.0.width,
+                                Flexible(
+                                  child: MyRadioListTile<int>(
+                                    value: 1,
+                                    groupValue: currentIndexMark,
+                                    onChanged: (index) {
+                                      currentIndexMark = index!;
+                                      changeState(() {});
+                                    },
+                                    leading: 'Kantor',
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ],
