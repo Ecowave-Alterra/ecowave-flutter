@@ -22,6 +22,7 @@ import 'package:get_it/get_it.dart';
 final GetIt locator = GetIt.instance;
 
 void init() {
+  
   // state management
   locator.registerFactory(() => AddressBloc(locator()));
   locator.registerFactory(() => HomeBloc());

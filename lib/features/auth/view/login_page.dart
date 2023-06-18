@@ -3,9 +3,8 @@ import 'package:ecowave/features/home/view/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:ecowave/core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../change_password/view/forget_password.dart';
-import '../bloc/login/login_bloc.dart';
+import 'package:ecowave/features/change_password/view/forget_password.dart';
+import 'package:ecowave/features/auth/bloc/login/login_bloc.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -18,6 +17,13 @@ class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+
+   @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
             emailController: _emailController,
             passwordController: _passwordController),
         child: BlocConsumer<LoginBloc, LoginState>(
-          listener: (context, state) {
+          listener: (context, state) async{
             if (state is LoginError) {
               "Email atau password tidak valid. Mohon coba lagi."
                   .failedBar(context);
@@ -45,7 +51,10 @@ class _LoginPageState extends State<LoginPage> {
               _passwordController.clear();
               context.read<LoginBloc>().add(const LoginInputChange());
             } else if (state is LoginSuccess) {
-              context.push(const MyHomePage());
+             await  context.push(const MyHomePage());
+              if(context.mounted){
+               dispose();
+              }
             }
           },
           builder: (context, state) {

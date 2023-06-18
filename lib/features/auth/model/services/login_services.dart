@@ -1,21 +1,40 @@
 import 'package:dio/dio.dart';
+import 'package:ecowave/core.dart';
 import 'package:ecowave/features/auth/model/models/login_model.dart';
 
 class LoginService {
-  Future<int?> login(Login login) async {
-    try {
-      Dio dio = Dio();
-      final response = await dio.post(
-          'https://galonin.temanhorizon.com/api/login',
-          data: login.toJson());
+  static const String baseUrl = BaseURL.mock;
 
-      if (response.data != null) {
-        return response.data['data']['userId'];
+  final Dio dio = Dio();
+
+  Future<Map<String, dynamic>> login(LoginModel model) async {
+    try {
+      final response = await dio.post(
+        '$baseUrl/user/login',
+        data: model.toJson(),
+        options: Options(
+          headers: {'Content-Type': 'application/json'},
+        ),
+      );
+
+
+      if (response.statusCode == 200) {
+        return response.data as Map<String, dynamic>;
       } else {
-        return null;
+        print('Login failed.');
+        return {
+          'success': false,
+          'message': 'Login failed',
+          'data': null,
+        };
       }
     } catch (e) {
-      return null;
+      print('Error: $e');
+      return {
+        'success': false,
+        'message': 'Error: $e',
+        'data': null,
+      };
     }
   }
 }

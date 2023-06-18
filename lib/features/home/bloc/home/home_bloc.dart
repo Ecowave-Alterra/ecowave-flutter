@@ -11,7 +11,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       if (event is UpdateSharedPreferences) {
         try {
           SharedPreferences prefs = await SharedPreferences.getInstance();
-          String userId = prefs.getString('userId') ?? '';
+          String userId = prefs.getString('token')??'';
           emit(state.copyWith(token: userId));
         } catch (error) {
           await Future.delayed(const Duration(seconds: 2));
@@ -23,12 +23,15 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       emit(state.copyWith(index: event.index));
     });
 
-    on<LogOut>((event, emit) {
+     on<LogOut>((event, emit) {
       emit(state.copyWith(token: ''));
     });
+
+    
   }
+  
 
   void changeSharedPreferences() {
-    add(const UpdateSharedPreferences());
+    add(UpdateSharedPreferences());
   }
 }
