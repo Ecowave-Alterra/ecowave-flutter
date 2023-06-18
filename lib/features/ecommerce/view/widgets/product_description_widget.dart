@@ -20,6 +20,54 @@ class ProductDescription extends StatelessWidget {
         } else if (state is ProductSuccess) {
           return Column(
             children: [
+              Visibility(
+                visible: productModel.stock == 0,
+                child: Padding(
+                  padding: const EdgeInsets.all(AppSizes.primary),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: AppColors.warning300,
+                      border: Border.all(color: AppColors.warning700),
+                      borderRadius: BorderRadius.circular(4.0),
+                    ),
+                    child: const Padding(
+                      padding: EdgeInsets.fromLTRB(11.0, 8.0, 8.0, 8.0),
+                      child: Row(
+                        children: [
+                          ImageIcon(
+                            AppIcons.warning,
+                            size: AppSizes.primary,
+                            color: AppColors.warning700,
+                          ),
+                          SizedBox(
+                            width: 19.0,
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Barang Tidak Tersedia',
+                                style: TextStyle(
+                                  fontWeight: AppFontWeight.semibold,
+                                  fontSize: 12.0,
+                                ),
+                              ),
+                              Text(
+                                'Untuk Sementara stok barang ini habis. Kamu\nbisa mencari barang serupa terlebih dahulu.',
+                                style: TextStyle(
+                                  fontWeight: AppFontWeight.medium,
+                                  fontSize: 12.0,
+                                ),
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
               Container(
                 padding: const EdgeInsets.only(left: AppSizes.primary),
                 alignment: Alignment.centerLeft,
@@ -63,7 +111,7 @@ class ProductDescription extends StatelessWidget {
                           Container(
                             padding: const EdgeInsets.only(right: 5.0),
                             child: Text(
-                              productModel.rating[0].rating.toString(),
+                              productModel.review[0].rating.toString(),
                               style: const TextStyle(
                                 fontSize: AppSizes.primary,
                                 fontWeight: AppFontWeight.medium,
@@ -215,7 +263,7 @@ class ProductDescription extends StatelessWidget {
                       padding: const EdgeInsets.only(
                           left: 8.0, top: 2.0, bottom: 2.0),
                       child: Text(
-                        '${productModel.rating.length} penilaian',
+                        '${productModel.review.length} penilaian',
                         style: const TextStyle(
                             fontSize: 14,
                             fontWeight: AppFontWeight.medium,
@@ -234,13 +282,13 @@ class ProductDescription extends StatelessWidget {
                       height: 40.0,
                       child: CircleAvatar(
                         backgroundImage: NetworkImage(
-                            productModel.rating[0].photoProfileUrl),
+                            productModel.review[0].profilePhotoUrl),
                       ),
                     ),
                     Container(
                       padding: const EdgeInsets.only(left: 10.0),
                       child: Text(
-                        productModel.rating[0].name,
+                        productModel.review[0].fullName,
                         style: const TextStyle(
                             fontSize: 12.0,
                             fontWeight: AppFontWeight.medium,
@@ -302,7 +350,7 @@ class ProductDescription extends StatelessWidget {
                     left: AppSizes.primary, right: AppSizes.primary),
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  productModel.rating[0].comment,
+                  productModel.review[0].comment,
                   style: const TextStyle(
                     fontSize: AppSizes.primary,
                     fontWeight: AppFontWeight.regular,

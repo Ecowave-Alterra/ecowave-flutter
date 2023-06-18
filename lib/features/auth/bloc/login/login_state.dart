@@ -32,14 +32,16 @@ class LoginState extends Equatable {
 
 class LoginSuccess extends LoginState {
   final String message;
+  final UserModel user;
 
   const LoginSuccess({
     required bool isLoginButtonDisabled,
     required this.message,
+    required this.user
   }) : super(isLoginButtonDisabled: isLoginButtonDisabled);
 
   @override
-  List<Object?> get props => [...super.props, message];
+  List<Object?> get props => [...super.props, message,user];
 
   @override
   bool get stringify => true;

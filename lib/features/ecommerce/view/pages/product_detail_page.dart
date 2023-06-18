@@ -65,73 +65,55 @@ class ProductDetail extends StatelessWidget {
         child: Row(
           children: [
             Flexible(
-              child: BlocBuilder<ProductBloc, ProductState>(
-                builder: (context, state) {
-                  if (state is ProductSuccess) {
-                    return EcoFormButtonIcon(
-                      onPressed: () {
-                        context.read<CartBloc>().add(
-                              AddItemCart(
-                                cartModel: CartModel(
-                                  id: productModel.productId.toString(),
-                                  nameItems: productModel.name,
-                                  detailItems: state.data[0].category,
-                                  image:
-                                      'assets/images/productShop${productModel.productId}.png',
-                                  price: productModel.price.toInt(),
-                                  totalItems: 1,
-                                  checkedItems: false,
-                                ),
-                              ),
-                            );
-                      },
-                      label: "Keranjang",
-                      image: const Image(
-                        image: AppIcons.keranjang,
-                        width: AppSizes.primary,
-                        height: AppSizes.primary,
-                      ),
-                      height: 48.0,
-                      backgroundColor: AppColors.primary50,
-                      textColor: AppColors.primary500,
-                    );
-                  } else {
-                    return const SizedBox.shrink();
-                  }
+              child: EcoFormButtonIcon(
+                onPressed: () {
+                  context.read<CartBloc>().add(
+                        AddItemCart(
+                          cartModel: CartModel(
+                            id: productModel.productId,
+                            nameItems: productModel.name,
+                            detailItems: productModel.category,
+                            image: productModel.productImageUrl[0],
+                            price: productModel.price.toInt(),
+                            totalItems: 1,
+                            checkedItems: false,
+                          ),
+                        ),
+                      );
                 },
+                label: "Keranjang",
+                image: const Image(
+                  image: AppIcons.keranjang,
+                  width: AppSizes.primary,
+                  height: AppSizes.primary,
+                ),
+                height: 48.0,
+                backgroundColor: AppColors.primary50,
+                textColor: AppColors.primary500,
               ),
             ),
             const SizedBox(
               width: AppSizes.primary,
             ),
             Flexible(
-              child: BlocBuilder<ProductBloc, ProductState>(
-                builder: (context, state) {
-                  if (state is ProductSuccess) {
-                    return EcoFormButton(
-                      onPressed: () {
-                        context.push(PaymentDetailPage(
-                          carts: [
-                            CartModel(
-                              id: productModel.productId.toString(),
-                              nameItems: productModel.name,
-                              detailItems: state.data[0].category,
-                              image:
-                                  'assets/images/productShop${productModel.productId}.png',
-                              price: productModel.price.toInt(),
-                              totalItems: 1,
-                              checkedItems: false,
-                            ),
-                          ],
-                        ));
-                      },
-                      label: "Pesan Sekarang",
-                      height: 48.0,
-                    );
-                  } else {
-                    return const SizedBox.shrink();
-                  }
+              child: EcoFormButton(
+                onPressed: () {
+                  context.push(PaymentDetailPage(
+                    carts: [
+                      CartModel(
+                        id: productModel.productId,
+                        nameItems: productModel.name,
+                        detailItems: productModel.category,
+                        image: productModel.productImageUrl[0],
+                        price: productModel.price.toInt(),
+                        totalItems: 1,
+                        checkedItems: false,
+                      ),
+                    ],
+                  ));
                 },
+                label: "Pesan Sekarang",
+                height: 48.0,
               ),
             ),
           ],

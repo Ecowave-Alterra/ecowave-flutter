@@ -1,18 +1,15 @@
 import 'package:ecowave/features/information/model/models/information_model.dart';
 import 'package:ecowave/features/information/view/pages/detail_information_page.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../core.dart';
 
 class ListInformation extends StatefulWidget {
   const ListInformation({
     super.key,
-    required this.image,
-    required this.date,
-    required this.info,
     required this.informationModel,
   });
-  final String image, date, info;
   final InformationModel informationModel;
 
   @override
@@ -36,8 +33,8 @@ class _ListInformationState extends State<ListInformation> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Image.asset(
-              widget.image,
+            Image.network(
+              widget.informationModel.photoContentUrl,
               width: 127,
               height: 148,
               fit: BoxFit.cover,
@@ -47,7 +44,9 @@ class _ListInformationState extends State<ListInformation> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  widget.date,
+                  DateFormat.yMMMMd().format(DateTime.parse(
+                    widget.informationModel.date,
+                  )),
                   style: const TextStyle(
                     fontSize: 12,
                     fontWeight: AppFontWeight.regular,
@@ -58,7 +57,7 @@ class _ListInformationState extends State<ListInformation> {
                   alignment: Alignment.centerLeft,
                   width: context.fullWidth - 160.0,
                   child: Text(
-                    widget.info,
+                    widget.informationModel.title,
                     style: const TextStyle(
                       fontSize: 12,
                       fontWeight: AppFontWeight.semibold,

@@ -1,7 +1,7 @@
 import 'package:ecowave/core.dart';
 import 'package:ecowave/features/address/bloc/address/address_bloc.dart';
-import 'package:ecowave/features/address/view/pages/add_adress_page.dart';
-import 'package:ecowave/features/address/view/pages/update_adress_page.dart';
+import 'package:ecowave/features/address/view/pages/add_address_page.dart';
+import 'package:ecowave/features/address/view/pages/update_address_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -36,7 +36,7 @@ class AddressPage extends StatelessWidget {
                   context.read<AddressBloc>().add(GetAddressesEvent()),
             );
           } else if (state is AddressSuccess) {
-            if (state.data.isEmpty) {
+            if (state.addresses!.isEmpty) {
               return SizedBox(
                 width: context.fullWidth,
                 height: context.fullHeight / 1.3,
@@ -49,7 +49,7 @@ class AddressPage extends StatelessWidget {
             } else {
               return ListView.separated(
                 separatorBuilder: (context, index) => const Divider(),
-                itemCount: state.data.length,
+                itemCount: state.addresses!.length,
                 itemBuilder: (context, index) {
                   return Container(
                     margin: const EdgeInsets.all(16),
@@ -61,7 +61,7 @@ class AddressPage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              '${state.data[index].recipient} (${state.data[index].mark})',
+                              '${state.addresses![index].recipient} (${state.addresses![index].mark})',
                               style: const TextStyle(
                                 fontSize: 14,
                                 fontWeight: AppFontWeight.semibold,
@@ -70,7 +70,7 @@ class AddressPage extends StatelessWidget {
                             ),
                             6.0.height,
                             Text(
-                              state.data[index].phoneNumber,
+                              state.addresses![index].phoneNumber,
                               style: const TextStyle(
                                 fontSize: 14,
                                 fontWeight: AppFontWeight.regular,
@@ -78,7 +78,7 @@ class AddressPage extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              state.data[index].address,
+                              state.addresses![index].address,
                               style: const TextStyle(
                                 fontSize: 14,
                                 fontWeight: AppFontWeight.regular,
@@ -86,7 +86,7 @@ class AddressPage extends StatelessWidget {
                               ),
                             ),
                             6.0.height,
-                            if (state.data[index].isPrimary)
+                            if (state.addresses![index].isPrimary)
                               Container(
                                 padding: const EdgeInsets.all(6),
                                 decoration: BoxDecoration(
@@ -113,7 +113,7 @@ class AddressPage extends StatelessWidget {
                           ),
                           child: TextButton(
                             onPressed: () => context.push(UpdateAddressPage(
-                              addressModel: state.data[index],
+                              addressModel: state.addresses![index],
                             )),
                             child: const Text(
                               'Ubah',

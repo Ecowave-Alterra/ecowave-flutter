@@ -1,6 +1,5 @@
 import 'package:ecowave/features/payment/model/models/expedition_model.dart';
 import 'package:ecowave/features/payment/model/models/expedition_request.dart';
-import 'package:ecowave/features/payment/model/models/expedition_response_model.dart';
 import 'package:ecowave/features/payment/model/services/expedition_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
@@ -14,29 +13,30 @@ void main() {
     final ExpeditionService expeditionService = MockExpeditionService();
     final List<ExpeditionModel> expeditions = [
       {
-        "rajaongkir": {
-          "results": [
-            {
-              "Code": "pos",
-              "name": "POS Indonesia (POS)",
-              "costs": [
-                {
-                  "service": "Pos Reguler",
-                  "description": "Pos Reguler",
-                  "cost": [
-                    {"value": 48000, "etd": "7 HARI"}
-                  ]
-                }
-              ]
-            }
-          ]
-        }
+        "Code": "jne",
+        "Name": "Jalur Nugraha Ekakurir (JNE)",
+        "Service": "REG",
+        "Description": "Layanan Reguler",
+        "Value": 66000,
+        "Etd": "2-3"
       },
-    ]
-        .map((e) => ExpeditionResponseModel.fromJson(e))
-        .toList()
-        .map((e) => e.toModelEntity())
-        .toList();
+      {
+        "Code": "pos",
+        "Name": "POS Indonesia (POS)",
+        "Service": "Pos Reguler",
+        "Description": "Pos Reguler",
+        "Value": 48000,
+        "Etd": "7 HARI"
+      },
+      {
+        "Code": "tiki",
+        "Name": "Citra Van Titipan Kilat (TIKI)",
+        "Service": "REG",
+        "Description": "Regular Service",
+        "Value": 42000,
+        "Etd": "3"
+      }
+    ].map((e) => ExpeditionModel.fromJson(e)).toList();
     final ExpeditionRequest request =
         ExpeditionRequest(cityId: "12", weight: 1);
 

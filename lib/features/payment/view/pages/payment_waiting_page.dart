@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PaymentWaitingPage extends StatelessWidget {
-  const PaymentWaitingPage({super.key});
+  final int totalPayment;
+  const PaymentWaitingPage({super.key, required this.totalPayment});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +38,7 @@ class PaymentWaitingPage extends StatelessWidget {
                     ),
                   ),
                   TextSpan(
-                    text: 89000.currencyFormatRp,
+                    text: totalPayment.currencyFormatRp,
                     style: const TextStyle(
                       fontWeight: AppFontWeight.semibold,
                       fontSize: 12,
@@ -49,15 +50,18 @@ class PaymentWaitingPage extends StatelessWidget {
                       fontSize: 12,
                     ),
                   ),
-                  const TextSpan(
-                    text: "dd/mm/yy.",
-                    style: TextStyle(
+                  TextSpan(
+                    text: DateTime.now()
+                        .add(const Duration(days: 1))
+                        .toFormattedDate(),
+                    style: const TextStyle(
                       fontWeight: AppFontWeight.semibold,
                       fontSize: 12,
                     ),
                   ),
                   const TextSpan(
-                    text: " \nLihat Pesanan Saya untuk informasi lebih lanjut.",
+                    text:
+                        ". \nLihat Pesanan Saya untuk informasi lebih lanjut.",
                     style: TextStyle(
                       fontSize: 12,
                     ),

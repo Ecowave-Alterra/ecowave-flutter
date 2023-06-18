@@ -7,10 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ShippingOptionsPage extends StatelessWidget {
+  final String cityId;
   final ExpeditionModel? shipping;
 
   const ShippingOptionsPage({
     super.key,
+    required this.cityId,
     required this.shipping,
   });
 
@@ -41,7 +43,7 @@ class ShippingOptionsPage extends StatelessWidget {
                     onRetry: () =>
                         context.read<ExpeditionBloc>().add(GetExpeditionsEvent(
                               request: ExpeditionRequest(
-                                cityId: 12.toString(),
+                                cityId: cityId,
                                 weight: 1,
                               ),
                             )),
@@ -102,7 +104,7 @@ class ShippingOptionsPage extends StatelessWidget {
                                   ],
                                 ),
                                 const Spacer(),
-                                Text(shipping.price.currencyFormatRp),
+                                Text(shipping.value.currencyFormatRp),
                               ],
                             ),
                           ),

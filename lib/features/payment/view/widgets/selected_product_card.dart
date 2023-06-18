@@ -17,7 +17,7 @@ class SelectedProductCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.asset(
+          Image.network(
             cartModel.image,
             width: 55.0,
             height: 55.0,

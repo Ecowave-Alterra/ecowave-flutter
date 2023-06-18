@@ -368,7 +368,7 @@ class ProfilePage extends StatelessWidget {
                     onPressed: () async {
                       SharedPreferences prefs =
                           await SharedPreferences.getInstance();
-                      prefs.remove('userId');
+                      prefs.remove('token');
                       if (context.mounted) {
                         context.read<HomeBloc>().add(LogOut());
                       }

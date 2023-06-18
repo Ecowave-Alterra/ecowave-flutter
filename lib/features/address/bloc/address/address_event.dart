@@ -9,6 +9,13 @@ abstract class AddressEvent extends Equatable {
 
 class GetAddressesEvent extends AddressEvent {}
 
+class GetCityEvent extends AddressEvent {
+  final int provinceId;
+  const GetCityEvent({
+    required this.provinceId,
+  });
+}
+
 class AddAddressesEvent extends AddressEvent {
   final AddressRequest request;
   const AddAddressesEvent({
