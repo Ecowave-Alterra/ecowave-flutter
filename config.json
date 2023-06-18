@@ -1,4 +1,5 @@
 {
-    "openai_key": "",
-    "modules": []
+    "modules": [],
+    "module_directory_name": "module",
+    "advanced_mode": false
 }

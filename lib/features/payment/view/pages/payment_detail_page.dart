@@ -1,15 +1,16 @@
 import 'package:ecowave/core.dart';
 import 'package:ecowave/features/address/bloc/address/address_bloc.dart';
+import 'package:ecowave/features/cart/bloc/cart/cart_bloc.dart';
 import 'package:ecowave/features/cart/model/models/cart_model.dart';
+import 'package:ecowave/features/payment/bloc/get_point/get_point_bloc.dart';
 import 'package:ecowave/features/payment/bloc/payment_detail/payment_detail_bloc.dart';
 import 'package:ecowave/features/payment/bloc/voucher/voucher_bloc.dart';
 import 'package:ecowave/features/payment/bloc/expedition/expedition_bloc.dart';
-import 'package:ecowave/features/payment/bloc/payment_method/payment_method_bloc.dart';
 import 'package:ecowave/features/address/model/models/address_model.dart';
+import 'package:ecowave/features/payment/model/models/transaction_request.dart';
 import 'package:ecowave/features/payment/view/pages/payment_page.dart';
 import 'package:ecowave/features/payment/view/pages/payment_waiting_page.dart';
 import 'package:ecowave/features/payment/view/pages/voucher_page.dart';
-import 'package:ecowave/features/payment/view/pages/payment_method_page.dart';
 import 'package:ecowave/features/payment/view/pages/shipping_address_page.dart';
 import 'package:ecowave/features/payment/view/pages/shipping_options_page.dart';
 import 'package:ecowave/features/payment/view/widgets/address_info_widget.dart';
@@ -32,10 +33,12 @@ class PaymentDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     context.read<PaymentDetailBloc>().add(const PointUsedEvent(pointUsed: 0));
     context.read<PaymentDetailBloc>().add(GetCartsEvent(carts: carts));
+    context.read<GetPointBloc>().add(0);
     context.read<VoucherBloc>().add(GetVouchersEvent());
     context.read<ExpeditionBloc>().add(GetExpeditionsEvent());
     context.read<AddressBloc>().add(GetAddressesEvent());
-    context.read<PaymentMethodBloc>().add(GetPaymentMethodsEvent());
+
+    int totalPayment = 0;
 
     return Scaffold(
       appBar: AppBar(
@@ -125,23 +128,14 @@ class PaymentDetailPage extends StatelessWidget {
             },
           ),
           16.0.height,
-          CheckoutSettingSwitch(
-            currentPoint: 9000,
-            label: "Tukarkan Point",
-            onChanged: (value) => context
-                .read<PaymentDetailBloc>()
-                .add(PointUsedEvent(pointUsed: value)),
-          ),
-          16.0.height,
-          BlocBuilder<PaymentDetailBloc, PaymentDetailState>(
+          BlocBuilder<GetPointBloc, int>(
             builder: (context, state) {
-              return CheckoutSettingButton(
-                value: state.paymentMethodModel?.name,
-                label: "Pilih Metode Pembayaran",
-                icon: AppIcons.payment,
-                onPressed: () => context.push(PaymentMethodPage(
-                  currentPaymentMethod: state.paymentMethodModel,
-                )),
+              return CheckoutSettingSwitch(
+                currentPoint: state,
+                label: "Tukarkan Point",
+                onChanged: (value) => context
+                    .read<PaymentDetailBloc>()
+                    .add(PointUsedEvent(pointUsed: value)),
               );
             },
           ),
@@ -188,34 +182,52 @@ class PaymentDetailPage extends StatelessWidget {
             ),
             Flexible(
               flex: 1,
-              child: BlocBuilder<PaymentDetailBloc, PaymentDetailState>(
+              child: BlocConsumer<PaymentDetailBloc, PaymentDetailState>(
+                listener: (context, state) async {
+                  if (state.transactionModel != null) {
+                    await context.push(PaymentPage(
+                      paymentId: state.transactionModel!.transactionId,
+                      paymentUrl: state.transactionModel!.paymentUrl,
+                    ));
+                    if (context.mounted) {
+                      context.pushAndRemoveUntil(
+                          PaymentWaitingPage(totalPayment: totalPayment),
+                          (route) => route.isFirst);
+                    }
+                  }
+                },
                 builder: (context, state) {
                   return EcoFormButton(
                     label: "Order Sekarang",
                     onPressed: state.addressModel == null ||
                             state.expeditionModel == null ||
-                            state.paymentMethodModel == null
+                            state.carts == null
                         ? null
                         : () async {
-                            await context.push(const PaymentPage());
-                            if (context.mounted) {
-                              context.read<PaymentDetailBloc>().add(
-                                    CheckoutEvent(
-                                      addressModel: state.addressModel!,
-                                      paymentMethodModel:
-                                          state.paymentMethodModel!,
-                                      expeditionModel: state.expeditionModel!,
-                                      voucherModel: state.voucherModel,
-                                      products: carts,
-                                      pointUsed: state.pointUsed,
-                                      totalPayment:
-                                          state.paymentInfo!.totalPayment,
-                                    ),
-                                  );
-
-                              await context.pushAndRemoveUntil(
-                                  const PaymentWaitingPage(),
-                                  (route) => route.isFirst);
+                            totalPayment = state.paymentInfo!.totalPayment;
+                            context.read<PaymentDetailBloc>().add(CheckoutEvent(
+                                  request: TransactionRequest(
+                                    addressId: state.addressModel!.userAddress,
+                                    totalShippingPrice:
+                                        state.paymentInfo!.totalPayment,
+                                    expeditionName: state.expeditionModel!.name,
+                                    discount: state.paymentInfo!.discount,
+                                    transactionDetails: carts
+                                        .map((e) => TransactionDetail(
+                                              productId: int.parse(e.id),
+                                              productName: e.nameItems,
+                                              qty: e.totalItems,
+                                              subTotalPrice: e.totalPrice,
+                                            ))
+                                        .toList(),
+                                    point: state.pointUsed,
+                                    voucherId: state.voucherModel?.id,
+                                  ),
+                                ));
+                            for (CartModel element in carts) {
+                              context
+                                  .read<CartBloc>()
+                                  .add(DeleteItemCart(id: element.id));
                             }
                           },
                   );
