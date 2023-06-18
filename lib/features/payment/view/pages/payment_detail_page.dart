@@ -60,10 +60,12 @@ class PaymentDetailPage extends StatelessWidget {
                     } else if (state is AddressFailed) {
                       return EcoError(
                         errorMessage: state.meesage,
-                        onRetry: () {},
+                        onRetry: () => context
+                            .read<AddressBloc>()
+                            .add(GetAddressesEvent()),
                       );
                     } else if (state is AddressSuccess) {
-                      final AddressModel shippingAddressModel = state.data
+                      final AddressModel shippingAddressModel = state.addresses!
                           .where((element) => element.isPrimary)
                           .first;
 

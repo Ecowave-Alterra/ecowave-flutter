@@ -1,6 +1,6 @@
 import 'package:ecowave/core.dart';
 import 'package:ecowave/features/address/model/models/address_model.dart';
-import 'package:ecowave/features/address/view/pages/update_adress_page.dart';
+import 'package:ecowave/features/address/view/pages/update_address_page.dart';
 import 'package:flutter/material.dart';
 
 class ShippingAddressCard extends StatelessWidget {
@@ -32,7 +32,7 @@ class ShippingAddressCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Radio(
-                    value: addressModel.userAddress,
+                    value: addressModel.id,
                     groupValue: selectedOption,
                     onChanged: (value) => onTap(),
                     activeColor: AppColors.primary500,
