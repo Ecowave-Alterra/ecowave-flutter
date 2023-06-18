@@ -51,7 +51,7 @@ class ContentInformation extends StatelessWidget {
                     ),
                   ),
                   16.0.height,
-                  Image.asset(
+                  Image.network(
                     informationModel.photoContentUrl,
                   ),
                   16.0.height,
