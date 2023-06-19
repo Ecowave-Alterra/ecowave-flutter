@@ -6,15 +6,17 @@ class TransactionRequest {
   final int totalShippingPrice;
   final int? point;
   final String expeditionName;
+  final String estimationDay;
   final int discount;
   final List<TransactionDetail> transactionDetails;
 
   TransactionRequest({
-    this.voucherId,
+    required this.voucherId,
     required this.addressId,
     required this.totalShippingPrice,
-    this.point,
+    required this.point,
     required this.expeditionName,
+    required this.estimationDay,
     required this.discount,
     required this.transactionDetails,
   });
@@ -26,6 +28,7 @@ class TransactionRequest {
       'totalShippingPrice': totalShippingPrice,
       'point': point,
       'expeditionName': expeditionName,
+      'estimationDay': estimationDay,
       'discount': discount,
       'transactionDetails': transactionDetails.map((x) => x.toMap()).toList(),
     };
@@ -35,7 +38,7 @@ class TransactionRequest {
 }
 
 class TransactionDetail {
-  final int productId;
+  final String productId;
   final String productName;
   final int qty;
   final int subTotalPrice;

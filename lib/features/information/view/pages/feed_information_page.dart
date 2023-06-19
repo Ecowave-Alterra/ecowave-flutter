@@ -4,7 +4,6 @@ import 'package:ecowave/features/information/view/pages/bookmark_page.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 
 import '../widget/carousel_information_card_widget.dart';
 import '../widget/list_information_widget.dart';

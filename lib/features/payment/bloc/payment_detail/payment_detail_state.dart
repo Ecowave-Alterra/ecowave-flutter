@@ -46,7 +46,7 @@ class PaymentDetailState {
       paymentInfo: PaymentInfo(
         productPrice: productsPrice ?? this.productsPrice ?? 0,
         shippingPrice:
-            expeditionModel?.price ?? this.expeditionModel?.price ?? 0,
+            expeditionModel?.value ?? this.expeditionModel?.value ?? 0,
         pointUsed: pointUsed ?? this.pointUsed,
         voucher: voucherModel ?? this.voucherModel,
       ),

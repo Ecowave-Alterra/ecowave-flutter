@@ -70,7 +70,7 @@ class ProductDetail extends StatelessWidget {
                   context.read<CartBloc>().add(
                         AddItemCart(
                           cartModel: CartModel(
-                            id: productModel.productId.toString(),
+                            id: productModel.productId,
                             nameItems: productModel.name,
                             detailItems: productModel.category,
                             image: productModel.productImageUrl[0],
@@ -101,7 +101,7 @@ class ProductDetail extends StatelessWidget {
                   context.push(PaymentDetailPage(
                     carts: [
                       CartModel(
-                        id: productModel.productId.toString(),
+                        id: productModel.productId,
                         nameItems: productModel.name,
                         detailItems: productModel.category,
                         image: productModel.productImageUrl[0],

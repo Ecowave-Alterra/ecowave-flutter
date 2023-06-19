@@ -1,4 +1,4 @@
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ecowave/features/auth/model/models/login_model.dart';
 import 'package:ecowave/features/profile/models/user_model.dart';
 import 'package:ecowave/features/auth/model/services/login_services.dart';
@@ -25,7 +25,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           email: emailController.text,
           password: passwordController.text,
         ));
-        print(userData);
         if (userData['Status'] == 200) {
           final data = userData;
           final userModel = UserModel.fromJson(data);
@@ -45,7 +44,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           ));
         }
       } catch (error) {
-        print(error);
         await Future.delayed(const Duration(seconds: 2));
         emit(LoginError(
           isLoginButtonDisabled: false,

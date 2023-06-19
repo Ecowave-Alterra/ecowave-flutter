@@ -35,7 +35,6 @@ class _PaymentPageState extends State<PaymentPage> {
       context.read<HomeBloc>().add(const OnBottomNavTap(1));
       // TODO: arahkan ke tab pesanan Dikemas
       context.pushAndRemoveUntil<bool>(const MyHomePage(), (route) => false);
-      "Pembayaran berhasil".succeedBar(context);
     }
   }
 

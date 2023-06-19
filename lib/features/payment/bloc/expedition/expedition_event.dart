@@ -7,4 +7,9 @@ abstract class ExpeditionEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class GetExpeditionsEvent extends ExpeditionEvent {}
+class GetExpeditionsEvent extends ExpeditionEvent {
+  final ExpeditionRequest request;
+  const GetExpeditionsEvent({
+    required this.request,
+  });
+}

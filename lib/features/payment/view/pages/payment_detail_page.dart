@@ -7,6 +7,7 @@ import 'package:ecowave/features/payment/bloc/payment_detail/payment_detail_bloc
 import 'package:ecowave/features/payment/bloc/voucher/voucher_bloc.dart';
 import 'package:ecowave/features/payment/bloc/expedition/expedition_bloc.dart';
 import 'package:ecowave/features/address/model/models/address_model.dart';
+import 'package:ecowave/features/payment/model/models/expedition_request.dart';
 import 'package:ecowave/features/payment/model/models/transaction_request.dart';
 import 'package:ecowave/features/payment/view/pages/payment_page.dart';
 import 'package:ecowave/features/payment/view/pages/payment_waiting_page.dart';
@@ -35,7 +36,6 @@ class PaymentDetailPage extends StatelessWidget {
     context.read<PaymentDetailBloc>().add(GetCartsEvent(carts: carts));
     context.read<GetPointBloc>().add(0);
     context.read<VoucherBloc>().add(GetVouchersEvent());
-    context.read<ExpeditionBloc>().add(GetExpeditionsEvent());
     context.read<AddressBloc>().add(GetAddressesEvent());
 
     int totalPayment = 0;
@@ -106,9 +106,18 @@ class PaymentDetailPage extends StatelessWidget {
                 value: state.expeditionModel?.name,
                 label: "Pilih Opsi Pengiriman",
                 icon: AppIcons.shipping,
-                onPressed: () => context.push(ShippingOptionsPage(
-                  shipping: state.expeditionModel,
-                )),
+                onPressed: () {
+                  context.read<ExpeditionBloc>().add(GetExpeditionsEvent(
+                        request: ExpeditionRequest(
+                          cityId: state.addressModel!.cityId.toString(),
+                          weight: 1,
+                        ),
+                      ));
+                  context.push(ShippingOptionsPage(
+                    cityId: state.addressModel!.cityId.toString(),
+                    shipping: state.expeditionModel,
+                  ));
+                },
               );
             },
           ),
@@ -207,14 +216,15 @@ class PaymentDetailPage extends StatelessWidget {
                             totalPayment = state.paymentInfo!.totalPayment;
                             context.read<PaymentDetailBloc>().add(CheckoutEvent(
                                   request: TransactionRequest(
-                                    addressId: state.addressModel!.userAddress,
+                                    addressId: state.addressModel!.id,
                                     totalShippingPrice:
                                         state.paymentInfo!.totalPayment,
                                     expeditionName: state.expeditionModel!.name,
+                                    estimationDay: state.expeditionModel!.etd,
                                     discount: state.paymentInfo!.discount,
                                     transactionDetails: carts
                                         .map((e) => TransactionDetail(
-                                              productId: int.parse(e.id),
+                                              productId: e.id,
                                               productName: e.nameItems,
                                               qty: e.totalItems,
                                               subTotalPrice: e.totalPrice,

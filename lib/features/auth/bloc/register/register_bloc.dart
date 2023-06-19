@@ -33,9 +33,10 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
 
     on<RegisterButtonPressed>((event, emit) async {
       try {
-        emit(const RegisterLoading(isRegisterButtonDisabled: true, isLoading: true));
+        emit(const RegisterLoading(
+            isRegisterButtonDisabled: true, isLoading: true));
 
-        final isRegistered = await RegisterService().Register(
+        final isRegistered = await RegisterService().register(
           RegisterModel(
             email: emailController.text,
             password: passwordController.text,
@@ -45,10 +46,12 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
           ),
         );
 
-        emit(const RegisterLoading(isRegisterButtonDisabled: true, isLoading: false));
+        emit(const RegisterLoading(
+            isRegisterButtonDisabled: true, isLoading: false));
 
         if (isRegistered) {
-          emit(const RegisterSuccess(isRegisterButtonDisabled: true, message: 'Berhasil'));
+          emit(const RegisterSuccess(
+              isRegisterButtonDisabled: true, message: 'Berhasil'));
         } else {
           emit(const RegisterError(
             isRegisterButtonDisabled: true,

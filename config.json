@@ -1,5 +1,6 @@
 {
     "modules": [],
     "module_directory_name": "module",
-    "advanced_mode": false
+    "experimental_mode": false,
+    "unfreezed": true
 }

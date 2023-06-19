@@ -14,8 +14,9 @@ void main() {
     final TransactionModel response = TransactionModel.fromJson({
       "Message": "Success Create Transaction",
       "Payment_url":
-          "https://app.sandbox.midtrans.com/snap/v3/redirection/959c2027-1824-4a0f-a510-b5ea00561434",
-      "Status": 201
+          "https://app.sandbox.midtrans.com/snap/v3/redirection/6590b4fb-21a3-45d7-aa0a-9e712d56dfcd",
+      "Status": 201,
+      "Transaction_Id": "eco22023061710010633"
     });
 
     final Map<String, dynamic> jsonMap = {
@@ -24,6 +25,7 @@ void main() {
       "TotalShippingPrice": 20000,
       "Point": 5000,
       "ExpeditionName": "Jalur Nugraha Ekakurir (JNE)",
+      "EstimationDay": "3-6",
       "Discount": 10000,
       "TransactionDetails": [
         {
@@ -41,6 +43,7 @@ void main() {
       totalShippingPrice: jsonMap['TotalShippingPrice'],
       point: jsonMap['Point'],
       expeditionName: jsonMap['ExpeditionName'],
+      estimationDay: jsonMap['EstimationDay'],
       discount: jsonMap['Discount'],
       transactionDetails: [],
     );

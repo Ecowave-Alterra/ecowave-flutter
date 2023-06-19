@@ -1,14 +1,15 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'profile_bloc.dart';
 
-class ProfileEvent extends Equatable{
+class ProfileEvent extends Equatable {
   @override
   List<Object?> get props => [];
 }
-class getDataUser extends ProfileEvent {
+
+class GetDataUser extends ProfileEvent {
   final UserModel userData;
 
-  getDataUser(
+  GetDataUser(
     this.userData,
   );
   @override

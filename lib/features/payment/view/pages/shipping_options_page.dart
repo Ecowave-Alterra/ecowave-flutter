@@ -2,14 +2,17 @@ import 'package:ecowave/core.dart';
 import 'package:ecowave/features/payment/bloc/expedition/expedition_bloc.dart';
 import 'package:ecowave/features/payment/bloc/payment_detail/payment_detail_bloc.dart';
 import 'package:ecowave/features/payment/model/models/expedition_model.dart';
+import 'package:ecowave/features/payment/model/models/expedition_request.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ShippingOptionsPage extends StatelessWidget {
+  final String cityId;
   final ExpeditionModel? shipping;
 
   const ShippingOptionsPage({
     super.key,
+    required this.cityId,
     required this.shipping,
   });
 
@@ -28,11 +31,23 @@ class ShippingOptionsPage extends StatelessWidget {
           BlocBuilder<ExpeditionBloc, ExpeditionState>(
             builder: (context, state) {
               if (state is ExpeditionLoading) {
-                return const EcoLoading();
+                return SizedBox(
+                  height: context.fullHeight / 1.3,
+                  child: const EcoLoading(),
+                );
               } else if (state is ExpeditionFailed) {
-                return EcoError(
-                  errorMessage: state.meesage,
-                  onRetry: () {},
+                return SizedBox(
+                  height: context.fullHeight / 1.3,
+                  child: EcoError(
+                    errorMessage: state.meesage,
+                    onRetry: () =>
+                        context.read<ExpeditionBloc>().add(GetExpeditionsEvent(
+                              request: ExpeditionRequest(
+                                cityId: cityId,
+                                weight: 1,
+                              ),
+                            )),
+                  ),
                 );
               } else if (state is ExpeditionSuccess) {
                 return StatefulBuilder(
@@ -56,8 +71,8 @@ class ShippingOptionsPage extends StatelessWidget {
                             child: Row(
                               children: [
                                 Radio(
-                                  value: shipping.id,
-                                  groupValue: selectedOption?.id,
+                                  value: shipping.code,
+                                  groupValue: selectedOption?.code,
                                   onChanged: (value) {
                                     selectedOption = shipping;
                                     isExist.value = true;
@@ -75,6 +90,12 @@ class ShippingOptionsPage extends StatelessWidget {
                                       ),
                                     ),
                                     Text(
+                                      shipping.description,
+                                      style: const TextStyle(
+                                        color: AppColors.grey500,
+                                      ),
+                                    ),
+                                    Text(
                                       shipping.estimateFormat,
                                       style: const TextStyle(
                                         color: AppColors.grey500,
@@ -83,7 +104,7 @@ class ShippingOptionsPage extends StatelessWidget {
                                   ],
                                 ),
                                 const Spacer(),
-                                Text(shipping.price.currencyFormatRp),
+                                Text(shipping.value.currencyFormatRp),
                               ],
                             ),
                           ),

@@ -20,7 +20,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _noTelpController = TextEditingController();
 
-   @override
+  @override
   void dispose() {
     _emailController.dispose();
     _nameController.dispose();
@@ -29,6 +29,7 @@ class _RegisterPageState extends State<RegisterPage> {
     _noTelpController.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,14 +45,13 @@ class _RegisterPageState extends State<RegisterPage> {
             noTelpController: _noTelpController,
             nameController: _nameController),
         child: BlocConsumer<RegisterBloc, RegisterState>(
-            listener: (context, state)async {
+            listener: (context, state) async {
           if (state is RegisterError) {}
           if (state is RegisterSuccess) {
-            
-           await context.push(LoginPage());
-           if(context.mounted){
-            dispose();
-           }
+            await context.push(const LoginPage());
+            if (context.mounted) {
+              dispose();
+            }
           }
         }, builder: (context, state) {
           if (state is RegisterLoading) {
@@ -175,7 +175,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             if (_formKey.currentState!.validate()) {
                               context
                                   .read<RegisterBloc>()
-                                  .add(RegisterButtonPressed());
+                                  .add(const RegisterButtonPressed());
                             }
                           },
                     backgroundColor: state.isRegisterButtonDisabled
