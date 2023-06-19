@@ -22,7 +22,7 @@ class PaymentInfo {
       if (discountUsed > (voucher?.maximumDiscount ?? 0)) {
         discountUsed = voucher?.maximumDiscount ?? 0;
       }
-    } else {
+    } else if (voucher?.voucherType.type == "Gratis Ongkir") {
       discountUsed = shippingPrice;
     }
 

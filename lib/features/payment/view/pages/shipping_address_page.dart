@@ -1,6 +1,6 @@
 import 'package:ecowave/core.dart';
 import 'package:ecowave/features/address/bloc/address/address_bloc.dart';
-import 'package:ecowave/features/address/view/pages/add_adress_page.dart';
+import 'package:ecowave/features/address/view/pages/add_address_page.dart';
 import 'package:ecowave/features/payment/bloc/payment_detail/payment_detail_bloc.dart';
 import 'package:ecowave/features/address/model/models/address_model.dart';
 import 'package:ecowave/features/payment/view/widgets/shipping_address_card.dart';
@@ -45,7 +45,7 @@ class ShippingAddressPage extends StatelessWidget {
                   context.read<AddressBloc>().add(GetAddressesEvent()),
             );
           } else if (state is AddressSuccess) {
-            if (state.data.isEmpty) {
+            if (state.addresses!.isEmpty) {
               return SizedBox(
                 width: context.fullWidth,
                 height: context.fullHeight / 1.4,
@@ -60,12 +60,12 @@ class ShippingAddressPage extends StatelessWidget {
                 builder: (context, changeState) {
                   return ListView.separated(
                     separatorBuilder: (context, index) => const Divider(),
-                    itemCount: state.data.length,
+                    itemCount: state.addresses!.length,
                     itemBuilder: (context, index) => ShippingAddressCard(
-                      selectedOption: selectedOption?.userAddress,
-                      addressModel: state.data[index],
+                      selectedOption: selectedOption?.id,
+                      addressModel: state.addresses![index],
                       onTap: () {
-                        selectedOption = state.data[index];
+                        selectedOption = state.addresses![index];
                         isExist.value = true;
                         changeState(() {});
                       },

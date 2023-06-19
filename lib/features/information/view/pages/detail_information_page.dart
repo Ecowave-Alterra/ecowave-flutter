@@ -86,7 +86,7 @@ class _ContentInformationState extends State<ContentInformation> {
                   ),
                   8.0.height,
                   Text(
-                    'by ecoInfo  |  ${DateFormat.yMMMMd().format(DateTime.parse(widget.informationModel.createdAt))}',
+                    'by ecoInfo  |  ${DateFormat.yMMMMd().format(DateTime.parse(widget.informationModel.date))}',
                     style: const TextStyle(
                       fontSize: 12,
                       fontWeight: AppFontWeight.regular,
@@ -94,12 +94,12 @@ class _ContentInformationState extends State<ContentInformation> {
                     ),
                   ),
                   16.0.height,
-                  Image.asset(
+                  Image.network(
                     widget.informationModel.photoContentUrl,
                   ),
                   16.0.height,
                   Html(
-                    data: widget.informationModel.writingContent,
+                    data: widget.informationModel.content,
                   ),
                 ],
               );

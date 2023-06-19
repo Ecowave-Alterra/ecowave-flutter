@@ -32,7 +32,7 @@ class ListInformation extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Image.asset(
+            Image.network(
               informationModel.photoContentUrl,
               width: 127,
               height: 148,
@@ -43,8 +43,9 @@ class ListInformation extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  DateFormat.yMMMMd()
-                      .format(DateTime.parse(informationModel.createdAt)),
+                  DateFormat.yMMMMd().format(DateTime.parse(
+                    informationModel.date,
+                  )),
                   style: const TextStyle(
                     fontSize: 12,
                     fontWeight: AppFontWeight.regular,
@@ -73,8 +74,8 @@ class ListInformation extends StatelessWidget {
                           context.read<BookmarkBloc>().add(AddBookmarkEvent(
                               informationModel: informationModel));
                         } else if (value == true) {
-                          context.read<BookmarkBloc>().add(
-                              DeleteBookmarkEvent(id: informationModel.id));
+                          context.read<BookmarkBloc>().add(DeleteBookmarkEvent(
+                              id: informationModel.informationId));
                         }
                       },
                       icon: ImageIcon(

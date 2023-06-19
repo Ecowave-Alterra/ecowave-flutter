@@ -7,8 +7,9 @@ import 'package:ecowave/features/ecommerce/bloc/product_home/product_bloc.dart';
 import 'package:ecowave/features/home/bloc/home/home_bloc.dart';
 import 'package:ecowave/features/information/bloc/isBookmark/is_bookmark_bloc.dart';
 import 'package:ecowave/features/payment/bloc/expedition/expedition_bloc.dart';
+import 'package:ecowave/features/payment/bloc/get_point/get_point_bloc.dart';
 import 'package:ecowave/features/payment/bloc/payment_detail/payment_detail_bloc.dart';
-import 'package:ecowave/features/payment/bloc/payment_method/payment_method_bloc.dart';
+import 'package:ecowave/features/payment/bloc/payment_status/payment_status_bloc.dart';
 import 'package:ecowave/features/payment/bloc/voucher/voucher_bloc.dart';
 import 'package:ecowave/features/transaction/bloc/history_transaction/history_transaction_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,12 +19,13 @@ class Providers {
     BlocProvider<AddressBloc>(create: (context) => di.locator<AddressBloc>()),
     BlocProvider<HomeBloc>(create: (context) => di.locator<HomeBloc>()),
     BlocProvider<CartBloc>(create: (context) => di.locator<CartBloc>()),
-    BlocProvider<PaymentMethodBloc>(
-        create: (context) => di.locator<PaymentMethodBloc>()),
+    BlocProvider<GetPointBloc>(create: (context) => di.locator<GetPointBloc>()),
     BlocProvider<ExpeditionBloc>(
         create: (context) => di.locator<ExpeditionBloc>()),
     BlocProvider<PaymentDetailBloc>(
         create: (context) => di.locator<PaymentDetailBloc>()),
+    BlocProvider<PaymentStatusBloc>(
+        create: (context) => di.locator<PaymentStatusBloc>()),
     BlocProvider<HistoryTransactionBloc>(
         create: (context) => di.locator<HistoryTransactionBloc>()),
     BlocProvider<VoucherBloc>(create: (context) => di.locator<VoucherBloc>()),

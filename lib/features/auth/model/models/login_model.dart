@@ -1,8 +1,8 @@
-class Login {
+class LoginModel {
   final String email;
   final String password;
 
-  Login({
+  LoginModel({
     required this.email,
     required this.password,
   });

@@ -22,6 +22,7 @@ part 'package:ecowave/core/dialogs/show_point.dart';
 part 'package:ecowave/core/enums/data_state_status.dart';
 
 part 'package:ecowave/core/widgets/form_button.dart';
+part 'package:ecowave/core/widgets/form_dropdown.dart';
 part 'package:ecowave/core/widgets/form_input_password.dart';
 part 'package:ecowave/core/widgets/form_input.dart';
 part 'package:ecowave/core/widgets/form_button_icon.dart';

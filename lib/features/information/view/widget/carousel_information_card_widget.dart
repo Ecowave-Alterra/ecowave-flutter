@@ -26,7 +26,7 @@ class CarouselCardInformation extends StatelessWidget {
           height: 150,
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage(informationModel.photoContentUrl),
+              image: NetworkImage(informationModel.photoContentUrl),
               fit: BoxFit.cover,
               alignment: Alignment.topCenter,
             ),

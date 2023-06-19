@@ -1,6 +1,5 @@
 import 'package:ecowave/core.dart';
 import 'package:ecowave/core/utils/providers.dart';
-import 'package:ecowave/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -17,8 +16,7 @@ class App extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Ecowave',
-        home: const InformationPage(),
-        onGenerateRoute: Routes.generateRoute,
+        home: const MyHomePage(),
         theme: ThemeData(
           scaffoldBackgroundColor: AppColors.white,
           useMaterial3: true,
