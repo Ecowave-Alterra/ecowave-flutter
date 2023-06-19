@@ -1,29 +1,28 @@
+import 'package:ecowave/features/information/bloc/bookmark/bookmark_bloc.dart';
 import 'package:ecowave/features/information/model/models/information_model.dart';
 import 'package:ecowave/features/information/view/pages/detail_information_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core.dart';
 
-class ListInformation extends StatefulWidget {
-  const ListInformation({
+class ListInformation extends StatelessWidget {
+  ListInformation({
     super.key,
     required this.informationModel,
+    required this.isBookmark,
   });
   final InformationModel informationModel;
 
-  @override
-  State<ListInformation> createState() => _ListInformationState();
-}
+  ValueNotifier<bool> isBookmark;
 
-class _ListInformationState extends State<ListInformation> {
-  bool status = false;
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
         context.push(ContentInformation(
-          informationModel: widget.informationModel,
+          informationModel: informationModel,
         ));
       },
       child: Container(
@@ -34,7 +33,7 @@ class _ListInformationState extends State<ListInformation> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Image.network(
-              widget.informationModel.photoContentUrl,
+              informationModel.photoContentUrl,
               width: 127,
               height: 148,
               fit: BoxFit.cover,
@@ -45,7 +44,7 @@ class _ListInformationState extends State<ListInformation> {
               children: [
                 Text(
                   DateFormat.yMMMMd().format(DateTime.parse(
-                    widget.informationModel.date,
+                    informationModel.date,
                   )),
                   style: const TextStyle(
                     fontSize: 12,
@@ -57,7 +56,7 @@ class _ListInformationState extends State<ListInformation> {
                   alignment: Alignment.centerLeft,
                   width: context.fullWidth - 160.0,
                   child: Text(
-                    widget.informationModel.title,
+                    informationModel.title,
                     style: const TextStyle(
                       fontSize: 12,
                       fontWeight: AppFontWeight.semibold,
@@ -65,17 +64,29 @@ class _ListInformationState extends State<ListInformation> {
                     ),
                   ),
                 ),
-                IconButton(
-                  onPressed: () {
-                    setState(() {
-                      status = !status;
-                    });
+                ValueListenableBuilder(
+                  valueListenable: isBookmark,
+                  builder: (context, value, _) {
+                    return IconButton(
+                      onPressed: () {
+                        isBookmark.value = !isBookmark.value;
+                        if (value == false) {
+                          context.read<BookmarkBloc>().add(AddBookmarkEvent(
+                              informationModel: informationModel));
+                        } else if (value == true) {
+                          context.read<BookmarkBloc>().add(DeleteBookmarkEvent(
+                              id: informationModel.informationId));
+                        }
+                      },
+                      icon: ImageIcon(
+                        value
+                            ? AppIcons.solidBookmark
+                            : AppIcons.outlineBookmark,
+                        color: AppColors.primary600,
+                        size: 18,
+                      ),
+                    );
                   },
-                  icon: ImageIcon(
-                    status ? AppIcons.solidBookmark : AppIcons.outlineBookmark,
-                    color: AppColors.primary600,
-                    size: 18,
-                  ),
                 ),
               ],
             ),

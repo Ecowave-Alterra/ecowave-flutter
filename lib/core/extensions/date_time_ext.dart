@@ -53,4 +53,15 @@ extension DateTimeExt on DateTime {
 
     return '$day $month';
   }
+
+  String toFormattedDateMinute() {
+    final int hour = this.hour;
+    final int minute = this.minute;
+    final int day = this.day;
+    final String month = _monthNamesShort[this.month - 1];
+    final int year = this.year;
+
+    return '$day $month $year, $hour:$minute';
+    // return DateFormat('d MMM y, H:mm a', 'id').format(time);
+  }
 }
