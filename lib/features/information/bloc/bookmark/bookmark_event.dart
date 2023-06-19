@@ -15,7 +15,7 @@ class AddBookmarkEvent extends BookmarkEvent {
 }
 
 class DeleteBookmarkEvent extends BookmarkEvent {
-  final int id;
+  final String id;
   const DeleteBookmarkEvent({
     required this.id,
   });
