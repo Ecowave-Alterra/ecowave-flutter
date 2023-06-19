@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:ecowave/features/auth/model/models/login_model.dart';
-import 'package:ecowave/features/profile/models/user_model.dart';
 import 'package:ecowave/features/auth/model/services/login_services.dart';
+import 'package:ecowave/features/home/model/models/user_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -25,7 +25,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           email: emailController.text,
           password: passwordController.text,
         ));
-        print(userData);
         if (userData['Status'] == 200) {
           final data = userData;
           final userModel = UserModel.fromJson(data);

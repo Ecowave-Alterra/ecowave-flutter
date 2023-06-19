@@ -10,6 +10,7 @@ import 'package:ecowave/features/payment/bloc/expedition/expedition_bloc.dart';
 import 'package:ecowave/features/payment/bloc/payment_detail/payment_detail_bloc.dart';
 import 'package:ecowave/features/payment/bloc/payment_method/payment_method_bloc.dart';
 import 'package:ecowave/features/payment/bloc/voucher/voucher_bloc.dart';
+import 'package:ecowave/features/profile/bloc/profile_bloc.dart';
 import 'package:ecowave/features/transaction/bloc/history_transaction/history_transaction_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -36,5 +37,7 @@ class Providers {
         create: (context) => di.locator<ProductCategoryBloc>()),
     BlocProvider<ProductImageBloc>(
         create: (context) => di.locator<ProductImageBloc>()),
+     BlocProvider<ProfileBloc>(
+        create: (context) => di.locator<ProfileBloc>()),
   ];
 }

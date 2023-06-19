@@ -29,7 +29,6 @@ class LoginService {
         };
       }
     } catch (e) {
-      print('Error: $e');
       return {
         'success': false,
         'message': 'Error: $e',

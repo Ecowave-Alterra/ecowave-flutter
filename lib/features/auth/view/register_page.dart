@@ -48,7 +48,7 @@ class _RegisterPageState extends State<RegisterPage> {
           if (state is RegisterError) {}
           if (state is RegisterSuccess) {
             
-           await context.push(LoginPage());
+           await context.push(const LoginPage());
            if(context.mounted){
             dispose();
            }
@@ -175,7 +175,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             if (_formKey.currentState!.validate()) {
                               context
                                   .read<RegisterBloc>()
-                                  .add(RegisterButtonPressed());
+                                  .add(const RegisterButtonPressed());
                             }
                           },
                     backgroundColor: state.isRegisterButtonDisabled

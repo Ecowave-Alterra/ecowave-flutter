@@ -14,6 +14,8 @@ import 'package:ecowave/features/payment/bloc/payment_method/payment_method_bloc
 import 'package:ecowave/features/payment/bloc/voucher/voucher_bloc.dart';
 import 'package:ecowave/features/payment/model/services/expedition_service.dart';
 import 'package:ecowave/features/payment/model/services/payment_method_service.dart';
+import 'package:ecowave/features/profile/bloc/profile_bloc.dart';
+import 'package:ecowave/features/profile/model/services/profile_services.dart';
 import 'package:ecowave/features/transaction/bloc/history_transaction/history_transaction_bloc.dart';
 import 'package:ecowave/features/transaction/model/services/history_transaction_service.dart';
 import 'package:ecowave/features/payment/model/services/voucher_service.dart';
@@ -39,6 +41,7 @@ void init() {
   locator.registerFactory(() => ProductBloc(locator()));
   locator.registerFactory(() => ProductCategoryBloc(locator()));
   locator.registerFactory(() => ProductImageBloc(locator()));
+  locator.registerFactory(() => ProfileBloc(locator()));
 
   // service
   locator.registerLazySingleton<AddressService>(() => AddressService());
@@ -54,4 +57,6 @@ void init() {
       .registerLazySingleton<ProductImageService>(() => ProductImageService());
   locator.registerLazySingleton<ProductCategoryService>(
       () => ProductCategoryService());
+   locator.registerLazySingleton<ProfileService>(
+      () =>ProfileService());
 }

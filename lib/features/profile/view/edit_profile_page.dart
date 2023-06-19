@@ -1,8 +1,10 @@
 import 'dart:io';
 
+import 'package:ecowave/features/profile/bloc/profile_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:ecowave/core.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class EditProfilePage extends StatefulWidget {
   const EditProfilePage({Key? key}) : super(key: key);
@@ -12,71 +14,60 @@ class EditProfilePage extends StatefulWidget {
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
-  final String _initialName = 'Fauzi';
-  final String _initialEmail = 'Fauzi@gmail.com';
-  final String _initialUsername = 'FauziM';
-  final String _initialNoTelp = '08986654433223';
-
   File? _image;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _noTelpController = TextEditingController();
+  late final ProfileState userBloc;
 
-  bool _isChangeButtonDisabled = true;
+  @override
+  void initState() {
+    super.initState();
+    userBloc = context.read<ProfileBloc>().state;
+    _nameController.text = userBloc.user.name;
+    _emailController.text = userBloc.user.email;
+    _usernameController.text = userBloc.user.username;
+    _noTelpController.text = userBloc.user.phone;
+  }
 
-  void _checkLoginButtonStatus() {
+  bool get isChackButton {
     final email = _emailController.text;
     final username = _usernameController.text;
     final noTelp = _noTelpController.text;
     final name = _nameController.text;
     final image = _image;
 
-    setState(() {
-      _isChangeButtonDisabled = email == _initialEmail &&
-          username == _initialUsername &&
-          noTelp == _initialNoTelp &&
-          name == _initialName &&
-          image == null;
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _nameController.text = _initialName;
-    _emailController.text = _initialEmail;
-    _usernameController.text = _initialUsername;
-    _noTelpController.text = _initialNoTelp;
-
-    _emailController.addListener(_checkLoginButtonStatus);
-    _usernameController.addListener(_checkLoginButtonStatus);
-    _nameController.addListener(_checkLoginButtonStatus);
-    _noTelpController.addListener(_checkLoginButtonStatus);
-  }
-
-  Future<void> _pickImage() async {
-    FilePickerResult? result =
-        await FilePicker.platform.pickFiles(type: FileType.image);
-
-    if (result != null) {
-      setState(() {
-        _image = File(result.files.single.path!);
-        _isChangeButtonDisabled = false;
-      });
-      if (context.mounted) {
-        "Berhasil! Foto profil berhasil diubah".succeedBar(context);
-      }
-    } else {
-      if (context.mounted) {
-        "Ups! Foto profil gagal diunggah. Coba lagi ya".failedBar(context);
-      }
-    }
+    return (email != userBloc.user.email ||
+        username != userBloc.user.username ||
+        noTelp != userBloc.user.phone ||
+        name != userBloc.user.name ||
+        image != null);
   }
 
   @override
   Widget build(BuildContext context) {
+    final ValueNotifier<bool> isExist = ValueNotifier<bool>(false);
+    Future<void> _pickImage() async {
+      FilePickerResult? result =
+          await FilePicker.platform.pickFiles(type: FileType.image);
+
+      if (result != null) {
+        setState(() {
+          _image = File(result.files.single.path!);
+        });
+        if (context.mounted) {
+          "Berhasil! Foto profil berhasil diubah".succeedBar(context);
+          isExist.value = isChackButton;
+        }
+      } else {
+        if (context.mounted) {
+          "Ups! Foto profil gagal diunggah. Coba lagi ya".failedBar(context);
+        }
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(title: const Text("Saya")),
       body: SingleChildScrollView(
@@ -126,7 +117,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       color: AppColors.grey500,
                     ),
                     onChanged: (value) {
-                      setState(() {});
+                      isExist.value = isChackButton;
                     },
                   ),
                   20.0.height,
@@ -136,7 +127,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     keyboardType: TextInputType.emailAddress,
                     controller: _emailController,
                     validator: (value) {
-                      if (value == null || value == _initialName) {
+                      if (value == null) {
                         return 'Email tidak boleh kosong';
                       } else if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
                           .hasMatch(value)) {
@@ -144,7 +135,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       }
                       return null;
                     },
-                    onChanged: (value) {},
+                    onChanged: (value) {
+                      isExist.value = isChackButton;
+                    },
                     icon: const ImageIcon(
                       AppIcons.email,
                       color: AppColors.grey500,
@@ -159,6 +152,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       AppIcons.username,
                       color: AppColors.grey500,
                     ),
+                    onChanged: (value) {
+                      isExist.value = isChackButton;
+                    },
                   ),
                   20.0.height,
                   EcoFormInput(
@@ -170,21 +166,26 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       AppIcons.username,
                       color: AppColors.grey500,
                     ),
+                    onChanged: (value) {
+                      isExist.value = isChackButton;
+                    },
                   ),
                   140.0.height,
-                  EcoFormButton(
-                    label: 'Simpan',
-                    onPressed: _isChangeButtonDisabled
-                        ? () {}
-                        : () {
-                            if (_formKey.currentState!.validate()) {
-                              "Yey! Profil kamu berhasil diubah"
-                                  .succeedBar(context);
+                  ValueListenableBuilder(
+                    valueListenable: isExist,
+                    builder: (context, value, child) => EcoFormButton(
+                      label: 'Simpan',
+                      onPressed: value
+                          ? () {
+                              if (_formKey.currentState!.validate()) {
+                                "Yey! Profil kamu berhasil diubah"
+                                    .succeedBar(context);
+                              }
                             }
-                          },
-                    backgroundColor: _isChangeButtonDisabled
-                        ? AppColors.primary300
-                        : AppColors.primary500,
+                          : null,
+                      backgroundColor:
+                          value ? AppColors.primary500 : AppColors.primary300,
+                    ),
                   ),
                 ],
               ),

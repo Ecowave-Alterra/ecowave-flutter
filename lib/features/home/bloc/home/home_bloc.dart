@@ -32,6 +32,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   
 
   void changeSharedPreferences() {
-    add(UpdateSharedPreferences());
+    add(const UpdateSharedPreferences());
   }
 }

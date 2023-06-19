@@ -1,12 +1,12 @@
 
 import 'package:ecowave/features/home/view/dashboard_page.dart';
-import 'package:ecowave/features/profile/view/empty_session.dart';
+import 'package:ecowave/features/profile/view/empty_session_page.dart';
 import 'package:ecowave/features/transaction/view/pages/history_transaction_page.dart';
 import 'package:flutter/material.dart';
 import 'package:ecowave/core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../profile/view/profile.dart';
+import '../../profile/view/profile_page.dart';
 import '../bloc/home/home_bloc.dart';
 
 class MyHomePage extends StatefulWidget {
