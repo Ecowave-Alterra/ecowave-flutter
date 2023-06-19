@@ -54,9 +54,8 @@ class ListBookmark extends StatelessWidget {
                   ),
                   IconButton(
                     onPressed: () {
-                      context
-                          .read<BookmarkBloc>()
-                          .add(DeleteBookmarkEvent(id: informationModel.id));
+                      context.read<BookmarkBloc>().add(DeleteBookmarkEvent(
+                          id: informationModel.informationId));
                     },
                     icon: const ImageIcon(
                       AppIcons.solidBookmark,

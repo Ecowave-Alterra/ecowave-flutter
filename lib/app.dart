@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'features/information/view/pages/feed_information_page.dart';
+import 'features/home/view/home_page.dart';
 
 class App extends StatelessWidget {
   const App({super.key});

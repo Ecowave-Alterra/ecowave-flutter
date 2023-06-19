@@ -33,20 +33,20 @@ class BookmarkService {
   }
 
   void addItem(InformationModel informationModel) {
-    print(informationModel.id);
     items.add(informationModel);
     saveToLocalStorage();
   }
 
-  void deleteItem(int id) {
+  void deleteItem(String id) {
     items.removeWhere(
-      (element) => element.id == id,
+      (element) => element.informationId == id,
     );
     saveToLocalStorage();
   }
 
   bool isBookmark(InformationModel informationModel) {
-    if (items.indexWhere((element) => element.id == informationModel.id) ==
+    if (items.indexWhere((element) =>
+            element.informationId == informationModel.informationId) ==
         -1) {
       return false;
     } else {
