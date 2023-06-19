@@ -1,5 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecowave/core.dart';
-import 'package:ecowave/features/transaction/model/models/history_transaction.dart';
+import 'package:ecowave/features/transaction/model/models/history_transaction_model.dart';
 import 'package:ecowave/features/transaction/view/pages/track_delivery_page.dart';
 import 'package:flutter/material.dart';
 
@@ -44,7 +45,7 @@ class PaidTransactionDetailPage extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(detailTransaction.typeDelivery),
+                        Text(detailTransaction.expeditionStatus),
                         InkWell(
                           onTap: () {
                             context.push(TrackDeliveryPage(
@@ -61,9 +62,9 @@ class PaidTransactionDetailPage extends StatelessWidget {
                     6.0.height,
                     Row(
                       children: [
-                        Text(detailTransaction.expedition),
+                        Text(detailTransaction.expeditionName),
                         const Text(" : "),
-                        Text(detailTransaction.resiCode)
+                        Text(detailTransaction.receiptNumber)
                       ],
                     )
                   ],
@@ -85,11 +86,11 @@ class PaidTransactionDetailPage extends StatelessWidget {
                 ],
               ),
               14.0.height,
-              Text(detailTransaction.recipient),
+              Text(detailTransaction.address.recipient),
               6.0.height,
-              Text(detailTransaction.phone),
+              Text(detailTransaction.address.phoneNumber),
               6.0.height,
-              Text(detailTransaction.address),
+              Text(detailTransaction.address.address),
               Container(
                 margin: const EdgeInsets.only(bottom: 16, top: 32),
                 child: const Row(
@@ -104,24 +105,35 @@ class PaidTransactionDetailPage extends StatelessWidget {
               ),
               const Divider(),
               ListView.builder(
-                  itemCount: detailTransaction.productTransaction.length,
+                  itemCount: detailTransaction.orderDetail.length,
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
-                    final ProductTransaction cPaid =
-                        detailTransaction.productTransaction[index];
+                    final OrderDetail cPaid =
+                        detailTransaction.orderDetail[index];
                     return Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Container(
-                            decoration: const BoxDecoration(),
-                            height: 70,
-                            width: 90,
-                            child: Image.network(
-                              cPaid.productImageUrl,
-                              fit: BoxFit.cover,
+                          _sizedContainer(
+                            CachedNetworkImage(
+                              imageUrl: cPaid.productImageUrl,
+                              imageBuilder: (context, imageProvider) =>
+                                  Container(
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: imageProvider,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                              placeholder: (context, url) =>
+                                  const CircularProgressIndicator(
+                                color: Colors.green,
+                              ),
+                              errorWidget: (context, url, error) =>
+                                  const Icon(Icons.error),
                             ),
                           ),
                           const SizedBox(
@@ -142,7 +154,8 @@ class PaidTransactionDetailPage extends StatelessWidget {
                                     Text(cPaid.qty.toString()),
                                   ],
                                 ),
-                                Text(cPaid.price.currencyFormatRp.toString()),
+                                Text(cPaid.subTotalPrice.currencyFormatRp
+                                    .toString()),
                               ],
                             ),
                           )
@@ -158,7 +171,8 @@ class PaidTransactionDetailPage extends StatelessWidget {
                 children: [
                   const Text("Ongkos Kirim"),
                   Text(
-                    detailTransaction.shipping.currencyFormatRp.toString(),
+                    detailTransaction.totalShippingPrice.currencyFormatRp
+                        .toString(),
                   )
                 ],
               ),
@@ -172,7 +186,7 @@ class PaidTransactionDetailPage extends StatelessWidget {
                   ),
                   Expanded(
                     child: Text(
-                      detailTransaction.note,
+                      detailTransaction.address.note,
                       textAlign: TextAlign.right,
                     ),
                   )
@@ -184,7 +198,7 @@ class PaidTransactionDetailPage extends StatelessWidget {
                 children: [
                   const Text("Promo yang Digunakan"),
                   Text(
-                    detailTransaction.voucher.currencyFormatRp.toString(),
+                    detailTransaction.discount.currencyFormatRp.toString(),
                   )
                 ],
               ),
@@ -192,7 +206,7 @@ class PaidTransactionDetailPage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("${detailTransaction.productTransaction.length} Produk"),
+                  Text("${detailTransaction.orderDetail.length} Produk"),
                   Row(
                     children: [
                       const Text("Total Pesanan : "),
@@ -222,6 +236,14 @@ class PaidTransactionDetailPage extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _sizedContainer(Widget child) {
+    return SizedBox(
+      width: 90.0,
+      height: 70.0,
+      child: Center(child: child),
     );
   }
 }

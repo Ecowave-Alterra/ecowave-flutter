@@ -12,6 +12,8 @@ import 'package:ecowave/features/payment/bloc/payment_detail/payment_detail_bloc
 import 'package:ecowave/features/payment/bloc/payment_status/payment_status_bloc.dart';
 import 'package:ecowave/features/payment/bloc/voucher/voucher_bloc.dart';
 import 'package:ecowave/features/transaction/bloc/history_transaction/history_transaction_bloc.dart';
+import 'package:ecowave/features/transaction/bloc/tabbar/tabbar_bloc.dart';
+import 'package:ecowave/features/transaction/bloc/tracking_delivery/tracking_delivery_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Providers {
@@ -32,6 +34,9 @@ class Providers {
     BlocProvider<InformationBloc>(
         create: (context) => di.locator<InformationBloc>()),
     BlocProvider<ProductBloc>(create: (context) => di.locator<ProductBloc>()),
+    BlocProvider<TabbarBloc>(create: (context) => di.locator<TabbarBloc>()),
+    BlocProvider<TrackingDeliveryBloc>(
+        create: (context) => di.locator<TrackingDeliveryBloc>()),
     BlocProvider<BookmarkBloc>(create: (context) => di.locator<BookmarkBloc>()),
     BlocProvider<IsBookmarkBloc>(
         create: (context) => di.locator<IsBookmarkBloc>()),
