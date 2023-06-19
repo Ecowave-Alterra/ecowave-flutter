@@ -1,4 +1,4 @@
-import 'package:ecowave/features/information/bloc/informatio/information_bloc.dart';
+import 'package:ecowave/features/information/bloc/information/information_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -7,9 +7,51 @@ import 'package:intl/intl.dart';
 import '../../../../core.dart';
 import '../../model/models/information_model.dart';
 
-class ContentInformation extends StatelessWidget {
+class ContentInformation extends StatefulWidget {
   const ContentInformation({super.key, required this.informationModel});
   final InformationModel informationModel;
+
+  @override
+  State<ContentInformation> createState() => _ContentInformationState();
+}
+
+class _ContentInformationState extends State<ContentInformation> {
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_scrollListener);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_scrollListener);
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _scrollListener() {
+    if (_scrollController.offset >=
+            _scrollController.position.maxScrollExtent &&
+        !_scrollController.position.outOfRange) {
+      setState(() {
+        true;
+        showPoint(
+            onPress: () {
+              _closePopup;
+              context.pop();
+            },
+            context: context);
+      });
+    }
+  }
+
+  void _closePopup() {
+    setState(() {
+      false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,10 +73,11 @@ class ContentInformation extends StatelessWidget {
               return const EcoLoading();
             } else if (state is InformationSuccess) {
               return ListView(
+                controller: _scrollController,
                 children: [
                   16.0.height,
                   Text(
-                    informationModel.title,
+                    widget.informationModel.title,
                     style: const TextStyle(
                       fontSize: 20,
                       fontWeight: AppFontWeight.semibold,
@@ -43,7 +86,7 @@ class ContentInformation extends StatelessWidget {
                   ),
                   8.0.height,
                   Text(
-                    'by ecoInfo  |  ${DateFormat.yMMMMd().format(DateTime.parse(informationModel.date))}',
+                    'by ecoInfo  |  ${DateFormat.yMMMMd().format(DateTime.parse(widget.informationModel.date))}',
                     style: const TextStyle(
                       fontSize: 12,
                       fontWeight: AppFontWeight.regular,
@@ -52,11 +95,11 @@ class ContentInformation extends StatelessWidget {
                   ),
                   16.0.height,
                   Image.network(
-                    informationModel.photoContentUrl,
+                    widget.informationModel.photoContentUrl,
                   ),
                   16.0.height,
                   Html(
-                    data: informationModel.content,
+                    data: widget.informationModel.content,
                   ),
                 ],
               );

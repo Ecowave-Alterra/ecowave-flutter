@@ -1,8 +1,12 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecowave/core.dart';
+import 'package:ecowave/features/transaction/model/models/history_transaction_model.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class ReasonCanceledPage extends StatelessWidget {
-  const ReasonCanceledPage({super.key});
+  final HistoryTransactionModel reason;
+  const ReasonCanceledPage({super.key, required this.reason});
 
   @override
   Widget build(BuildContext context) {
@@ -23,56 +27,74 @@ class ReasonCanceledPage extends StatelessWidget {
                     TextStyle(fontWeight: AppFontWeight.medium, fontSize: 16),
               ),
               8.0.height,
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text("Pada"),
-                  Text(
-                    "24 Apr 2023 12.48",
-                  ),
-                ],
-              ),
-              28.0.height,
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
-                    decoration: const BoxDecoration(),
-                    height: 70,
-                    width: 90,
-                    child: Image.asset(
-                      "assets/images/productShop2.png",
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  const Flexible(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
+                  const Text("Pada"),
+                  Text(
+                      DateTime.parse(reason.updatedAt).toFormattedDateMinute()),
+                ],
+              ),
+              28.0.height,
+              ListView.builder(
+                itemCount: reason.orderDetail.length,
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  final OrderDetail product = reason.orderDetail[index];
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("Totebag Tas belanja serbaguna"),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Text("x"),
-                            Text("1"),
-                          ],
+                        _sizedContainer(
+                          CachedNetworkImage(
+                            imageUrl: product.productImageUrl,
+                            imageBuilder: (context, imageProvider) => Container(
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: imageProvider,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                            placeholder: (context, url) =>
+                                const CircularProgressIndicator(
+                              color: Colors.green,
+                            ),
+                            errorWidget: (context, url, error) =>
+                                const Icon(Icons.error),
+                          ),
                         ),
-                        Text("15.000"),
+                        Flexible(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(product.productName),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  const Text("x"),
+                                  Text(product.qty.toString()),
+                                ],
+                              ),
+                              Text(product.subTotalPrice.toString()),
+                            ],
+                          ),
+                        )
                       ],
                     ),
-                  )
-                ],
+                  );
+                },
               ),
               8.0.height,
               const Divider(),
               16.0.height,
-              const Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Diminta Pada"),
-                  Text(
-                    "24 Apr 2023 12.48",
-                  )
+                  const Text("Diminta Pada"),
+                  Text(DateTime.parse(reason.createdAt).toFormattedDateMinute())
                 ],
               ),
               28.0.height,
@@ -96,8 +118,8 @@ class ReasonCanceledPage extends StatelessWidget {
                   Expanded(
                     child: Container(
                       decoration: const BoxDecoration(),
-                      child: const Text(
-                        "Melakukan Pemesanan Double",
+                      child: Text(
+                        reason.canceledReason,
                         textAlign: TextAlign.right,
                       ),
                     ),
@@ -114,5 +136,22 @@ class ReasonCanceledPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget _sizedContainer(Widget child) {
+    return SizedBox(
+      width: 90.0,
+      height: 70.0,
+      child: Center(child: child),
+    );
+  }
+
+  formatDateMinutes(String date) {
+    String dateString = date;
+    DateTime dateTime = DateTime.parse(dateString);
+    DateFormat formatter = DateFormat('dd MMM yyyy HH:mm:ss');
+    String formattedDate = formatter.format(dateTime);
+
+    return formattedDate;
   }
 }
