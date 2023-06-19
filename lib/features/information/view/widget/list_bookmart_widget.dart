@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core.dart';
 
-class ListBookmark extends StatefulWidget {
+class ListBookmark extends StatelessWidget {
   const ListBookmark({
     super.key,
     required this.informationModel,
@@ -14,17 +14,11 @@ class ListBookmark extends StatefulWidget {
   final InformationModel informationModel;
 
   @override
-  State<ListBookmark> createState() => _ListBookmarkState();
-}
-
-class _ListBookmarkState extends State<ListBookmark> {
-  bool status = false;
-  @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
         context.push(ContentInformation(
-          informationModel: widget.informationModel,
+          informationModel: informationModel,
         ));
       },
       child: Container(
@@ -35,7 +29,7 @@ class _ListBookmarkState extends State<ListBookmark> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Image.asset(
-              widget.informationModel.photoContentUrl,
+              informationModel.photoContentUrl,
               width: 127,
               height: 148,
               fit: BoxFit.cover,
@@ -50,7 +44,7 @@ class _ListBookmarkState extends State<ListBookmark> {
                     alignment: Alignment.centerLeft,
                     width: context.fullWidth - 160.0,
                     child: Text(
-                      widget.informationModel.title,
+                      informationModel.title,
                       style: const TextStyle(
                         fontSize: 12,
                         fontWeight: AppFontWeight.semibold,
@@ -59,8 +53,11 @@ class _ListBookmarkState extends State<ListBookmark> {
                     ),
                   ),
                   IconButton(
-                    onPressed: () => context.read<BookmarkBloc>().add(
-                        DeleteBookmarkEvent(id: widget.informationModel.id)),
+                    onPressed: () {
+                      context
+                          .read<BookmarkBloc>()
+                          .add(DeleteBookmarkEvent(id: informationModel.id));
+                    },
                     icon: const ImageIcon(
                       AppIcons.solidBookmark,
                       color: AppColors.primary600,

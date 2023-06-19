@@ -1,5 +1,4 @@
 import 'package:ecowave/features/information/bloc/bookmark/bookmark_bloc.dart';
-import 'package:ecowave/features/information/bloc/isBookmark/is_bookmark_bloc.dart';
 import 'package:ecowave/features/information/model/models/information_model.dart';
 import 'package:ecowave/features/information/view/pages/detail_information_page.dart';
 import 'package:flutter/material.dart';
@@ -9,11 +8,14 @@ import 'package:intl/intl.dart';
 import '../../../../core.dart';
 
 class ListInformation extends StatelessWidget {
-  const ListInformation({
+  ListInformation({
     super.key,
     required this.informationModel,
+    required this.isBookmark,
   });
   final InformationModel informationModel;
+
+  ValueNotifier<bool> isBookmark;
 
   @override
   Widget build(BuildContext context) {
@@ -61,24 +63,22 @@ class ListInformation extends StatelessWidget {
                     ),
                   ),
                 ),
-                BlocBuilder<IsBookmarkBloc, bool>(
-                  builder: (context, state) {
+                ValueListenableBuilder(
+                  valueListenable: isBookmark,
+                  builder: (context, value, _) {
                     return IconButton(
                       onPressed: () {
-                        print('state = $state');
-                        if (!state) {
+                        isBookmark.value = !isBookmark.value;
+                        if (value == false) {
                           context.read<BookmarkBloc>().add(AddBookmarkEvent(
                               informationModel: informationModel));
-                        } else {
+                        } else if (value == true) {
                           context.read<BookmarkBloc>().add(
                               DeleteBookmarkEvent(id: informationModel.id));
                         }
-                        context.read<IsBookmarkBloc>().add(informationModel);
-                        // final res = await SharedPreferences.getInstance();
-                        // res.clear();
                       },
                       icon: ImageIcon(
-                        state
+                        value
                             ? AppIcons.solidBookmark
                             : AppIcons.outlineBookmark,
                         color: AppColors.primary600,

@@ -13,9 +13,9 @@ class BookmarkPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(
+          title: const Text(
             'Bookmark',
-            style: GoogleFonts.poppins(
+            style: TextStyle(
               fontSize: 30,
               fontWeight: AppFontWeight.regular,
               color: AppColors.black,
@@ -31,14 +31,27 @@ class BookmarkPage extends StatelessWidget {
                   if (state is BookmarkLoading) {
                     return const EcoLoading();
                   } else if (state is BookmarkSuccess) {
-                    return ListView.separated(
-                      itemBuilder: (context, index) =>
-                          ListBookmark(informationModel: state.data[index]),
-                      separatorBuilder: (context, index) => const Divider(
-                        height: 16,
-                      ),
-                      itemCount: state.data.length,
-                    );
+                    if (state.data.isEmpty) {
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 150.0),
+                        child: Center(
+                          child: EcoEmpty(
+                            massage: "Bookmark tidak tersedia",
+                            image: AppImages.emptyState,
+                            height: context.fullWidth / 2,
+                          ),
+                        ),
+                      );
+                    } else {
+                      return ListView.separated(
+                        itemBuilder: (context, index) =>
+                            ListBookmark(informationModel: state.data[index]),
+                        separatorBuilder: (context, index) => const Divider(
+                          height: 16,
+                        ),
+                        itemCount: state.data.length,
+                      );
+                    }
                   } else {
                     return const SizedBox.shrink();
                   }

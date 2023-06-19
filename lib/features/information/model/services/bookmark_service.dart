@@ -48,7 +48,6 @@ class BookmarkService {
   bool isBookmark(InformationModel informationModel) {
     if (items.indexWhere((element) => element.id == informationModel.id) ==
         -1) {
-      print('false = ${items.map((e) => e.id).toList()}');
       return false;
     } else {
       return true;
