@@ -1,6 +1,7 @@
 import 'package:ecowave/core.dart';
 import 'package:ecowave/features/transaction/bloc/history_transaction/history_transaction_bloc.dart';
 import 'package:ecowave/features/transaction/model/models/history_transaction_model.dart';
+import 'package:ecowave/features/transaction/view/pages/packed_detail_page.dart';
 import 'package:ecowave/features/transaction/view/pages/paid_transaction_detail_page.dart';
 import 'package:ecowave/features/transaction/view/widgets/empty_state.dart';
 import 'package:ecowave/features/transaction/view/widgets/product_transaction_widget.dart.dart';
@@ -41,8 +42,7 @@ class PackedHistoryTransactionPage extends StatelessWidget {
                   totalProductOrderPrice: cPacked.totalPrice,
                   descriptionStatus: "Penjual telah menerima pesanan anda",
                   onPressedDetail: () {
-                    context.push(
-                        PaidTransactionDetailPage(detailTransaction: cPacked));
+                    context.push(PackedDetailPage(detailTransaction: cPacked));
                   },
                   onPressedAction: () {},
                   buttonName: "Pesanan Diterima",
