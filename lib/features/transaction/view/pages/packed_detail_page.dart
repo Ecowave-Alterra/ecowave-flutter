@@ -3,11 +3,10 @@ import 'package:ecowave/core.dart';
 import 'package:ecowave/features/transaction/model/models/history_transaction_model.dart';
 import 'package:flutter/material.dart';
 
-class FailedTransactionDetailPage extends StatelessWidget {
+class PackedDetailPage extends StatelessWidget {
   final HistoryTransactionModel detailTransaction;
 
-  const FailedTransactionDetailPage(
-      {super.key, required this.detailTransaction});
+  const PackedDetailPage({super.key, required this.detailTransaction});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +20,7 @@ class FailedTransactionDetailPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              24.0.height,
+              8.0.height,
               const Row(
                 children: [
                   ImageIcon(
@@ -57,7 +56,8 @@ class FailedTransactionDetailPage extends StatelessWidget {
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
-                    final cFailed = detailTransaction.orderDetail[index];
+                    final OrderDetail cPaid =
+                        detailTransaction.orderDetail[index];
                     return Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10),
                       child: Row(
@@ -65,7 +65,7 @@ class FailedTransactionDetailPage extends StatelessWidget {
                         children: [
                           _sizedContainer(
                             CachedNetworkImage(
-                              imageUrl: cFailed.productImageUrl,
+                              imageUrl: cPaid.productImageUrl,
                               imageBuilder: (context, imageProvider) =>
                                   Container(
                                 decoration: BoxDecoration(
@@ -91,17 +91,17 @@ class FailedTransactionDetailPage extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 Text(
-                                  cFailed.productName,
+                                  cPaid.productName,
                                   textAlign: TextAlign.right,
                                 ),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     const Text("x"),
-                                    Text(cFailed.qty.toString()),
+                                    Text(cPaid.qty.toString()),
                                   ],
                                 ),
-                                Text(cFailed.subTotalPrice.currencyFormatRp
+                                Text(cPaid.subTotalPrice.currencyFormatRp
                                     .toString()),
                               ],
                             ),

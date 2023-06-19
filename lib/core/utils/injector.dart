@@ -15,6 +15,8 @@ import 'package:ecowave/features/payment/model/services/expedition_service.dart'
 import 'package:ecowave/features/payment/model/services/get_point_service.dart';
 import 'package:ecowave/features/payment/model/services/transaction_service.dart';
 import 'package:ecowave/features/transaction/bloc/history_transaction/history_transaction_bloc.dart';
+import 'package:ecowave/features/transaction/bloc/tabbar/tabbar_bloc.dart';
+import 'package:ecowave/features/transaction/bloc/tracking_delivery/tracking_delivery_bloc.dart';
 import 'package:ecowave/features/transaction/model/services/history_transaction_service.dart';
 import 'package:ecowave/features/payment/model/services/voucher_service.dart';
 import 'package:get_it/get_it.dart';
@@ -22,7 +24,6 @@ import 'package:get_it/get_it.dart';
 final GetIt locator = GetIt.instance;
 
 void init() {
-  
   // state management
   locator.registerFactory(() => AddressBloc(locator()));
   locator.registerFactory(() => HomeBloc());
@@ -35,6 +36,8 @@ void init() {
   locator.registerFactory(() => VoucherBloc(locator()));
   locator.registerFactory(() => InformationBloc(locator()));
   locator.registerFactory(() => ProductBloc(locator()));
+  locator.registerFactory(() => TabbarBloc());
+  locator.registerFactory(() => TrackingDeliveryBloc(locator()));
 
   // service
   locator.registerLazySingleton<AddressService>(() => AddressService());
