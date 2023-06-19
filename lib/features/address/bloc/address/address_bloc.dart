@@ -1,5 +1,7 @@
 import 'package:ecowave/features/address/model/models/address_model.dart';
 import 'package:ecowave/features/address/model/models/address_request.dart';
+import 'package:ecowave/features/address/model/models/city_model.dart';
+import 'package:ecowave/features/address/model/models/province_model.dart';
 import 'package:ecowave/features/address/model/services/address_service.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,8 +18,26 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
     on<GetAddressesEvent>((event, emit) async {
       emit(AddressLoading());
       try {
-        final List<AddressModel> result = await service.getAddresses();
-        emit(AddressSuccess(data: result));
+        final List<ProvinceModel> provinces = await service.getProvinces();
+        final List<AddressModel> addresses = await service.getAddresses();
+        emit(AddressSuccess(
+          provinces: provinces,
+          addresses: addresses,
+          cities: const [],
+        ));
+      } catch (e) {
+        emit(AddressFailed(meesage: e.toString()));
+      }
+    });
+
+    on<GetCityEvent>((event, emit) async {
+      try {
+        final AddressSuccess currentState = state as AddressSuccess;
+        final List<CityModel> cities =
+            await service.getCities(event.provinceId);
+        emit(currentState.copyWith(
+          cities: cities,
+        ));
       } catch (e) {
         emit(AddressFailed(meesage: e.toString()));
       }

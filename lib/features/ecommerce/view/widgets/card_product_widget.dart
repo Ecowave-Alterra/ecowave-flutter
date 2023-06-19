@@ -33,8 +33,6 @@ class CardProduct extends StatelessWidget {
                   return GestureDetector(
                     onTap: () => context.push(ProductDetail(
                       productModel: state.data[index],
-                      productId: product.id,
-                      productCategoryId: product.productCategoryId,
                     )),
                     child: Container(
                       width: 171,
@@ -49,14 +47,47 @@ class CardProduct extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          ClipRRect(
-                            borderRadius:
-                                BorderRadius.circular(AppSizes.radius),
-                            child: Image.asset(
-                              'assets/images/productShop${product.id}.png',
-                              height: 126,
-                              fit: BoxFit.fill,
-                            ),
+                          Stack(
+                            alignment: Alignment.bottomLeft,
+                            children: [
+                              ClipRRect(
+                                borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(12.0),
+                                    topRight: Radius.circular(12.0)),
+                                child: ColorFiltered(
+                                  colorFilter: ColorFilter.mode(
+                                      product.stock == 0
+                                          ? Colors.black
+                                          : Colors.transparent,
+                                      BlendMode.saturation),
+                                  child: Image.network(
+                                    product.productImageUrl[0],
+                                    height: 126,
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
+                              ),
+                              Visibility(
+                                visible: product.stock == 0,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    padding: const EdgeInsets.fromLTRB(
+                                        10.0, 8.0, 10.0, 8.0),
+                                    decoration: BoxDecoration(
+                                        color: AppColors.grey600,
+                                        borderRadius:
+                                            BorderRadius.circular(4.0)),
+                                    child: const Text('Stok Habis',
+                                        style: TextStyle(
+                                          color: AppColors.white,
+                                          fontWeight: AppFontWeight.medium,
+                                          fontSize: 12.0,
+                                        )),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                           Container(
                             alignment: Alignment.centerLeft,
@@ -97,7 +128,7 @@ class CardProduct extends StatelessWidget {
                                     size: 12,
                                   ),
                                   Text(
-                                    product.rating.toString(),
+                                    product.averageRating.toString(),
                                     style: const TextStyle(
                                       fontWeight: AppFontWeight.medium,
                                       color: AppColors.grey700,

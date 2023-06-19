@@ -1,13 +1,14 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:ecowave/features/ecommerce/bloc/product_image/product_image_bloc.dart';
+import 'package:ecowave/features/ecommerce/bloc/product_home/product_bloc.dart';
+import 'package:ecowave/features/ecommerce/model/models/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core.dart';
 
 class CarouselBarang extends StatefulWidget {
-  final int productId;
-  const CarouselBarang({super.key, required this.productId});
+  final ProductModel productModel;
+  const CarouselBarang({super.key, required this.productModel});
 
   @override
   State<CarouselBarang> createState() => _CarouselBarangState();
@@ -19,26 +20,23 @@ class _CarouselBarangState extends State<CarouselBarang> {
 
   @override
   Widget build(BuildContext context) {
-    context
-        .read<ProductImageBloc>()
-        .add(GetProductImageEvent(widget.productId));
-    return BlocBuilder<ProductImageBloc, ProductImageState>(
+    return BlocBuilder<ProductBloc, ProductState>(
       builder: (context, state) {
-        if (state is ProductImageLoading) {
+        if (state is ProductLoading) {
           return const EcoLoading();
-        } else if (state is ProductImageFailed) {
+        } else if (state is ProductFailed) {
           return EcoError(
             errorMessage: state.message,
             onRetry: () {},
           );
-        } else if (state is ProductImageSuccess) {
+        } else if (state is ProductSuccess) {
           List<Widget> imgList = List.generate(
-            state.data.length,
+            widget.productModel.productImageUrl.length,
             (index) {
-              final img = state.data[index];
+              final img = widget.productModel.productImageUrl[index];
               return SizedBox.fromSize(
-                child: Image.asset(
-                  img.productImageUrl,
+                child: Image.network(
+                  img,
                   fit: BoxFit.contain,
                 ),
               );
@@ -57,6 +55,7 @@ class _CarouselBarangState extends State<CarouselBarang> {
                         height: 358,
                         autoPlay: true,
                         enlargeCenterPage: false,
+                        pauseAutoPlayOnTouch: true,
                         viewportFraction: 1.0,
                         aspectRatio: 2.0,
                         onPageChanged: (index, reason) {

@@ -17,11 +17,9 @@ class LoginService {
         ),
       );
 
-
       if (response.statusCode == 200) {
         return response.data as Map<String, dynamic>;
       } else {
-        print('Login failed.');
         return {
           'success': false,
           'message': 'Login failed',

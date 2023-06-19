@@ -20,7 +20,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _noTelpController = TextEditingController();
 
-   @override
+  @override
   void dispose() {
     _emailController.dispose();
     _nameController.dispose();

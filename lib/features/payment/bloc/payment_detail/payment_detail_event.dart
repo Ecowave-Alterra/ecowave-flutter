@@ -39,14 +39,6 @@ class ChangeVoucherEvent extends PaymentDetailEvent {
   });
 }
 
-class ChangePaymentMethodEvent extends PaymentDetailEvent {
-  final PaymentMethodModel paymentMethodModel;
-
-  const ChangePaymentMethodEvent({
-    required this.paymentMethodModel,
-  });
-}
-
 class PointUsedEvent extends PaymentDetailEvent {
   final int pointUsed;
 
@@ -56,21 +48,9 @@ class PointUsedEvent extends PaymentDetailEvent {
 }
 
 class CheckoutEvent extends PaymentDetailEvent {
-  final AddressModel addressModel;
-  final PaymentMethodModel paymentMethodModel;
-  final ExpeditionModel expeditionModel;
-  final VoucherModel? voucherModel;
-  final List<CartModel> products;
-  final int? pointUsed;
-  final int totalPayment;
+  final TransactionRequest request;
 
   const CheckoutEvent({
-    required this.addressModel,
-    required this.paymentMethodModel,
-    required this.expeditionModel,
-    required this.voucherModel,
-    required this.products,
-    required this.pointUsed,
-    required this.totalPayment,
+    required this.request,
   });
 }

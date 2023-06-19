@@ -2,6 +2,7 @@ part of 'package:ecowave/core.dart';
 
 class AppImages {
   static const String logo = 'assets/images/logo.png';
+  static const String voucher = 'assets/images/voucher.jpg';
 
   static const String cardInfo1 = 'assets/images/cardInfo1.png';
   static const String cardInfo2 = 'assets/images/cardInfo2.png';

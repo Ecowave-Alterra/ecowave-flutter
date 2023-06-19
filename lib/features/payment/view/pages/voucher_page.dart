@@ -33,11 +33,18 @@ class VoucherPage extends StatelessWidget {
           BlocBuilder<VoucherBloc, VoucherState>(
             builder: (context, state) {
               if (state is VoucherLoading) {
-                return const EcoLoading();
+                return SizedBox(
+                  height: context.fullHeight / 1.3,
+                  child: const EcoLoading(),
+                );
               } else if (state is VoucherFailed) {
-                return EcoError(
-                  errorMessage: state.meesage,
-                  onRetry: () {},
+                return SizedBox(
+                  height: context.fullHeight / 1.3,
+                  child: EcoError(
+                    errorMessage: state.meesage,
+                    onRetry: () =>
+                        context.read<VoucherBloc>().add(GetVouchersEvent()),
+                  ),
                 );
               } else if (state is VoucherSuccess) {
                 if (state.data.isEmpty) {
