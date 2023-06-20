@@ -29,7 +29,6 @@ class _RegisterPageState extends State<RegisterPage> {
     _noTelpController.dispose();
     super.dispose();
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,13 +44,14 @@ class _RegisterPageState extends State<RegisterPage> {
             noTelpController: _noTelpController,
             nameController: _nameController),
         child: BlocConsumer<RegisterBloc, RegisterState>(
-            listener: (context, state) async {
+            listener: (context, state)async {
           if (state is RegisterError) {}
           if (state is RegisterSuccess) {
-            await context.push(const LoginPage());
-            if (context.mounted) {
-              dispose();
-            }
+            
+           await context.push(const LoginPage());
+           if(context.mounted){
+            dispose();
+           }
           }
         }, builder: (context, state) {
           if (state is RegisterLoading) {
