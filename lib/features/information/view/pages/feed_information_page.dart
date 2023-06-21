@@ -135,7 +135,6 @@ class _InformationPageState extends State<InformationPage> {
                     itemBuilder: (context, index) {
                       return ListInformation(
                         informationModel: state.data[index],
-                        isBookmark: ValueNotifier<bool>(false),
                       );
                     },
                     separatorBuilder: (context, index) => const Divider(

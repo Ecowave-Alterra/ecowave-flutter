@@ -11,11 +11,10 @@ class ListInformation extends StatelessWidget {
   ListInformation({
     super.key,
     required this.informationModel,
-    required this.isBookmark,
   });
   final InformationModel informationModel;
 
-  ValueNotifier<bool> isBookmark;
+  ValueNotifier<bool> isBookmark = ValueNotifier(false);
 
   @override
   Widget build(BuildContext context) {

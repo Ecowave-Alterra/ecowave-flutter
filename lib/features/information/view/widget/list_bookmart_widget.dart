@@ -28,7 +28,7 @@ class ListBookmark extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Image.asset(
+            Image.network(
               informationModel.photoContentUrl,
               width: 127,
               height: 148,
