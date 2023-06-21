@@ -377,6 +377,7 @@ class ProfilePage extends StatelessWidget {
                               await SharedPreferences.getInstance();
                           prefs.remove('token');
                           if (context.mounted) {
+                            context.read<ProfileBloc>().add(DeleteDataUser());
                             context.read<HomeBloc>().add(LogOut());
                           }
                         },

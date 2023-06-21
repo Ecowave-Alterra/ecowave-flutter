@@ -12,7 +12,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     on<GetDataUser>((event, emit) async {
       final userData = await ProfileService().fetchUserProfile();
       UserProfileModel dataUser = UserProfileModel.fromJson(userData);
-      print(dataUser);
       emit(ProfileState(user: dataUser));
     });
 
@@ -33,6 +32,10 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       } catch (error) {
 
       }
+    });
+
+    on<DeleteDataUser>((event,emit){
+      emit(ProfileState.initial());
     });
   }
 }

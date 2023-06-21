@@ -1,5 +1,5 @@
 import 'package:ecowave/core.dart';
-import 'package:ecowave/features/information/bloc/informatio/information_bloc.dart';
+import 'package:ecowave/features/information/bloc/information/information_bloc.dart';
 import 'package:ecowave/features/information/view/pages/bookmark_page.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -135,6 +135,7 @@ class _InformationPageState extends State<InformationPage> {
                     itemBuilder: (context, index) {
                       return ListInformation(
                         informationModel: state.data[index],
+                        isBookmark: ValueNotifier<bool>(false),
                       );
                     },
                     separatorBuilder: (context, index) => const Divider(

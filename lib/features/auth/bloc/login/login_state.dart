@@ -32,7 +32,7 @@ class LoginState extends Equatable {
 
 class LoginSuccess extends LoginState {
   final String message;
-  final UserModel user;
+  final UserProfileModel user;
 
   const LoginSuccess({
     required bool isLoginButtonDisabled,

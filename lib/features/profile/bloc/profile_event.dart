@@ -10,6 +10,10 @@ class GetDataUser extends ProfileEvent {
   List<Object?> get props => [];
 }
 
+class DeleteDataUser extends ProfileEvent {
+  @override
+  List<Object?> get props => [];
+}
 class UpdateDataUser extends ProfileEvent {
   final String fullName;
   final String email;
