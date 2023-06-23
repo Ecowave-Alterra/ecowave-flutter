@@ -1,11 +1,10 @@
-import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:ecowave/core.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileService {
   final Dio _dio = Dio();
-  final String url = BaseURL.mock;
+  final String url = BaseURL.api;
 
   Future<Map<String, dynamic>> fetchUserProfile() async {
     
@@ -23,8 +22,7 @@ class ProfileService {
         ),
       );
       if (response.statusCode == 200) {
-        Map<String, dynamic> userData = jsonDecode(response.data);
-        return userData;
+        return response.data;
       } else {
         throw Exception('Failed to fetch user profile');
       }

@@ -25,7 +25,7 @@ class _MyHomePageState extends State<MyHomePage> {
           body: IndexedStack(
             index: state.index,
             children:  [
-              const DashboardPage(),
+              DashboardPage(),
               state.token != '' ?
               const HistoryTransactionPage(): const EmptyUserPage() ,
               state.token != '' ?
