@@ -203,6 +203,8 @@ class PaymentDetailPage extends StatelessWidget {
                           PaymentWaitingPage(totalPayment: totalPayment),
                           (route) => route.isFirst);
                     }
+                  } else if (state.status == DataStateStatus.error) {
+                    state.errorMessage.failedBar(context);
                   }
                 },
                 builder: (context, state) {
@@ -221,7 +223,7 @@ class PaymentDetailPage extends StatelessWidget {
                                         state.paymentInfo!.totalPayment,
                                     expeditionName: state.expeditionModel!.name,
                                     estimationDay: state.expeditionModel!.etd,
-                                    discount: state.paymentInfo!.discount,
+                                    discount: state.paymentInfo?.discount ?? 0,
                                     transactionDetails: carts
                                         .map((e) => TransactionDetail(
                                               productId: e.id,
@@ -231,7 +233,7 @@ class PaymentDetailPage extends StatelessWidget {
                                             ))
                                         .toList(),
                                     point: state.pointUsed,
-                                    voucherId: state.voucherModel?.id,
+                                    voucherId: state.voucherModel?.id ?? 1,
                                   ),
                                 ));
                             for (CartModel element in carts) {

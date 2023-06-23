@@ -22,7 +22,7 @@ class TermAndConditionPage extends StatelessWidget {
     ];
     final List<String> termAndConditionDiscount = [
       "Voucher hanya berlaku apabila pembelian pengguna sudah memenuhi syarat dan ketentuan yang tertera pada voucher.",
-      "Nominal yang didapatkan sebesar maksimal ${voucherModel.maximumDiscount?.currencyFormatRp}.",
+      "Nominal yang didapatkan sebesar maksimal ${voucherModel.maximumDiscount.currencyFormatRp}.",
       "Jika transaksi dibatalkan atau masuk ke pusat resolusi, dana yang kembali ke pembeli akan sesuai dengan nominal pembayaran yang dilakukan.",
       "Ecowave berhak melakukan tindakan yang diperlukan apabila diduga terjadi tindakan kecurangan yang dilakukan oleh pengguna yang melanggra syarat dan ketentuan dan merugikan Ecowave.",
       "Dengan menggunakan voucher ini, pengguna dianggap telah memahami dan meyetujui semua Syarat dan Ketentuan yang berlaku.",
@@ -86,7 +86,7 @@ class TermAndConditionPage extends StatelessWidget {
                     const Text("Min. belanja"),
                     const Spacer(),
                     Text(
-                      (voucherModel.minimumPurchase ?? 0).currencyFormatRp,
+                      (voucherModel.minimumPurchase).currencyFormatRp,
                       style: const TextStyle(
                         fontWeight: AppFontWeight.semibold,
                       ),
@@ -107,7 +107,7 @@ class TermAndConditionPage extends StatelessWidget {
                       const Text("Maks. potongan belanja"),
                       const Spacer(),
                       Text(
-                        (voucherModel.maximumDiscount ?? 0).currencyFormatRp,
+                        (voucherModel.maximumDiscount).currencyFormatRp,
                         style: const TextStyle(
                           fontWeight: AppFontWeight.semibold,
                         ),

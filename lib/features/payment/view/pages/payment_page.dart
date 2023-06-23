@@ -33,7 +33,6 @@ class _PaymentPageState extends State<PaymentPage> {
 
     if (paymentStatus == "settlemet") {
       context.read<HomeBloc>().add(const OnBottomNavTap(1));
-      // TODO: arahkan ke tab pesanan Dikemas
       context.pushAndRemoveUntil<bool>(const MyHomePage(), (route) => false);
     }
   }

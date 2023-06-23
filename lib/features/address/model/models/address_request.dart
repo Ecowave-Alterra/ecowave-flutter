@@ -28,10 +28,10 @@ class AddressRequest {
   Map<String, dynamic> toMap() {
     return {
       'recipient': recipient,
-      'phoneNumber': phoneNumber,
-      'provinceId': provinceId,
+      'phone': phoneNumber,
+      'provinceId': provinceId.toString(),
       'provinceName': provinceName,
-      'cityId': cityId,
+      'cityId': cityId.toString(),
       'cityName': cityName,
       'address': address,
       'note': note,

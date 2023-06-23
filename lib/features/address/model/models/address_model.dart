@@ -22,7 +22,6 @@ class AddressModel {
   final String? note;
   final String? mark;
   final bool isPrimary;
-  final int userId;
 
   AddressModel({
     required this.id,
@@ -36,28 +35,26 @@ class AddressModel {
     this.note,
     this.mark,
     required this.isPrimary,
-    required this.userId,
   });
 
   factory AddressModel.fromJson(Map<String, dynamic> json) => AddressModel(
         id: json["Id"],
         recipient: json["Recipient"],
-        phoneNumber: json["PhoneNumber"],
-        provinceId: json["ProvinceId"],
+        phoneNumber: json["Phone"],
+        provinceId: int.parse(json["ProvinceId"]),
         provinceName: json["ProvinceName"],
-        cityId: json["CityId"],
+        cityId: int.parse(json["CityId"]),
         cityName: json["CityName"],
         address: json["Address"],
         note: json["Note"],
         mark: json["Mark"],
         isPrimary: json["IsPrimary"],
-        userId: json["UserId"],
       );
 
   Map<String, dynamic> toJson() => {
         "Id": id,
         "Recipient": recipient,
-        "PhoneNumber": phoneNumber,
+        "Phone": phoneNumber,
         "ProvinceId": provinceId,
         "ProvinceName": provinceName,
         "CityId": cityId,
@@ -66,6 +63,5 @@ class AddressModel {
         "Note": note,
         "Mark": mark,
         "IsPrimary": isPrimary,
-        "UserId": userId,
       };
 }
