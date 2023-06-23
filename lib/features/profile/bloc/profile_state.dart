@@ -7,7 +7,7 @@ class ProfileState extends Equatable {
   const ProfileState({required this.user});
 
   factory ProfileState.initial() {
-    return  ProfileState(user:UserProfileModel(username: '', email: '',googleId: '',roleId: 0,name: '',phone: '',id: 0,point: 0,profilePhotoUrl: '',addresses: []) );
+    return  ProfileState(user:UserProfileModel(username: '', email: '',name: '',phone: '',id: 0,point: 0,profilePhotoUrl: '') );
   }
 
   @override

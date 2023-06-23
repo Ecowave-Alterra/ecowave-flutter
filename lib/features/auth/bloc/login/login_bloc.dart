@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:ecowave/features/auth/model/models/login_model.dart';
 import 'package:ecowave/features/auth/model/services/login_services.dart';
-import 'package:ecowave/features/profile/model/models/profile_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -26,16 +25,13 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           password: passwordController.text,
         ));
         if (userData['Status'] == 200) {
-          final data = userData;
-          final userModel = UserProfileModel.fromJson(data);
+          emit(const LoginSuccess(
+            isLoginButtonDisabled: false,
+            message: "Login Sukses",
+          ));
           SharedPreferences prefs = await SharedPreferences.getInstance();
           prefs.setString('token', userData['Data']['Token']);
 
-          emit(LoginSuccess(
-            isLoginButtonDisabled: false,
-            message: "Login Sukses",
-            user: userModel,
-          ));
         } else {
           emit(const LoginError(
             isLoginButtonDisabled: false,

@@ -14,7 +14,7 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.read<ProfileBloc>().add(GetDataUser());
+    
     return Scaffold(
       appBar: AppBar(
         title: const Text('Saya'),
@@ -22,6 +22,9 @@ class ProfilePage extends StatelessWidget {
       ),
       body: BlocBuilder<ProfileBloc, ProfileState>(
         builder: (context, state) {
+          if(state.user.email == ''){
+            context.read<ProfileBloc>().add(GetDataUser());
+          }
           return ListView(children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -377,6 +380,7 @@ class ProfilePage extends StatelessWidget {
                               await SharedPreferences.getInstance();
                           prefs.remove('token');
                           if (context.mounted) {
+                            "Kamu berhasil keluar dari akun".succeedBar(context);
                             context.read<ProfileBloc>().add(DeleteDataUser());
                             context.read<HomeBloc>().add(LogOut());
                           }

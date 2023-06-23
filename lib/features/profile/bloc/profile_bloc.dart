@@ -10,14 +10,17 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   final ProfileService service;
   ProfileBloc(this.service) : super(ProfileState.initial()) {
     on<GetDataUser>((event, emit) async {
-      final userData = await ProfileService().fetchUserProfile();
+      final Map<String, dynamic>  userData = await service.fetchUserProfile();
+      print(userData);
       UserProfileModel dataUser = UserProfileModel.fromJson(userData);
       emit(ProfileState(user: dataUser));
     });
+    on<GetDataUserFromLogin>((event, emit) {
+      emit(ProfileState(user: event.user));
+    });
 
-     on<UpdateDataUser>((event, emit) async {
+    on<UpdateDataUser>((event, emit) async {
       try {
-        // Melakukan update data pengguna
         await service.updateUserProfile(
           event.fullName,
           event.email,
@@ -25,16 +28,12 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           event.phoneNumber,
           event.profilePhotoUrl,
         );
-
-        // Memperbarui state dengan data pengguna yang telah diperbarui
         final userData = await service.fetchUserProfile();
         print(userData);
-      } catch (error) {
-
-      }
+      } catch (error) {}
     });
 
-    on<DeleteDataUser>((event,emit){
+    on<DeleteDataUser>((event, emit) {
       emit(ProfileState.initial());
     });
   }

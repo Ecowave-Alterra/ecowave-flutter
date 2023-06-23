@@ -10,6 +10,12 @@ class GetDataUser extends ProfileEvent {
   List<Object?> get props => [];
 }
 
+class GetDataUserFromLogin extends ProfileEvent {
+   final UserProfileModel user;
+
+   GetDataUserFromLogin({required this.user});
+}
+
 class DeleteDataUser extends ProfileEvent {
   @override
   List<Object?> get props => [];
