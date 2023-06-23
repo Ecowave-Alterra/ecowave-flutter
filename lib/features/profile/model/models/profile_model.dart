@@ -1,45 +1,43 @@
 class UserProfileModel {
   final int id;
-  final String googleId;
-  final int roleId;
+  final String? googleId;
   final String name;
   final String username;
   final String email;
   final String phone;
   final int point;
   final String profilePhotoUrl;
-  final List<AddressModel> addresses;
+  final List<AddressModel>? addresses;
 
   UserProfileModel({
     required this.id,
-    required this.googleId,
-    required this.roleId,
+    this.googleId,
     required this.name,
     required this.username,
     required this.email,
     required this.phone,
     required this.point,
     required this.profilePhotoUrl,
-    required this.addresses,
+    this.addresses,
   });
 
   factory UserProfileModel.fromJson(Map<String, dynamic> json) {
-    var addressList = json['Data']['Addresses'] as List<dynamic>;
-    List<AddressModel> addresses = addressList
-        .map((address) => AddressModel.fromJson(address))
-        .toList();
+    var addressList = json['Data']['Addresses'] as List<dynamic>?;
+    List<AddressModel> Addresses = addressList
+            ?.map((address) => AddressModel.fromJson(address))
+            .toList() ??
+        [];
 
     return UserProfileModel(
       id: json['Data']['Id'],
       googleId: json['Data']['GoogleId'],
-      roleId: json['Data']['RoleId'],
       name: json['Data']['Name'],
       username: json['Data']['Username'],
       email: json['Data']['Email'],
       phone: json['Data']['Phone'],
       point: json['Data']['Point'],
-      profilePhotoUrl: json['Data']['ProfilePhotoUrl'],
-      addresses: addresses,
+      profilePhotoUrl: json['Data']['ProfilePhoto'],
+      addresses: Addresses,
     );
   }
 }
