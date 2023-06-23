@@ -1,8 +1,9 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:ecowave/core.dart';
 import 'package:ecowave/features/ecommerce/bloc/product_home/product_bloc.dart';
 import 'package:ecowave/features/ecommerce/view/pages/product_detail_page.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CardProduct extends StatelessWidget {
   const CardProduct({super.key});
@@ -31,9 +32,12 @@ class CardProduct extends StatelessWidget {
                 itemBuilder: (context, index) {
                   final product = state.data[index];
                   return GestureDetector(
-                    onTap: () => context.push(ProductDetail(
-                      productModel: state.data[index],
-                    )),
+                    onTap: () {
+                      context.push(ProductDetail(
+                        productModel: state.data[index],
+                      ));
+                      FocusScope.of(context).unfocus();
+                    },
                     child: Container(
                       width: 171,
                       height: 225,
@@ -61,7 +65,10 @@ class CardProduct extends StatelessWidget {
                                           : Colors.transparent,
                                       BlendMode.saturation),
                                   child: Image.network(
-                                    product.productImageUrl[0],
+                                    (product.productImageUrl!.isNotEmpty)
+                                        ? (product.productImageUrl?[0] ??
+                                            'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg')
+                                        : 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg',
                                     height: 126,
                                     fit: BoxFit.fill,
                                   ),

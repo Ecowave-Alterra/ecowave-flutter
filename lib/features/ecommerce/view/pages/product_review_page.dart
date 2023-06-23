@@ -41,7 +41,7 @@ class ProductReview extends StatelessWidget {
                   padding:
                       const EdgeInsets.only(left: 8.0, top: 2.0, bottom: 2.0),
                   child: Text(
-                    '${productModel.review.length} penilaian',
+                    '${(productModel.review?.length ?? 0)} penilaian',
                     style: const TextStyle(
                         fontSize: 14,
                         fontWeight: AppFontWeight.medium,

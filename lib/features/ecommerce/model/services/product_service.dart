@@ -11,7 +11,7 @@ class ProductService {
 
   Future<List<ProductModel>> getProduct() async {
     try {
-      const String url = '${BaseURL.mock}user/ecommerce/91203872';
+      const String url = '${BaseURL.api}user/ecommerce';
       final response = await _dio.get(url);
 
       if (response.statusCode == 200) {
@@ -27,7 +27,7 @@ class ProductService {
 
   Future<List<Review>> getProductRating() async {
     try {
-      const String url = '${BaseURL.mock}user/ecommerce/91203872';
+      const String url = '${BaseURL.api}user/ecommerce';
       final response = await _dio.get(url);
 
       if (response.statusCode == 200) {

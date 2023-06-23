@@ -4,6 +4,7 @@ import 'package:ecowave/features/ecommerce/model/models/product_model.dart';
 import 'package:ecowave/features/ecommerce/view/pages/product_review_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 class ProductDescription extends StatelessWidget {
   final ProductModel productModel;
@@ -111,7 +112,7 @@ class ProductDescription extends StatelessWidget {
                           Container(
                             padding: const EdgeInsets.only(right: 5.0),
                             child: Text(
-                              productModel.review[0].rating.toString(),
+                              (productModel.averageRating).toString(),
                               style: const TextStyle(
                                 fontSize: AppSizes.primary,
                                 fontWeight: AppFontWeight.medium,
@@ -201,15 +202,10 @@ class ProductDescription extends StatelessWidget {
                 ),
               ),
               Container(
-                padding: const EdgeInsets.only(
-                    left: AppSizes.primary, right: AppSizes.primary),
+                padding: const EdgeInsets.only(left: 8.0, right: 8.0),
                 alignment: Alignment.centerLeft,
-                child: Text(
-                  productModel.description,
-                  style: const TextStyle(
-                    fontSize: AppSizes.primary,
-                    fontWeight: AppFontWeight.regular,
-                  ),
+                child: Html(
+                  data: productModel.description,
                 ),
               ),
               Container(
@@ -263,7 +259,7 @@ class ProductDescription extends StatelessWidget {
                       padding: const EdgeInsets.only(
                           left: 8.0, top: 2.0, bottom: 2.0),
                       child: Text(
-                        '${productModel.review.length} penilaian',
+                        '${(productModel.review?.length) ?? 0} penilaian',
                         style: const TextStyle(
                             fontSize: 14,
                             fontWeight: AppFontWeight.medium,
@@ -273,90 +269,98 @@ class ProductDescription extends StatelessWidget {
                   ],
                 ),
               ),
-              Container(
-                padding: const EdgeInsets.only(left: AppSizes.primary),
-                child: Row(
-                  children: [
-                    SizedBox(
-                      width: 30.0,
-                      height: 40.0,
-                      child: CircleAvatar(
-                        backgroundImage: NetworkImage(
-                            productModel.review[0].profilePhotoUrl),
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.only(left: 10.0),
-                      child: Text(
-                        productModel.review[0].fullName,
-                        style: const TextStyle(
-                            fontSize: 12.0,
-                            fontWeight: AppFontWeight.medium,
-                            color: AppColors.black),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.fromLTRB(16.0, 4.0, 0, 0),
-                child: Row(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.only(right: 6.57),
-                      child: const ImageIcon(
-                        AppIcons.solidUlasan,
-                        color: AppColors.warning500,
-                        size: 14.24,
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.only(right: 6.57),
-                      child: const ImageIcon(
-                        AppIcons.solidUlasan,
-                        color: AppColors.warning500,
-                        size: 14.24,
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.only(right: 6.57),
-                      child: const ImageIcon(
-                        AppIcons.solidUlasan,
-                        color: AppColors.warning500,
-                        size: 14.24,
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.only(right: 6.57),
-                      child: const ImageIcon(
-                        AppIcons.solidUlasan,
-                        color: AppColors.warning500,
-                        size: 14.24,
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.only(right: 6.57),
-                      child: const ImageIcon(
-                        AppIcons.solidUlasan,
-                        color: AppColors.warning500,
-                        size: 14.24,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.only(
-                    left: AppSizes.primary, right: AppSizes.primary),
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  productModel.review[0].comment,
-                  style: const TextStyle(
-                    fontSize: AppSizes.primary,
-                    fontWeight: AppFontWeight.regular,
-                  ),
-                ),
-              ),
+              (productModel.review!.isNotEmpty)
+                  ? Column(
+                      children: [
+                        Container(
+                          padding:
+                              const EdgeInsets.only(left: AppSizes.primary),
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: 30.0,
+                                height: 40.0,
+                                child: CircleAvatar(
+                                  backgroundImage: NetworkImage(
+                                      (productModel.review?[0].profilePhoto ??
+                                          '')),
+                                ),
+                              ),
+                              Container(
+                                padding: const EdgeInsets.only(left: 10.0),
+                                child: Text(
+                                  (productModel.review?[0].name ?? ''),
+                                  style: const TextStyle(
+                                      fontSize: 12.0,
+                                      fontWeight: AppFontWeight.medium,
+                                      color: AppColors.black),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.fromLTRB(16.0, 4.0, 0, 0),
+                          child: Row(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.only(right: 6.57),
+                                child: const ImageIcon(
+                                  AppIcons.solidUlasan,
+                                  color: AppColors.warning500,
+                                  size: 14.24,
+                                ),
+                              ),
+                              Container(
+                                padding: const EdgeInsets.only(right: 6.57),
+                                child: const ImageIcon(
+                                  AppIcons.solidUlasan,
+                                  color: AppColors.warning500,
+                                  size: 14.24,
+                                ),
+                              ),
+                              Container(
+                                padding: const EdgeInsets.only(right: 6.57),
+                                child: const ImageIcon(
+                                  AppIcons.solidUlasan,
+                                  color: AppColors.warning500,
+                                  size: 14.24,
+                                ),
+                              ),
+                              Container(
+                                padding: const EdgeInsets.only(right: 6.57),
+                                child: const ImageIcon(
+                                  AppIcons.solidUlasan,
+                                  color: AppColors.warning500,
+                                  size: 14.24,
+                                ),
+                              ),
+                              Container(
+                                padding: const EdgeInsets.only(right: 6.57),
+                                child: const ImageIcon(
+                                  AppIcons.solidUlasan,
+                                  color: AppColors.warning500,
+                                  size: 14.24,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.only(
+                              left: AppSizes.primary, right: AppSizes.primary),
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            (productModel.review?[0].comment ?? ''),
+                            style: const TextStyle(
+                              fontSize: AppSizes.primary,
+                              fontWeight: AppFontWeight.regular,
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  : SizedBox.shrink(),
             ],
           );
         } else {

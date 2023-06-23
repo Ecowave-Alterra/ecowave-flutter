@@ -73,7 +73,10 @@ class ProductDetail extends StatelessWidget {
                             id: productModel.productId,
                             nameItems: productModel.name,
                             detailItems: productModel.category,
-                            image: productModel.productImageUrl[0],
+                            image: (productModel.productImageUrl!.isNotEmpty)
+                                ? (productModel.productImageUrl?[0] ??
+                                    'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg')
+                                : 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg',
                             price: productModel.price.toInt(),
                             totalItems: 1,
                             checkedItems: false,
@@ -104,7 +107,10 @@ class ProductDetail extends StatelessWidget {
                         id: productModel.productId,
                         nameItems: productModel.name,
                         detailItems: productModel.category,
-                        image: productModel.productImageUrl[0],
+                        image: (productModel.productImageUrl!.isNotEmpty)
+                            ? (productModel.productImageUrl?[0] ??
+                                'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg')
+                            : 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg',
                         price: productModel.price.toInt(),
                         totalItems: 1,
                         checkedItems: false,

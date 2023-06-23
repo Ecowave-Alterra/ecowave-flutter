@@ -31,9 +31,10 @@ class _CarouselBarangState extends State<CarouselBarang> {
           );
         } else if (state is ProductSuccess) {
           List<Widget> imgList = List.generate(
-            widget.productModel.productImageUrl.length,
+            (widget.productModel.productImageUrl?.length ?? 0),
             (index) {
-              final img = widget.productModel.productImageUrl[index];
+              final img = (widget.productModel.productImageUrl?[index] ??
+                  'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg');
               return SizedBox.fromSize(
                 child: Image.network(
                   img,
@@ -49,11 +50,18 @@ class _CarouselBarangState extends State<CarouselBarang> {
               child: Column(children: [
                 Expanded(
                   child: CarouselSlider(
-                    items: imgList,
+                    items: imgList.isNotEmpty
+                        ? imgList
+                        : [
+                            Image.network(
+                              'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg',
+                              fit: BoxFit.contain,
+                            ),
+                          ],
                     carouselController: _controller,
                     options: CarouselOptions(
                         height: 358,
-                        autoPlay: true,
+                        autoPlay: imgList.isNotEmpty ? true : false,
                         enlargeCenterPage: false,
                         pauseAutoPlayOnTouch: true,
                         viewportFraction: 1.0,
