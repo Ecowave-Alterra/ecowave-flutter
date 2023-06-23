@@ -49,7 +49,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   @override
   Widget build(BuildContext context) {
     final ValueNotifier<bool> isExist = ValueNotifier<bool>(false);
-    Future<void> _pickImage() async {
+    Future<void> pickImage() async {
       FilePickerResult? result =
           await FilePicker.platform.pickFiles(type: FileType.image);
 
@@ -99,7 +99,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   ),
                   10.0.height,
                   TextButton(
-                    onPressed: _pickImage,
+                    onPressed: pickImage,
                     child: const Text(
                       'Ubah Foto Profile',
                       style: TextStyle(

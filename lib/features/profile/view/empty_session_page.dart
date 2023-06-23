@@ -1,7 +1,7 @@
+import 'package:ecowave/features/auth/view/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:ecowave/core.dart';
 
-import '../../auth/view/login_page.dart';
 import '../../auth/view/register_page.dart';
 
 class EmptyUserPage extends StatefulWidget {

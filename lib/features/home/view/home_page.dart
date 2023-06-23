@@ -1,4 +1,3 @@
-
 import 'package:ecowave/features/home/view/dashboard_page.dart';
 import 'package:ecowave/features/profile/view/empty_session_page.dart';
 import 'package:ecowave/features/transaction/view/pages/history_transaction_page.dart';
@@ -24,12 +23,12 @@ class _MyHomePageState extends State<MyHomePage> {
         return Scaffold(
           body: IndexedStack(
             index: state.index,
-            children:  [
+            children: [
               const DashboardPage(),
-              state.token != '' ?
-              const HistoryTransactionPage(): const EmptyUserPage() ,
-              state.token != '' ?
-              const ProfilePage(): const EmptyUserPage() ,
+              state.token != ''
+                  ? const HistoryTransactionPage()
+                  : const EmptyUserPage(),
+              state.token != '' ? const ProfilePage() : const EmptyUserPage(),
             ],
           ),
           bottomNavigationBar: Container(

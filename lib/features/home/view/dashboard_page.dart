@@ -1,13 +1,33 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ecowave/core.dart';
+import 'package:ecowave/features/ecommerce/bloc/product_home/product_bloc.dart';
 import 'package:ecowave/features/ecommerce/view/pages/home_e_commerce_page.dart';
+import 'package:ecowave/features/information/bloc/information/information_bloc.dart';
 import 'package:ecowave/features/information/view/pages/feed_information_page.dart';
+import 'package:ecowave/features/information/view/widget/carousel_information_card_widget.dart';
+import 'package:ecowave/features/profile/bloc/profile_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class DashboardPage extends StatelessWidget {
-  final String nama = '';
+class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
 
+  @override
+  State<DashboardPage> createState() => _DashboardPageState();
+}
+
+class _DashboardPageState extends State<DashboardPage> {
+  @override
+  void initState() {
+    context.read<ProductBloc>().add(GetProductEvent());
+    context.read<InformationBloc>().add(GetInformationEvent());
+    super.initState();
+  }
+
+  int _currentinfo = 0;
+  final CarouselController _controllerinfo = CarouselController();
+  int _currentproduct = 0;
+  final CarouselController _controllerProduct = CarouselController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,15 +56,32 @@ class DashboardPage extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Padding(
-                            padding: EdgeInsets.symmetric(
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
                                 horizontal: AppSizes.primary),
-                            child: Text(
-                              "Hello, Dayuna!",
-                              style: TextStyle(
-                                  fontSize: AppSizes.buttonFontSize,
-                                  fontWeight: AppFontWeight.extrabold,
-                                  color: AppColors.white),
+                            child: BlocConsumer<ProfileBloc, ProfileState>(
+                              listener: (context, state) {},
+                              builder: (context, state) {
+                                String name = state.user.name;
+
+                                if (name != '') {
+                                  return Text(
+                                    'Hello, $name!',
+                                    style: const TextStyle(
+                                        fontSize: AppSizes.buttonFontSize,
+                                        fontWeight: AppFontWeight.extrabold,
+                                        color: AppColors.white),
+                                  );
+                                } else {
+                                  return const Text(
+                                    "Hello, User!",
+                                    style: TextStyle(
+                                        fontSize: AppSizes.buttonFontSize,
+                                        fontWeight: AppFontWeight.extrabold,
+                                        color: AppColors.white),
+                                  );
+                                }
+                              },
                             ),
                           ),
                           const SizedBox(
@@ -218,30 +255,92 @@ class DashboardPage extends StatelessWidget {
                           const SizedBox(
                             height: AppSizes.primary,
                           ),
-                          CarouselSlider(
-                            items: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(8.0),
-                                child: Image.asset(
-                                  AppImages.homeShop,
-                                  fit: BoxFit.cover,
+                          BlocBuilder<ProductBloc, ProductState>(
+                              builder: (context, state) {
+                            if (state is ProductLoading) {
+                              return const EcoLoading();
+                            } else if (state is ProductFailed) {
+                              return EcoError(
+                                errorMessage: state.message,
+                                onRetry: () {},
+                              );
+                            } else if (state is ProductSuccess) {
+                              List<Widget> carouselItems = [];
+                              final product = state.data;
+                              for (int i = 0; i < 3; i++) {
+                                carouselItems.add(
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 8.0),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                      child: Image.network(
+                                        product[i].productImageUrl[0],
+                                        height: 120,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              }
+                              return CarouselSlider(
+                                items: carouselItems,
+                                options: CarouselOptions(
+                                  height: 120,
+                                  enableInfiniteScroll: false,
+                                  disableCenter: true,
+                                  viewportFraction: 0.94,
+                                  aspectRatio: 2.0,
+                                  onPageChanged: (index, reason) {
+                                    if (_currentproduct != index) {
+                                      setState(() {
+                                        _currentproduct = index;
+                                      });
+                                    }
+                                  },
                                 ),
-                              ),
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(8.0),
-                                child: Image.asset(
-                                  AppImages.homeShop,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ],
-                            options: CarouselOptions(
-                              height: 120,
-                              enableInfiniteScroll: false,
-                              disableCenter: true,
-                              viewportFraction: 0.94,
-                              aspectRatio: 2.0,
-                            ),
+                              );
+                            }
+                            return const SizedBox();
+                          }),
+                          const SizedBox(
+                            height: AppSizes.primary,
+                          ),
+                          BlocBuilder<ProductBloc, ProductState>(
+                            builder: (context, state) {
+                              if (state is ProductLoading) {
+                                return const SizedBox();
+                              } else if (state is ProductSuccess) {
+                                final informationList =
+                                    state.data.take(3).toList();
+                                return Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: informationList
+                                      .asMap()
+                                      .entries
+                                      .map((entry) {
+                                    return GestureDetector(
+                                      onTap: () => _controllerProduct
+                                          .animateToPage(entry.key),
+                                      child: Container(
+                                        width: 12.0,
+                                        height: 12.0,
+                                        margin: const EdgeInsets.symmetric(
+                                            horizontal: 4.0),
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: _currentproduct == entry.key
+                                              ? AppColors.primary500
+                                              : const Color(0xffD9D9D9),
+                                        ),
+                                      ),
+                                    );
+                                  }).toList(),
+                                );
+                              } else {
+                                return const SizedBox.shrink();
+                              }
+                            },
                           ),
                           const SizedBox(
                             height: AppSizes.primary,
@@ -269,31 +368,84 @@ class DashboardPage extends StatelessWidget {
                           const SizedBox(
                             height: AppSizes.primary,
                           ),
-                          CarouselSlider(
-                            items: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(8.0),
-                                child: Image.asset(
-                                  AppImages.homeInfo,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(8.0),
-                                child: Image.asset(
-                                  AppImages.homeInfo,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ],
-                            options: CarouselOptions(
-                              height: 120,
-                              enableInfiniteScroll: false,
-                              disableCenter: true,
-                              viewportFraction: 0.94,
-                              aspectRatio: 2.0,
-                            ),
+                          BlocBuilder<InformationBloc, InformationState>(
+                            builder: (context, state) {
+                              if (state is InformationLoading) {
+                                return const EcoLoading();
+                              } else if (state is InformationSuccess) {
+                                return Column(
+                                  children: [
+                                    CarouselSlider.builder(
+                                      itemCount: state.data.length > 3
+                                          ? 3
+                                          : state.data.length,
+                                      itemBuilder: (context, index, realIndex) {
+                                        return CarouselCardInformation(
+                                          informationModel: state.data[index],
+                                        );
+                                      },
+                                      carouselController: _controllerinfo,
+                                      options: CarouselOptions(
+                                        height: 150,
+                                        enableInfiniteScroll: false,
+                                        disableCenter: true,
+                                        viewportFraction: 0.94,
+                                        aspectRatio: 2.0,
+                                        onPageChanged: (index, reason) {
+                                          setState(
+                                            () {
+                                              _currentinfo = index;
+                                            },
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              } else {
+                                return const SizedBox.shrink();
+                              }
+                            },
                           ),
+                          const SizedBox(
+                            height: AppSizes.primary,
+                          ),
+                          BlocBuilder<InformationBloc, InformationState>(
+                            builder: (context, state) {
+                              if (state is InformationLoading) {
+                                return const SizedBox();
+                              } else if (state is InformationSuccess) {
+                                final informationList =
+                                    state.data.take(3).toList();
+                                return Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: informationList
+                                      .asMap()
+                                      .entries
+                                      .map((entry) {
+                                    return GestureDetector(
+                                      onTap: () => _controllerinfo
+                                          .animateToPage(entry.key),
+                                      child: Container(
+                                        width: 12.0,
+                                        height: 12.0,
+                                        margin: const EdgeInsets.symmetric(
+                                            horizontal: 4.0),
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: _currentinfo == entry.key
+                                              ? AppColors.primary500
+                                              : const Color(0xffD9D9D9),
+                                        ),
+                                      ),
+                                    );
+                                  }).toList(),
+                                );
+                              } else {
+                                return const SizedBox.shrink();
+                              }
+                            },
+                          )
                         ],
                       ),
                     ),

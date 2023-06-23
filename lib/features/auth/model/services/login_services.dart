@@ -3,7 +3,7 @@ import 'package:ecowave/core.dart';
 import 'package:ecowave/features/auth/model/models/login_model.dart';
 
 class LoginService {
-  static const String baseUrl = BaseURL.mock;
+  static const String baseUrl = BaseURL.api;
 
   final Dio dio = Dio();
 
@@ -16,9 +16,8 @@ class LoginService {
           headers: {'Content-Type': 'application/json'},
         ),
       );
-
       if (response.statusCode == 200) {
-        return response.data as Map<String, dynamic>;
+        return response.data;
       } else {
         return {
           'success': false,

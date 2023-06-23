@@ -45,7 +45,10 @@ class _RegisterPageState extends State<RegisterPage> {
             nameController: _nameController),
         child: BlocConsumer<RegisterBloc, RegisterState>(
             listener: (context, state)async {
-          if (state is RegisterError) {}
+          if (state is RegisterError) {
+            "Email Sudah Digunakan."
+                  .failedBar(context);
+          }
           if (state is RegisterSuccess) {
             
            await context.push(const LoginPage());
