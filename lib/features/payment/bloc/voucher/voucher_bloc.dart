@@ -21,8 +21,8 @@ class VoucherBloc extends Bloc<VoucherEvent, VoucherState> {
                 DateTime.now().isAfter(DateTime.parse(element.startDate)) &&
                 DateTime.now().isBefore(DateTime.parse(element.endDate)))
             .toList();
-        voucherActive.sort((a, b) =>
-            (a.minimumPurchase ?? 0).compareTo(b.minimumPurchase ?? 0));
+        voucherActive
+            .sort((a, b) => (a.minimumPurchase).compareTo(b.minimumPurchase));
         emit(VoucherSuccess(data: voucherActive));
       } catch (e) {
         emit(VoucherFailed(meesage: e.toString()));

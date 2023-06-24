@@ -1,10 +1,8 @@
-import 'dart:convert';
-
 class TransactionRequest {
-  final int? voucherId;
+  final int voucherId;
   final int addressId;
   final int totalShippingPrice;
-  final int? point;
+  final int point;
   final String expeditionName;
   final String estimationDay;
   final int discount;
@@ -21,20 +19,17 @@ class TransactionRequest {
     required this.transactionDetails,
   });
 
-  Map<String, dynamic> toMap() {
-    return {
-      'voucherId': voucherId,
-      'addressId': addressId,
-      'totalShippingPrice': totalShippingPrice,
-      'point': point,
-      'expeditionName': expeditionName,
-      'estimationDay': estimationDay,
-      'discount': discount,
-      'transactionDetails': transactionDetails.map((x) => x.toMap()).toList(),
-    };
-  }
-
-  String toJson() => json.encode(toMap());
+  Map<String, dynamic> toJson() => {
+        "VoucherId": voucherId,
+        "AddressId": addressId,
+        "TotalShippingPrice": totalShippingPrice,
+        "Point": point,
+        "ExpeditionName": expeditionName,
+        "EstimationDay": estimationDay,
+        "Discount": discount,
+        "TransactionDetails":
+            List<dynamic>.from(transactionDetails.map((x) => x.toJson())),
+      };
 }
 
 class TransactionDetail {
@@ -50,14 +45,10 @@ class TransactionDetail {
     required this.subTotalPrice,
   });
 
-  Map<String, dynamic> toMap() {
-    return {
-      'productId': productId,
-      'productName': productName,
-      'qty': qty,
-      'subTotalPrice': subTotalPrice,
-    };
-  }
-
-  String toJson() => json.encode(toMap());
+  Map<String, dynamic> toJson() => {
+        "ProductId": productId,
+        "ProductName": productName,
+        "Qty": qty,
+        "SubTotalPrice": subTotalPrice,
+      };
 }

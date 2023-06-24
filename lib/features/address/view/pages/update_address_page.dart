@@ -275,6 +275,7 @@ class _UpdateAddressPageState extends State<UpdateAddressPage> {
                                     groupValue: currentIndexMark,
                                     onChanged: (index) {
                                       currentIndexMark = index!;
+                                      isExist.value = checkDataExists;
                                       changeState(() {});
                                     },
                                     leading: 'Rumah',
@@ -287,6 +288,7 @@ class _UpdateAddressPageState extends State<UpdateAddressPage> {
                                     groupValue: currentIndexMark,
                                     onChanged: (index) {
                                       currentIndexMark = index!;
+                                      isExist.value = checkDataExists;
                                       changeState(() {});
                                     },
                                     leading: 'Kantor',
@@ -338,7 +340,7 @@ class _UpdateAddressPageState extends State<UpdateAddressPage> {
               height: 45.0,
               label: "Simpan",
               onPressed: value
-                  ? () {
+                  ? () async {
                       if (currentIndexMark == 0) {
                         mark = "Rumah";
                       } else if (currentIndexMark == 1) {
@@ -366,8 +368,13 @@ class _UpdateAddressPageState extends State<UpdateAddressPage> {
                               ),
                             ));
                         context.pop();
-                        "Yey! Kamu berhasil memperbarui alamat"
-                            .succeedBar(context);
+                        await Future.delayed(const Duration(seconds: 3));
+                        if (context.mounted &&
+                            context.read<AddressBloc>().state
+                                is AddressSuccess) {
+                          "Yey! Kamu berhasil memperbarui alamat"
+                              .succeedBar(context);
+                        }
                       }
                     }
                   : null,

@@ -50,6 +50,17 @@ class ShippingOptionsPage extends StatelessWidget {
                   ),
                 );
               } else if (state is ExpeditionSuccess) {
+                if (state.data.isEmpty) {
+                  return SizedBox(
+                    width: context.fullWidth,
+                    height: context.fullHeight / 1.3,
+                    child: EcoEmpty(
+                      massage: "Opsi pengiriman belum tersedia",
+                      image: AppImages.emptyState,
+                      height: context.fullWidth / 2,
+                    ),
+                  );
+                }
                 return StatefulBuilder(
                   builder: (context, changeState) {
                     return ListView.builder(

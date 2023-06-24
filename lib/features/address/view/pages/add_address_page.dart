@@ -304,7 +304,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
               height: 45.0,
               label: "Simpan",
               onPressed: value
-                  ? () {
+                  ? () async {
                       String? mark;
                       if (currentIndexMark == 0) {
                         mark = "Rumah";
@@ -328,8 +328,13 @@ class _AddAddressPageState extends State<AddAddressPage> {
                               ),
                             ));
                         context.pop();
-                        "Yey! Kamu berhasil menambahkan alamat"
-                            .succeedBar(context);
+                        await Future.delayed(const Duration(seconds: 3));
+                        if (context.mounted &&
+                            context.read<AddressBloc>().state
+                                is AddressSuccess) {
+                          "Yey! Kamu berhasil menambahkan alamat"
+                              .succeedBar(context);
+                        }
                       }
                     }
                   : null,

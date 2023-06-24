@@ -61,9 +61,9 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
     on<UpdateAddressesEvent>((event, emit) async {
       emit(AddressLoading());
       try {
-        final bool isCreated =
+        final bool isUpdated =
             await service.updateAddresses(event.id, event.request);
-        if (isCreated) {
+        if (isUpdated) {
           add(GetAddressesEvent());
         } else {
           emit(const AddressFailed(
