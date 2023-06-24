@@ -8,14 +8,14 @@ import 'package:intl/intl.dart';
 import '../../../../core.dart';
 
 class ListInformation extends StatelessWidget {
-  ListInformation({
+  const ListInformation({
     super.key,
     required this.informationModel,
     required this.isBookmark,
   });
   final InformationModel informationModel;
 
-  ValueNotifier<bool> isBookmark;
+  final ValueNotifier<bool> isBookmark;
 
   @override
   Widget build(BuildContext context) {

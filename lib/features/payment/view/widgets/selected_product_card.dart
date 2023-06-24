@@ -34,7 +34,7 @@ class SelectedProductCard extends StatelessWidget {
                 ),
               ),
               12.0.height,
-              Text("Detail : ${cartModel.detailItems}"),
+              Text("Kategori : ${cartModel.detailItems}"),
               12.0.height,
               Text("${cartModel.totalItems} Barang"),
               12.0.height,

@@ -10,8 +10,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   final ProfileService service;
   ProfileBloc(this.service) : super(ProfileState.initial()) {
     on<GetDataUser>((event, emit) async {
-      final Map<String, dynamic>  userData = await service.fetchUserProfile();
-      print(userData);
+      final Map<String, dynamic> userData = await service.fetchUserProfile();
       UserProfileModel dataUser = UserProfileModel.fromJson(userData);
       emit(ProfileState(user: dataUser));
     });
@@ -28,9 +27,10 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           event.phoneNumber,
           event.profilePhotoUrl,
         );
-        final userData = await service.fetchUserProfile();
-        print(userData);
-      } catch (error) {}
+        await service.fetchUserProfile();
+      } catch (error) {
+        rethrow;
+      }
     });
 
     on<DeleteDataUser>((event, emit) {

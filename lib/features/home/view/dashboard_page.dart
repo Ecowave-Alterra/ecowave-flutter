@@ -60,9 +60,7 @@ class _DashboardPageState extends State<DashboardPage> {
                             padding: const EdgeInsets.symmetric(
                                 horizontal: AppSizes.primary),
                             child: BlocConsumer<ProfileBloc, ProfileState>(
-                              listener: (context, state) {
-                                // TODO: implement listener
-                              },
+                              listener: (context, state) {},
                               builder: (context, state) {
                                 String name = state.user.name;
 
@@ -262,7 +260,6 @@ class _DashboardPageState extends State<DashboardPage> {
                             if (state is ProductLoading) {
                               return const EcoLoading();
                             } else if (state is ProductFailed) {
-                              print('Error');
                               return EcoError(
                                 errorMessage: state.message,
                                 onRetry: () {},

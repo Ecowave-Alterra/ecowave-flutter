@@ -23,7 +23,7 @@ class UserProfileModel {
 
   factory UserProfileModel.fromJson(Map<String, dynamic> json) {
     var addressList = json['Data']['Addresses'] as List<dynamic>?;
-    List<AddressModel> Addresses = addressList
+    List<AddressModel> addresses = addressList
             ?.map((address) => AddressModel.fromJson(address))
             .toList() ??
         [];
@@ -37,7 +37,7 @@ class UserProfileModel {
       phone: json['Data']['Phone'],
       point: json['Data']['Point'],
       profilePhotoUrl: json['Data']['ProfilePhoto'],
-      addresses: Addresses,
+      addresses: addresses,
     );
   }
 }
