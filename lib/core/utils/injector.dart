@@ -4,6 +4,7 @@ import 'package:ecowave/features/cart/bloc/cart/cart_bloc.dart';
 import 'package:ecowave/features/information/bloc/bookmark/bookmark_bloc.dart';
 import 'package:ecowave/features/information/bloc/information/information_bloc.dart';
 import 'package:ecowave/features/information/bloc/isBookmark/is_bookmark_bloc.dart';
+import 'package:ecowave/features/information/bloc/updatePoint/update_point_bloc.dart';
 import 'package:ecowave/features/information/model/services/bookmark_service.dart';
 import 'package:ecowave/features/information/model/services/information_service.dart';
 import 'package:ecowave/features/ecommerce/bloc/product_home/product_bloc.dart';
@@ -46,6 +47,7 @@ void init() {
   locator.registerFactory(() => TrackingDeliveryBloc(locator()));
   locator.registerFactory(() => BookmarkBloc(locator()));
   locator.registerFactory(() => IsBookmarkBloc(locator()));
+  locator.registerFactory(() => UpdatePointBloc(locator()));
 
   // service
   locator.registerLazySingleton<AddressService>(() => AddressService());
@@ -57,8 +59,6 @@ void init() {
   locator.registerLazySingleton<VoucherService>(() => VoucherService());
   locator.registerLazySingleton<InformationService>(() => InformationService());
   locator.registerLazySingleton<ProductService>(() => ProductService());
-  locator.registerLazySingleton<ProfileService>(
-      () =>ProfileService());
+  locator.registerLazySingleton<ProfileService>(() => ProfileService());
   locator.registerLazySingleton<BookmarkService>(() => BookmarkService());
 }
-

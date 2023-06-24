@@ -275,7 +275,7 @@ class _DashboardPageState extends State<DashboardPage> {
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(8.0),
                                       child: Image.network(
-                                        product[i].productImageUrl[0],
+                                        product[i].productImageUrl![0],
                                         height: 120,
                                         fit: BoxFit.cover,
                                       ),
