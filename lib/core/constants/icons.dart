@@ -59,4 +59,5 @@ class AppIcons {
   static const AssetImage voucher = AssetImage("assets/icons/voucher.png");
   static const AssetImage payment = AssetImage("assets/icons/payment.png");
   static const AssetImage warning = AssetImage("assets/icons/warning.png");
+  static const AssetImage ratingVid = AssetImage("assets/icons/ratingVid.png");
 }

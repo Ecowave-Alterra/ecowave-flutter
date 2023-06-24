@@ -15,7 +15,10 @@ class HomeECommerce extends StatelessWidget {
         title: const Text("EcoShop"),
         actions: [
           IconButton(
-            onPressed: () => context.push(const CartPage()),
+            onPressed: () {
+              context.push(const CartPage());
+              FocusScope.of(context).unfocus();
+            },
             icon: const ImageIcon(
               AppIcons.keranjang,
               color: AppColors.primary500,

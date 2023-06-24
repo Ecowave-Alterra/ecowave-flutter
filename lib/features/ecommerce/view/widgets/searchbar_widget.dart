@@ -30,54 +30,56 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SizedBox(
-            width: 287,
-            height: 56,
-            child: TextFormField(
-              controller: search,
-              keyboardType: TextInputType.name,
-              style: const TextStyle(backgroundColor: AppColors.white),
-              cursorColor: AppColors.black,
-              decoration: InputDecoration(
-                contentPadding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(28),
-                  borderSide: const BorderSide(color: AppColors.grey300),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(28),
-                  borderSide: const BorderSide(color: AppColors.grey300),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(28),
-                  borderSide: const BorderSide(color: AppColors.primary500),
-                ),
-                disabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(28),
-                  borderSide: const BorderSide(color: AppColors.grey300),
-                ),
-                errorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(28),
-                  borderSide: const BorderSide(color: AppColors.error500),
-                ),
-                labelStyle: const TextStyle(
-                  color: Colors.black,
-                ),
-                hintText: 'Hinted search text',
-                hintStyle: const TextStyle(color: AppColors.grey500),
-                prefixIcon: const Padding(
-                  padding: EdgeInsets.all(18.4),
-                  child: ImageIcon(
-                    AppIcons.search,
-                    color: AppColors.grey400,
-                    size: 19,
+          Flexible(
+            child: Container(
+              padding: const EdgeInsets.only(left: AppSizes.primary),
+              height: 56,
+              child: TextFormField(
+                controller: search,
+                keyboardType: TextInputType.name,
+                style: const TextStyle(backgroundColor: AppColors.white),
+                cursorColor: AppColors.black,
+                decoration: InputDecoration(
+                  contentPadding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(28),
+                    borderSide: const BorderSide(color: AppColors.grey300),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(28),
+                    borderSide: const BorderSide(color: AppColors.grey300),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(28),
+                    borderSide: const BorderSide(color: AppColors.primary500),
+                  ),
+                  disabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(28),
+                    borderSide: const BorderSide(color: AppColors.grey300),
+                  ),
+                  errorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(28),
+                    borderSide: const BorderSide(color: AppColors.error500),
+                  ),
+                  labelStyle: const TextStyle(
+                    color: Colors.black,
+                  ),
+                  hintText: 'Hinted search text',
+                  hintStyle: const TextStyle(color: AppColors.grey500),
+                  prefixIcon: const Padding(
+                    padding: EdgeInsets.all(18.4),
+                    child: ImageIcon(
+                      AppIcons.search,
+                      color: AppColors.grey400,
+                      size: 19,
+                    ),
                   ),
                 ),
+                onChanged: (value) {
+                  context.read<ProductBloc>().add(SearchProductEvent(value));
+                },
               ),
-              onChanged: (value) {
-                context.read<ProductBloc>().add(SearchProductEvent(value));
-              },
             ),
           ),
           TextButton.icon(
@@ -195,7 +197,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                                     ),
                                     TextButton(
                                       onPressed: () {
-                                        isProductCategory = 'Perabot';
+                                        isProductCategory = 'perabot';
                                         setState(() {});
                                       },
                                       child: Container(
@@ -207,7 +209,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                                               color: AppColors.primary500),
                                           borderRadius: BorderRadius.circular(
                                               AppSizes.radius),
-                                          color: isProductCategory == 'Perabot'
+                                          color: isProductCategory == 'perabot'
                                               ? AppColors.primary500
                                               : AppColors.white,
                                         ),
@@ -216,7 +218,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                                             children: [
                                               Visibility(
                                                 visible: isProductCategory ==
-                                                        'Perabot'
+                                                        'perabot'
                                                     ? true
                                                     : false,
                                                 child: const Padding(
@@ -233,7 +235,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                                                 'Perabot',
                                                 style: TextStyle(
                                                   color: isProductCategory ==
-                                                          'Perabot'
+                                                          'perabot'
                                                       ? AppColors.white
                                                       : AppColors.primary500,
                                                   fontWeight:
@@ -249,7 +251,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                                     ),
                                     TextButton(
                                       onPressed: () {
-                                        isProductCategory = 'Kantong';
+                                        isProductCategory = 'kantong';
                                         setState(() {});
                                       },
                                       child: Container(
@@ -261,7 +263,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                                               color: AppColors.primary500),
                                           borderRadius: BorderRadius.circular(
                                               AppSizes.radius),
-                                          color: isProductCategory == 'Kantong'
+                                          color: isProductCategory == 'kantong'
                                               ? AppColors.primary500
                                               : AppColors.white,
                                         ),
@@ -270,7 +272,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                                             children: [
                                               Visibility(
                                                 visible: isProductCategory ==
-                                                        'Kantong'
+                                                        'kantong'
                                                     ? true
                                                     : false,
                                                 child: const Padding(
@@ -287,7 +289,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                                                 'Kantong',
                                                 style: TextStyle(
                                                   color: isProductCategory ==
-                                                          'Kantong'
+                                                          'kantong'
                                                       ? AppColors.white
                                                       : AppColors.primary500,
                                                   fontWeight:
@@ -406,6 +408,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                                             .read<ProductBloc>()
                                             .add(GetProductEvent());
                                         setState(() {});
+                                        FocusScope.of(context).unfocus();
                                       },
                                       child: Container(
                                         height: 44.0,
@@ -434,8 +437,8 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                                       onPressed: () {
                                         Navigator.pop(context);
                                         isFilterOn = 1;
-                                        isProductCategory == 'Perabot' ||
-                                                isProductCategory == 'Kantong'
+                                        isProductCategory == 'perabot' ||
+                                                isProductCategory == 'kantong'
                                             ? context.read<ProductBloc>().add(
                                                 FilterProductEvent(
                                                     isProductCategory,
@@ -444,6 +447,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                                                 SortOnlyProductEvent(
                                                     sortProduct));
                                         setState(() {});
+                                        FocusScope.of(context).unfocus();
                                       },
                                       child: Container(
                                         height: 44.0,
