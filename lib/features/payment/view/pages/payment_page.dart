@@ -31,7 +31,7 @@ class _PaymentPageState extends State<PaymentPage> {
     final String paymentStatus = context.read<PaymentStatusBloc>().state;
     debugPrint("paymentStatus: $paymentStatus");
 
-    if (paymentStatus == "settlemet") {
+    if (paymentStatus == "settlement") {
       context.read<HomeBloc>().add(const OnBottomNavTap(1));
       context.pushAndRemoveUntil<bool>(const MyHomePage(), (route) => false);
     }
@@ -78,7 +78,7 @@ class _PaymentPageState extends State<PaymentPage> {
       ..loadRequest(Uri.parse(widget.paymentUrl));
 
     timer = Timer.periodic(
-        const Duration(seconds: 10), (Timer t) => checkPaymentStatus());
+        const Duration(seconds: 5), (Timer t) => checkPaymentStatus());
     super.initState();
   }
 
