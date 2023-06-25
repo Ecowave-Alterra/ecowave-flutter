@@ -54,9 +54,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       } else if (event.value == true) {
         service.items[targetIndex].checkedItems = true;
       }
-      emit(CartSuccess(
-        data: service.items,
-      ));
+      add(GetTotalPayment());
     });
     on<CheckedAllItemCart>(
       (event, emit) {
@@ -70,16 +68,14 @@ class CartBloc extends Bloc<CartEvent, CartState> {
             service.items[i].checkedItems = true;
           }
         }
-        emit(CartSuccess(
-          data: service.items,
-        ));
+        add(GetTotalPayment());
       },
     );
     on<GetTotalPayment>(
       (event, emit) {
         double totalPayment = 0;
         for (CartModel item
-            in service.items.where((element) => element.checkedItems)) {
+            in service.items.where((element) => element.checkedItems == true)) {
           totalPayment += (item.price * item.totalItems);
         }
         emit(CartSuccess(data: service.items, total: totalPayment));
