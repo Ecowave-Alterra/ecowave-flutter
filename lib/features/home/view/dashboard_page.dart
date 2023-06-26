@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ecowave/core.dart';
 import 'package:ecowave/features/ecommerce/bloc/product_home/product_bloc.dart';
@@ -288,8 +289,8 @@ class _DashboardPageState extends State<DashboardPage> {
                                       child: ClipRRect(
                                         borderRadius:
                                             BorderRadius.circular(8.0),
-                                        child: Image.network(
-                                          (product[i]
+                                        child: CachedNetworkImage(
+                                          imageUrl: (product[i]
                                                   .productImageUrl!
                                                   .isNotEmpty)
                                               ? (product[i]
@@ -298,6 +299,12 @@ class _DashboardPageState extends State<DashboardPage> {
                                               : 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg',
                                           height: 120,
                                           fit: BoxFit.fitHeight,
+                                          errorWidget: (context, url, error) =>
+                                              const ImageIcon(
+                                            AppIcons.warning,
+                                            color: AppColors.primary500,
+                                            size: 50,
+                                          ),
                                         ),
                                       ),
                                     ),

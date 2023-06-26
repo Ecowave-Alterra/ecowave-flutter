@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ecowave/features/ecommerce/bloc/product_home/product_bloc.dart';
 import 'package:ecowave/features/ecommerce/model/models/product_model.dart';
@@ -36,9 +37,14 @@ class _CarouselBarangState extends State<CarouselBarang> {
               final img = (widget.productModel.productImageUrl?[index] ??
                   'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg');
               return SizedBox.fromSize(
-                child: Image.network(
-                  img,
+                child: CachedNetworkImage(
+                  imageUrl: img,
                   fit: BoxFit.contain,
+                  errorWidget: (context, url, error) => const ImageIcon(
+                    AppIcons.warning,
+                    color: AppColors.primary500,
+                    size: 50,
+                  ),
                 ),
               );
             },
@@ -53,9 +59,16 @@ class _CarouselBarangState extends State<CarouselBarang> {
                     items: imgList.isNotEmpty
                         ? imgList
                         : [
-                            Image.network(
-                              'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg',
+                            CachedNetworkImage(
+                              imageUrl:
+                                  'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg',
                               fit: BoxFit.contain,
+                              errorWidget: (context, url, error) =>
+                                  const ImageIcon(
+                                AppIcons.warning,
+                                color: AppColors.primary500,
+                                size: 50,
+                              ),
                             ),
                           ],
                     carouselController: _controller,
