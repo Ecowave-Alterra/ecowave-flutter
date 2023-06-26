@@ -56,13 +56,13 @@ class _TrackDeliveryPageState extends State<TrackDeliveryPage> {
                 ],
               ),
               30.0.height,
-              Text(widget.detailTransaction.expeditionStatus),
+              const Text("REGULER"),
               6.0.height,
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                      "${widget.detailTransaction.expeditionName} : ${widget.detailTransaction.receiptNumber}"),
+                      "${widget.detailTransaction.expeditionName.toUpperCase()} : ${widget.detailTransaction.receiptNumber}"),
                   Row(
                     children: [
                       Tooltip(
@@ -92,6 +92,10 @@ class _TrackDeliveryPageState extends State<TrackDeliveryPage> {
                 builder: (context, state) {
                   if (state is TrackingDeliveryLoading) {
                     return const EcoLoading();
+                  } else if (state is TrackingDeliveryEmpty) {
+                    return const Center(
+                      child: Text("Belum ada proses pengiriman"),
+                    );
                   } else if (state is TrackingDeliveryFailed) {
                     return EcoError(
                         errorMessage: state.message, onRetry: () {});

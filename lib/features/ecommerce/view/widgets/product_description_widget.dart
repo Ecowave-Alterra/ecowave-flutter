@@ -360,7 +360,7 @@ class ProductDescription extends StatelessWidget {
                         ),
                       ],
                     )
-                  : SizedBox.shrink(),
+                  : const SizedBox.shrink(),
             ],
           );
         } else {

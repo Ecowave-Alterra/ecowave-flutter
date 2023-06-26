@@ -16,15 +16,18 @@ class SuccessHistoryTransactionPage extends StatelessWidget {
   Widget build(BuildContext context) {
     context
         .read<HistoryTransactionBloc>()
-        .add(const GetHistoryTransactionEvent());
+        .add(const GetHistorySuccessTransactionEvent());
     return BlocBuilder<HistoryTransactionBloc, HistoryTransactionState>(
         builder: (context, state) {
       debugPrint("state di selesai $state");
       if (state is HistoryTransactionLoading) {
         return const EcoLoading();
+      }
+      if (state is HistoryTransactionEmpty) {
+        return const EmptyState();
       } else if (state is HistoryTransactionFailed) {
         return EcoError(errorMessage: state.message, onRetry: () {});
-      } else if (state is HistoryTransactionSuccess) {
+      } else if (state is HistorySuccessTransactionSuccess) {
         if (state.dataSuccess.isEmpty) {
           return const EmptyState();
         } else {
@@ -42,19 +45,30 @@ class SuccessHistoryTransactionPage extends StatelessWidget {
                   totalProduct: cSuccess.orderDetail[0].qty,
                   totalProductOrder: cSuccess.orderDetail.length,
                   totalProductOrderPrice: cSuccess.totalPrice,
-                  descriptionStatus:
-                      "Pesanan berhasil, silahkan berikan penilaian Anda",
+                  descriptionStatus: cSuccess.expeditionRating > 0.0
+                      ? "Terima kasih sudah belanja di toko kami😁"
+                      : "Pesanan telah berhasil, silahkan berikan penilaian Anda",
                   onPressedDetail: () {
                     context.push(
                         PaidTransactionDetailPage(detailTransaction: cSuccess));
                   },
                   onPressedAction: () {
-                    context.push(RatingPage(
-                      detailRating: cSuccess,
-                      moveTab: moveTab,
-                    ));
+                    cSuccess.expeditionRating > 0.0
+                        ? null
+                        : context.push(RatingPage(
+                            detailRating: cSuccess,
+                            moveTab: moveTab,
+                          ));
                   },
-                  buttonName: "Berikan Penilaian",
+                  buttonName: cSuccess.expeditionRating > 0.0
+                      ? "Pesanan Selesai"
+                      : "Berikan Penilaian",
+                  colorBackgroundButton: cSuccess.expeditionRating > 0.0
+                      ? AppColors.primary50
+                      : AppColors.primary500,
+                  colorTextButton: cSuccess.expeditionRating > 0.0
+                      ? AppColors.primary300
+                      : AppColors.white,
                 );
               });
         }
