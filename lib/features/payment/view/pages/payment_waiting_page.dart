@@ -79,7 +79,12 @@ class PaymentWaitingPage extends StatelessWidget {
                   flex: 1,
                   child: EcoFormButton(
                     label: "Beranda",
-                    onPressed: () => context.popToRoot(),
+                    onPressed: () {
+                      context
+                          .read<HistoryTransactionBloc>()
+                          .add(const GetHistoryUnpaidTransactionEvent());
+                      context.popToRoot();
+                    },
                     backgroundColor: Colors.transparent,
                     textColor: AppColors.primary500,
                     border: Border.all(
