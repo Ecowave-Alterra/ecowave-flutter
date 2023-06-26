@@ -227,8 +227,7 @@ class PaymentDetailPage extends StatelessWidget {
                                     addressId: state.addressModel!.id,
                                     totalShippingPrice:
                                         state.paymentInfo!.totalPayment,
-                                    expeditionName: state.expeditionModel!.code
-                                        .toUpperCase(),
+                                    expeditionName: state.expeditionModel!.code,
                                     estimationDay: state.expeditionModel!.etd,
                                     discount: state.paymentInfo?.discount ?? 0,
                                     transactionDetails: carts
