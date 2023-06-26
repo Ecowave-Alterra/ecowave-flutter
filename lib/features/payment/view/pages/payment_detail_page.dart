@@ -68,15 +68,18 @@ class PaymentDetailPage extends StatelessWidget {
                             .add(GetAddressesEvent()),
                       );
                     } else if (state is AddressSuccess) {
-                      final AddressModel shippingAddressModel = state.addresses!
-                          .where((element) => element.isPrimary)
-                          .first;
+                      AddressModel? shippingAddressModel;
 
-                      context
-                          .read<PaymentDetailBloc>()
-                          .add(ChangeShippingAddressEvent(
-                            addressModel: shippingAddressModel,
-                          ));
+                      if ((state.addresses ?? []).isNotEmpty) {
+                        shippingAddressModel = state.addresses!
+                            .where((element) => element.isPrimary)
+                            .first;
+                        context
+                            .read<PaymentDetailBloc>()
+                            .add(ChangeShippingAddressEvent(
+                              addressModel: shippingAddressModel,
+                            ));
+                      }
 
                       return AddressInfoWidget(
                         addressModel: shippingAddressModel,
@@ -107,16 +110,20 @@ class PaymentDetailPage extends StatelessWidget {
                 label: "Pilih Opsi Pengiriman",
                 icon: AppIcons.shipping,
                 onPressed: () {
-                  context.read<ExpeditionBloc>().add(GetExpeditionsEvent(
-                        request: ExpeditionRequest(
-                          cityId: state.addressModel!.cityId.toString(),
-                          weight: 1,
-                        ),
-                      ));
-                  context.push(ShippingOptionsPage(
-                    cityId: state.addressModel!.cityId.toString(),
-                    shipping: state.expeditionModel,
-                  ));
+                  if (state.addressModel != null) {
+                    context.read<ExpeditionBloc>().add(GetExpeditionsEvent(
+                          request: ExpeditionRequest(
+                            cityId: state.addressModel!.cityId.toString(),
+                            weight: 1,
+                          ),
+                        ));
+                    context.push(ShippingOptionsPage(
+                      cityId: state.addressModel!.cityId.toString(),
+                      shipping: state.expeditionModel,
+                    ));
+                  } else {
+                    "Pilih alamat terlebih dahulu".failedBar(context);
+                  }
                 },
               );
             },
@@ -221,7 +228,8 @@ class PaymentDetailPage extends StatelessWidget {
                                     addressId: state.addressModel!.id,
                                     totalShippingPrice:
                                         state.paymentInfo!.totalPayment,
-                                    expeditionName: state.expeditionModel!.name,
+                                    expeditionName:
+                                        "${state.expeditionModel!.code.toUpperCase()} ${state.expeditionModel!.service}",
                                     estimationDay: state.expeditionModel!.etd,
                                     discount: state.paymentInfo?.discount ?? 0,
                                     transactionDetails: carts

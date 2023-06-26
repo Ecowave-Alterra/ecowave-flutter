@@ -4,6 +4,7 @@ import 'package:ecowave/features/information/view/pages/detail_information_page.
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 import '../../../../core.dart';
 
@@ -32,11 +33,22 @@ class ListInformation extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Image.network(
-              informationModel.photoContentUrl,
+            CachedNetworkImage(
+              imageUrl: informationModel.photoContentUrl,
               width: 127,
               height: 148,
-              fit: BoxFit.cover,
+              imageBuilder: (context, imageProvider) => Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: imageProvider,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              errorWidget: (context, url, error) => const ImageIcon(
+                AppIcons.warning,
+                color: AppColors.primary500,
+              ),
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
