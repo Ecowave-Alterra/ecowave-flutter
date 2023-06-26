@@ -86,24 +86,27 @@ class ProductDetail extends StatelessWidget {
           children: [
             Flexible(
               child: EcoFormButtonIcon(
-                onPressed: () {
-                  context.read<CartBloc>().add(
-                        AddItemCart(
-                          cartModel: CartModel(
-                            id: productModel.productId,
-                            nameItems: productModel.name,
-                            detailItems: productModel.category,
-                            image: (productModel.productImageUrl!.isNotEmpty)
-                                ? (productModel.productImageUrl?[0] ??
-                                    'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg')
-                                : 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg',
-                            price: productModel.price.toInt(),
-                            totalItems: 1,
-                            checkedItems: false,
-                          ),
-                        ),
-                      );
-                },
+                onPressed: productModel.stock == 0
+                    ? null
+                    : () {
+                        context.read<CartBloc>().add(
+                              AddItemCart(
+                                cartModel: CartModel(
+                                  id: productModel.productId,
+                                  nameItems: productModel.name,
+                                  detailItems: productModel.category,
+                                  image: (productModel
+                                          .productImageUrl!.isNotEmpty)
+                                      ? (productModel.productImageUrl?[0] ??
+                                          'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg')
+                                      : 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg',
+                                  price: productModel.price.toInt(),
+                                  totalItems: 1,
+                                  checkedItems: false,
+                                ),
+                              ),
+                            );
+                      },
                 label: "Keranjang",
                 image: const Image(
                   image: AppIcons.keranjang,
@@ -120,24 +123,26 @@ class ProductDetail extends StatelessWidget {
             ),
             Flexible(
               child: EcoFormButton(
-                onPressed: () {
-                  context.push(PaymentDetailPage(
-                    carts: [
-                      CartModel(
-                        id: productModel.productId,
-                        nameItems: productModel.name,
-                        detailItems: productModel.category,
-                        image: (productModel.productImageUrl!.isNotEmpty)
-                            ? (productModel.productImageUrl?[0] ??
-                                'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg')
-                            : 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg',
-                        price: productModel.price.toInt(),
-                        totalItems: 1,
-                        checkedItems: false,
-                      ),
-                    ],
-                  ));
-                },
+                onPressed: productModel.stock == 0
+                    ? null
+                    : () {
+                        context.push(PaymentDetailPage(
+                          carts: [
+                            CartModel(
+                              id: productModel.productId,
+                              nameItems: productModel.name,
+                              detailItems: productModel.category,
+                              image: (productModel.productImageUrl!.isNotEmpty)
+                                  ? (productModel.productImageUrl?[0] ??
+                                      'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg')
+                                  : 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg',
+                              price: productModel.price.toInt(),
+                              totalItems: 1,
+                              checkedItems: false,
+                            ),
+                          ],
+                        ));
+                      },
                 label: "Pesan Sekarang",
                 height: 48.0,
               ),
