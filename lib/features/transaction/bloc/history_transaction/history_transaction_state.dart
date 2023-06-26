@@ -9,20 +9,46 @@ abstract class HistoryTransactionState extends Equatable {
 
 class HistoryTransactionInitial extends HistoryTransactionState {}
 
+class HistoryTransactionEmpty extends HistoryTransactionState {}
+
 class HistoryTransactionLoading extends HistoryTransactionState {}
 
-class HistoryTransactionSuccess extends HistoryTransactionState {
+class HistoryUnpaidTransactionSuccess extends HistoryTransactionState {
   final List<HistoryTransactionModel> dataUnpaid;
-  final List<HistoryTransactionModel> dataSending;
+
+  const HistoryUnpaidTransactionSuccess({
+    required this.dataUnpaid,
+  });
+}
+
+class HistoryPackedTransactionSuccess extends HistoryTransactionState {
   final List<HistoryTransactionModel> dataPacked;
+
+  const HistoryPackedTransactionSuccess({
+    required this.dataPacked,
+  });
+}
+
+class HistorySendingTransactionSuccess extends HistoryTransactionState {
+  final List<HistoryTransactionModel> dataSending;
+
+  const HistorySendingTransactionSuccess({
+    required this.dataSending,
+  });
+}
+
+class HistorySuccessTransactionSuccess extends HistoryTransactionState {
   final List<HistoryTransactionModel> dataSuccess;
+
+  const HistorySuccessTransactionSuccess({
+    required this.dataSuccess,
+  });
+}
+
+class HistoryFailedTransactionSuccess extends HistoryTransactionState {
   final List<HistoryTransactionModel> dataFailed;
 
-  const HistoryTransactionSuccess({
-    required this.dataUnpaid,
-    required this.dataSending,
-    required this.dataPacked,
-    required this.dataSuccess,
+  const HistoryFailedTransactionSuccess({
     required this.dataFailed,
   });
 }

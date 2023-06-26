@@ -11,6 +11,8 @@ class TrackingDeliveryInitial extends TrackingDeliveryState {}
 
 class TrackingDeliveryLoading extends TrackingDeliveryState {}
 
+class TrackingDeliveryEmpty extends TrackingDeliveryState {}
+
 class TrackingDeliverySuccess extends TrackingDeliveryState {
   final List<TrackingDeliveryModel> dataTracking;
 

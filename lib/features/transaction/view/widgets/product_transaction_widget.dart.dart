@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecowave/core.dart';
 import 'package:flutter/material.dart';
 
@@ -64,15 +65,27 @@ class ProductTransactionWidget extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                  decoration: const BoxDecoration(),
-                  height: 70,
-                  width: 90,
-                  // child: Image.asset(
-                  //   "assets/images/productShop2.png",
-                  //   fit: BoxFit.cover,
-                  // ),
-                  child: Image.network(imageUrl ?? ""),
+                _sizedContainer(
+                  CachedNetworkImage(
+                    imageUrl: (imageUrl!.isNotEmpty)
+                        ? (imageUrl ??
+                            'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg')
+                        : 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg',
+                    imageBuilder: (context, imageProvider) => Container(
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: imageProvider,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                    placeholder: (context, url) =>
+                        const CircularProgressIndicator(
+                      color: Colors.green,
+                    ),
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
+                  ),
                 ),
                 const SizedBox(
                   width: 50,
@@ -169,5 +182,13 @@ class ProductTransactionWidget extends StatelessWidget {
             ),
           ],
         ));
+  }
+
+  Widget _sizedContainer(Widget child) {
+    return SizedBox(
+      width: 90.0,
+      height: 70.0,
+      child: Center(child: child),
+    );
   }
 }

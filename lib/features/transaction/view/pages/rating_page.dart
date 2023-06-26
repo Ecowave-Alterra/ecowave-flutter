@@ -143,9 +143,9 @@ class _RatingPageState extends State<RatingPage> {
                               decoration: const BoxDecoration(),
                               child: RatingBar.builder(
                                 initialRating: 0,
-                                minRating: 0,
+                                minRating: 1,
                                 direction: Axis.horizontal,
-                                allowHalfRating: true,
+                                allowHalfRating: false,
                                 itemCount: 5,
                                 itemSize: 25.0,
                                 itemPadding:
@@ -195,63 +195,7 @@ class _RatingPageState extends State<RatingPage> {
                                             ),
                                             readOnly: true,
                                             onTap: () async {
-                                              final selectImage =
-                                                  await FilePicker.platform
-                                                      .pickFiles(
-                                                type: FileType.custom,
-                                                allowedExtensions: [
-                                                  'jpg',
-                                                  'jpeg',
-                                                  'png'
-                                                ],
-                                              );
-
-                                              if (selectImage != null) {
-                                                final FilePickerResult result =
-                                                    selectImage;
-
-                                                if (result.files.isNotEmpty) {
-                                                  final PlatformFile file =
-                                                      result.files.first;
-                                                  final String filePath =
-                                                      file.path ?? "";
-
-                                                  String extension = filePath
-                                                      .split('.')
-                                                      .last
-                                                      .toLowerCase();
-                                                  if (extension != 'jpg' &&
-                                                      extension != 'jpeg' &&
-                                                      extension != 'png') {
-                                                    if (context.mounted) {
-                                                      ScaffoldMessenger.of(
-                                                              context)
-                                                          .showSnackBar(
-                                                        const SnackBar(
-                                                          content: Text(
-                                                              "Masukkan gambar yang bertipe jpg, jpeg, atau png"),
-                                                        ),
-                                                      );
-                                                    }
-
-                                                    setState(() {
-                                                      _fotoControllers[index]
-                                                          .text = "";
-                                                    });
-                                                  } else {
-                                                    setState(() {
-                                                      _fotoControllers[index]
-                                                              .text =
-                                                          filePath.toString();
-                                                    });
-                                                  }
-                                                }
-                                              } else {
-                                                setState(() {
-                                                  _fotoControllers[index].text =
-                                                      "";
-                                                });
-                                              }
+                                              uploadImage(index);
                                             },
                                           ),
                                         ],
@@ -292,59 +236,7 @@ class _RatingPageState extends State<RatingPage> {
                                             ),
                                             readOnly: true,
                                             onTap: () async {
-                                              final selectVideo =
-                                                  await FilePicker.platform
-                                                      .pickFiles(
-                                                type: FileType.custom,
-                                                allowedExtensions: [
-                                                  'mp4',
-                                                ],
-                                              );
-
-                                              if (selectVideo != null) {
-                                                final FilePickerResult result =
-                                                    selectVideo;
-
-                                                if (result.files.isNotEmpty) {
-                                                  final PlatformFile file =
-                                                      result.files.first;
-                                                  final String filePath =
-                                                      file.path ?? "";
-
-                                                  String extension = filePath
-                                                      .split('.')
-                                                      .last
-                                                      .toLowerCase();
-                                                  if (extension != 'mp4') {
-                                                    if (context.mounted) {
-                                                      ScaffoldMessenger.of(
-                                                              context)
-                                                          .showSnackBar(
-                                                        const SnackBar(
-                                                          content: Text(
-                                                              "Masukkan Video yang bertipe mp4"),
-                                                        ),
-                                                      );
-                                                    }
-
-                                                    setState(() {
-                                                      _videoControllers[index]
-                                                          .text = "";
-                                                    });
-                                                  } else {
-                                                    setState(() {
-                                                      _videoControllers[index]
-                                                              .text =
-                                                          filePath.toString();
-                                                    });
-                                                  }
-                                                }
-                                              } else {
-                                                setState(() {
-                                                  _videoControllers[index]
-                                                      .text = "";
-                                                });
-                                              }
+                                              uploadVideo(index);
                                             },
                                           ),
                                         ],
@@ -384,9 +276,9 @@ class _RatingPageState extends State<RatingPage> {
                   decoration: const BoxDecoration(),
                   child: RatingBar.builder(
                     initialRating: 0,
-                    minRating: 0,
+                    minRating: 1,
                     direction: Axis.horizontal,
-                    allowHalfRating: true,
+                    allowHalfRating: false,
                     itemCount: 5,
                     itemSize: 25.0,
                     itemPadding: const EdgeInsets.symmetric(horizontal: 8),
@@ -415,30 +307,35 @@ class _RatingPageState extends State<RatingPage> {
                               i < widget.detailRating.orderDetail.length;
                               i++) {
                             // Retrieve the necessary data for each rating item
-                            double rating = double.tryParse(
+                            double ratingProduct = double.tryParse(
                                     _rateProdukControllers[i].text) ??
-                                0;
-                            String photoUrl = _fotoControllers[i].text;
-                            String videoUrl = _videoControllers[i].text;
-                            String comment = _komenControllers[i].text;
+                                1.0;
+                            String? photoUrl = _fotoControllers[i].text;
+                            String? videoUrl = _videoControllers[i].text;
+                            String? comment = _komenControllers[i].text;
 
                             RatingData ratingData = RatingData(
-                              ratingProduct: rating,
+                              ratingProduct: ratingProduct,
                               photoUrl: photoUrl,
                               videoUrl: videoUrl,
-                              commentUser: comment,
+                              comment: comment,
                             );
                             ratingDataList.add(ratingData);
                           }
 
                           double expeditionRating =
-                              double.tryParse(_rateLayananController.text) ?? 0;
+                              double.tryParse(_rateLayananController.text) ??
+                                  1.0;
 
                           context.read<HistoryTransactionBloc>().add(
                               PostRatingDataEvent(
-                                  ratingDataList, expeditionRating));
+                                  ratingDataList: ratingDataList,
+                                  expeditionRating: expeditionRating,
+                                  transactionId:
+                                      widget.detailRating.transactionId));
 
                           showPoint(
+                              nilaiPoint: 10,
                               context: context,
                               onPress: () {
                                 context.popToRoot();
@@ -471,5 +368,86 @@ class _RatingPageState extends State<RatingPage> {
       height: 70.0,
       child: Center(child: child),
     );
+  }
+
+  void uploadImage(index) async {
+    final selectImage = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['jpg', 'jpeg', 'png'],
+    );
+
+    if (selectImage != null) {
+      final FilePickerResult result = selectImage;
+
+      if (result.files.isNotEmpty) {
+        final PlatformFile file = result.files.first;
+        final String filePath = file.path ?? "";
+
+        String extension = filePath.split('.').last.toLowerCase();
+        if (extension != 'jpg' && extension != 'jpeg' && extension != 'png') {
+          if (context.mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content:
+                    Text("Masukkan gambar yang bertipe jpg, jpeg, atau png"),
+              ),
+            );
+          }
+
+          setState(() {
+            _fotoControllers[index].text = "";
+          });
+        } else {
+          setState(() {
+            _fotoControllers[index].text = filePath.toString();
+          });
+        }
+      }
+    } else {
+      setState(() {
+        _fotoControllers[index].text = "";
+      });
+    }
+  }
+
+  void uploadVideo(index) async {
+    final selectVideo = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: [
+        'mp4',
+      ],
+    );
+
+    if (selectVideo != null) {
+      final FilePickerResult result = selectVideo;
+
+      if (result.files.isNotEmpty) {
+        final PlatformFile file = result.files.first;
+        final String filePath = file.path ?? "";
+
+        String extension = filePath.split('.').last.toLowerCase();
+        if (extension != 'mp4') {
+          if (context.mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text("Masukkan Video yang bertipe mp4"),
+              ),
+            );
+          }
+
+          setState(() {
+            _videoControllers[index].text = "";
+          });
+        } else {
+          setState(() {
+            _videoControllers[index].text = filePath.toString();
+          });
+        }
+      }
+    } else {
+      setState(() {
+        _videoControllers[index].text = "";
+      });
+    }
   }
 }

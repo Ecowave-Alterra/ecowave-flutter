@@ -23,7 +23,7 @@ class _UnpaidHistoryTransactionPageState
   void initState() {
     context
         .read<HistoryTransactionBloc>()
-        .add(const GetHistoryTransactionEvent());
+        .add(const GetHistoryUnpaidTransactionEvent());
     super.initState();
   }
 
@@ -31,12 +31,15 @@ class _UnpaidHistoryTransactionPageState
   Widget build(BuildContext context) {
     return BlocBuilder<HistoryTransactionBloc, HistoryTransactionState>(
         builder: (context, state) {
-      // print("state $state");
+      debugPrint("state di belum bayar $state");
       if (state is HistoryTransactionLoading) {
         return const EcoLoading();
+      }
+      if (state is HistoryTransactionEmpty) {
+        return const EmptyState();
       } else if (state is HistoryTransactionFailed) {
         return EcoError(errorMessage: state.message, onRetry: () {});
-      } else if (state is HistoryTransactionSuccess) {
+      } else if (state is HistoryUnpaidTransactionSuccess) {
         if (state.dataUnpaid.isEmpty) {
           return const EmptyState();
         } else {
@@ -46,14 +49,14 @@ class _UnpaidHistoryTransactionPageState
               itemBuilder: (context, index) {
                 final HistoryTransactionModel cUnpaid = state.dataUnpaid[index];
 
-                // if (DateTime.now()
-                //         .difference(DateTime.parse(cUnpaid.createdAt))
-                //         .inDays >=
-                //     1) {
-                //   context
-                //       .read<HistoryTransactionBloc>()
-                //       .add(AddCancelTransactionEvent(cUnpaid.transactionId));
-                // }
+                if (DateTime.now()
+                        .difference(DateTime.parse(cUnpaid.createdAt))
+                        .inDays >=
+                    1) {
+                  context
+                      .read<HistoryTransactionBloc>()
+                      .add(AddCancelTransactionEvent(cUnpaid.transactionId));
+                }
                 return ProductTransactionWidget(
                     statusOrder: cUnpaid.statusTransaction,
                     imageUrl: cUnpaid.orderDetail[0].productImageUrl,
