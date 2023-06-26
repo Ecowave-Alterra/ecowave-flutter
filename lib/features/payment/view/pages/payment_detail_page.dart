@@ -226,10 +226,11 @@ class PaymentDetailPage extends StatelessWidget {
                                   request: TransactionRequest(
                                     addressId: state.addressModel!.id,
                                     totalShippingPrice:
-                                        state.paymentInfo!.totalPayment,
+                                        state.paymentInfo!.shippingPrice,
                                     expeditionName: state.expeditionModel!.code,
                                     estimationDay: state.expeditionModel!.etd,
-                                    discount: state.paymentInfo?.discount ?? 0,
+                                    discount:
+                                        -(state.paymentInfo?.discount ?? 0),
                                     transactionDetails: carts
                                         .map((e) => TransactionDetail(
                                               productId: e.id,
@@ -238,7 +239,7 @@ class PaymentDetailPage extends StatelessWidget {
                                               subTotalPrice: e.totalPrice,
                                             ))
                                         .toList(),
-                                    point: state.pointUsed,
+                                    point: -state.pointUsed,
                                     voucherId: state.voucherModel?.id ?? 1,
                                   ),
                                 ));
