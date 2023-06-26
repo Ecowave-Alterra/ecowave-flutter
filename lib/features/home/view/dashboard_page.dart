@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ecowave/core.dart';
+import 'package:ecowave/features/auth/view/login_page.dart';
 import 'package:ecowave/features/ecommerce/bloc/product_home/product_bloc.dart';
 import 'package:ecowave/features/ecommerce/view/pages/home_e_commerce_page.dart';
 import 'package:ecowave/features/ecommerce/view/pages/product_detail_page.dart';
@@ -62,7 +63,11 @@ class _DashboardPageState extends State<DashboardPage> {
                             padding: const EdgeInsets.symmetric(
                                 horizontal: AppSizes.primary),
                             child: BlocConsumer<ProfileBloc, ProfileState>(
-                              listener: (context, state) {},
+                              listener: (context, state) {
+                                if (state.status == DataStateStatus.error) {
+                                  context.pushReplacement(const LoginPage());
+                                }
+                              },
                               builder: (context, state) {
                                 String name = state.user.name;
 

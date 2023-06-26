@@ -17,7 +17,6 @@ class ProfilePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Saya'),
-        centerTitle: true,
       ),
       body: BlocBuilder<ProfileBloc, ProfileState>(
         builder: (context, state) {
