@@ -102,7 +102,7 @@ class _DashboardPageState extends State<DashboardPage> {
                                   ),
                                   borderRadius:
                                       BorderRadius.circular(AppSizes.radius)),
-                              child: const Row(
+                              child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
@@ -110,7 +110,7 @@ class _DashboardPageState extends State<DashboardPage> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Row(
+                                      const Row(
                                         children: [
                                           Text(
                                             "EcoPoint  ",
@@ -131,16 +131,21 @@ class _DashboardPageState extends State<DashboardPage> {
                                           ),
                                         ],
                                       ),
-                                      Text(
-                                        "1000",
-                                        style: TextStyle(
-                                            fontSize: AppSizes.secondary,
-                                            fontWeight:
-                                                AppFontWeight.extrabold),
+                                      BlocBuilder<ProfileBloc, ProfileState>(
+                                        builder: (context, state) {
+                                          return Text(
+                                            state.user.point.toString(),
+                                            style: const TextStyle(
+                                              fontSize: AppSizes.secondary,
+                                              fontWeight:
+                                                  AppFontWeight.extrabold,
+                                            ),
+                                          );
+                                        },
                                       )
                                     ],
                                   ),
-                                  ImageIcon(
+                                  const ImageIcon(
                                     AppIcons.ecoPoints,
                                     size: 48,
                                     color: AppColors.grey500,
