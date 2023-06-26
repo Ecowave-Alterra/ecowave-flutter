@@ -1,5 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ecowave/core.dart';
+import 'package:ecowave/features/auth/view/login_page.dart';
 import 'package:ecowave/features/ecommerce/bloc/product_home/product_bloc.dart';
 import 'package:ecowave/features/ecommerce/view/pages/home_e_commerce_page.dart';
 import 'package:ecowave/features/ecommerce/view/pages/product_detail_page.dart';
@@ -61,7 +63,11 @@ class _DashboardPageState extends State<DashboardPage> {
                             padding: const EdgeInsets.symmetric(
                                 horizontal: AppSizes.primary),
                             child: BlocConsumer<ProfileBloc, ProfileState>(
-                              listener: (context, state) {},
+                              listener: (context, state) {
+                                if (state.status == DataStateStatus.error) {
+                                  context.pushReplacement(const LoginPage());
+                                }
+                              },
                               builder: (context, state) {
                                 String name = state.user.name;
 
@@ -102,7 +108,7 @@ class _DashboardPageState extends State<DashboardPage> {
                                   ),
                                   borderRadius:
                                       BorderRadius.circular(AppSizes.radius)),
-                              child: const Row(
+                              child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
@@ -110,7 +116,7 @@ class _DashboardPageState extends State<DashboardPage> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Row(
+                                      const Row(
                                         children: [
                                           Text(
                                             "EcoPoint  ",
@@ -131,16 +137,21 @@ class _DashboardPageState extends State<DashboardPage> {
                                           ),
                                         ],
                                       ),
-                                      Text(
-                                        "1000",
-                                        style: TextStyle(
-                                            fontSize: AppSizes.secondary,
-                                            fontWeight:
-                                                AppFontWeight.extrabold),
+                                      BlocBuilder<ProfileBloc, ProfileState>(
+                                        builder: (context, state) {
+                                          return Text(
+                                            state.user.point.toString(),
+                                            style: const TextStyle(
+                                              fontSize: AppSizes.secondary,
+                                              fontWeight:
+                                                  AppFontWeight.extrabold,
+                                            ),
+                                          );
+                                        },
                                       )
                                     ],
                                   ),
-                                  ImageIcon(
+                                  const ImageIcon(
                                     AppIcons.ecoPoints,
                                     size: 48,
                                     color: AppColors.grey500,
@@ -283,8 +294,8 @@ class _DashboardPageState extends State<DashboardPage> {
                                       child: ClipRRect(
                                         borderRadius:
                                             BorderRadius.circular(8.0),
-                                        child: Image.network(
-                                          (product[i]
+                                        child: CachedNetworkImage(
+                                          imageUrl: (product[i]
                                                   .productImageUrl!
                                                   .isNotEmpty)
                                               ? (product[i]
@@ -293,6 +304,12 @@ class _DashboardPageState extends State<DashboardPage> {
                                               : 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg',
                                           height: 120,
                                           fit: BoxFit.fitHeight,
+                                          errorWidget: (context, url, error) =>
+                                              const ImageIcon(
+                                            AppIcons.warning,
+                                            color: AppColors.primary500,
+                                            size: 50,
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -483,6 +500,7 @@ class _DashboardPageState extends State<DashboardPage> {
               ],
             ),
           ),
+          16.0.height,
         ],
       ),
     );

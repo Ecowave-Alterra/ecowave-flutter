@@ -1,13 +1,26 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'profile_bloc.dart';
 
 class ProfileState extends Equatable {
+  final DataStateStatus status;
   final UserProfileModel user;
 
-  const ProfileState({required this.user});
+  const ProfileState({
+    this.status = DataStateStatus.initial,
+    required this.user,
+  });
 
   factory ProfileState.initial() {
-    return  ProfileState(user:UserProfileModel(username: '', email: '',name: '',phone: '',id: 0,point: 0,profilePhotoUrl: '') );
+    return ProfileState(
+      user: UserProfileModel(
+        username: '',
+        email: '',
+        name: '',
+        phone: '',
+        id: 0,
+        point: 0,
+        profilePhotoUrl: '',
+      ),
+    );
   }
 
   @override
@@ -15,6 +28,4 @@ class ProfileState extends Equatable {
 
   @override
   bool get stringify => true;
-
-
 }

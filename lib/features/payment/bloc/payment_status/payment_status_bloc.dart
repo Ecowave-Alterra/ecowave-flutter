@@ -9,8 +9,12 @@ class PaymentStatusBloc extends Bloc<String, String> {
     this.service,
   ) : super("initial") {
     on<String>((event, emit) async {
-      final String result = await service.getPaymentStatus(event);
-      emit(result);
+      if (event == "initial") {
+        emit(event);
+      } else {
+        final String result = await service.getPaymentStatus(event);
+        emit(result);
+      }
     });
   }
 }

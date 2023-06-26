@@ -2,7 +2,6 @@ import 'package:ecowave/core.dart';
 import 'package:ecowave/features/address/bloc/address/address_bloc.dart';
 import 'package:ecowave/features/cart/bloc/cart/cart_bloc.dart';
 import 'package:ecowave/features/cart/model/models/cart_model.dart';
-import 'package:ecowave/features/payment/bloc/get_point/get_point_bloc.dart';
 import 'package:ecowave/features/payment/bloc/payment_detail/payment_detail_bloc.dart';
 import 'package:ecowave/features/payment/bloc/voucher/voucher_bloc.dart';
 import 'package:ecowave/features/payment/bloc/expedition/expedition_bloc.dart';
@@ -19,6 +18,7 @@ import 'package:ecowave/features/payment/view/widgets/checkout_setting_button.da
 import 'package:ecowave/features/payment/view/widgets/checkout_setting_switch.dart';
 import 'package:ecowave/features/payment/view/widgets/payment_info_widget.dart';
 import 'package:ecowave/features/payment/view/widgets/selected_product_card.dart';
+import 'package:ecowave/features/profile/bloc/profile_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -34,7 +34,6 @@ class PaymentDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     context.read<PaymentDetailBloc>().add(const PointUsedEvent(pointUsed: 0));
     context.read<PaymentDetailBloc>().add(GetCartsEvent(carts: carts));
-    context.read<GetPointBloc>().add(0);
     context.read<VoucherBloc>().add(GetVouchersEvent());
     context.read<AddressBloc>().add(GetAddressesEvent());
 
@@ -144,10 +143,10 @@ class PaymentDetailPage extends StatelessWidget {
             },
           ),
           16.0.height,
-          BlocBuilder<GetPointBloc, int>(
+          BlocBuilder<ProfileBloc, ProfileState>(
             builder: (context, state) {
               return CheckoutSettingSwitch(
-                currentPoint: state,
+                currentPoint: state.user.point,
                 label: "Tukarkan Point",
                 onChanged: (value) => context
                     .read<PaymentDetailBloc>()
@@ -221,17 +220,18 @@ class PaymentDetailPage extends StatelessWidget {
                             state.expeditionModel == null ||
                             state.carts == null
                         ? null
-                        : () async {
+                        : () {
                             totalPayment = state.paymentInfo!.totalPayment;
                             context.read<PaymentDetailBloc>().add(CheckoutEvent(
                                   request: TransactionRequest(
                                     addressId: state.addressModel!.id,
                                     totalShippingPrice:
-                                        state.paymentInfo!.totalPayment,
-                                    expeditionName:
-                                        "${state.expeditionModel!.code.toUpperCase()} ${state.expeditionModel!.service}",
-                                    estimationDay: state.expeditionModel!.etd,
-                                    discount: state.paymentInfo?.discount ?? 0,
+                                        state.paymentInfo!.shippingPrice,
+                                    expeditionName: state.expeditionModel!.code,
+                                    estimationDay:
+                                        state.expeditionModel!.etd[0],
+                                    discount:
+                                        -(state.paymentInfo?.discount ?? 0),
                                     transactionDetails: carts
                                         .map((e) => TransactionDetail(
                                               productId: e.id,
@@ -240,7 +240,7 @@ class PaymentDetailPage extends StatelessWidget {
                                               subTotalPrice: e.totalPrice,
                                             ))
                                         .toList(),
-                                    point: state.pointUsed,
+                                    point: -state.pointUsed,
                                     voucherId: state.voucherModel?.id ?? 1,
                                   ),
                                 ));
@@ -249,6 +249,7 @@ class PaymentDetailPage extends StatelessWidget {
                                   .read<CartBloc>()
                                   .add(DeleteItemCart(id: element.id));
                             }
+                            context.read<ProfileBloc>().add(GetDataUser());
                           },
                   );
                 },

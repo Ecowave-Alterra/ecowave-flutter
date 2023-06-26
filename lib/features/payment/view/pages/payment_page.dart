@@ -39,6 +39,8 @@ class _PaymentPageState extends State<PaymentPage> {
 
   @override
   void initState() {
+    context.read<PaymentStatusBloc>().add("initial");
+
     const PlatformWebViewControllerCreationParams params =
         PlatformWebViewControllerCreationParams();
     _controller = WebViewController.fromPlatformCreationParams(params);

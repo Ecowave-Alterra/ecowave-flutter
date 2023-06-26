@@ -28,11 +28,31 @@ class ProductDetail extends StatelessWidget {
           actions: [
             IconButton(
               onPressed: () => context.push(const CartPage()),
-              icon: const ImageIcon(
-                AppIcons.keranjang,
-                color: AppColors.primary500,
+              icon: BlocBuilder<CartBloc, CartState>(
+                builder: (context, state) {
+                  if (state is CartSuccess) {
+                    if (state.data.isEmpty) {
+                      return const ImageIcon(
+                        AppIcons.keranjang,
+                        color: AppColors.primary500,
+                      );
+                    }
+                    return Badge(
+                      backgroundColor: AppColors.primary500,
+                      label: Text(state.data.length.toString()),
+                      child: const ImageIcon(
+                        AppIcons.keranjang,
+                        color: AppColors.primary500,
+                      ),
+                    );
+                  }
+                  return const ImageIcon(
+                    AppIcons.keranjang,
+                    color: AppColors.primary500,
+                  );
+                },
               ),
-              iconSize: 18.0,
+              iconSize: 22.0,
             ),
           ],
           leading: BackButton(
