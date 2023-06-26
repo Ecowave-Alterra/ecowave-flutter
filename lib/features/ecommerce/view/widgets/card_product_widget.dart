@@ -61,7 +61,7 @@ class CardProduct extends StatelessWidget {
                                 child: ColorFiltered(
                                   colorFilter: ColorFilter.mode(
                                       product.stock == 0
-                                          ? Colors.black
+                                          ? Colors.grey
                                           : Colors.transparent,
                                       BlendMode.saturation),
                                   child: Image.network(
