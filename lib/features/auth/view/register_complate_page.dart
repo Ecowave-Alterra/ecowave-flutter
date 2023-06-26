@@ -40,13 +40,6 @@ class _RegisterComplatePageState extends State<RegisterComplatePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Lengkapi Profile'),
-        centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(AppSizes.primary),

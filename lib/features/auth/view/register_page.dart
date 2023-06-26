@@ -29,12 +29,12 @@ class _RegisterPageState extends State<RegisterPage> {
     _noTelpController.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Daftar Sekarang'),
-        centerTitle: true,
       ),
       body: BlocProvider(
         create: (context) => RegisterBloc(
@@ -44,17 +44,15 @@ class _RegisterPageState extends State<RegisterPage> {
             noTelpController: _noTelpController,
             nameController: _nameController),
         child: BlocConsumer<RegisterBloc, RegisterState>(
-            listener: (context, state)async {
+            listener: (context, state) async {
           if (state is RegisterError) {
-            "Email Sudah Digunakan."
-                  .failedBar(context);
+            "Email Sudah Digunakan.".failedBar(context);
           }
           if (state is RegisterSuccess) {
-            
-           await context.push(const LoginPage());
-           if(context.mounted){
-            dispose();
-           }
+            await context.push(const LoginPage());
+            if (context.mounted) {
+              dispose();
+            }
           }
         }, builder: (context, state) {
           if (state is RegisterLoading) {

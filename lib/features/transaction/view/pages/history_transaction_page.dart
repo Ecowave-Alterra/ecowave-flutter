@@ -7,6 +7,7 @@ import 'package:ecowave/features/transaction/view/pages/sending_history_transact
 import 'package:ecowave/features/transaction/view/pages/success_history_transaction_page.dart';
 import 'package:ecowave/features/transaction/view/pages/unpaid_history_transaction_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class HistoryTransactionPage extends StatefulWidget {
   const HistoryTransactionPage({super.key});
@@ -52,9 +53,15 @@ class _HistoryTransactionPageState extends State<HistoryTransactionPage>
                   labelColor: AppColors.primary600,
                   dividerColor: Colors.transparent,
                   indicator: const BoxDecoration(),
-                  labelStyle: const TextStyle(
-                      fontSize: 16, fontWeight: FontWeight.bold),
-                  unselectedLabelStyle: const TextStyle(fontSize: 14),
+                  labelStyle: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: GoogleFonts.poppins().fontFamily,
+                  ),
+                  unselectedLabelStyle: TextStyle(
+                    fontSize: 14,
+                    fontFamily: GoogleFonts.poppins().fontFamily,
+                  ),
                   tabs: const <Widget>[
                     Tab(
                       text: "Belum Bayar",

@@ -32,7 +32,7 @@ class TransactionService {
       if (response.statusCode == 200) {
         return response.data["Payment Status"];
       } else {
-        throw "get provinces not successfully";
+        throw "get payment status not successfully";
       }
     } catch (e) {
       rethrow;
@@ -53,7 +53,7 @@ class TransactionService {
       if (response.statusCode == 200) {
         return TransactionModel.fromJson(response.data);
       } else {
-        throw "get provinces not successfully";
+        throw "create transaction not successfully";
       }
     } catch (e) {
       rethrow;

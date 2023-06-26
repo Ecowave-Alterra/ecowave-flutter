@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecowave/core.dart';
 import 'package:ecowave/features/cart/model/models/cart_model.dart';
 import 'package:flutter/material.dart';
@@ -17,11 +18,16 @@ class SelectedProductCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.network(
-            cartModel.image,
+          CachedNetworkImage(
+            imageUrl: cartModel.image,
             width: 55.0,
             height: 55.0,
             fit: BoxFit.cover,
+            errorWidget: (context, url, error) => const ImageIcon(
+              AppIcons.warning,
+              color: AppColors.primary500,
+              size: 50,
+            ),
           ),
           16.0.width,
           Column(

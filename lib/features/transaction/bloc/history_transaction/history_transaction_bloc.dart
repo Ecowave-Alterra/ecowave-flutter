@@ -11,28 +11,93 @@ class HistoryTransactionBloc
   final HistoryTransactionService service;
 
   HistoryTransactionBloc(this.service) : super(HistoryTransactionInitial()) {
-    on<GetHistoryTransactionEvent>((event, emit) async {
+    on<GetHistoryUnpaidTransactionEvent>((event, emit) async {
       emit(HistoryTransactionLoading());
       try {
-        final List<HistoryTransactionModel> transactionModelUnpaid =
+        final List<HistoryTransactionModel>? transactionModelPacked =
             await service.getTransactions("Belum Bayar");
 
-        final List<HistoryTransactionModel> transactionModelSending =
-            await service.getTransactions("Dikirim");
-        final List<HistoryTransactionModel> transactionModelPacked =
+        if (transactionModelPacked == null || transactionModelPacked.isEmpty) {
+          emit(HistoryTransactionEmpty());
+        } else {
+          emit(HistoryUnpaidTransactionSuccess(
+            dataUnpaid: transactionModelPacked,
+          ));
+        }
+      } catch (e) {
+        emit(HistoryTransactionFailed(message: e.toString()));
+      }
+    });
+
+    on<GetHistoryPackedTransactionEvent>((event, emit) async {
+      emit(HistoryTransactionLoading());
+      try {
+        final List<HistoryTransactionModel>? transactionModelPacked =
             await service.getTransactions("Dikemas");
-        final List<HistoryTransactionModel> transactionModelSuccess =
+
+        if (transactionModelPacked == null || transactionModelPacked.isEmpty) {
+          emit(HistoryTransactionEmpty());
+        } else {
+          emit(HistoryPackedTransactionSuccess(
+            dataPacked: transactionModelPacked,
+          ));
+        }
+      } catch (e) {
+        emit(HistoryTransactionFailed(message: e.toString()));
+      }
+    });
+
+    on<GetHistorySendingTransactionEvent>((event, emit) async {
+      emit(HistoryTransactionLoading());
+      try {
+        final List<HistoryTransactionModel>? transactionModelSending =
+            await service.getTransactions("Dikirim");
+
+        if (transactionModelSending == null ||
+            transactionModelSending.isEmpty) {
+          emit(HistoryTransactionEmpty());
+        } else {
+          emit(HistorySendingTransactionSuccess(
+            dataSending: transactionModelSending,
+          ));
+        }
+      } catch (e) {
+        emit(HistoryTransactionFailed(message: e.toString()));
+      }
+    });
+
+    on<GetHistorySuccessTransactionEvent>((event, emit) async {
+      emit(HistoryTransactionLoading());
+      try {
+        final List<HistoryTransactionModel>? transactionModelSuccess =
             await service.getTransactions("Selesai");
-        final List<HistoryTransactionModel> transactionModelFailed =
+
+        if (transactionModelSuccess == null ||
+            transactionModelSuccess.isEmpty) {
+          emit(HistoryTransactionEmpty());
+        } else {
+          emit(HistorySuccessTransactionSuccess(
+            dataSuccess: transactionModelSuccess,
+          ));
+        }
+      } catch (e) {
+        emit(HistoryTransactionFailed(message: e.toString()));
+      }
+    });
+
+    on<GetHistoryFailedTransactionEvent>((event, emit) async {
+      emit(HistoryTransactionLoading());
+      try {
+        final List<HistoryTransactionModel>? transactionModelFailed =
             await service.getTransactions("Dibatalkan");
-        // print("sasasasa $transactionModelFailed");
-        emit(HistoryTransactionSuccess(
-          dataUnpaid: transactionModelUnpaid,
-          dataSending: transactionModelSending,
-          dataPacked: transactionModelPacked,
-          dataSuccess: transactionModelSuccess,
-          dataFailed: transactionModelFailed,
-        ));
+
+        if (transactionModelFailed == null || transactionModelFailed.isEmpty) {
+          emit(HistoryTransactionEmpty());
+        } else {
+          emit(HistoryFailedTransactionSuccess(
+            dataFailed: transactionModelFailed,
+          ));
+        }
       } catch (e) {
         emit(HistoryTransactionFailed(message: e.toString()));
       }
@@ -70,7 +135,7 @@ class HistoryTransactionBloc
       emit(HistoryTransactionLoading());
       try {
         await service.postRatingData(
-            event.ratingDataList, event.expeditionRating);
+            event.ratingDataList, event.expeditionRating, event.transactionId);
       } catch (e) {
         emit(HistoryTransactionFailed(message: e.toString()));
       }

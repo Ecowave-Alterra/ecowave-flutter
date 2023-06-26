@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecowave/features/cart/bloc/cart/cart_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,9 +25,16 @@ class ListItem extends StatelessWidget {
                     CheckedItemCart(value: value!, id: cartModel.id),
                   ),
             ),
-            Image.network(
-              cartModel.image,
+            CachedNetworkImage(
+              imageUrl: cartModel.image,
               height: 55,
+              width: 55,
+              fit: BoxFit.cover,
+              errorWidget: (context, url, error) => const ImageIcon(
+                AppIcons.warning,
+                color: AppColors.primary500,
+                size: 55,
+              ),
             ),
             16.0.width,
             Column(

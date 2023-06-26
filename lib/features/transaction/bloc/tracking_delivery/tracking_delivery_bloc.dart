@@ -13,10 +13,14 @@ class TrackingDeliveryBloc
     on<GetTracingDeliveryEvent>((event, emit) async {
       emit(TrackingDeliveryLoading());
       try {
-        final List<TrackingDeliveryModel> trackingDelivery =
+        final List<TrackingDeliveryModel>? trackingDelivery =
             await service.getTrackingDelivery(event.resi, event.cou);
 
-        emit(TrackingDeliverySuccess(dataTracking: trackingDelivery));
+        if (trackingDelivery == null) {
+          emit(TrackingDeliveryEmpty());
+        } else {
+          emit(TrackingDeliverySuccess(dataTracking: trackingDelivery));
+        }
       } catch (e) {
         emit(TrackingDeliveryFailed(message: e.toString()));
       }
