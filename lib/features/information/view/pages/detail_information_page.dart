@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecowave/features/information/bloc/updatePoint/update_point_bloc.dart';
 import 'package:ecowave/features/information/bloc/information/information_bloc.dart';
-import 'package:ecowave/features/information/model/services/information_service.dart';
+import 'package:ecowave/features/profile/bloc/profile_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -20,6 +20,8 @@ class ContentInformation extends StatefulWidget {
 
 class _ContentInformationState extends State<ContentInformation> {
   final ScrollController _scrollController = ScrollController();
+  bool isScrolled = false;
+
   @override
   void initState() {
     super.initState();
@@ -36,13 +38,15 @@ class _ContentInformationState extends State<ContentInformation> {
   void _scrollListener() {
     if (_scrollController.offset >=
             _scrollController.position.maxScrollExtent &&
-        !_scrollController.position.outOfRange) {
+        !_scrollController.position.outOfRange &&
+        !isScrolled) {
       context.read<UpdatePointBloc>().add(GetMessageEvent());
+      context.read<ProfileBloc>().add(GetDataUser());
       showPoint(
-          onPress: () {
-            context.pop();
-          },
-          context: context);
+        onPress: () => context.pop(),
+        context: context,
+      );
+      isScrolled = true;
     }
   }
 
