@@ -20,10 +20,9 @@ class _CartPageState extends State<CartPage> {
   double totalPayment = 0;
   @override
   Widget build(BuildContext context) {
-    context.read<CartBloc>().add(GetItemCart());
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
-        if (state.token == ''){
+        if (state.token == '') {
           return const EmptyUserPage();
         }
         return Scaffold(
