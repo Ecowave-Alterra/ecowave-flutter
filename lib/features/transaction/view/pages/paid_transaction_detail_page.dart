@@ -45,7 +45,7 @@ class PaidTransactionDetailPage extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(detailTransaction.expeditionStatus),
+                        const Text("REGULER"),
                         InkWell(
                           onTap: () {
                             context.push(TrackDeliveryPage(
@@ -62,7 +62,7 @@ class PaidTransactionDetailPage extends StatelessWidget {
                     6.0.height,
                     Row(
                       children: [
-                        Text(detailTransaction.expeditionName),
+                        Text(detailTransaction.expeditionName.toUpperCase()),
                         const Text(" : "),
                         Text(detailTransaction.receiptNumber)
                       ],
@@ -88,7 +88,7 @@ class PaidTransactionDetailPage extends StatelessWidget {
               14.0.height,
               Text(detailTransaction.address.recipient),
               6.0.height,
-              Text(detailTransaction.address.phoneNumber),
+              Text(detailTransaction.address.phone),
               6.0.height,
               Text(detailTransaction.address.address),
               Container(

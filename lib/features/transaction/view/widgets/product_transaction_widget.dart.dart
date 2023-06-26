@@ -72,7 +72,12 @@ class ProductTransactionWidget extends StatelessWidget {
                   //   "assets/images/productShop2.png",
                   //   fit: BoxFit.cover,
                   // ),
-                  child: Image.network(imageUrl ?? ""),
+                  child: Image.network(
+                    (imageUrl!.isNotEmpty)
+                        ? (imageUrl ??
+                            'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg')
+                        : 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg',
+                  ),
                 ),
                 const SizedBox(
                   width: 50,

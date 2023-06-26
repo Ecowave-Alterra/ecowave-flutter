@@ -28,7 +28,7 @@ class UnpaidTransactionDetailPage extends StatelessWidget {
     final int endTime = targetTime.millisecondsSinceEpoch;
     context
         .read<HistoryTransactionBloc>()
-        .add(const GetHistoryTransactionEvent());
+        .add(const GetHistoryUnpaidTransactionEvent());
     return Scaffold(
         appBar: AppBar(
           title: const Text("Pesanan Saya"),
@@ -104,7 +104,7 @@ class UnpaidTransactionDetailPage extends StatelessWidget {
                     14.0.height,
                     Text(detailTransaction.address.recipient),
                     6.0.height,
-                    Text(detailTransaction.address.phoneNumber),
+                    Text(detailTransaction.address.phone),
                     6.0.height,
                     Text(detailTransaction.address.address),
                     Container(

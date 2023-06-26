@@ -7,8 +7,24 @@ abstract class HistoryTransactionEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class GetHistoryTransactionEvent extends HistoryTransactionEvent {
-  const GetHistoryTransactionEvent();
+class GetHistoryUnpaidTransactionEvent extends HistoryTransactionEvent {
+  const GetHistoryUnpaidTransactionEvent();
+}
+
+class GetHistoryPackedTransactionEvent extends HistoryTransactionEvent {
+  const GetHistoryPackedTransactionEvent();
+}
+
+class GetHistorySendingTransactionEvent extends HistoryTransactionEvent {
+  const GetHistorySendingTransactionEvent();
+}
+
+class GetHistorySuccessTransactionEvent extends HistoryTransactionEvent {
+  const GetHistorySuccessTransactionEvent();
+}
+
+class GetHistoryFailedTransactionEvent extends HistoryTransactionEvent {
+  const GetHistoryFailedTransactionEvent();
 }
 
 class AddCancelTransactionEvent extends HistoryTransactionEvent {
@@ -35,6 +51,10 @@ class AddConfirmTransactionEvent extends HistoryTransactionEvent {
 class PostRatingDataEvent extends HistoryTransactionEvent {
   final List<RatingData> ratingDataList;
   final double expeditionRating;
+  final String transactionId;
 
-  const PostRatingDataEvent(this.ratingDataList, this.expeditionRating);
+  const PostRatingDataEvent(
+      {required this.ratingDataList,
+      required this.expeditionRating,
+      required this.transactionId});
 }

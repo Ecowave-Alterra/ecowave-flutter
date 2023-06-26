@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ecowave/core.dart';
 import 'package:ecowave/features/ecommerce/bloc/product_home/product_bloc.dart';
 import 'package:ecowave/features/ecommerce/view/pages/home_e_commerce_page.dart';
+import 'package:ecowave/features/ecommerce/view/pages/product_detail_page.dart';
 import 'package:ecowave/features/information/bloc/information/information_bloc.dart';
 import 'package:ecowave/features/information/view/pages/feed_information_page.dart';
 import 'package:ecowave/features/information/view/widget/carousel_information_card_widget.dart';
@@ -269,22 +270,50 @@ class _DashboardPageState extends State<DashboardPage> {
                               final product = state.data;
                               for (int i = 0; i < 3; i++) {
                                 carouselItems.add(
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 8.0),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(8.0),
-                                      child: Image.network(
-                                        product[i].productImageUrl[0],
-                                        height: 120,
-                                        fit: BoxFit.cover,
+                                  GestureDetector(
+                                    onTap: () {
+                                      context.push(ProductDetail(
+                                        productModel: state.data[i],
+                                      ));
+                                      FocusScope.of(context).unfocus();
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 8.0),
+                                      child: ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                        child: Image.network(
+                                          (product[i]
+                                                  .productImageUrl!
+                                                  .isNotEmpty)
+                                              ? (product[i]
+                                                      .productImageUrl?[0] ??
+                                                  'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg')
+                                              : 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg',
+                                          height: 120,
+                                          fit: BoxFit.fitHeight,
+                                        ),
                                       ),
                                     ),
                                   ),
                                 );
                               }
                               return CarouselSlider(
-                                items: carouselItems,
+                                items: carouselItems.map((widget) {
+                                  return Container(
+                                    decoration: BoxDecoration(
+                                      color: AppColors
+                                          .grey50, // Ganti dengan warna latar belakang yang diinginkan
+                                      borderRadius: BorderRadius.circular(8.0),
+                                      border: Border.all(
+                                        color: AppColors.white,
+                                        width: 2.0,
+                                      ),
+                                    ),
+                                    child: widget,
+                                  );
+                                }).toList(),
                                 options: CarouselOptions(
                                   height: 120,
                                   enableInfiniteScroll: false,
