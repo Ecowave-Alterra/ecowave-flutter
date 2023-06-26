@@ -17,6 +17,8 @@ class InformationSuccess extends InformationState {
   const InformationSuccess({
     required this.data,
   });
+  @override
+  List<Object> get props => [data];
 }
 
 class InformationError extends InformationState {

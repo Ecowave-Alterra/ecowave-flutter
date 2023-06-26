@@ -13,3 +13,10 @@ class GetInformationEvent extends InformationEvent {
     required this.id,
   });
 }
+
+class GetMoreInformationEvent extends InformationEvent {
+  final int id;
+  const GetMoreInformationEvent({
+    required this.id,
+  });
+}

@@ -19,14 +19,15 @@ class _InformationPageState extends State<InformationPage> {
   final ScrollController scrollController = ScrollController();
   int _current = 0;
   int page = 1;
-  bool hasMore = true;
   @override
   void initState() {
     context.read<InformationBloc>().add(GetInformationEvent(id: page));
     scrollController.addListener(() {
       if (scrollController.position.maxScrollExtent ==
           scrollController.offset) {
-        context.read<InformationBloc>().add(GetInformationEvent(id: page + 1));
+        context
+            .read<InformationBloc>()
+            .add(GetMoreInformationEvent(id: page + 1));
       }
     });
     super.initState();

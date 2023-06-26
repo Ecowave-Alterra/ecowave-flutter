@@ -20,5 +20,16 @@ class InformationBloc extends Bloc<InformationEvent, InformationState> {
         emit(InformationError(message: e.toString()));
       }
     });
+    on<GetMoreInformationEvent>((event, emit) async {
+      try {
+        final List<InformationModel> result =
+            await service.getInformation(id: event.id);
+
+        final InformationSuccess currentState = state as InformationSuccess;
+        emit(InformationSuccess(data: [...currentState.data, ...result]));
+      } catch (e) {
+        emit(InformationError(message: e.toString()));
+      }
+    });
   }
 }
