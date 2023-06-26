@@ -220,7 +220,7 @@ class PaymentDetailPage extends StatelessWidget {
                             state.expeditionModel == null ||
                             state.carts == null
                         ? null
-                        : () async {
+                        : () {
                             totalPayment = state.paymentInfo!.totalPayment;
                             context.read<PaymentDetailBloc>().add(CheckoutEvent(
                                   request: TransactionRequest(
@@ -249,6 +249,7 @@ class PaymentDetailPage extends StatelessWidget {
                                   .read<CartBloc>()
                                   .add(DeleteItemCart(id: element.id));
                             }
+                            context.read<ProfileBloc>().add(GetDataUser());
                           },
                   );
                 },
