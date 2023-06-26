@@ -17,9 +17,9 @@ class InformationService {
   InformationService() {
     init();
   }
-  Future<List<InformationModel>> getInformation() async {
+  Future<List<InformationModel>> getInformation({required int id}) async {
     try {
-      const String url = '${BaseURL.api}user/information?page=1';
+      String url = '${BaseURL.api}user/information?page=$id';
       final response = await _dio.get(url);
       if (response.statusCode == 200) {
         final List data = response.data['Informations'];

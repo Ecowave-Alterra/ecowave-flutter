@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecowave/features/information/bloc/updatePoint/update_point_bloc.dart';
 import 'package:ecowave/features/information/bloc/information/information_bloc.dart';
-import 'package:ecowave/features/information/model/services/information_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';

@@ -4,7 +4,6 @@ import 'package:ecowave/features/information/view/pages/bookmark_page.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../widget/carousel_information_card_widget.dart';
 import '../widget/list_information_widget.dart';
 
@@ -16,14 +15,22 @@ class InformationPage extends StatefulWidget {
 }
 
 class _InformationPageState extends State<InformationPage> {
+  final CarouselController _controller = CarouselController();
+  final ScrollController scrollController = ScrollController();
+  int _current = 0;
+  int page = 1;
+  bool hasMore = true;
   @override
   void initState() {
-    context.read<InformationBloc>().add(GetInformationEvent());
+    context.read<InformationBloc>().add(GetInformationEvent(id: page));
+    scrollController.addListener(() {
+      if (scrollController.position.maxScrollExtent ==
+          scrollController.offset) {
+        context.read<InformationBloc>().add(GetInformationEvent(id: page + 1));
+      }
+    });
     super.initState();
   }
-
-  int _current = 0;
-  final CarouselController _controller = CarouselController();
 
   @override
   Widget build(BuildContext context) {
@@ -66,10 +73,10 @@ class _InformationPageState extends State<InformationPage> {
           BlocBuilder<InformationBloc, InformationState>(
             builder: (context, state) {
               if (state is InformationLoading) {
-                return const EcoLoading();
+                return const SizedBox();
               } else if (state is InformationSuccess) {
                 return CarouselSlider.builder(
-                  itemCount: state.data.length,
+                  itemCount: state.data.length > 5 ? 5 : state.data.length,
                   itemBuilder: (context, index, realIndex) {
                     return CarouselCardInformation(
                       informationModel: state.data[index],
@@ -79,6 +86,7 @@ class _InformationPageState extends State<InformationPage> {
                   options: CarouselOptions(
                     height: 150,
                     initialPage: 0,
+                    autoPlay: true,
                     onPageChanged: (index, reason) {
                       setState(
                         () {
@@ -99,9 +107,10 @@ class _InformationPageState extends State<InformationPage> {
               if (state is InformationLoading) {
                 return const SizedBox();
               } else if (state is InformationSuccess) {
+                final informationList = state.data.take(5).toList();
                 return Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: state.data.asMap().entries.map((entry) {
+                  children: informationList.asMap().entries.map((entry) {
                     return GestureDetector(
                       onTap: () => _controller.animateToPage(entry.key),
                       child: Container(
@@ -131,6 +140,7 @@ class _InformationPageState extends State<InformationPage> {
               } else if (state is InformationSuccess) {
                 return Expanded(
                   child: ListView.separated(
+                    controller: scrollController,
                     itemCount: state.data.length,
                     itemBuilder: (context, index) {
                       return ListInformation(

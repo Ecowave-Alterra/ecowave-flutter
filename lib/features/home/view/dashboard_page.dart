@@ -20,7 +20,7 @@ class _DashboardPageState extends State<DashboardPage> {
   @override
   void initState() {
     context.read<ProductBloc>().add(GetProductEvent());
-    context.read<InformationBloc>().add(GetInformationEvent());
+    context.read<InformationBloc>().add(GetInformationEvent(id: 0));
     super.initState();
   }
 
