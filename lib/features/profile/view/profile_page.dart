@@ -14,7 +14,6 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       appBar: AppBar(
         title: const Text('Saya'),
@@ -22,7 +21,7 @@ class ProfilePage extends StatelessWidget {
       ),
       body: BlocBuilder<ProfileBloc, ProfileState>(
         builder: (context, state) {
-          if(state.user.email == ''){
+          if (state.user.email == '') {
             context.read<ProfileBloc>().add(GetDataUser());
           }
           return ListView(children: [
@@ -46,8 +45,8 @@ class ProfilePage extends StatelessWidget {
                     ),
                     16.0.height,
                     Padding(
-                      padding:
-                          const EdgeInsets.symmetric(horizontal: AppSizes.primary),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: AppSizes.primary),
                       child: Row(
                         children: [
                           const CircleAvatar(
@@ -92,8 +91,8 @@ class ProfilePage extends StatelessWidget {
                     ),
                     8.0.height,
                     Padding(
-                      padding:
-                          const EdgeInsets.symmetric(horizontal: AppSizes.primary),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: AppSizes.primary),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -127,8 +126,8 @@ class ProfilePage extends StatelessWidget {
                     ),
                     16.0.height,
                     Padding(
-                      padding:
-                          const EdgeInsets.symmetric(horizontal: AppSizes.primary),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: AppSizes.primary),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -195,10 +194,9 @@ class ProfilePage extends StatelessWidget {
                             Row(
                               children: [
                                 Text(
-                                  'Lihat Detail ',
+                                  'Dalam pengembangan ',
                                   style: TextStyle(
-                                    fontSize: 14,
-                                    color: AppColors.grey700,
+                                    color: AppColors.grey300,
                                   ),
                                 ),
                                 Icon(
@@ -380,7 +378,8 @@ class ProfilePage extends StatelessWidget {
                               await SharedPreferences.getInstance();
                           prefs.remove('token');
                           if (context.mounted) {
-                            "Kamu berhasil keluar dari akun".succeedBar(context);
+                            "Kamu berhasil keluar dari akun"
+                                .succeedBar(context);
                             context.read<ProfileBloc>().add(DeleteDataUser());
                             context.read<HomeBloc>().add(LogOut());
                           }
