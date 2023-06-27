@@ -3,7 +3,7 @@ import 'package:ecowave/core.dart';
 import 'package:ecowave/features/transaction/bloc/history_transaction/history_transaction_bloc.dart';
 import 'package:ecowave/features/transaction/bloc/tabbar/tabbar_bloc.dart';
 import 'package:ecowave/features/transaction/model/models/history_transaction_model.dart';
-import 'package:ecowave/features/transaction/model/services/history_transaction_service.dart';
+import 'package:ecowave/features/transaction/model/models/rating_data_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';

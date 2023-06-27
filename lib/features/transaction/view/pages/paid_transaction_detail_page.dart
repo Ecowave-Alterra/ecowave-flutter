@@ -64,7 +64,10 @@ class PaidTransactionDetailPage extends StatelessWidget {
                       children: [
                         Text(detailTransaction.expeditionName.toUpperCase()),
                         const Text(" : "),
-                        Text(detailTransaction.receiptNumber)
+                        Text(detailTransaction.receiptNumber == ""
+                            ? "No Resi Belum Tersedia"
+                            : detailTransaction.receiptNumber ??
+                                "No Resi Belum Tersedia")
                       ],
                     )
                   ],

@@ -1,4 +1,5 @@
 import 'package:ecowave/features/transaction/model/models/history_transaction_model.dart';
+import 'package:ecowave/features/transaction/model/models/rating_data_model.dart';
 import 'package:ecowave/features/transaction/model/services/history_transaction_service.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

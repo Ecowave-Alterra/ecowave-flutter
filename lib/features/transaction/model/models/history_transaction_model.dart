@@ -17,7 +17,7 @@ class HistoryTransactionModel {
   final String updatedAt;
   final int addressId;
   final String statusTransaction;
-  final String receiptNumber;
+  final String? receiptNumber;
   final int totalProductPrice;
   final int totalShippingPrice;
   final int point;

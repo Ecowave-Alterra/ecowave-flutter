@@ -26,7 +26,13 @@ class SuccessHistoryTransactionPage extends StatelessWidget {
       if (state is HistoryTransactionEmpty) {
         return const EmptyState();
       } else if (state is HistoryTransactionFailed) {
-        return EcoError(errorMessage: state.message, onRetry: () {});
+        return EcoError(
+            errorMessage: state.message,
+            onRetry: () {
+              context
+                  .read<HistoryTransactionBloc>()
+                  .add(const GetHistoryFailedTransactionEvent());
+            });
       } else if (state is HistorySuccessTransactionSuccess) {
         if (state.dataSuccess.isEmpty) {
           return const EmptyState();
@@ -35,7 +41,7 @@ class SuccessHistoryTransactionPage extends StatelessWidget {
               itemCount: state.dataSuccess.length,
               itemBuilder: (BuildContext context, int index) {
                 final HistoryTransactionModel cSuccess =
-                    state.dataSuccess[index];
+                    state.dataSuccess[state.dataSuccess.length - 1 - index];
                 return ProductTransactionWidget(
                   statusOrder: cSuccess.statusTransaction,
                   imageUrl: cSuccess.orderDetail[0].productImageUrl,

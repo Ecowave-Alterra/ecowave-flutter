@@ -85,6 +85,9 @@ class _CancelTransactionPageState extends State<CancelTransactionPage> {
                           context.popToRoot();
                           context.read<TabbarBloc>().add(4);
                           widget.moveTab();
+                          if (context.mounted &&
+                              context.read<HistoryTransactionBloc>().state
+                                  is GetHistoryFailedTransactionEvent) {}
                           "Pesanan berhasil dibatalkan".succeedBar(context);
                         },
                         context: context,

@@ -1,7 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:ecowave/core.dart';
 import 'package:ecowave/features/transaction/model/models/history_transaction_model.dart';
-import 'package:ecowave/features/transaction/model/models/tracking_delivery_mode.dart';
+import 'package:ecowave/features/transaction/model/models/rating_data_model.dart';
+import 'package:ecowave/features/transaction/model/models/tracking_delivery_model.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -217,18 +218,4 @@ class HistoryTransactionService {
       rethrow;
     }
   }
-}
-
-class RatingData {
-  final double ratingProduct;
-  final String photoUrl;
-  final String videoUrl;
-  final String comment;
-
-  RatingData({
-    required this.ratingProduct,
-    required this.photoUrl,
-    required this.videoUrl,
-    required this.comment,
-  });
 }

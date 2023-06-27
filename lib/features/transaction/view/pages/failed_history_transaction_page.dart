@@ -25,7 +25,13 @@ class FailedHistoryTransactionPage extends StatelessWidget {
       if (state is HistoryTransactionEmpty) {
         return const EmptyState();
       } else if (state is HistoryTransactionFailed) {
-        return EcoError(errorMessage: state.message, onRetry: () {});
+        return EcoError(
+            errorMessage: state.message,
+            onRetry: () {
+              context
+                  .read<HistoryTransactionBloc>()
+                  .add(const GetHistoryFailedTransactionEvent());
+            });
       } else if (state is HistoryFailedTransactionSuccess) {
         if (state.dataFailed.isEmpty) {
           return const EmptyState();
@@ -35,7 +41,8 @@ class FailedHistoryTransactionPage extends StatelessWidget {
               shrinkWrap: true,
               itemBuilder: (context, index) {
                 // print("Ada data gasih ${state.dataFailed}");
-                final HistoryTransactionModel cFailed = state.dataFailed[index];
+                final HistoryTransactionModel cFailed =
+                    state.dataFailed[state.dataFailed.length - 1 - index];
                 // print("ada data Failed gak $cFailed");
                 return ProductTransactionWidget(
                     statusOrder: cFailed.statusTransaction,

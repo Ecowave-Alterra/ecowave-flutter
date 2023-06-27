@@ -1,4 +1,4 @@
-import 'package:ecowave/features/transaction/model/models/tracking_delivery_mode.dart';
+import 'package:ecowave/features/transaction/model/models/tracking_delivery_model.dart';
 import 'package:ecowave/features/transaction/model/services/history_transaction_service.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
