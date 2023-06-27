@@ -31,12 +31,19 @@ class _ReviewListWidgetState extends State<ReviewListWidget> {
                   left: AppSizes.primary, top: AppSizes.primary),
               child: Row(
                 children: [
-                  SizedBox(
-                    width: 30.0,
-                    height: 40.0,
-                    child: CircleAvatar(
-                      backgroundImage:
-                          NetworkImage(reviews[index].profilePhoto),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(50.0),
+                    child: CachedNetworkImage(
+                      width: 30.0,
+                      height: 30.0,
+                      imageUrl: reviews[index].profilePhoto,
+                      errorWidget: (context, url, error) => const Padding(
+                        padding: EdgeInsets.all(4.0),
+                        child: ImageIcon(
+                          AppIcons.warning,
+                          color: AppColors.primary500,
+                        ),
+                      ),
                     ),
                   ),
                   Container(
