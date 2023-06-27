@@ -260,7 +260,6 @@ class PaymentDetailPage extends StatelessWidget {
                                     .read<CartBloc>()
                                     .add(DeleteItemCart(id: element.id));
                               }
-                              context.read<ProfileBloc>().add(GetDataUser());
                             },
                     );
                   },

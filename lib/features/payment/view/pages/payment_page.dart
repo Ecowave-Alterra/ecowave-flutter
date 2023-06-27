@@ -4,6 +4,7 @@ import 'package:ecowave/core.dart';
 import 'package:ecowave/features/home/bloc/home/home_bloc.dart';
 import 'package:ecowave/features/home/view/home_page.dart';
 import 'package:ecowave/features/payment/bloc/payment_status/payment_status_bloc.dart';
+import 'package:ecowave/features/profile/bloc/profile_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -32,6 +33,7 @@ class _PaymentPageState extends State<PaymentPage> {
     debugPrint("paymentStatus: $paymentStatus");
 
     if (paymentStatus == "settlement") {
+      context.read<ProfileBloc>().add(GetDataUser());
       context.read<HomeBloc>().add(const OnBottomNavTap(1));
       context.pushAndRemoveUntil<bool>(const MyHomePage(), (route) => false);
     }
