@@ -17,9 +17,14 @@ class SuccessHistoryTransactionPage extends StatelessWidget {
     context
         .read<HistoryTransactionBloc>()
         .add(const GetHistorySuccessTransactionEvent());
-    return BlocBuilder<HistoryTransactionBloc, HistoryTransactionState>(
-        builder: (context, state) {
-      debugPrint("state di selesai $state");
+    return BlocConsumer<HistoryTransactionBloc, HistoryTransactionState>(
+        listener: (context, state) {
+      if (state is HistorySuccessTransactionSuccess) {
+        if (state.isUpdated) {
+          state.messageUpdated.succeedBar(context);
+        }
+      }
+    }, builder: (context, state) {
       if (state is HistoryTransactionLoading) {
         return const EcoLoading();
       }
@@ -36,6 +41,8 @@ class SuccessHistoryTransactionPage extends StatelessWidget {
       } else if (state is HistorySuccessTransactionSuccess) {
         if (state.dataSuccess.isEmpty) {
           return const EmptyState();
+        } else if (state.isUpdated) {
+          return const EcoLoading();
         } else {
           return ListView.builder(
               itemCount: state.dataSuccess.length,

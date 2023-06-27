@@ -39,10 +39,29 @@ class HistorySendingTransactionSuccess extends HistoryTransactionState {
 
 class HistorySuccessTransactionSuccess extends HistoryTransactionState {
   final List<HistoryTransactionModel> dataSuccess;
+  final bool isUpdated;
+  final String messageUpdated;
 
   const HistorySuccessTransactionSuccess({
     required this.dataSuccess,
+    this.isUpdated = false,
+    this.messageUpdated = "",
   });
+
+  @override
+  List<Object> get props => [dataSuccess, messageUpdated, isUpdated];
+
+  HistorySuccessTransactionSuccess copyWith({
+    List<HistoryTransactionModel>? dataSuccess,
+    bool? isUpdated,
+    String? messageUpdated,
+  }) {
+    return HistorySuccessTransactionSuccess(
+      dataSuccess: dataSuccess ?? this.dataSuccess,
+      isUpdated: isUpdated ?? this.isUpdated,
+      messageUpdated: messageUpdated ?? this.messageUpdated,
+    );
+  }
 }
 
 class HistoryFailedTransactionSuccess extends HistoryTransactionState {

@@ -133,10 +133,16 @@ class HistoryTransactionBloc
     });
 
     on<PostRatingDataEvent>((event, emit) async {
-      emit(HistoryTransactionLoading());
       try {
-        await service.postRatingData(
+        final bool isRating = await service.postRatingData(
             event.ratingDataList, event.expeditionRating, event.transactionId);
+        if (isRating) {
+          emit((state as HistorySuccessTransactionSuccess).copyWith(
+            isUpdated: true,
+            messageUpdated: "Yey! Kamu mendapatkan point +10",
+          ));
+          add(const GetHistorySuccessTransactionEvent());
+        }
       } catch (e) {
         emit(HistoryTransactionFailed(message: e.toString()));
       }
