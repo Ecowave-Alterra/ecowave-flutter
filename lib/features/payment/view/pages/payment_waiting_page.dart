@@ -1,5 +1,6 @@
 import 'package:ecowave/core.dart';
 import 'package:ecowave/features/home/bloc/home/home_bloc.dart';
+import 'package:ecowave/features/profile/bloc/profile_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -80,6 +81,7 @@ class PaymentWaitingPage extends StatelessWidget {
                   child: EcoFormButton(
                     label: "Beranda",
                     onPressed: () {
+                      context.read<ProfileBloc>().add(GetDataUser());
                       context
                           .read<HistoryTransactionBloc>()
                           .add(const GetHistoryUnpaidTransactionEvent());
@@ -98,6 +100,7 @@ class PaymentWaitingPage extends StatelessWidget {
                   child: EcoFormButton(
                     label: "Pesanan Saya",
                     onPressed: () {
+                      context.read<ProfileBloc>().add(GetDataUser());
                       context
                           .read<HistoryTransactionBloc>()
                           .add(const GetHistoryUnpaidTransactionEvent());

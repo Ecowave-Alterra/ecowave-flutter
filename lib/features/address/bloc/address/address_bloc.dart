@@ -44,10 +44,13 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
     });
 
     on<AddAddressesEvent>((event, emit) async {
-      emit(AddressLoading());
       try {
         final bool isCreated = await service.createAddresses(event.request);
         if (isCreated) {
+          emit((state as AddressSuccess).copyWith(
+            isUpdated: true,
+            messageUpdated: "Yey! Kamu berhasil menambahkan alamat",
+          ));
           add(GetAddressesEvent());
         } else {
           emit(const AddressFailed(
@@ -59,11 +62,14 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
     });
 
     on<UpdateAddressesEvent>((event, emit) async {
-      emit(AddressLoading());
       try {
         final bool isUpdated =
             await service.updateAddresses(event.id, event.request);
         if (isUpdated) {
+          emit((state as AddressSuccess).copyWith(
+            isUpdated: true,
+            messageUpdated: "Yey! Kamu berhasil memperbarui alamat",
+          ));
           add(GetAddressesEvent());
         } else {
           emit(const AddressFailed(

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecowave/core.dart';
 import 'package:ecowave/features/ecommerce/bloc/product_home/product_bloc.dart';
 import 'package:ecowave/features/ecommerce/model/models/product_model.dart';
@@ -277,13 +278,22 @@ class ProductDescription extends StatelessWidget {
                               const EdgeInsets.only(left: AppSizes.primary),
                           child: Row(
                             children: [
-                              SizedBox(
-                                width: 30.0,
-                                height: 40.0,
-                                child: CircleAvatar(
-                                  backgroundImage: NetworkImage(
-                                      (productModel.review?[0].profilePhoto ??
-                                          '')),
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(50.0),
+                                child: CachedNetworkImage(
+                                  width: 30.0,
+                                  height: 30.0,
+                                  imageUrl: (productModel
+                                          .review?[0].profilePhoto ??
+                                      'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg'),
+                                  errorWidget: (context, url, error) =>
+                                      const Padding(
+                                    padding: EdgeInsets.all(4.0),
+                                    child: ImageIcon(
+                                      AppIcons.warning,
+                                      color: AppColors.primary500,
+                                    ),
+                                  ),
                                 ),
                               ),
                               Container(

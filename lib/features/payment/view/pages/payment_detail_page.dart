@@ -2,6 +2,7 @@ import 'package:ecowave/core.dart';
 import 'package:ecowave/features/address/bloc/address/address_bloc.dart';
 import 'package:ecowave/features/cart/bloc/cart/cart_bloc.dart';
 import 'package:ecowave/features/cart/model/models/cart_model.dart';
+import 'package:ecowave/features/home/bloc/home/home_bloc.dart';
 import 'package:ecowave/features/payment/bloc/payment_detail/payment_detail_bloc.dart';
 import 'package:ecowave/features/payment/bloc/voucher/voucher_bloc.dart';
 import 'package:ecowave/features/payment/bloc/expedition/expedition_bloc.dart';
@@ -19,6 +20,7 @@ import 'package:ecowave/features/payment/view/widgets/checkout_setting_switch.da
 import 'package:ecowave/features/payment/view/widgets/payment_info_widget.dart';
 import 'package:ecowave/features/payment/view/widgets/selected_product_card.dart';
 import 'package:ecowave/features/profile/bloc/profile_bloc.dart';
+import 'package:ecowave/features/profile/view/empty_session_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -39,225 +41,234 @@ class PaymentDetailPage extends StatelessWidget {
 
     int totalPayment = 0;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Detail Pembayaran"),
-      ),
-      body: ListView(
-        children: [
-          BlocBuilder<PaymentDetailBloc, PaymentDetailState>(
-            builder: (context, state) {
-              if (state.addressModel != null) {
-                return AddressInfoWidget(
-                  addressModel: state.addressModel,
-                  onChangeTap: () => context.push(ShippingAddressPage(
-                    currentAddress: state.addressModel,
-                  )),
-                );
-              } else {
-                return BlocBuilder<AddressBloc, AddressState>(
-                  builder: (context, state) {
-                    if (state is AddressLoading) {
-                      return const EcoLoading();
-                    } else if (state is AddressFailed) {
-                      return EcoError(
-                        errorMessage: state.meesage,
-                        onRetry: () => context
-                            .read<AddressBloc>()
-                            .add(GetAddressesEvent()),
-                      );
-                    } else if (state is AddressSuccess) {
-                      AddressModel? shippingAddressModel;
+    return BlocBuilder<HomeBloc, HomeState>(builder: (context, state) {
+      if (state.token == '') {
+        return const EmptyUserPage();
+      }
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text("Detail Pembayaran"),
+        ),
+        body: ListView(
+          children: [
+            BlocBuilder<PaymentDetailBloc, PaymentDetailState>(
+              builder: (context, state) {
+                if (state.addressModel != null) {
+                  return AddressInfoWidget(
+                    addressModel: state.addressModel,
+                    onChangeTap: () => context.push(ShippingAddressPage(
+                      currentAddress: state.addressModel,
+                    )),
+                  );
+                } else {
+                  return BlocBuilder<AddressBloc, AddressState>(
+                    builder: (context, state) {
+                      if (state is AddressLoading) {
+                        return const EcoLoading();
+                      } else if (state is AddressFailed) {
+                        return EcoError(
+                          errorMessage: state.meesage,
+                          onRetry: () => context
+                              .read<AddressBloc>()
+                              .add(GetAddressesEvent()),
+                        );
+                      } else if (state is AddressSuccess) {
+                        AddressModel? shippingAddressModel;
 
-                      if ((state.addresses ?? []).isNotEmpty) {
-                        shippingAddressModel = state.addresses!
-                            .where((element) => element.isPrimary)
-                            .first;
-                        context
-                            .read<PaymentDetailBloc>()
-                            .add(ChangeShippingAddressEvent(
-                              addressModel: shippingAddressModel,
-                            ));
+                        if ((state.addresses ?? []).isNotEmpty) {
+                          shippingAddressModel = state.addresses!
+                              .where((element) => element.isPrimary)
+                              .first;
+                          context
+                              .read<PaymentDetailBloc>()
+                              .add(ChangeShippingAddressEvent(
+                                addressModel: shippingAddressModel,
+                              ));
+                        }
+
+                        return AddressInfoWidget(
+                          addressModel: shippingAddressModel,
+                          onChangeTap: () => context.push(ShippingAddressPage(
+                            currentAddress: shippingAddressModel,
+                          )),
+                        );
+                      } else {
+                        return const SizedBox.shrink();
                       }
-
-                      return AddressInfoWidget(
-                        addressModel: shippingAddressModel,
-                        onChangeTap: () => context.push(ShippingAddressPage(
-                          currentAddress: shippingAddressModel,
-                        )),
-                      );
+                    },
+                  );
+                }
+              },
+            ),
+            const Divider(),
+            Padding(
+              padding: const EdgeInsets.all(AppSizes.primary),
+              child: Column(
+                children: carts
+                    .map((e) => SelectedProductCard(cartModel: e))
+                    .toList(),
+              ),
+            ),
+            BlocBuilder<PaymentDetailBloc, PaymentDetailState>(
+              builder: (context, state) {
+                return CheckoutSettingButton(
+                  value: state.expeditionModel?.name,
+                  label: "Pilih Opsi Pengiriman",
+                  icon: AppIcons.shipping,
+                  onPressed: () {
+                    if (state.addressModel != null) {
+                      context.read<ExpeditionBloc>().add(GetExpeditionsEvent(
+                            request: ExpeditionRequest(
+                              cityId: state.addressModel!.cityId.toString(),
+                              weight: 1,
+                            ),
+                          ));
+                      context.push(ShippingOptionsPage(
+                        cityId: state.addressModel!.cityId.toString(),
+                        shipping: state.expeditionModel,
+                      ));
                     } else {
-                      return const SizedBox.shrink();
+                      "Pilih alamat terlebih dahulu".failedBar(context);
                     }
                   },
                 );
-              }
-            },
-          ),
-          const Divider(),
-          Padding(
-            padding: const EdgeInsets.all(AppSizes.primary),
-            child: Column(
-              children:
-                  carts.map((e) => SelectedProductCard(cartModel: e)).toList(),
+              },
             ),
-          ),
-          BlocBuilder<PaymentDetailBloc, PaymentDetailState>(
-            builder: (context, state) {
-              return CheckoutSettingButton(
-                value: state.expeditionModel?.name,
-                label: "Pilih Opsi Pengiriman",
-                icon: AppIcons.shipping,
-                onPressed: () {
-                  if (state.addressModel != null) {
-                    context.read<ExpeditionBloc>().add(GetExpeditionsEvent(
-                          request: ExpeditionRequest(
-                            cityId: state.addressModel!.cityId.toString(),
-                            weight: 1,
-                          ),
-                        ));
-                    context.push(ShippingOptionsPage(
-                      cityId: state.addressModel!.cityId.toString(),
-                      shipping: state.expeditionModel,
-                    ));
-                  } else {
-                    "Pilih alamat terlebih dahulu".failedBar(context);
-                  }
-                },
-              );
-            },
-          ),
-          16.0.height,
-          BlocBuilder<PaymentDetailBloc, PaymentDetailState>(
-            builder: (context, state) {
-              return CheckoutSettingButton(
-                value: state.voucherModel?.name,
-                label: "Gunakan Voucher",
-                icon: AppIcons.voucher,
-                iconColor: AppColors.warning500,
-                onPressed: () => context.push(VoucherPage(
-                  productPrice: state.paymentInfo?.productPrice ?? 0,
-                  currentVoucher: state.voucherModel,
-                )),
-              );
-            },
-          ),
-          16.0.height,
-          BlocBuilder<ProfileBloc, ProfileState>(
-            builder: (context, state) {
-              return CheckoutSettingSwitch(
-                currentPoint: state.user.point,
-                label: "Tukarkan Point",
-                onChanged: (value) => context
-                    .read<PaymentDetailBloc>()
-                    .add(PointUsedEvent(pointUsed: value)),
-              );
-            },
-          ),
-          16.0.height,
-          BlocBuilder<PaymentDetailBloc, PaymentDetailState>(
-            builder: (context, state) {
-              if (state.status == DataStateStatus.success) {
-                return PaymentInfoWidget(
-                  paymentInfo: state.paymentInfo!,
+            16.0.height,
+            BlocBuilder<PaymentDetailBloc, PaymentDetailState>(
+              builder: (context, state) {
+                return CheckoutSettingButton(
+                  value: state.voucherModel?.name,
+                  label: "Gunakan Voucher",
+                  icon: AppIcons.voucher,
+                  iconColor: AppColors.warning500,
+                  onPressed: () => context.push(VoucherPage(
+                    productPrice: state.paymentInfo?.productPrice ?? 0,
+                    currentVoucher: state.voucherModel,
+                  )),
                 );
-              } else {
-                return const SizedBox.shrink();
-              }
-            },
-          ),
-        ],
-      ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(AppSizes.primary),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Flexible(
-              flex: 1,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text("Total Pembayaran"),
-                  5.0.height,
-                  BlocBuilder<PaymentDetailBloc, PaymentDetailState>(
-                    builder: (context, state) {
-                      return Text(
-                        (state.paymentInfo?.totalPayment ?? 0).currencyFormatRp,
-                        style: const TextStyle(
-                          fontWeight: AppFontWeight.semibold,
-                        ),
-                      );
-                    },
-                  ),
-                ],
-              ),
+              },
             ),
-            Flexible(
-              flex: 1,
-              child: BlocConsumer<PaymentDetailBloc, PaymentDetailState>(
-                listener: (context, state) async {
-                  if (state.transactionModel != null) {
-                    await context.push(PaymentPage(
-                      paymentId: state.transactionModel!.transactionId,
-                      paymentUrl: state.transactionModel!.paymentUrl,
-                    ));
-                    if (context.mounted) {
-                      context.pushAndRemoveUntil(
-                          PaymentWaitingPage(totalPayment: totalPayment),
-                          (route) => route.isFirst);
-                    }
-                  } else if (state.status == DataStateStatus.error) {
-                    state.errorMessage.failedBar(context);
-                  }
-                },
-                builder: (context, state) {
-                  return EcoFormButton(
-                    label: "Order Sekarang",
-                    onPressed: state.addressModel == null ||
-                            state.expeditionModel == null ||
-                            state.carts == null
-                        ? null
-                        : () {
-                            totalPayment = state.paymentInfo!.totalPayment;
-                            context.read<PaymentDetailBloc>().add(CheckoutEvent(
-                                  request: TransactionRequest(
-                                    addressId: state.addressModel!.id,
-                                    totalShippingPrice:
-                                        state.paymentInfo!.shippingPrice,
-                                    expeditionName: state.expeditionModel!.code,
-                                    estimationDay:
-                                        state.expeditionModel!.etd[0],
-                                    discount:
-                                        -(state.paymentInfo?.discount ?? 0),
-                                    transactionDetails: carts
-                                        .map((e) => TransactionDetail(
-                                              productId: e.id,
-                                              productName: e.nameItems,
-                                              qty: e.totalItems,
-                                              subTotalPrice: e.totalPrice,
-                                            ))
-                                        .toList(),
-                                    point: -state.pointUsed,
-                                    voucherId: state.voucherModel?.id ?? 1,
-                                  ),
-                                ));
-                            for (CartModel element in carts) {
-                              context
-                                  .read<CartBloc>()
-                                  .add(DeleteItemCart(id: element.id));
-                            }
-                            context.read<ProfileBloc>().add(GetDataUser());
-                          },
+            16.0.height,
+            BlocBuilder<ProfileBloc, ProfileState>(
+              builder: (context, state) {
+                return CheckoutSettingSwitch(
+                  currentPoint: state.user.point,
+                  label: "Tukarkan Point",
+                  onChanged: (value) => context
+                      .read<PaymentDetailBloc>()
+                      .add(PointUsedEvent(pointUsed: value)),
+                );
+              },
+            ),
+            16.0.height,
+            BlocBuilder<PaymentDetailBloc, PaymentDetailState>(
+              builder: (context, state) {
+                if (state.status == DataStateStatus.success) {
+                  return PaymentInfoWidget(
+                    paymentInfo: state.paymentInfo!,
                   );
-                },
-              ),
+                } else {
+                  return const SizedBox.shrink();
+                }
+              },
             ),
           ],
         ),
-      ),
-    );
+        bottomNavigationBar: Padding(
+          padding: const EdgeInsets.all(AppSizes.primary),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Flexible(
+                flex: 1,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text("Total Pembayaran"),
+                    5.0.height,
+                    BlocBuilder<PaymentDetailBloc, PaymentDetailState>(
+                      builder: (context, state) {
+                        return Text(
+                          (state.paymentInfo?.totalPayment ?? 0)
+                              .currencyFormatRp,
+                          style: const TextStyle(
+                            fontWeight: AppFontWeight.semibold,
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              Flexible(
+                flex: 1,
+                child: BlocConsumer<PaymentDetailBloc, PaymentDetailState>(
+                  listener: (context, state) async {
+                    if (state.transactionModel != null) {
+                      await context.push(PaymentPage(
+                        paymentId: state.transactionModel!.transactionId,
+                        paymentUrl: state.transactionModel!.paymentUrl,
+                      ));
+                      if (context.mounted) {
+                        context.pushAndRemoveUntil(
+                            PaymentWaitingPage(totalPayment: totalPayment),
+                            (route) => route.isFirst);
+                      }
+                    } else if (state.status == DataStateStatus.error) {
+                      state.errorMessage.failedBar(context);
+                    }
+                  },
+                  builder: (context, state) {
+                    return EcoFormButton(
+                      label: "Order Sekarang",
+                      onPressed: state.addressModel == null ||
+                              state.expeditionModel == null ||
+                              state.carts == null
+                          ? null
+                          : () {
+                              totalPayment = state.paymentInfo!.totalPayment;
+                              context
+                                  .read<PaymentDetailBloc>()
+                                  .add(CheckoutEvent(
+                                    request: TransactionRequest(
+                                      addressId: state.addressModel!.id,
+                                      totalShippingPrice:
+                                          state.paymentInfo!.shippingPrice,
+                                      expeditionName:
+                                          state.expeditionModel!.code,
+                                      estimationDay:
+                                          state.expeditionModel!.etd[0],
+                                      discount:
+                                          -(state.paymentInfo?.discount ?? 0),
+                                      transactionDetails: carts
+                                          .map((e) => TransactionDetail(
+                                                productId: e.id,
+                                                productName: e.nameItems,
+                                                qty: e.totalItems,
+                                                subTotalPrice: e.totalPrice,
+                                              ))
+                                          .toList(),
+                                      point: -state.pointUsed,
+                                      voucherId: state.voucherModel?.id ?? 1,
+                                    ),
+                                  ));
+                              for (CartModel element in carts) {
+                                context
+                                    .read<CartBloc>()
+                                    .add(DeleteItemCart(id: element.id));
+                              }
+                            },
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    });
   }
 }

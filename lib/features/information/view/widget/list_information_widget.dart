@@ -15,7 +15,6 @@ class ListInformation extends StatelessWidget {
     required this.isBookmark,
   });
   final InformationModel informationModel;
-
   final ValueNotifier<bool> isBookmark;
 
   @override
