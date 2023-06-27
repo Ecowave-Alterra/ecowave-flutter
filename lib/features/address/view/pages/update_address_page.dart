@@ -368,13 +368,6 @@ class _UpdateAddressPageState extends State<UpdateAddressPage> {
                               ),
                             ));
                         context.pop();
-                        await Future.delayed(const Duration(seconds: 3));
-                        if (context.mounted &&
-                            context.read<AddressBloc>().state
-                                is AddressSuccess) {
-                          "Yey! Kamu berhasil memperbarui alamat"
-                              .succeedBar(context);
-                        }
                       }
                     }
                   : null,

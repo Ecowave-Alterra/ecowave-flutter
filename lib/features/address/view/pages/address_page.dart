@@ -25,7 +25,14 @@ class AddressPage extends StatelessWidget {
           ),
         ],
       ),
-      body: BlocBuilder<AddressBloc, AddressState>(
+      body: BlocConsumer<AddressBloc, AddressState>(
+        listener: (context, state) {
+          if (state is AddressSuccess) {
+            if (state.isUpdated) {
+              state.messageUpdated.succeedBar(context);
+            }
+          }
+        },
         builder: (context, state) {
           if (state is AddressLoading) {
             return const EcoLoading();
