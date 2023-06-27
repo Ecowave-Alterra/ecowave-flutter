@@ -38,7 +38,13 @@ class _UnpaidHistoryTransactionPageState
       if (state is HistoryTransactionEmpty) {
         return const EmptyState();
       } else if (state is HistoryTransactionFailed) {
-        return EcoError(errorMessage: state.message, onRetry: () {});
+        return EcoError(
+            errorMessage: state.message,
+            onRetry: () {
+              context
+                  .read<HistoryTransactionBloc>()
+                  .add(const GetHistoryFailedTransactionEvent());
+            });
       } else if (state is HistoryUnpaidTransactionSuccess) {
         if (state.dataUnpaid.isEmpty) {
           return const EmptyState();
@@ -47,7 +53,8 @@ class _UnpaidHistoryTransactionPageState
               itemCount: state.dataUnpaid.length,
               shrinkWrap: true,
               itemBuilder: (context, index) {
-                final HistoryTransactionModel cUnpaid = state.dataUnpaid[index];
+                final HistoryTransactionModel cUnpaid =
+                    state.dataUnpaid[state.dataUnpaid.length - 1 - index];
 
                 if (DateTime.now()
                         .difference(DateTime.parse(cUnpaid.createdAt))

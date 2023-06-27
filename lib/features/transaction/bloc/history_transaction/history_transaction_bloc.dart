@@ -1,4 +1,5 @@
 import 'package:ecowave/features/transaction/model/models/history_transaction_model.dart';
+import 'package:ecowave/features/transaction/model/models/rating_data_model.dart';
 import 'package:ecowave/features/transaction/model/services/history_transaction_service.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -132,10 +133,16 @@ class HistoryTransactionBloc
     });
 
     on<PostRatingDataEvent>((event, emit) async {
-      emit(HistoryTransactionLoading());
       try {
-        await service.postRatingData(
+        final bool isRating = await service.postRatingData(
             event.ratingDataList, event.expeditionRating, event.transactionId);
+        if (isRating) {
+          emit((state as HistorySuccessTransactionSuccess).copyWith(
+            isUpdated: true,
+            messageUpdated: "Yey! Kamu mendapatkan point +10",
+          ));
+          add(const GetHistorySuccessTransactionEvent());
+        }
       } catch (e) {
         emit(HistoryTransactionFailed(message: e.toString()));
       }

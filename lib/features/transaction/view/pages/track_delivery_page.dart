@@ -1,7 +1,7 @@
 import 'package:ecowave/core.dart';
 import 'package:ecowave/features/transaction/bloc/tracking_delivery/tracking_delivery_bloc.dart';
 import 'package:ecowave/features/transaction/model/models/history_transaction_model.dart';
-import 'package:ecowave/features/transaction/model/models/tracking_delivery_mode.dart';
+import 'package:ecowave/features/transaction/model/models/tracking_delivery_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,7 +20,8 @@ class _TrackDeliveryPageState extends State<TrackDeliveryPage> {
   @override
   void initState() {
     context.read<TrackingDeliveryBloc>().add(GetTracingDeliveryEvent(
-        resi: widget.detailTransaction.receiptNumber,
+        resi:
+            widget.detailTransaction.receiptNumber ?? "No Resi Belum Tersedia",
         cou: widget.detailTransaction.expeditionName));
     super.initState();
   }
@@ -51,7 +52,7 @@ class _TrackDeliveryPageState extends State<TrackDeliveryPage> {
                   ),
                   Flexible(
                     child: Text(
-                        "Estimasi diterima : ${widget.detailTransaction.estimationDay} Hari"),
+                        "Estimasi diterima : ${widget.detailTransaction.estimationDay}"),
                   )
                 ],
               ),
@@ -61,8 +62,19 @@ class _TrackDeliveryPageState extends State<TrackDeliveryPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                      "${widget.detailTransaction.expeditionName.toUpperCase()} : ${widget.detailTransaction.receiptNumber}"),
+                  Row(
+                    children: [
+                      Text(widget.detailTransaction.expeditionName
+                          .toUpperCase()),
+                      const Text(" : "),
+                      Text(
+                        widget.detailTransaction.receiptNumber == ''
+                            ? ' : No Resi Belum Tersedia'
+                            : widget.detailTransaction.receiptNumber ??
+                                " : No Resi Belum Tersedia",
+                      )
+                    ],
+                  ),
                   Row(
                     children: [
                       Tooltip(
@@ -76,7 +88,8 @@ class _TrackDeliveryPageState extends State<TrackDeliveryPage> {
                           tooltipkey.currentState?.ensureTooltipVisible();
 
                           Clipboard.setData(ClipboardData(
-                              text: widget.detailTransaction.receiptNumber));
+                              text: widget.detailTransaction.receiptNumber ??
+                                  "No Resi belum tersedia"));
                         },
                         child: const Text(
                           'Salin',

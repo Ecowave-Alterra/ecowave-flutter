@@ -22,8 +22,11 @@ class UnpaidTransactionDetailPage extends StatelessWidget {
         DateTime.parse(detailTransaction.createdAt);
 
     final DateTime targetTime = transactionTime.add(const Duration(days: 1));
+
+    final DateTime modifiedTargetTime =
+        targetTime.add(const Duration(hours: 7));
     final String tempoTime =
-        DateFormat('d MMM y, H:mm a', 'id').format(targetTime);
+        DateFormat('d MMM y, H:mm a', 'id').format(modifiedTargetTime);
 
     final int endTime = targetTime.millisecondsSinceEpoch;
     context

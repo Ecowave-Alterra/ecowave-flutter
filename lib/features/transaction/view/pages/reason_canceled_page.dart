@@ -31,8 +31,9 @@ class ReasonCanceledPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text("Pada"),
-                  Text(
-                      DateTime.parse(reason.updatedAt).toFormattedDateMinute()),
+                  Text((DateTime.parse(reason.updatedAt)
+                          .add(const Duration(hours: 7)))
+                      .toFormattedDateMinute()),
                 ],
               ),
               28.0.height,
@@ -94,7 +95,9 @@ class ReasonCanceledPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text("Diminta Pada"),
-                  Text(DateTime.parse(reason.createdAt).toFormattedDateMinute())
+                  Text((DateTime.parse(reason.createdAt)
+                          .add(const Duration(hours: 7)))
+                      .toFormattedDateMinute()),
                 ],
               ),
               28.0.height,

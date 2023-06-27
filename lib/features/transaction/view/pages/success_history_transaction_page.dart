@@ -17,25 +17,38 @@ class SuccessHistoryTransactionPage extends StatelessWidget {
     context
         .read<HistoryTransactionBloc>()
         .add(const GetHistorySuccessTransactionEvent());
-    return BlocBuilder<HistoryTransactionBloc, HistoryTransactionState>(
-        builder: (context, state) {
-      debugPrint("state di selesai $state");
+    return BlocConsumer<HistoryTransactionBloc, HistoryTransactionState>(
+        listener: (context, state) {
+      if (state is HistorySuccessTransactionSuccess) {
+        if (state.isUpdated) {
+          state.messageUpdated.succeedBar(context);
+        }
+      }
+    }, builder: (context, state) {
       if (state is HistoryTransactionLoading) {
         return const EcoLoading();
       }
       if (state is HistoryTransactionEmpty) {
         return const EmptyState();
       } else if (state is HistoryTransactionFailed) {
-        return EcoError(errorMessage: state.message, onRetry: () {});
+        return EcoError(
+            errorMessage: state.message,
+            onRetry: () {
+              context
+                  .read<HistoryTransactionBloc>()
+                  .add(const GetHistoryFailedTransactionEvent());
+            });
       } else if (state is HistorySuccessTransactionSuccess) {
         if (state.dataSuccess.isEmpty) {
           return const EmptyState();
+        } else if (state.isUpdated) {
+          return const EcoLoading();
         } else {
           return ListView.builder(
               itemCount: state.dataSuccess.length,
               itemBuilder: (BuildContext context, int index) {
                 final HistoryTransactionModel cSuccess =
-                    state.dataSuccess[index];
+                    state.dataSuccess[state.dataSuccess.length - 1 - index];
                 return ProductTransactionWidget(
                   statusOrder: cSuccess.statusTransaction,
                   imageUrl: cSuccess.orderDetail[0].productImageUrl,

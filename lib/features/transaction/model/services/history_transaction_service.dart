@@ -1,7 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:ecowave/core.dart';
 import 'package:ecowave/features/transaction/model/models/history_transaction_model.dart';
-import 'package:ecowave/features/transaction/model/models/tracking_delivery_mode.dart';
+import 'package:ecowave/features/transaction/model/models/rating_data_model.dart';
+import 'package:ecowave/features/transaction/model/models/tracking_delivery_model.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -22,21 +23,18 @@ class HistoryTransactionService {
   Future<List<HistoryTransactionModel>?> getTransactions(String filter) async {
     try {
       String url = '${BaseURL.api}user/order?filter=$filter&page=1';
-      // debugPrint("urlnya apa $url");
       final Response response = await _dio.getUri(
         Uri.parse(url),
         options: Options(
           headers: {"Authorization": "Bearer $token"},
         ),
       );
-      // debugPrint("responsenya apa $response");
       if (response.statusCode == 200) {
         if (response.data["Order"].runtimeType == String) {
           return null;
         } else {
           final List<dynamic> datas =
               (response.data as Map<String, dynamic>)["Order"];
-          // debugPrint("datas get transactions : $datas");
           List<HistoryTransactionModel> data = datas
               .map((x) =>
                   HistoryTransactionModel.fromJson(x as Map<String, dynamic>))
@@ -65,7 +63,6 @@ class HistoryTransactionService {
         data: data,
       );
 
-      // debugPrint("ini response : $response");
       if (response.statusCode == 200) {
         debugPrint("Berhasil membatalkan pesanan otomatis");
       }
@@ -84,7 +81,6 @@ class HistoryTransactionService {
         'TransactionId': transactionId,
       };
 
-      // print("data ini isinya apa $data");
       final response = await _dio.postUri(
         (Uri.parse('${BaseURL.api}user/order/cancel')),
         options: Options(
@@ -92,7 +88,6 @@ class HistoryTransactionService {
         ),
         data: data,
       );
-      // print("response isinya apa $response");
       if (response.statusCode == 200) {
         debugPrint("Berhasil membatalkan pesanan dengan komentar");
       }
@@ -120,17 +115,8 @@ class HistoryTransactionService {
     }
   }
 
-  Future<void> postRatingData(List<RatingData> ratingDataList,
+  Future<bool> postRatingData(List<RatingData> ratingDataList,
       double expeditionRating, String transactionId) async {
-    // print("Ini data photoUrl ${ratingDataList.map((e) => e.photoUrl)}");
-    // print("Ini data videoUrl ${ratingDataList.map((e) => e.videoUrl)}");
-    // print("Ini data comment ${ratingDataList.map((e) => e.comment)}");
-    // print(
-    //     "Ini data ratingProduct ${ratingDataList.map((e) => e.ratingProduct)}");
-
-    // print("Ini data expeditionRating $expeditionRating");
-    // print("Ini data transactionId $transactionId");
-
     try {
       FormData formData = FormData();
 
@@ -159,10 +145,6 @@ class HistoryTransactionService {
             ),
         ]);
       }
-      // print("isi formdata aja $formData");
-      // print("isi formdata field ${formData.fields}");
-      // print("isi formdata file ${formData.files}");
-
       Response response = await _dio.postUri(
         Uri.parse('${BaseURL.api}user/review/$transactionId'),
         options: Options(
@@ -175,13 +157,12 @@ class HistoryTransactionService {
 
       if (response.statusCode == 201) {
         debugPrint('Data rating berhasil dikirim');
-        getTransactions("Selesai");
+        return true;
       } else {
-        debugPrint(
-            'Gagal mengirim data rating. Status code: ${response.statusCode}');
+        throw "Gagak memberikan rating";
       }
     } catch (error) {
-      debugPrint('Terjadi error saat mengirim data rating: $error');
+      rethrow;
     }
   }
 
@@ -217,18 +198,4 @@ class HistoryTransactionService {
       rethrow;
     }
   }
-}
-
-class RatingData {
-  final double ratingProduct;
-  final String photoUrl;
-  final String videoUrl;
-  final String comment;
-
-  RatingData({
-    required this.ratingProduct,
-    required this.photoUrl,
-    required this.videoUrl,
-    required this.comment,
-  });
 }

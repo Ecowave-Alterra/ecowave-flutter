@@ -3,7 +3,7 @@ import 'package:ecowave/core.dart';
 import 'package:ecowave/features/transaction/bloc/history_transaction/history_transaction_bloc.dart';
 import 'package:ecowave/features/transaction/bloc/tabbar/tabbar_bloc.dart';
 import 'package:ecowave/features/transaction/model/models/history_transaction_model.dart';
-import 'package:ecowave/features/transaction/model/services/history_transaction_service.dart';
+import 'package:ecowave/features/transaction/model/models/rating_data_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -26,6 +26,7 @@ class _RatingPageState extends State<RatingPage> {
   final List<TextEditingController> _fotoControllers = [];
   final List<TextEditingController> _videoControllers = [];
   final List<TextEditingController> _komenControllers = [];
+  final ValueNotifier<bool> isExist = ValueNotifier<bool>(true);
 
   @override
   void initState() {
@@ -292,70 +293,112 @@ class _RatingPageState extends State<RatingPage> {
                   ),
                 ),
                 36.0.height,
-                ElevatedButton(
-                  onPressed: () {
-                    showConfirmation(
-                        title: 'Apakah penilaianmu sudah benar?',
-                        message:
-                            'Kami akan memasukkan penilaian ini ke data kami',
-                        nameButtonConfirmation: 'Nilai',
-                        colorButtonConfirmation: AppColors.primary500,
-                        pressNavConfirmation: () {
-                          List<RatingData> ratingDataList = [];
+                // ElevatedButton(
+                //   onPressed: () {
+                //     showConfirmation(
+                //         title: 'Apakah penilaianmu sudah benar?',
+                //         message:
+                //             'Kami akan memasukkan penilaian ini ke data kami',
+                //         nameButtonConfirmation: 'Nilai',
+                //         colorButtonConfirmation: AppColors.primary500,
+                //         pressNavConfirmation: () {
+                //           List<RatingData> ratingDataList = [];
 
-                          for (int i = 0;
-                              i < widget.detailRating.orderDetail.length;
-                              i++) {
-                            // Retrieve the necessary data for each rating item
-                            double ratingProduct = double.tryParse(
-                                    _rateProdukControllers[i].text) ??
-                                1.0;
-                            String? photoUrl = _fotoControllers[i].text;
-                            String? videoUrl = _videoControllers[i].text;
-                            String? comment = _komenControllers[i].text;
+                //           for (int i = 0;
+                //               i < widget.detailRating.orderDetail.length;
+                //               i++) {
+                //             // Retrieve the necessary data for each rating item
+                //             double ratingProduct = double.tryParse(
+                //                     _rateProdukControllers[i].text) ??
+                //                 1.0;
+                //             String? photoUrl = _fotoControllers[i].text;
+                //             String? videoUrl = _videoControllers[i].text;
+                //             String? comment = _komenControllers[i].text;
 
-                            RatingData ratingData = RatingData(
-                              ratingProduct: ratingProduct,
-                              photoUrl: photoUrl,
-                              videoUrl: videoUrl,
-                              comment: comment,
-                            );
-                            ratingDataList.add(ratingData);
-                          }
+                //             RatingData ratingData = RatingData(
+                //               ratingProduct: ratingProduct,
+                //               photoUrl: photoUrl,
+                //               videoUrl: videoUrl,
+                //               comment: comment,
+                //             );
+                //             ratingDataList.add(ratingData);
+                //           }
 
-                          double expeditionRating =
-                              double.tryParse(_rateLayananController.text) ??
-                                  1.0;
+                //           double expeditionRating =
+                //               double.tryParse(_rateLayananController.text) ??
+                //                   1.0;
 
-                          context.read<HistoryTransactionBloc>().add(
-                              PostRatingDataEvent(
-                                  ratingDataList: ratingDataList,
-                                  expeditionRating: expeditionRating,
-                                  transactionId:
-                                      widget.detailRating.transactionId));
+                //           context.read<HistoryTransactionBloc>().add(
+                //               PostRatingDataEvent(
+                //                   ratingDataList: ratingDataList,
+                //                   expeditionRating: expeditionRating,
+                //                   transactionId:
+                //                       widget.detailRating.transactionId));
 
-                          showPoint(
-                              nilaiPoint: 10,
-                              context: context,
-                              onPress: () {
-                                context.popToRoot();
-                                context.read<TabbarBloc>().add((0));
-                                widget.moveTab();
-                              });
-                        },
-                        context: context,
-                        nameButtonUnConfirmation: 'Tidak');
-                  },
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.primary500),
-                  child: const Text(
-                    "Kirim Komentar",
-                    style: TextStyle(color: AppColors.white),
-                  ),
-                ),
-                20.0.height,
+                //           context.pop();
+                //         },
+                //         context: context,
+                //         nameButtonUnConfirmation: 'Tidak');
+                //   },
+                //   style: ElevatedButton.styleFrom(
+                //       backgroundColor: AppColors.primary500),
+                //   child: const Text(
+                //     "Kirim Komentar",
+                //     style: TextStyle(color: AppColors.white),
+                //   ),
+                // ),
+                80.0.height,
               ],
             ),
+          ),
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.all(AppSizes.primary),
+        child: ValueListenableBuilder<bool>(
+          valueListenable: isExist,
+          builder: (context, value, _) => EcoFormButton(
+            height: 45.0,
+            label: "Berikan Komentar",
+            onPressed: value
+                ? () async {
+                    List<RatingData> ratingDataList = [];
+
+                    for (int i = 0;
+                        i < widget.detailRating.orderDetail.length;
+                        i++) {
+                      // Retrieve the necessary data for each rating item
+                      double ratingProduct =
+                          double.tryParse(_rateProdukControllers[i].text) ??
+                              1.0;
+                      String? photoUrl = _fotoControllers[i].text;
+                      String? videoUrl = _videoControllers[i].text;
+                      String? comment = _komenControllers[i].text;
+
+                      RatingData ratingData = RatingData(
+                        ratingProduct: ratingProduct,
+                        photoUrl: photoUrl,
+                        videoUrl: videoUrl,
+                        comment: comment,
+                      );
+                      ratingDataList.add(ratingData);
+                    }
+
+                    double expeditionRating =
+                        double.tryParse(_rateLayananController.text) ?? 1.0;
+
+                    context.read<HistoryTransactionBloc>().add(
+                        PostRatingDataEvent(
+                            ratingDataList: ratingDataList,
+                            expeditionRating: expeditionRating,
+                            transactionId: widget.detailRating.transactionId));
+
+                    context.popToRoot();
+                    context.read<TabbarBloc>().add(3);
+                    widget.moveTab();
+                  }
+                : null,
           ),
         ),
       ),

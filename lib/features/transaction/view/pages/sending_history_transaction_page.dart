@@ -25,7 +25,13 @@ class SendingHistoryTransactionPage extends StatelessWidget {
       if (state is HistoryTransactionEmpty) {
         return const EmptyState();
       } else if (state is HistoryTransactionFailed) {
-        return EcoError(errorMessage: state.message, onRetry: () {});
+        return EcoError(
+            errorMessage: state.message,
+            onRetry: () {
+              context
+                  .read<HistoryTransactionBloc>()
+                  .add(const GetHistoryFailedTransactionEvent());
+            });
       } else if (state is HistorySendingTransactionSuccess) {
         if (state.dataSending.isEmpty) {
           return const EmptyState();
@@ -34,7 +40,7 @@ class SendingHistoryTransactionPage extends StatelessWidget {
               itemCount: state.dataSending.length,
               itemBuilder: (BuildContext context, int index) {
                 final HistoryTransactionModel cSending =
-                    state.dataSending[index];
+                    state.dataSending[state.dataSending.length - 1 - index];
                 if (DateTime.now()
                         .difference(DateTime.parse(cSending.createdAt))
                         .inDays >=
