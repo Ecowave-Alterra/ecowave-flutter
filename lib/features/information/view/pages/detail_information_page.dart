@@ -1,4 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:ecowave/features/information/bloc/bookmark/bookmark_bloc.dart';
+import 'package:ecowave/features/information/bloc/isBookmark/is_bookmark_bloc.dart';
 import 'package:ecowave/features/information/bloc/updatePoint/update_point_bloc.dart';
 import 'package:ecowave/features/information/bloc/information/information_bloc.dart';
 import 'package:ecowave/features/profile/bloc/profile_bloc.dart';
@@ -52,14 +54,30 @@ class _ContentInformationState extends State<ContentInformation> {
 
   @override
   Widget build(BuildContext context) {
+    context.read<IsBookmarkBloc>().add(widget.informationModel);
+
     return Scaffold(
       appBar: AppBar(
         actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const ImageIcon(AppIcons.outlineBookmark,
-                color: AppColors.primary600, size: 18),
-          ),
+          BlocBuilder<IsBookmarkBloc, bool>(builder: (context, state) {
+            return IconButton(
+              onPressed: () {
+                if (state == false) {
+                  context.read<BookmarkBloc>().add(AddBookmarkEvent(
+                      informationModel: widget.informationModel));
+                } else if (state == true) {
+                  context.read<BookmarkBloc>().add(DeleteBookmarkEvent(
+                      id: widget.informationModel.informationId));
+                }
+                context.read<IsBookmarkBloc>().add(widget.informationModel);
+              },
+              icon: ImageIcon(
+                state ? AppIcons.solidBookmark : AppIcons.outlineBookmark,
+                color: AppColors.primary600,
+                size: 18,
+              ),
+            );
+          }),
         ],
       ),
       body: Padding(
