@@ -18,7 +18,7 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-   @override
+  @override
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
@@ -30,20 +30,13 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Login'),
-        centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
       ),
       body: BlocProvider(
         create: (context) => LoginBloc(
             emailController: _emailController,
             passwordController: _passwordController),
         child: BlocConsumer<LoginBloc, LoginState>(
-          listener: (context, state) async{
+          listener: (context, state) async {
             if (state is LoginError) {
               "Email atau password tidak valid. Mohon coba lagi."
                   .failedBar(context);
@@ -51,9 +44,10 @@ class _LoginPageState extends State<LoginPage> {
               _passwordController.clear();
               context.read<LoginBloc>().add(const LoginInputChange());
             } else if (state is LoginSuccess) {
-             await  context.push(const MyHomePage());
-              if(context.mounted){
-               dispose();
+              await context.pushAndRemoveUntil(
+                  const MyHomePage(), (route) => false);
+              if (context.mounted) {
+                dispose();
               }
             }
           },

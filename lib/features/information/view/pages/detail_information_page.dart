@@ -1,4 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:ecowave/features/information/bloc/updatePoint/update_point_bloc.dart';
 import 'package:ecowave/features/information/bloc/information/information_bloc.dart';
+import 'package:ecowave/features/profile/bloc/profile_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -17,6 +20,7 @@ class ContentInformation extends StatefulWidget {
 
 class _ContentInformationState extends State<ContentInformation> {
   final ScrollController _scrollController = ScrollController();
+  bool isScrolled = false;
 
   @override
   void initState() {
@@ -34,23 +38,16 @@ class _ContentInformationState extends State<ContentInformation> {
   void _scrollListener() {
     if (_scrollController.offset >=
             _scrollController.position.maxScrollExtent &&
-        !_scrollController.position.outOfRange) {
-      setState(() {
-        true;
-        showPoint(
-            onPress: () {
-              _closePopup;
-              context.pop();
-            },
-            context: context);
-      });
+        !_scrollController.position.outOfRange &&
+        !isScrolled) {
+      context.read<UpdatePointBloc>().add(GetMessageEvent());
+      context.read<ProfileBloc>().add(GetDataUser());
+      showPoint(
+        onPress: () => context.pop(),
+        context: context,
+      );
+      isScrolled = true;
     }
-  }
-
-  void _closePopup() {
-    setState(() {
-      false;
-    });
   }
 
   @override
@@ -94,8 +91,13 @@ class _ContentInformationState extends State<ContentInformation> {
                     ),
                   ),
                   16.0.height,
-                  Image.network(
-                    widget.informationModel.photoContentUrl,
+                  CachedNetworkImage(
+                    imageUrl: widget.informationModel.photoContentUrl,
+                    errorWidget: (context, url, error) => const ImageIcon(
+                      AppIcons.warning,
+                      color: AppColors.primary500,
+                      size: 50,
+                    ),
                   ),
                   16.0.height,
                   Html(

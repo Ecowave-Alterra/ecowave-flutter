@@ -16,14 +16,17 @@ class SendingHistoryTransactionPage extends StatelessWidget {
   Widget build(BuildContext context) {
     context
         .read<HistoryTransactionBloc>()
-        .add(const GetHistoryTransactionEvent());
+        .add(const GetHistorySendingTransactionEvent());
     return BlocBuilder<HistoryTransactionBloc, HistoryTransactionState>(
         builder: (context, state) {
       if (state is HistoryTransactionLoading) {
         return const EcoLoading();
+      }
+      if (state is HistoryTransactionEmpty) {
+        return const EmptyState();
       } else if (state is HistoryTransactionFailed) {
         return EcoError(errorMessage: state.message, onRetry: () {});
-      } else if (state is HistoryTransactionSuccess) {
+      } else if (state is HistorySendingTransactionSuccess) {
         if (state.dataSending.isEmpty) {
           return const EmptyState();
         } else {
@@ -32,14 +35,14 @@ class SendingHistoryTransactionPage extends StatelessWidget {
               itemBuilder: (BuildContext context, int index) {
                 final HistoryTransactionModel cSending =
                     state.dataSending[index];
-                // if (DateTime.now()
-                //         .difference(DateTime.parse(cSending.createdAt))
-                //         .inDays >=
-                //     10) {
-                //   context
-                //       .read<HistoryTransactionBloc>()
-                //       .add(AddConfirmTransactionEvent(cSending.transactionId));
-                // }
+                if (DateTime.now()
+                        .difference(DateTime.parse(cSending.createdAt))
+                        .inDays >=
+                    10) {
+                  context
+                      .read<HistoryTransactionBloc>()
+                      .add(AddConfirmTransactionEvent(cSending.transactionId));
+                }
                 return ProductTransactionWidget(
                   statusOrder: cSending.statusTransaction,
                   imageUrl: cSending.orderDetail[0].productImageUrl,

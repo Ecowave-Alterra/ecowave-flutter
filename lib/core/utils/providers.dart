@@ -6,8 +6,8 @@ import 'package:ecowave/features/information/bloc/information/information_bloc.d
 import 'package:ecowave/features/ecommerce/bloc/product_home/product_bloc.dart';
 import 'package:ecowave/features/home/bloc/home/home_bloc.dart';
 import 'package:ecowave/features/information/bloc/isBookmark/is_bookmark_bloc.dart';
+import 'package:ecowave/features/information/bloc/updatePoint/update_point_bloc.dart';
 import 'package:ecowave/features/payment/bloc/expedition/expedition_bloc.dart';
-import 'package:ecowave/features/payment/bloc/get_point/get_point_bloc.dart';
 import 'package:ecowave/features/payment/bloc/payment_detail/payment_detail_bloc.dart';
 import 'package:ecowave/features/payment/bloc/payment_status/payment_status_bloc.dart';
 import 'package:ecowave/features/payment/bloc/voucher/voucher_bloc.dart';
@@ -22,7 +22,6 @@ class Providers {
     BlocProvider<AddressBloc>(create: (context) => di.locator<AddressBloc>()),
     BlocProvider<HomeBloc>(create: (context) => di.locator<HomeBloc>()),
     BlocProvider<CartBloc>(create: (context) => di.locator<CartBloc>()),
-    BlocProvider<GetPointBloc>(create: (context) => di.locator<GetPointBloc>()),
     BlocProvider<ExpeditionBloc>(
         create: (context) => di.locator<ExpeditionBloc>()),
     BlocProvider<PaymentDetailBloc>(
@@ -42,5 +41,7 @@ class Providers {
     BlocProvider<BookmarkBloc>(create: (context) => di.locator<BookmarkBloc>()),
     BlocProvider<IsBookmarkBloc>(
         create: (context) => di.locator<IsBookmarkBloc>()),
+    BlocProvider<UpdatePointBloc>(
+        create: (context) => di.locator<UpdatePointBloc>()),
   ];
 }

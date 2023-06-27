@@ -4,18 +4,17 @@ import 'package:ecowave/features/cart/bloc/cart/cart_bloc.dart';
 import 'package:ecowave/features/information/bloc/bookmark/bookmark_bloc.dart';
 import 'package:ecowave/features/information/bloc/information/information_bloc.dart';
 import 'package:ecowave/features/information/bloc/isBookmark/is_bookmark_bloc.dart';
+import 'package:ecowave/features/information/bloc/updatePoint/update_point_bloc.dart';
 import 'package:ecowave/features/information/model/services/bookmark_service.dart';
 import 'package:ecowave/features/information/model/services/information_service.dart';
 import 'package:ecowave/features/ecommerce/bloc/product_home/product_bloc.dart';
 import 'package:ecowave/features/ecommerce/model/services/product_service.dart';
 import 'package:ecowave/features/home/bloc/home/home_bloc.dart';
 import 'package:ecowave/features/payment/bloc/expedition/expedition_bloc.dart';
-import 'package:ecowave/features/payment/bloc/get_point/get_point_bloc.dart';
 import 'package:ecowave/features/payment/bloc/payment_detail/payment_detail_bloc.dart';
 import 'package:ecowave/features/payment/bloc/payment_status/payment_status_bloc.dart';
 import 'package:ecowave/features/payment/bloc/voucher/voucher_bloc.dart';
 import 'package:ecowave/features/payment/model/services/expedition_service.dart';
-import 'package:ecowave/features/payment/model/services/get_point_service.dart';
 import 'package:ecowave/features/payment/model/services/transaction_service.dart';
 import 'package:ecowave/features/profile/bloc/profile_bloc.dart';
 import 'package:ecowave/features/profile/model/services/profile_services.dart';
@@ -33,7 +32,6 @@ void init() {
   locator.registerFactory(() => AddressBloc(locator()));
   locator.registerFactory(() => HomeBloc());
   locator.registerFactory(() => CartBloc());
-  locator.registerFactory(() => GetPointBloc(locator()));
   locator.registerFactory(() => ExpeditionBloc(locator()));
   locator.registerFactory(() => PaymentDetailBloc(locator()));
   locator.registerFactory(() => PaymentStatusBloc(locator()));
@@ -46,10 +44,10 @@ void init() {
   locator.registerFactory(() => TrackingDeliveryBloc(locator()));
   locator.registerFactory(() => BookmarkBloc(locator()));
   locator.registerFactory(() => IsBookmarkBloc(locator()));
+  locator.registerFactory(() => UpdatePointBloc(locator()));
 
   // service
   locator.registerLazySingleton<AddressService>(() => AddressService());
-  locator.registerLazySingleton<GetPointService>(() => GetPointService());
   locator.registerLazySingleton<ExpeditionService>(() => ExpeditionService());
   locator.registerLazySingleton<TransactionService>(() => TransactionService());
   locator.registerLazySingleton<HistoryTransactionService>(
@@ -57,8 +55,6 @@ void init() {
   locator.registerLazySingleton<VoucherService>(() => VoucherService());
   locator.registerLazySingleton<InformationService>(() => InformationService());
   locator.registerLazySingleton<ProductService>(() => ProductService());
-  locator.registerLazySingleton<ProfileService>(
-      () =>ProfileService());
+  locator.registerLazySingleton<ProfileService>(() => ProfileService());
   locator.registerLazySingleton<BookmarkService>(() => BookmarkService());
 }
-

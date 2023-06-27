@@ -31,15 +31,16 @@ class _PaymentPageState extends State<PaymentPage> {
     final String paymentStatus = context.read<PaymentStatusBloc>().state;
     debugPrint("paymentStatus: $paymentStatus");
 
-    if (paymentStatus == "settlemet") {
+    if (paymentStatus == "settlement") {
       context.read<HomeBloc>().add(const OnBottomNavTap(1));
-      // TODO: arahkan ke tab pesanan Dikemas
       context.pushAndRemoveUntil<bool>(const MyHomePage(), (route) => false);
     }
   }
 
   @override
   void initState() {
+    context.read<PaymentStatusBloc>().add("initial");
+
     const PlatformWebViewControllerCreationParams params =
         PlatformWebViewControllerCreationParams();
     _controller = WebViewController.fromPlatformCreationParams(params);
@@ -79,7 +80,7 @@ class _PaymentPageState extends State<PaymentPage> {
       ..loadRequest(Uri.parse(widget.paymentUrl));
 
     timer = Timer.periodic(
-        const Duration(seconds: 10), (Timer t) => checkPaymentStatus());
+        const Duration(seconds: 5), (Timer t) => checkPaymentStatus());
     super.initState();
   }
 

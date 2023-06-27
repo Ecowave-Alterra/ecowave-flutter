@@ -4,7 +4,6 @@ import 'package:ecowave/features/information/view/widget/list_bookmart_widget.da
 import 'package:ecowave/features/profile/view/empty_session_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../core.dart';
 
@@ -15,7 +14,7 @@ class BookmarkPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
-        if (state.token == ''){
+        if (state.token == '') {
           return const EmptyUserPage();
         }
         return Scaffold(

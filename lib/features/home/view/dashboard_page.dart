@@ -1,7 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ecowave/core.dart';
+import 'package:ecowave/features/auth/view/login_page.dart';
 import 'package:ecowave/features/ecommerce/bloc/product_home/product_bloc.dart';
 import 'package:ecowave/features/ecommerce/view/pages/home_e_commerce_page.dart';
+import 'package:ecowave/features/ecommerce/view/pages/product_detail_page.dart';
 import 'package:ecowave/features/information/bloc/information/information_bloc.dart';
 import 'package:ecowave/features/information/view/pages/feed_information_page.dart';
 import 'package:ecowave/features/information/view/widget/carousel_information_card_widget.dart';
@@ -61,7 +64,9 @@ class _DashboardPageState extends State<DashboardPage> {
                                 horizontal: AppSizes.primary),
                             child: BlocConsumer<ProfileBloc, ProfileState>(
                               listener: (context, state) {
-                                // TODO: implement listener
+                                if (state.status == DataStateStatus.error) {
+                                  context.pushReplacement(const LoginPage());
+                                }
                               },
                               builder: (context, state) {
                                 String name = state.user.name;
@@ -103,7 +108,7 @@ class _DashboardPageState extends State<DashboardPage> {
                                   ),
                                   borderRadius:
                                       BorderRadius.circular(AppSizes.radius)),
-                              child: const Row(
+                              child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
@@ -111,7 +116,7 @@ class _DashboardPageState extends State<DashboardPage> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Row(
+                                      const Row(
                                         children: [
                                           Text(
                                             "EcoPoint  ",
@@ -132,16 +137,21 @@ class _DashboardPageState extends State<DashboardPage> {
                                           ),
                                         ],
                                       ),
-                                      Text(
-                                        "1000",
-                                        style: TextStyle(
-                                            fontSize: AppSizes.secondary,
-                                            fontWeight:
-                                                AppFontWeight.extrabold),
+                                      BlocBuilder<ProfileBloc, ProfileState>(
+                                        builder: (context, state) {
+                                          return Text(
+                                            state.user.point.toString(),
+                                            style: const TextStyle(
+                                              fontSize: AppSizes.secondary,
+                                              fontWeight:
+                                                  AppFontWeight.extrabold,
+                                            ),
+                                          );
+                                        },
                                       )
                                     ],
                                   ),
-                                  ImageIcon(
+                                  const ImageIcon(
                                     AppIcons.ecoPoints,
                                     size: 48,
                                     color: AppColors.grey500,
@@ -262,7 +272,6 @@ class _DashboardPageState extends State<DashboardPage> {
                             if (state is ProductLoading) {
                               return const EcoLoading();
                             } else if (state is ProductFailed) {
-                              print('Error');
                               return EcoError(
                                 errorMessage: state.message,
                                 onRetry: () {},
@@ -272,22 +281,56 @@ class _DashboardPageState extends State<DashboardPage> {
                               final product = state.data;
                               for (int i = 0; i < 3; i++) {
                                 carouselItems.add(
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 8.0),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(8.0),
-                                      child: Image.network(
-                                        product[i].productImageUrl[0],
-                                        height: 120,
-                                        fit: BoxFit.cover,
+                                  GestureDetector(
+                                    onTap: () {
+                                      context.push(ProductDetail(
+                                        productModel: state.data[i],
+                                      ));
+                                      FocusScope.of(context).unfocus();
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 8.0),
+                                      child: ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                        child: CachedNetworkImage(
+                                          imageUrl: (product[i]
+                                                  .productImageUrl!
+                                                  .isNotEmpty)
+                                              ? (product[i]
+                                                      .productImageUrl?[0] ??
+                                                  'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg')
+                                              : 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg',
+                                          height: 120,
+                                          fit: BoxFit.fitHeight,
+                                          errorWidget: (context, url, error) =>
+                                              const ImageIcon(
+                                            AppIcons.warning,
+                                            color: AppColors.primary500,
+                                            size: 50,
+                                          ),
+                                        ),
                                       ),
                                     ),
                                   ),
                                 );
                               }
                               return CarouselSlider(
-                                items: carouselItems,
+                                items: carouselItems.map((widget) {
+                                  return Container(
+                                    decoration: BoxDecoration(
+                                      color: AppColors
+                                          .grey50, // Ganti dengan warna latar belakang yang diinginkan
+                                      borderRadius: BorderRadius.circular(8.0),
+                                      border: Border.all(
+                                        color: AppColors.white,
+                                        width: 2.0,
+                                      ),
+                                    ),
+                                    child: widget,
+                                  );
+                                }).toList(),
                                 options: CarouselOptions(
                                   height: 120,
                                   enableInfiniteScroll: false,
@@ -457,6 +500,7 @@ class _DashboardPageState extends State<DashboardPage> {
               ],
             ),
           ),
+          16.0.height,
         ],
       ),
     );

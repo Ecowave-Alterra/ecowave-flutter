@@ -15,15 +15,18 @@ class FailedHistoryTransactionPage extends StatelessWidget {
   Widget build(BuildContext context) {
     context
         .read<HistoryTransactionBloc>()
-        .add(const GetHistoryTransactionEvent());
+        .add(const GetHistoryFailedTransactionEvent());
     return BlocBuilder<HistoryTransactionBloc, HistoryTransactionState>(
         builder: (context, state) {
       // print("state $state");
       if (state is HistoryTransactionLoading) {
         return const EcoLoading();
+      }
+      if (state is HistoryTransactionEmpty) {
+        return const EmptyState();
       } else if (state is HistoryTransactionFailed) {
         return EcoError(errorMessage: state.message, onRetry: () {});
-      } else if (state is HistoryTransactionSuccess) {
+      } else if (state is HistoryFailedTransactionSuccess) {
         if (state.dataFailed.isEmpty) {
           return const EmptyState();
         } else {

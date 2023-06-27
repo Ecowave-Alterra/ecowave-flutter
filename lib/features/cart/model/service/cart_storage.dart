@@ -34,7 +34,12 @@ class CartService {
   }
 
   void addItem(CartModel cartModel) {
-    items.add(cartModel);
+    int index = items.indexWhere((item) => item.id == cartModel.id);
+    if (index != -1) {
+      items[index].totalItems++;
+    } else {
+      items.add(cartModel);
+    }
     saveToLocalStorage();
   }
 

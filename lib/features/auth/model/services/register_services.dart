@@ -9,17 +9,15 @@ class RegisterService {
 
   Future<bool> register(RegisterModel user) async {
     try {
-      final response= await dio.post(
+      await dio.post(
         '$baseUrl/user/register',
         data: user.toJson(),
         options: Options(
           headers: {'Content-Type': 'application/json'},
         ),
       );
-      print(response);
       return true;
     } catch (e) {
-      print(e);
       return false;
     }
   }

@@ -14,14 +14,17 @@ class PackedHistoryTransactionPage extends StatelessWidget {
   Widget build(BuildContext context) {
     context
         .read<HistoryTransactionBloc>()
-        .add(const GetHistoryTransactionEvent());
+        .add(const GetHistoryPackedTransactionEvent());
     return BlocBuilder<HistoryTransactionBloc, HistoryTransactionState>(
         builder: (context, state) {
       if (state is HistoryTransactionLoading) {
         return const EcoLoading();
+      }
+      if (state is HistoryTransactionEmpty) {
+        return const EmptyState();
       } else if (state is HistoryTransactionFailed) {
         return EcoError(errorMessage: state.message, onRetry: () {});
-      } else if (state is HistoryTransactionSuccess) {
+      } else if (state is HistoryPackedTransactionSuccess) {
         if (state.dataPacked.isEmpty) {
           return const EmptyState();
         } else {

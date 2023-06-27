@@ -1,16 +1,24 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:ecowave/core.dart';
 import 'package:ecowave/features/address/model/models/address_model.dart';
 import 'package:ecowave/features/address/model/models/address_request.dart';
 import 'package:ecowave/features/address/model/models/city_model.dart';
 import 'package:ecowave/features/address/model/models/province_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AddressService {
   late Dio _dio;
-  AddressService() {
+  late SharedPreferences prefs;
+  late String token;
+
+  Future<void> init() async {
     _dio = Dio();
+    prefs = await SharedPreferences.getInstance();
+    token = prefs.getString("token") ?? "";
+  }
+
+  AddressService() {
+    init();
   }
 
   Future<List<ProvinceModel>> getProvinces() async {
@@ -58,11 +66,16 @@ class AddressService {
 
   Future<List<AddressModel>> getAddresses() async {
     try {
-      const String url = '${BaseURL.mock}user/address';
-      final response = await _dio.get(url);
+      const String url = '${BaseURL.api}user/address';
+      final response = await _dio.getUri(
+        Uri.parse(url),
+        options: Options(
+          headers: {"Authorization": "Bearer $token"},
+        ),
+      );
 
       if (response.statusCode == 200) {
-        final List datas = jsonDecode(response.data)["Data"];
+        final List datas = response.data["Data"];
         return datas.map((e) => AddressModel.fromJson(e)).toList();
       } else {
         throw "get addresses not successfully";
@@ -74,10 +87,14 @@ class AddressService {
 
   Future<bool> createAddresses(AddressRequest request) async {
     try {
-      const String url = '${BaseURL.mock}user/address';
-      final response = await _dio.post(url, data: request.toJson());
+      const String url = '${BaseURL.api}user/address';
+      final response = await _dio.postUri(Uri.parse(url),
+          options: Options(
+            headers: {"Authorization": "Bearer $token"},
+          ),
+          data: request.toJson());
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 201) {
         return true;
       } else {
         throw "create address not successfully";
@@ -89,8 +106,12 @@ class AddressService {
 
   Future<bool> updateAddresses(int id, AddressRequest request) async {
     try {
-      final String url = '${BaseURL.mock}user/address/$id';
-      final response = await _dio.put(url, data: request.toJson());
+      final String url = '${BaseURL.api}user/address/$id';
+      final response = await _dio.putUri(Uri.parse(url),
+          options: Options(
+            headers: {"Authorization": "Bearer $token"},
+          ),
+          data: request.toJson());
 
       if (response.statusCode == 200) {
         return true;

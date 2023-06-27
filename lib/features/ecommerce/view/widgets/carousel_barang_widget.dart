@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ecowave/features/ecommerce/bloc/product_home/product_bloc.dart';
 import 'package:ecowave/features/ecommerce/model/models/product_model.dart';
@@ -31,13 +32,19 @@ class _CarouselBarangState extends State<CarouselBarang> {
           );
         } else if (state is ProductSuccess) {
           List<Widget> imgList = List.generate(
-            widget.productModel.productImageUrl.length,
+            (widget.productModel.productImageUrl?.length ?? 0),
             (index) {
-              final img = widget.productModel.productImageUrl[index];
+              final img = (widget.productModel.productImageUrl?[index] ??
+                  'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg');
               return SizedBox.fromSize(
-                child: Image.network(
-                  img,
+                child: CachedNetworkImage(
+                  imageUrl: img,
                   fit: BoxFit.contain,
+                  errorWidget: (context, url, error) => const ImageIcon(
+                    AppIcons.warning,
+                    color: AppColors.primary500,
+                    size: 50,
+                  ),
                 ),
               );
             },
@@ -49,11 +56,25 @@ class _CarouselBarangState extends State<CarouselBarang> {
               child: Column(children: [
                 Expanded(
                   child: CarouselSlider(
-                    items: imgList,
+                    items: imgList.isNotEmpty
+                        ? imgList
+                        : [
+                            CachedNetworkImage(
+                              imageUrl:
+                                  'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg',
+                              fit: BoxFit.contain,
+                              errorWidget: (context, url, error) =>
+                                  const ImageIcon(
+                                AppIcons.warning,
+                                color: AppColors.primary500,
+                                size: 50,
+                              ),
+                            ),
+                          ],
                     carouselController: _controller,
                     options: CarouselOptions(
                         height: 358,
-                        autoPlay: true,
+                        autoPlay: imgList.isNotEmpty ? true : false,
                         enlargeCenterPage: false,
                         pauseAutoPlayOnTouch: true,
                         viewportFraction: 1.0,
