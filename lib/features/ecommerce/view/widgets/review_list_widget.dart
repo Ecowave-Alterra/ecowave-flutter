@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecowave/core.dart';
 import 'package:ecowave/features/ecommerce/model/models/product_model.dart';
 import 'package:flutter/material.dart';
@@ -125,8 +126,15 @@ class ImageReview extends StatelessWidget {
         height: 100.0,
         width: 100.0,
         padding: const EdgeInsets.fromLTRB(16.0, 4.0, 4.0, 16.0),
-        child: Image.network(image ??
-            'https://storage.googleapis.com/ecowave/img/products/bottle.png'),
+        child: CachedNetworkImage(
+          imageUrl: image ??
+              'https://storage.googleapis.com/ecowave/img/products/bottle.png',
+          errorWidget: (context, url, error) => const ImageIcon(
+            AppIcons.warning,
+            color: AppColors.primary500,
+            size: 50,
+          ),
+        ),
       );
     }
   }
@@ -174,8 +182,15 @@ class _VideoReviewState extends State<VideoReview> {
           child: Stack(
             alignment: Alignment.center,
             children: [
-              Image.network(widget.image ??
-                  'https://storage.googleapis.com/ecowave/img/products/bottle.png'),
+              CachedNetworkImage(
+                imageUrl: widget.image ??
+                    'https://storage.googleapis.com/ecowave/img/products/bottle.png',
+                errorWidget: (context, url, error) => const ImageIcon(
+                  AppIcons.warning,
+                  color: AppColors.primary500,
+                  size: 50,
+                ),
+              ),
               const ImageIcon(AppIcons.ratingVid),
             ],
           ),

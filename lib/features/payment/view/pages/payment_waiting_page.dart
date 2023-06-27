@@ -3,6 +3,8 @@ import 'package:ecowave/features/home/bloc/home/home_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../transaction/bloc/history_transaction/history_transaction_bloc.dart';
+
 class PaymentWaitingPage extends StatelessWidget {
   final int totalPayment;
   const PaymentWaitingPage({super.key, required this.totalPayment});
@@ -77,7 +79,12 @@ class PaymentWaitingPage extends StatelessWidget {
                   flex: 1,
                   child: EcoFormButton(
                     label: "Beranda",
-                    onPressed: () => context.popToRoot(),
+                    onPressed: () {
+                      context
+                          .read<HistoryTransactionBloc>()
+                          .add(const GetHistoryUnpaidTransactionEvent());
+                      context.popToRoot();
+                    },
                     backgroundColor: Colors.transparent,
                     textColor: AppColors.primary500,
                     border: Border.all(
@@ -91,6 +98,9 @@ class PaymentWaitingPage extends StatelessWidget {
                   child: EcoFormButton(
                     label: "Pesanan Saya",
                     onPressed: () {
+                      context
+                          .read<HistoryTransactionBloc>()
+                          .add(const GetHistoryUnpaidTransactionEvent());
                       context.popToRoot();
                       context.read<HomeBloc>().add(const OnBottomNavTap(1));
                     },
