@@ -87,19 +87,19 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
               showModalBottomSheet<void>(
                 context: context,
                 builder: (BuildContext context) {
-                  return SingleChildScrollView(
-                    child: Container(
-                      height: 405,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8.0),
-                          color: AppColors.white),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          Container(
-                            height: 405,
-                            alignment: Alignment.topLeft,
+                  return Container(
+                    height: 405,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8.0),
+                        color: AppColors.white),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        Container(
+                          height: 405,
+                          alignment: Alignment.topLeft,
+                          child: SingleChildScrollView(
                             child: Column(
                               children: [
                                 Padding(
@@ -495,8 +495,8 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                               ],
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   );
                 },
