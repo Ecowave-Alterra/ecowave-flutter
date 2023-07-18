@@ -21,7 +21,7 @@ class _ReviewListWidgetState extends State<ReviewListWidget> {
         (index) => widget.review.review![index]);
     return ListView.builder(
       shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       itemCount: reviews.length,
       itemBuilder: (context, index) {
         return Column(
