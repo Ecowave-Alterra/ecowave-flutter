@@ -6,14 +6,17 @@ class CartModel {
   final String detailItems;
   final String image;
   final int price;
+  final int stock;
   int totalItems;
   bool checkedItems;
+
   CartModel({
     required this.id,
     required this.nameItems,
     required this.detailItems,
     required this.image,
     required this.price,
+    required this.stock,
     required this.totalItems,
     required this.checkedItems,
   });
@@ -27,6 +30,7 @@ class CartModel {
       'detailItems': detailItems,
       'image': image,
       'price': price,
+      'stock': stock,
       'totalItems': totalItems,
       'checkedItems': checkedItems,
     };
@@ -39,6 +43,7 @@ class CartModel {
       detailItems: map['detailItems'] ?? '',
       image: map['image'] ?? '',
       price: map['price'] ?? 0,
+      stock: map['stock'] ?? 0,
       totalItems: map['totalItems']?.toInt() ?? 0,
       checkedItems: map['checkedItems'] ?? false,
     );
@@ -55,6 +60,7 @@ class CartModel {
     String? detailItems,
     String? image,
     int? price,
+    int? stock,
     int? totalItems,
     bool? checkedItems,
   }) {
@@ -64,6 +70,7 @@ class CartModel {
       detailItems: detailItems ?? this.detailItems,
       image: image ?? this.image,
       price: price ?? this.price,
+      stock: stock ?? this.stock,
       totalItems: totalItems ?? this.totalItems,
       checkedItems: checkedItems ?? this.checkedItems,
     );
@@ -71,7 +78,7 @@ class CartModel {
 
   @override
   String toString() {
-    return 'CartModel(id: $id, nameItems: $nameItems, detailItems: $detailItems, image: $image, price: $price, totalItems: $totalItems, checkedItems: $checkedItems)';
+    return 'CartModel(id: $id, nameItems: $nameItems, detailItems: $detailItems, image: $image, price: $price, stock: $stock, totalItems: $totalItems, checkedItems: $checkedItems)';
   }
 
   @override
@@ -84,6 +91,7 @@ class CartModel {
         other.detailItems == detailItems &&
         other.image == image &&
         other.price == price &&
+        other.stock == stock &&
         other.totalItems == totalItems &&
         other.checkedItems == checkedItems;
   }
@@ -95,6 +103,7 @@ class CartModel {
         detailItems.hashCode ^
         image.hashCode ^
         price.hashCode ^
+        stock.hashCode ^
         totalItems.hashCode ^
         checkedItems.hashCode;
   }

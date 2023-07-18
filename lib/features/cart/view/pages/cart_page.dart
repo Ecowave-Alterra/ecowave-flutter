@@ -76,6 +76,18 @@ class _CartPageState extends State<CartPage> {
                     if (state is CartLoading) {
                       return const EcoLoading();
                     } else if (state is CartSuccess) {
+                      if (state.data.isEmpty) {
+                        return SizedBox(
+                          height: context.fullHeight / 1.5,
+                          child: Center(
+                            child: EcoEmpty(
+                              massage: "Tidak ada Produk",
+                              image: AppImages.emptyKeranjang,
+                              height: context.fullWidth / 2,
+                            ),
+                          ),
+                        );
+                      }
                       return Expanded(
                         child: ListView.separated(
                           padding: const EdgeInsets.only(left: 14, top: 32),

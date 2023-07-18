@@ -74,37 +74,33 @@ class ListItem extends StatelessWidget {
                   width: MediaQuery.of(context).size.width - 240,
                 ),
                 IconButton(
-                    icon: const ImageIcon(
+                    icon: ImageIcon(
                       AppIcons.min,
                       size: 10,
-                      color: AppColors.grey500,
+                      color: cartModel.totalItems == 1
+                          ? AppColors.grey500
+                          : AppColors.primary500,
                     ),
-                    onPressed: () => context
-                        .read<CartBloc>()
-                        .add(ReduceTotalItemCart(id: cartModel.id))),
+                    onPressed: cartModel.totalItems == 1
+                        ? null
+                        : () => context
+                            .read<CartBloc>()
+                            .add(ReduceTotalItemCart(id: cartModel.id))),
                 12.5.width,
-                BlocBuilder<CartBloc, CartState>(
-                  builder: (context, state) {
-                    if (state is CartLoading) {
-                      return const EcoLoading();
-                    } else if (state is CartSuccess) {
-                      return Text(cartModel.totalItems.toString());
-                    } else if (state is CartError) {
-                      return const Text('error');
-                    } else {
-                      return const SizedBox.shrink();
-                    }
-                  },
-                ),
+                Text(cartModel.totalItems.toString()),
                 12.5.width,
                 IconButton(
-                  onPressed: () => context
-                      .read<CartBloc>()
-                      .add(AddTotalItemCart(id: cartModel.id)),
-                  icon: const ImageIcon(
+                  onPressed: cartModel.totalItems == cartModel.stock
+                      ? null
+                      : () => context
+                          .read<CartBloc>()
+                          .add(AddTotalItemCart(id: cartModel.id)),
+                  icon: ImageIcon(
                     AppIcons.add,
                     size: 10,
-                    color: AppColors.primary500,
+                    color: cartModel.totalItems == cartModel.stock
+                        ? AppColors.grey500
+                        : AppColors.primary500,
                   ),
                 ),
               ],
