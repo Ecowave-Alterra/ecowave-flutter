@@ -228,7 +228,7 @@ class PaidTransactionDetailPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text("Metode Pembayaran"),
-                  Text(detailTransaction.paymentMethod),
+                  Text(detailTransaction.paymentMethod ?? "-"),
                 ],
               ),
               const Padding(

@@ -246,7 +246,9 @@ class UnpaidTransactionDetailPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Text("Metode Pembayaran"),
-                        Text(detailTransaction.paymentMethod),
+                        Text(detailTransaction.paymentMethod == ""
+                            ? "-"
+                            : detailTransaction.paymentMethod ?? ""),
                       ],
                     ),
                     const Padding(

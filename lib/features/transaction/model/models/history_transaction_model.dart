@@ -21,7 +21,7 @@ class HistoryTransactionModel {
   final int totalProductPrice;
   final int totalShippingPrice;
   final int point;
-  final String paymentMethod;
+  final String? paymentMethod;
   final String paymentStatus;
   final String expeditionName;
   final int voucherId;

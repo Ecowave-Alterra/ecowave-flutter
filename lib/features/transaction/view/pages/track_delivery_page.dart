@@ -52,7 +52,7 @@ class _TrackDeliveryPageState extends State<TrackDeliveryPage> {
                   ),
                   Flexible(
                     child: Text(
-                        "Estimasi diterima : ${widget.detailTransaction.estimationDay}"),
+                        "Estimasi diterima : ${widget.detailTransaction.estimationDay} hari"),
                   )
                 ],
               ),
