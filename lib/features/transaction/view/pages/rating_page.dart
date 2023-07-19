@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecowave/core.dart';
 import 'package:ecowave/features/transaction/bloc/history_transaction/history_transaction_bloc.dart';
@@ -426,13 +428,15 @@ class _RatingPageState extends State<RatingPage> {
         final PlatformFile file = result.files.first;
         final String filePath = file.path ?? "";
 
-        String extension = filePath.split('.').last.toLowerCase();
-        if (extension != 'jpg' && extension != 'jpeg' && extension != 'png') {
+        File imageFile = File(filePath);
+        int fileSizeInBytes = imageFile.lengthSync();
+        double fileSizeInMB = fileSizeInBytes / (1024 * 1024);
+
+        if (fileSizeInMB > 5) {
           if (context.mounted) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
-                content:
-                    Text("Masukkan gambar yang bertipe jpg, jpeg, atau png"),
+                content: Text("Ukuran gambar tidak boleh lebih dari 5 MB"),
               ),
             );
           }
@@ -441,9 +445,25 @@ class _RatingPageState extends State<RatingPage> {
             _fotoControllers[index].text = "";
           });
         } else {
-          setState(() {
-            _fotoControllers[index].text = filePath.toString();
-          });
+          String extension = filePath.split('.').last.toLowerCase();
+          if (extension != 'jpg' && extension != 'jpeg' && extension != 'png') {
+            if (context.mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content:
+                      Text("Masukkan gambar yang bertipe jpg, jpeg, atau png"),
+                ),
+              );
+            }
+
+            setState(() {
+              _fotoControllers[index].text = "";
+            });
+          } else {
+            setState(() {
+              _fotoControllers[index].text = filePath.toString();
+            });
+          }
         }
       }
     } else {
@@ -456,9 +476,7 @@ class _RatingPageState extends State<RatingPage> {
   void uploadVideo(index) async {
     final selectVideo = await FilePicker.platform.pickFiles(
       type: FileType.custom,
-      allowedExtensions: [
-        'mp4',
-      ],
+      allowedExtensions: ['mp4'],
     );
 
     if (selectVideo != null) {
@@ -468,12 +486,15 @@ class _RatingPageState extends State<RatingPage> {
         final PlatformFile file = result.files.first;
         final String filePath = file.path ?? "";
 
-        String extension = filePath.split('.').last.toLowerCase();
-        if (extension != 'mp4') {
+        File videoFile = File(filePath);
+        int fileSizeInBytes = videoFile.lengthSync();
+        double fileSizeInMB = fileSizeInBytes / (1024 * 1024);
+
+        if (fileSizeInMB > 10) {
           if (context.mounted) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
-                content: Text("Masukkan Video yang bertipe mp4"),
+                content: Text("Ukuran video tidak boleh lebih dari 10 MB"),
               ),
             );
           }
@@ -482,9 +503,24 @@ class _RatingPageState extends State<RatingPage> {
             _videoControllers[index].text = "";
           });
         } else {
-          setState(() {
-            _videoControllers[index].text = filePath.toString();
-          });
+          String extension = filePath.split('.').last.toLowerCase();
+          if (extension != 'mp4') {
+            if (context.mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text("Masukkan video yang bertipe mp4"),
+                ),
+              );
+            }
+
+            setState(() {
+              _videoControllers[index].text = "";
+            });
+          } else {
+            setState(() {
+              _videoControllers[index].text = filePath.toString();
+            });
+          }
         }
       }
     } else {
