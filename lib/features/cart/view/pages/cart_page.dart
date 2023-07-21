@@ -18,6 +18,7 @@ class CartPage extends StatefulWidget {
 class _CartPageState extends State<CartPage> {
   bool checkedAll = false;
   double totalPayment = 0;
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<HomeBloc, HomeState>(
@@ -25,6 +26,7 @@ class _CartPageState extends State<CartPage> {
         if (state.token == '') {
           return const EmptyUserPage();
         }
+
         return Scaffold(
           appBar: AppBar(
             title: const Text(
