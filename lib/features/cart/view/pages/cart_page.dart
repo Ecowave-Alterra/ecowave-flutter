@@ -150,8 +150,10 @@ class _CartPageState extends State<CartPage> {
                           label: 'Beli',
                           onPressed: state.total.toInt() == 0
                               ? null
-                              : () => context
-                                  .push(PaymentDetailPage(carts: state.data)),
+                              : () => context.push(PaymentDetailPage(
+                                  carts: state.data
+                                      .where((element) => element.checkedItems)
+                                      .toList())),
                         ),
                       ),
                     ],
