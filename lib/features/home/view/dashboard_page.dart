@@ -352,6 +352,7 @@ class _DashboardPageState extends State<DashboardPage> {
                                   }).toList(),
                                   options: CarouselOptions(
                                     height: 120,
+                                    autoPlay: true,
                                     enableInfiniteScroll: false,
                                     disableCenter: true,
                                     viewportFraction: 0.94,
@@ -453,6 +454,7 @@ class _DashboardPageState extends State<DashboardPage> {
                                         carouselController: _controllerinfo,
                                         options: CarouselOptions(
                                           height: 150,
+                                          autoPlay: true,
                                           enableInfiniteScroll: false,
                                           disableCenter: true,
                                           viewportFraction: 0.94,
