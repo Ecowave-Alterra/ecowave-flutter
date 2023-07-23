@@ -148,47 +148,47 @@ class _LoginPageState extends State<LoginPage> {
                       ],
                     ),
                     loginButton,
-                    36.0.height,
-                    const Row(
-                      children: [
-                        Expanded(
-                          child: Divider(
-                            thickness: 1.0,
-                            color: AppColors.grey500,
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 8.0),
-                          child: Text(
-                            'ATAU',
-                            style: TextStyle(
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.grey500,
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Divider(
-                            thickness: 1.0,
-                            color: AppColors.grey500,
-                          ),
-                        ),
-                      ],
-                    ),
-                    36.0.height,
-                    EcoFormButtonIcon(
-                      label: 'Lanjutkan menggunakan Google',
-                      onPressed: () {},
-                      backgroundColor: AppColors.white,
-                      border: Border.all(
-                        color: AppColors.grey300,
-                      ),
-                      textColor: AppColors.grey700,
-                      image: const Image(
-                        image: AppIcons.google,
-                      ),
-                    ),
+                    // 36.0.height,
+                    // const Row(
+                    //   children: [
+                    //     Expanded(
+                    //       child: Divider(
+                    //         thickness: 1.0,
+                    //         color: AppColors.grey500,
+                    //       ),
+                    //     ),
+                    //     Padding(
+                    //       padding: EdgeInsets.symmetric(horizontal: 8.0),
+                    //       child: Text(
+                    //         'ATAU',
+                    //         style: TextStyle(
+                    //           fontSize: 16.0,
+                    //           fontWeight: FontWeight.bold,
+                    //           color: AppColors.grey500,
+                    //         ),
+                    //       ),
+                    //     ),
+                    //     Expanded(
+                    //       child: Divider(
+                    //         thickness: 1.0,
+                    //         color: AppColors.grey500,
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
+                    // 36.0.height,
+                    // EcoFormButtonIcon(
+                    //   label: 'Lanjutkan menggunakan Google',
+                    //   onPressed: () {},
+                    //   backgroundColor: AppColors.white,
+                    //   border: Border.all(
+                    //     color: AppColors.grey300,
+                    //   ),
+                    //   textColor: AppColors.grey700,
+                    //   image: const Image(
+                    //     image: AppIcons.google,
+                    //   ),
+                    // ),
                     10.0.height,
                     EcoFormButton(
                       label: 'Belum punya akun? Daftar',
