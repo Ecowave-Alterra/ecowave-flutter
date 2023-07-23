@@ -15,15 +15,6 @@ class _CarouselGambarState extends State<CarouselGambar> {
       borderRadius: BorderRadius.circular(8.0),
       child: SizedBox.fromSize(
         child: Image.asset(
-          AppImages.bannerShop1,
-          fit: BoxFit.fill,
-        ),
-      ),
-    ),
-    ClipRRect(
-      borderRadius: BorderRadius.circular(8.0),
-      child: SizedBox.fromSize(
-        child: Image.asset(
           AppImages.bannerShop3,
           fit: BoxFit.fill,
         ),
