@@ -101,6 +101,7 @@ class ProductDetail extends StatelessWidget {
                                           'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg')
                                       : 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg',
                                   price: productModel.price.toInt(),
+                                  stock: productModel.stock,
                                   totalItems: 1,
                                   checkedItems: false,
                                 ),
@@ -137,6 +138,7 @@ class ProductDetail extends StatelessWidget {
                                       'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg')
                                   : 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg',
                               price: productModel.price.toInt(),
+                              stock: productModel.stock,
                               totalItems: 1,
                               checkedItems: false,
                             ),
