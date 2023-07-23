@@ -36,30 +36,38 @@ class ListItem extends StatelessWidget {
                 size: 55,
               ),
             ),
-            16.0.width,
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  cartModel.nameItems,
-                  style: const TextStyle(
-                    fontWeight: AppFontWeight.semibold,
+                Padding(
+                  padding: const EdgeInsets.only(left: 16.0),
+                  child: Text(
+                    cartModel.nameItems,
+                    style: const TextStyle(
+                      fontWeight: AppFontWeight.semibold,
+                    ),
                   ),
                 ),
                 12.0.height,
-                Text(
-                  cartModel.detailItems,
-                  style: const TextStyle(
-                    fontSize: 12,
-                    fontWeight: AppFontWeight.regular,
+                Padding(
+                  padding: const EdgeInsets.only(left: 16.0),
+                  child: Text(
+                    cartModel.detailItems,
+                    style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: AppFontWeight.regular,
+                    ),
                   ),
                 ),
                 12.0.height,
-                Text(
-                  cartModel.price.currencyFormatRp,
-                  style: const TextStyle(
-                    fontSize: 12,
-                    fontWeight: AppFontWeight.regular,
+                Padding(
+                  padding: const EdgeInsets.only(left: 16.0),
+                  child: Text(
+                    cartModel.price.currencyFormatRp,
+                    style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: AppFontWeight.regular,
+                    ),
                   ),
                 ),
               ],
@@ -68,46 +76,35 @@ class ListItem extends StatelessWidget {
         ),
         Row(
           children: [
-            Row(
-              children: [
-                SizedBox(
-                  width: MediaQuery.of(context).size.width - 240,
-                ),
-                IconButton(
-                    icon: const ImageIcon(
-                      AppIcons.min,
-                      size: 10,
-                      color: AppColors.grey500,
-                    ),
-                    onPressed: () => context
-                        .read<CartBloc>()
-                        .add(ReduceTotalItemCart(id: cartModel.id))),
-                12.5.width,
-                BlocBuilder<CartBloc, CartState>(
-                  builder: (context, state) {
-                    if (state is CartLoading) {
-                      return const EcoLoading();
-                    } else if (state is CartSuccess) {
-                      return Text(cartModel.totalItems.toString());
-                    } else if (state is CartError) {
-                      return const Text('error');
-                    } else {
-                      return const SizedBox.shrink();
-                    }
-                  },
-                ),
-                12.5.width,
-                IconButton(
-                  onPressed: () => context
+            100.0.width,
+            IconButton(
+              onPressed: cartModel.totalItems == 1
+                  ? null
+                  : () => context
+                      .read<CartBloc>()
+                      .add(ReduceTotalItemCart(id: cartModel.id)),
+              icon: ImageIcon(
+                AppIcons.min,
+                size: 10,
+                color: cartModel.totalItems == 1
+                    ? AppColors.grey500
+                    : AppColors.primary500,
+              ),
+            ),
+            Text(cartModel.totalItems.toString()),
+            IconButton(
+              onPressed: cartModel.totalItems == cartModel.stock
+                  ? null
+                  : () => context
                       .read<CartBloc>()
                       .add(AddTotalItemCart(id: cartModel.id)),
-                  icon: const ImageIcon(
-                    AppIcons.add,
-                    size: 10,
-                    color: AppColors.primary500,
-                  ),
-                ),
-              ],
+              icon: ImageIcon(
+                AppIcons.add,
+                size: 10,
+                color: cartModel.totalItems == cartModel.stock
+                    ? AppColors.grey500
+                    : AppColors.primary500,
+              ),
             ),
             const Spacer(),
             TextButton(
@@ -120,7 +117,7 @@ class ListItem extends StatelessWidget {
               ),
             ),
           ],
-        )
+        ),
       ],
     );
   }

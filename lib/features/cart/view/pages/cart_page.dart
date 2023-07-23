@@ -18,6 +18,7 @@ class CartPage extends StatefulWidget {
 class _CartPageState extends State<CartPage> {
   bool checkedAll = false;
   double totalPayment = 0;
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<HomeBloc, HomeState>(
@@ -25,6 +26,7 @@ class _CartPageState extends State<CartPage> {
         if (state.token == '') {
           return const EmptyUserPage();
         }
+
         return Scaffold(
           appBar: AppBar(
             title: const Text(
@@ -76,6 +78,18 @@ class _CartPageState extends State<CartPage> {
                     if (state is CartLoading) {
                       return const EcoLoading();
                     } else if (state is CartSuccess) {
+                      if (state.data.isEmpty) {
+                        return SizedBox(
+                          height: context.fullHeight / 1.5,
+                          child: Center(
+                            child: EcoEmpty(
+                              massage: "Tidak ada Produk",
+                              image: AppImages.emptyKeranjang,
+                              height: context.fullWidth / 2,
+                            ),
+                          ),
+                        );
+                      }
                       return Expanded(
                         child: ListView.separated(
                           padding: const EdgeInsets.only(left: 14, top: 32),
@@ -136,8 +150,10 @@ class _CartPageState extends State<CartPage> {
                           label: 'Beli',
                           onPressed: state.total.toInt() == 0
                               ? null
-                              : () => context
-                                  .push(PaymentDetailPage(carts: state.data)),
+                              : () => context.push(PaymentDetailPage(
+                                  carts: state.data
+                                      .where((element) => element.checkedItems)
+                                      .toList())),
                         ),
                       ),
                     ],
