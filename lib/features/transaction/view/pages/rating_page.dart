@@ -102,7 +102,10 @@ class _RatingPageState extends State<RatingPage> {
                               children: [
                                 _sizedContainer(
                                   CachedNetworkImage(
-                                    imageUrl: product.productImageUrl,
+                                    imageUrl: (product
+                                            .productImageUrl.isNotEmpty)
+                                        ? (product.productImageUrl)
+                                        : 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg',
                                     imageBuilder: (context, imageProvider) =>
                                         Container(
                                       decoration: BoxDecoration(
