@@ -1,6 +1,6 @@
 import 'package:ecowave/features/auth/bloc/register/register_bloc.dart';
 import 'package:ecowave/features/auth/view/login_page.dart';
-import 'package:ecowave/features/auth/view/register_complate_page.dart';
+// import 'package:ecowave/features/auth/view/register_complate_page.dart';
 import 'package:flutter/material.dart';
 import 'package:ecowave/core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
