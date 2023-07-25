@@ -1,8 +1,10 @@
+import 'package:ecowave/features/auth/view/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:ecowave/core.dart';
 
 class ChangePasswordPage extends StatefulWidget {
-  const ChangePasswordPage({Key? key}) : super(key: key);
+  final String email;
+  const ChangePasswordPage({Key? key, required this.email}) : super(key: key);
 
   @override
   State<ChangePasswordPage> createState() => _ChangePasswordPageState();
@@ -11,7 +13,8 @@ class ChangePasswordPage extends StatefulWidget {
 class _ChangePasswordPageState extends State<ChangePasswordPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _passwordNewController = TextEditingController();
-  final TextEditingController _passwordNewConfirController = TextEditingController();
+  final TextEditingController _passwordNewConfirController =
+      TextEditingController();
 
   bool _isLoginButtonDisabled = true;
 
@@ -20,7 +23,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
     final passwordNewConfir = _passwordNewConfirController.text;
 
     setState(() {
-      _isLoginButtonDisabled = passwordNew.isEmpty || passwordNewConfir.isEmpty ;
+      _isLoginButtonDisabled = passwordNew.isEmpty || passwordNewConfir.isEmpty;
     });
   }
 
@@ -30,19 +33,20 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
     _passwordNewController.addListener(_checkLoginButtonStatus);
     _passwordNewConfirController.addListener(_checkLoginButtonStatus);
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Ubah Password'),
-      ),  
-      body: SingleChildScrollView(
-         padding: const EdgeInsets.all(10),
-         child: Form(
-          key: _formKey,
-           child:Column( 
-               children: [
-                 EcoFormInputPassword(
+        appBar: AppBar(
+          title: const Text('Ubah Password'),
+        ),
+        body: SingleChildScrollView(
+            padding: const EdgeInsets.all(10),
+            child: Form(
+              key: _formKey,
+              child: Column(children: [
+                30.0.height,
+                EcoFormInputPassword(
                   label: 'Password Baru',
                   hint: 'Masukkan password Baru Anda',
                   controller: _passwordNewController,
@@ -59,15 +63,17 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                   },
                 ),
                 20.0.height,
-                  EcoFormInputPassword(
-                  label: 'Password Baru',
-                  hint: 'Masukkan password Baru Anda',
+                EcoFormInputPassword(
+                  label: 'Konfirmasi Password Baru',
+                  hint: 'Masukkan konfirmasi password baru',
                   controller: _passwordNewConfirController,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Password tidak boleh kosong';
                     } else if (value.length < 6) {
                       return 'Password harus memiliki setidaknya 6 karakter';
+                    } else if (value != _passwordNewController.text) {
+                      return 'Password tidak sama';
                     }
                     return null;
                   },
@@ -78,19 +84,19 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                 20.0.height,
                 EcoFormButton(
                   label: 'Ganti Password',
-                  onPressed: _isLoginButtonDisabled ? () {} : () {
-                    if (_formKey.currentState!.validate()) {
-
-                    }
-                  },
+                  onPressed: _isLoginButtonDisabled
+                      ? () {}
+                      : () {
+                          if (_formKey.currentState!.validate()) {
+                            context.pushAndRemoveUntil(
+                                const LoginPage(), (route) => false);
+                          }
+                        },
                   backgroundColor: _isLoginButtonDisabled
                       ? AppColors.primary300
                       : AppColors.primary500,
                 ),
-               ]
-             ),
-         ) 
-      )  
-    );
+              ]),
+            )));
   }
 }

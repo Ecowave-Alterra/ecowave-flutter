@@ -1,6 +1,7 @@
 import 'package:ecowave/core/utils/injector.dart' as di;
 import 'package:ecowave/features/address/bloc/address/address_bloc.dart';
 import 'package:ecowave/features/cart/bloc/cart/cart_bloc.dart';
+import 'package:ecowave/features/change_password/bloc/otp/otp_bloc.dart';
 import 'package:ecowave/features/information/bloc/bookmark/bookmark_bloc.dart';
 import 'package:ecowave/features/information/bloc/information/information_bloc.dart';
 import 'package:ecowave/features/ecommerce/bloc/product_home/product_bloc.dart';
@@ -43,5 +44,6 @@ class Providers {
         create: (context) => di.locator<IsBookmarkBloc>()),
     BlocProvider<UpdatePointBloc>(
         create: (context) => di.locator<UpdatePointBloc>()),
+    BlocProvider<OtpBloc>(create: (context) => di.locator<OtpBloc>()),
   ];
 }

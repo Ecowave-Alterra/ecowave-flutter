@@ -1,6 +1,8 @@
 import 'package:ecowave/features/address/bloc/address/address_bloc.dart';
 import 'package:ecowave/features/address/model/services/address_service.dart';
 import 'package:ecowave/features/cart/bloc/cart/cart_bloc.dart';
+import 'package:ecowave/features/change_password/bloc/otp/otp_bloc.dart';
+import 'package:ecowave/features/change_password/model/services/change_password_service.dart';
 import 'package:ecowave/features/information/bloc/bookmark/bookmark_bloc.dart';
 import 'package:ecowave/features/information/bloc/information/information_bloc.dart';
 import 'package:ecowave/features/information/bloc/isBookmark/is_bookmark_bloc.dart';
@@ -45,6 +47,7 @@ void init() {
   locator.registerFactory(() => BookmarkBloc(locator()));
   locator.registerFactory(() => IsBookmarkBloc(locator()));
   locator.registerFactory(() => UpdatePointBloc(locator()));
+  locator.registerFactory(() => OtpBloc(locator()));
 
   // service
   locator.registerLazySingleton<AddressService>(() => AddressService());
@@ -57,4 +60,6 @@ void init() {
   locator.registerLazySingleton<ProductService>(() => ProductService());
   locator.registerLazySingleton<ProfileService>(() => ProfileService());
   locator.registerLazySingleton<BookmarkService>(() => BookmarkService());
+  locator.registerLazySingleton<ChangePasswordService>(
+      () => ChangePasswordService());
 }
