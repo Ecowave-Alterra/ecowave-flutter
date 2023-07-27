@@ -1,8 +1,6 @@
-import 'dart:async';
-
 import 'package:ecowave/core.dart';
 import 'package:ecowave/features/change_password/bloc/otp/otp_bloc.dart';
-import 'package:ecowave/features/change_password/model/services/change_password_service.dart';
+import 'package:ecowave/features/change_password/model/services/otp_service.dart';
 import 'package:ecowave/features/change_password/view/change_password_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -40,7 +38,7 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
         title: const Text("Lupa Password"),
       ),
       body: BlocProvider(
-        create: (context) => OtpBloc(ChangePasswordService()),
+        create: (context) => OtpBloc(OtpService()),
         child: BlocListener<OtpBloc, OtpState>(
           listener: (context, state) {
             if (state is OtpLoading) {
@@ -48,21 +46,8 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
                 context: context,
                 barrierDismissible: false,
                 builder: (BuildContext context) {
-                  return Dialog(
-                    backgroundColor: Colors.transparent,
-                    elevation: 0,
-                    child: Container(
-                      width: 100,
-                      height: 100,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: const Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                    ),
-                  );
+                  return Container(
+                      color: Colors.white, child: const EcoLoading());
                 },
               );
             } else if (state is OtpError) {
@@ -71,7 +56,6 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
                     email: widget.email,
                   ),
                   (route) => false);
-
               "Gagal Verifikasi OTP, kode otp mungkin sudah kadaluarsa"
                   .failedBar(context);
             } else if (state is OtpSuccess) {
@@ -81,6 +65,13 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
                   ),
                   (route) => false);
               "Berhasil verifikasi kode OTP".succeedBar(context);
+            } else if (state is OtpVerifikasiSuccess) {
+              context.pushAndRemoveUntil(
+                  PinCodeVerificationScreen(
+                    email: widget.email,
+                  ),
+                  (route) => false);
+              "Berhasil mengirim kode OTP kembali!".succeedBar(context);
             }
           },
           child: BlocBuilder<OtpBloc, OtpState>(
@@ -211,9 +202,7 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
                             TextButton(
                               onPressed: () {
                                 BlocProvider.of<OtpBloc>(context)
-                                    .add(SendOtpEvent(widget.email));
-                                "OTP telah dikirim kembali!!"
-                                    .succeedBar(context);
+                                    .add(SendOtp2Event(widget.email));
                               },
                               child: const Text(
                                 "Kirim Ulang",

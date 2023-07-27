@@ -16,6 +16,15 @@ class SendOtpEvent extends OtpEvent {
   List<Object> get props => [email];
 }
 
+class SendOtp2Event extends OtpEvent {
+  final String email;
+
+  const SendOtp2Event(this.email);
+
+  @override
+  List<Object> get props => [email];
+}
+
 class VerifikasiOtpEvent extends OtpEvent {
   final String email;
   final String otp;

@@ -1,6 +1,7 @@
 import 'package:ecowave/core/utils/injector.dart' as di;
 import 'package:ecowave/features/address/bloc/address/address_bloc.dart';
 import 'package:ecowave/features/cart/bloc/cart/cart_bloc.dart';
+import 'package:ecowave/features/change_password/bloc/change_password/change_password_bloc.dart';
 import 'package:ecowave/features/change_password/bloc/otp/otp_bloc.dart';
 import 'package:ecowave/features/information/bloc/bookmark/bookmark_bloc.dart';
 import 'package:ecowave/features/information/bloc/information/information_bloc.dart';
@@ -45,5 +46,7 @@ class Providers {
     BlocProvider<UpdatePointBloc>(
         create: (context) => di.locator<UpdatePointBloc>()),
     BlocProvider<OtpBloc>(create: (context) => di.locator<OtpBloc>()),
+    BlocProvider<ChangePasswordBloc>(
+        create: (context) => di.locator<ChangePasswordBloc>()),
   ];
 }

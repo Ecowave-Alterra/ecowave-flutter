@@ -13,6 +13,8 @@ class OtpLoading extends OtpState {}
 
 class OtpSuccess extends OtpState {}
 
+class OtpVerifikasiSuccess extends OtpState {}
+
 class OtpError extends OtpState {
   final String errorMessage;
 

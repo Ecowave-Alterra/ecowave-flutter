@@ -1,46 +1,28 @@
 import 'package:dio/dio.dart';
 import 'package:ecowave/core.dart';
+import 'package:ecowave/features/change_password/model/models/change_password_model.dart';
+import 'package:flutter/material.dart';
 
 class ChangePasswordService {
-  static const String baseUrl = BaseURL.api;
+  final Dio _dio = Dio();
 
-  final Dio dio = Dio();
-
-  Future<Map<String, dynamic>> sendEmailOtp(String email) async {
+  Future<bool> changePassword(ChangePasswordModel request) async {
     try {
-      final response = await dio.post(
-        '$baseUrl/user/forgot-password',
-        data: {"Email": email},
-        options: Options(
-          headers: {'Content-Type': 'application/json'},
-        ),
-      );
+      const String url = '${BaseURL.api}/user/change-password';
+      final response = await _dio.putUri(Uri.parse(url),
+          options: Options(
+            headers: {'Content-Type': 'application/json'},
+          ),
+          data: request.toJson());
+
+      debugPrint("RESPONSESESE : $response");
       if (response.statusCode == 200) {
-        return response.data;
+        return true;
       } else {
-        throw "Gagal mengirim OTP";
+        throw "change password not successfully";
       }
     } catch (e) {
-      throw Exception('An error occurred $e');
-    }
-  }
-
-  Future<Map<String, dynamic>> verifikasiOtp(String email, String otp) async {
-    try {
-      final response = await dio.post(
-        '$baseUrl/user/verifikasi-otp',
-        data: {"Email": email, "CodeOtp": otp},
-        options: Options(
-          headers: {'Content-Type': 'application/json'},
-        ),
-      );
-      if (response.statusCode == 200) {
-        return response.data;
-      } else {
-        throw "Gagal verifikasi OTP";
-      }
-    } catch (e) {
-      throw Exception('An error occurred $e');
+      rethrow;
     }
   }
 }
