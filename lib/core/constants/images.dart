@@ -24,6 +24,10 @@ class AppImages {
   static const String cardShop2 = 'assets/images/cardShop2.png';
   static const String cardShop3 = 'assets/images/cardShop3.png';
 
+  static const String bannerShop1 = 'assets/images/bannershop1.png';
+  static const String bannerShop2 = 'assets/images/bannershop2.png';
+  static const String bannerShop3 = 'assets/images/bannershop3.jpg';
+
   static const String emptyState = 'assets/images/emptyState.png';
   static const String emptyKeranjang = 'assets/images/emptyKeranjang.png';
 

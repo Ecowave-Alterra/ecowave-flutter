@@ -15,7 +15,7 @@ class _CarouselGambarState extends State<CarouselGambar> {
       borderRadius: BorderRadius.circular(8.0),
       child: SizedBox.fromSize(
         child: Image.asset(
-          AppImages.cardShop1,
+          AppImages.bannerShop3,
           fit: BoxFit.fill,
         ),
       ),
@@ -24,7 +24,7 @@ class _CarouselGambarState extends State<CarouselGambar> {
       borderRadius: BorderRadius.circular(8.0),
       child: SizedBox.fromSize(
         child: Image.asset(
-          AppImages.cardShop2,
+          AppImages.cardInfo3,
           fit: BoxFit.fill,
         ),
       ),
@@ -33,7 +33,7 @@ class _CarouselGambarState extends State<CarouselGambar> {
       borderRadius: BorderRadius.circular(8.0),
       child: SizedBox.fromSize(
         child: Image.asset(
-          AppImages.cardShop3,
+          AppImages.bannerShop2,
           fit: BoxFit.fill,
         ),
       ),
@@ -79,7 +79,7 @@ class _CarouselGambarState extends State<CarouselGambar> {
                         shape: BoxShape.circle,
                         color: (Theme.of(context).brightness == Brightness.dark
                                 ? Colors.white
-                                : Colors.black)
+                                : Colors.green)
                             .withOpacity(_current == entry.key ? 0.9 : 0.4)),
                   ),
                 );

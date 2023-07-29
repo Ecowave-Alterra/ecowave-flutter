@@ -10,6 +10,18 @@ class ReasonCanceledPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final DateTime orderTime =
+        DateTime.parse(reason.createdAt).add(const Duration(hours: 7));
+
+    final String orderTimeId =
+        DateFormat('d MMM y, H:mm a', 'id').format(orderTime);
+
+    final DateTime cancelTime =
+        DateTime.parse(reason.updatedAt).add(const Duration(hours: 7));
+
+    final String cancelTimeId =
+        DateFormat('d MMM y, H:mm a', 'id').format(cancelTime);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Alasan Dibatalkan"),
@@ -31,9 +43,7 @@ class ReasonCanceledPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text("Pada"),
-                  Text((DateTime.parse(reason.updatedAt)
-                          .add(const Duration(hours: 7)))
-                      .toFormattedDateMinute()),
+                  Text(cancelTimeId),
                 ],
               ),
               28.0.height,
@@ -97,9 +107,7 @@ class ReasonCanceledPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text("Diminta Pada"),
-                  Text((DateTime.parse(reason.createdAt)
-                          .add(const Duration(hours: 7)))
-                      .toFormattedDateMinute()),
+                  Text(orderTimeId),
                 ],
               ),
               28.0.height,

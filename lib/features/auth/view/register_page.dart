@@ -1,6 +1,6 @@
 import 'package:ecowave/features/auth/bloc/register/register_bloc.dart';
 import 'package:ecowave/features/auth/view/login_page.dart';
-import 'package:ecowave/features/auth/view/register_complate_page.dart';
+// import 'package:ecowave/features/auth/view/register_complate_page.dart';
 import 'package:flutter/material.dart';
 import 'package:ecowave/core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,6 +17,9 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
+
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _noTelpController = TextEditingController();
 
@@ -141,6 +144,12 @@ class _RegisterPageState extends State<RegisterPage> {
                       AppIcons.numberPhone,
                       color: AppColors.grey500,
                     ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'No telepon tidak boleh kosong';
+                      }
+                      return null;
+                    },
                     onChanged: (value) {
                       context
                           .read<RegisterBloc>()
@@ -166,6 +175,28 @@ class _RegisterPageState extends State<RegisterPage> {
                           .add(const RegisterInputChange());
                     },
                   ),
+
+                  20.0.height,
+                  EcoFormInputPassword(
+                    label: 'Konfirmasi Password',
+                    hint: 'Masukkan konfirmasi password',
+                    controller: _confirmPasswordController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Password tidak boleh kosong';
+                      } else if (value.length < 8) {
+                        return 'Password harus memiliki setidaknya 8 karakter';
+                      } else if (value != _passwordController.text) {
+                        return 'Password tidak sesuai';
+                      }
+                      return null;
+                    },
+                    onChanged: (value) {
+                      context
+                          .read<RegisterBloc>()
+                          .add(const RegisterInputChange());
+                    },
+                  ),
                   20.0.height,
                   // Other form inputs like email and password
                   EcoFormButton(
@@ -177,56 +208,58 @@ class _RegisterPageState extends State<RegisterPage> {
                               context
                                   .read<RegisterBloc>()
                                   .add(const RegisterButtonPressed());
+                              "Berhasil mendaftarkan akun, silahkan login!"
+                                  .succeedBar(context);
                             }
                           },
                     backgroundColor: state.isRegisterButtonDisabled
                         ? AppColors.primary300
                         : AppColors.primary500,
                   ),
-                  36.0.height,
-                  const Row(
-                    children: [
-                      Expanded(
-                        child: Divider(
-                          thickness: 1.0,
-                          color: AppColors.grey500,
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 8.0),
-                        child: Text(
-                          'ATAU',
-                          style: TextStyle(
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.grey500,
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: Divider(
-                          thickness: 1.0,
-                          color: AppColors.grey500,
-                        ),
-                      ),
-                    ],
-                  ),
-                  36.0.height,
-                  EcoFormButtonIcon(
-                    label: 'Lanjutkan menggunakan Google',
-                    onPressed: () {
-                      context.push(const RegisterComplatePage());
-                      // aksi yang dilakukan ketika tombol ditekan
-                    },
-                    backgroundColor: Colors.white,
-                    textColor: Colors.black,
-                    border: Border.all(
-                      color: AppColors.grey300,
-                    ),
-                    image: const Image(image: AppIcons.google),
-                    height: 48.0,
-                    width: MediaQuery.of(context).size.width,
-                  ),
+                  // 36.0.height,
+                  // const Row(
+                  //   children: [
+                  //     Expanded(
+                  //       child: Divider(
+                  //         thickness: 1.0,
+                  //         color: AppColors.grey500,
+                  //       ),
+                  //     ),
+                  //     Padding(
+                  //       padding: EdgeInsets.symmetric(horizontal: 8.0),
+                  //       child: Text(
+                  //         'ATAU',
+                  //         style: TextStyle(
+                  //           fontSize: 16.0,
+                  //           fontWeight: FontWeight.bold,
+                  //           color: AppColors.grey500,
+                  //         ),
+                  //       ),
+                  //     ),
+                  //     Expanded(
+                  //       child: Divider(
+                  //         thickness: 1.0,
+                  //         color: AppColors.grey500,
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
+                  // 36.0.height,
+                  // EcoFormButtonIcon(
+                  //   label: 'Lanjutkan menggunakan Google',
+                  //   onPressed: () {
+                  //     context.push(const RegisterComplatePage());
+                  //     // aksi yang dilakukan ketika tombol ditekan
+                  //   },
+                  //   backgroundColor: Colors.white,
+                  //   textColor: Colors.black,
+                  //   border: Border.all(
+                  //     color: AppColors.grey300,
+                  //   ),
+                  //   image: const Image(image: AppIcons.google),
+                  //   height: 48.0,
+                  //   width: MediaQuery.of(context).size.width,
+                  // ),
                   36.0.height,
                   const Text.rich(
                     TextSpan(
