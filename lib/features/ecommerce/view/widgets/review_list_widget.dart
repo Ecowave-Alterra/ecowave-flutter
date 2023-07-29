@@ -94,10 +94,19 @@ class _ReviewListWidgetState extends State<ReviewListWidget> {
                     visible: reviews[index].videoUrl != '',
                     child: VideoReview(
                         video: reviews[index].videoUrl,
-                        image: reviews[index].photoUrl)),
-                Visibility(
-                    visible: reviews[index].photoUrl != '',
-                    child: ImageReview(image: reviews[index].photoUrl)),
+                        image:
+                            'https://w7.pngwing.com/pngs/244/695/png-transparent-play-icon-video-player-information-play-icon-miscellaneous-angle-text.png')),
+                Hero(
+                  tag: 'imageHero_$index',
+                  child: GestureDetector(
+                    onTap: () => _showFullScreenImage(
+                        context, reviews[index].photoUrl, index),
+                    child: Visibility(
+                      visible: reviews[index].photoUrl.isNotEmpty,
+                      child: ImageReview(image: reviews[index].photoUrl),
+                    ),
+                  ),
+                ),
               ],
             ),
             Container(
@@ -115,6 +124,16 @@ class _ReviewListWidgetState extends State<ReviewListWidget> {
           ],
         );
       },
+    );
+  }
+
+  void _showFullScreenImage(BuildContext context, String imageUrl, int index) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => FullScreenImagePage(
+            imageUrl: imageUrl, heroTag: 'imageHero_$index'),
+      ),
     );
   }
 }
@@ -159,14 +178,14 @@ class VideoReview extends StatefulWidget {
 
 class _VideoReviewState extends State<VideoReview> {
   VideoPlayerController? controller;
+  bool isVideoPlaying = false; // Add a flag to track video state
+
   @override
   void initState() {
     super.initState();
     controller = VideoPlayerController.network(widget.video ??
         'https://storage.googleapis.com/ecowave/video/reviews/review.mp4')
-      ..addListener(() => setState(() {}))
-      ..setLooping(true)
-      ..initialize().then((_) => controller!.play());
+      ..initialize().then((_) => setState(() {}));
   }
 
   @override
@@ -199,32 +218,74 @@ class _VideoReviewState extends State<VideoReview> {
                   size: 50,
                 ),
               ),
-              const ImageIcon(AppIcons.ratingVid),
             ],
           ),
         ),
-        onTap: () => showDialog<String>(
-          context: context,
-          builder: (BuildContext context) => AlertDialog(
-            surfaceTintColor: AppColors.white,
-            scrollable: false,
-            title: const Text('Video Review'),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                VideoPlayerWidget(controller: controller),
-              ],
-            ),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () => Navigator.pop(context, 'Close'),
-                child: const Text('Close'),
-              ),
-            ],
-          ),
-        ),
+        onTap: () => showVideoDialog(),
       );
     }
+  }
+
+  void showVideoDialog() {
+    isVideoPlaying = true;
+    controller!.play();
+    showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        surfaceTintColor: AppColors.white,
+        scrollable: false,
+        title: const Text('Video Review'),
+        content: GestureDetector(
+            onTap: () {
+              if (isVideoPlaying) {
+                controller!.pause(); // Pause the video when tapping on it
+              } else {
+                controller!.play(); // Resume the video when tapping on it again
+              }
+              setState(() {
+                isVideoPlaying =
+                    !isVideoPlaying; // Toggle the video playing state
+              });
+            },
+            child: Column(mainAxisSize: MainAxisSize.min, children: [
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  VideoPlayerWidget(controller: controller),
+                  // Show the button only when video is paused
+                  if (isVideoPlaying == false)
+                    Positioned.fill(
+                      child: IconButton(
+                        icon: const Icon(
+                          Icons.play_arrow,
+                          size: 80,
+                          color: Colors.white,
+                        ),
+                        onPressed: () {
+                          controller!.play();
+                          setState(() {
+                            isVideoPlaying = true;
+                          });
+                        },
+                      ),
+                    ),
+                ],
+              ),
+            ])),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              controller!.pause(); // Pause the video when closing the dialog
+              setState(() {
+                isVideoPlaying = false; // Reset the video state
+              });
+              Navigator.pop(context, 'Close');
+            },
+            child: const Text('Close'),
+          ),
+        ],
+      ),
+    );
   }
 }
 
@@ -249,4 +310,59 @@ class VideoPlayerWidget extends StatelessWidget {
   Widget buildVideoPlayer() => AspectRatio(
       aspectRatio: controller!.value.aspectRatio,
       child: VideoPlayer(controller!));
+}
+
+class FullScreenImagePage extends StatelessWidget {
+  final String imageUrl;
+  final String heroTag;
+
+  const FullScreenImagePage(
+      {super.key, required this.imageUrl, required this.heroTag});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Container(
+        color: Colors.black,
+        child: Stack(
+          children: [
+            GestureDetector(
+              onTap: () => Navigator.pop(context),
+              child: Center(
+                child: Hero(
+                  tag: heroTag,
+                  child: InteractiveViewer(
+                    panEnabled: true,
+                    boundaryMargin: const EdgeInsets.all(20.0),
+                    minScale: 1.0,
+                    maxScale: 5.0,
+                    child: CachedNetworkImage(
+                      imageUrl: imageUrl,
+                      fit: BoxFit.contain,
+                      errorWidget: (context, url, error) => const ImageIcon(
+                        AppIcons.warning,
+                        color: AppColors.primary500,
+                        size: 50,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              top: MediaQuery.of(context).padding.top,
+              left: 0,
+              child: IconButton(
+                icon: const Icon(
+                  Icons.arrow_back,
+                  color: Colors.white,
+                ),
+                onPressed: () => Navigator.pop(context),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
