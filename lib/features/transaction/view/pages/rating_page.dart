@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecowave/core.dart';
 import 'package:ecowave/features/transaction/bloc/history_transaction/history_transaction_bloc.dart';
@@ -100,7 +102,10 @@ class _RatingPageState extends State<RatingPage> {
                               children: [
                                 _sizedContainer(
                                   CachedNetworkImage(
-                                    imageUrl: product.productImageUrl,
+                                    imageUrl: (product
+                                            .productImageUrl.isNotEmpty)
+                                        ? (product.productImageUrl)
+                                        : 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg',
                                     imageBuilder: (context, imageProvider) =>
                                         Container(
                                       decoration: BoxDecoration(
@@ -293,76 +298,8 @@ class _RatingPageState extends State<RatingPage> {
                   ),
                 ),
                 36.0.height,
-                // ElevatedButton(
-                //   onPressed: () {
-                //     showConfirmation(
-                //         title: 'Apakah penilaianmu sudah benar?',
-                //         message:
-                //             'Kami akan memasukkan penilaian ini ke data kami',
-                //         nameButtonConfirmation: 'Nilai',
-                //         colorButtonConfirmation: AppColors.primary500,
-                //         pressNavConfirmation: () {
-                //           List<RatingData> ratingDataList = [];
-
-                //           for (int i = 0;
-                //               i < widget.detailRating.orderDetail.length;
-                //               i++) {
-                //             // Retrieve the necessary data for each rating item
-                //             double ratingProduct = double.tryParse(
-                //                     _rateProdukControllers[i].text) ??
-                //                 1.0;
-                //             String? photoUrl = _fotoControllers[i].text;
-                //             String? videoUrl = _videoControllers[i].text;
-                //             String? comment = _komenControllers[i].text;
-
-                //             RatingData ratingData = RatingData(
-                //               ratingProduct: ratingProduct,
-                //               photoUrl: photoUrl,
-                //               videoUrl: videoUrl,
-                //               comment: comment,
-                //             );
-                //             ratingDataList.add(ratingData);
-                //           }
-
-                //           double expeditionRating =
-                //               double.tryParse(_rateLayananController.text) ??
-                //                   1.0;
-
-                //           context.read<HistoryTransactionBloc>().add(
-                //               PostRatingDataEvent(
-                //                   ratingDataList: ratingDataList,
-                //                   expeditionRating: expeditionRating,
-                //                   transactionId:
-                //                       widget.detailRating.transactionId));
-
-                //           context.pop();
-                //         },
-                //         context: context,
-                //         nameButtonUnConfirmation: 'Tidak');
-                //   },
-                //   style: ElevatedButton.styleFrom(
-                //       backgroundColor: AppColors.primary500),
-                //   child: const Text(
-                //     "Kirim Komentar",
-                //     style: TextStyle(color: AppColors.white),
-                //   ),
-                // ),
-                80.0.height,
-              ],
-            ),
-          ),
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.all(AppSizes.primary),
-        child: ValueListenableBuilder<bool>(
-          valueListenable: isExist,
-          builder: (context, value, _) => EcoFormButton(
-            height: 45.0,
-            label: "Berikan Komentar",
-            onPressed: value
-                ? () async {
+                ElevatedButton(
+                  onPressed: () {
                     List<RatingData> ratingDataList = [];
 
                     for (int i = 0;
@@ -397,11 +334,69 @@ class _RatingPageState extends State<RatingPage> {
                     context.popToRoot();
                     context.read<TabbarBloc>().add(3);
                     widget.moveTab();
-                  }
-                : null,
+                  },
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.primary500),
+                  child: const Text(
+                    "Kirim Komentar",
+                    style: TextStyle(color: AppColors.white),
+                  ),
+                ),
+                80.0.height,
+              ],
+            ),
           ),
         ),
       ),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      // floatingActionButton: Padding(
+      //   padding: const EdgeInsets.all(AppSizes.primary),
+      //   child: ValueListenableBuilder<bool>(
+      //     valueListenable: isExist,
+      //     builder: (context, value, _) => EcoFormButton(
+      //       height: 45.0,
+      //       label: "Berikan Komentar",
+      //       onPressed: value
+      //           ? () async {
+      //               List<RatingData> ratingDataList = [];
+
+      //               for (int i = 0;
+      //                   i < widget.detailRating.orderDetail.length;
+      //                   i++) {
+      //                 // Retrieve the necessary data for each rating item
+      //                 double ratingProduct =
+      //                     double.tryParse(_rateProdukControllers[i].text) ??
+      //                         1.0;
+      //                 String? photoUrl = _fotoControllers[i].text;
+      //                 String? videoUrl = _videoControllers[i].text;
+      //                 String? comment = _komenControllers[i].text;
+
+      //                 RatingData ratingData = RatingData(
+      //                   ratingProduct: ratingProduct,
+      //                   photoUrl: photoUrl,
+      //                   videoUrl: videoUrl,
+      //                   comment: comment,
+      //                 );
+      //                 ratingDataList.add(ratingData);
+      //               }
+
+      //               double expeditionRating =
+      //                   double.tryParse(_rateLayananController.text) ?? 1.0;
+
+      //               context.read<HistoryTransactionBloc>().add(
+      //                   PostRatingDataEvent(
+      //                       ratingDataList: ratingDataList,
+      //                       expeditionRating: expeditionRating,
+      //                       transactionId: widget.detailRating.transactionId));
+
+      //               context.popToRoot();
+      //               context.read<TabbarBloc>().add(3);
+      //               widget.moveTab();
+      //             }
+      //           : null,
+      //     ),
+      //   ),
+      // ),
     );
   }
 
@@ -426,13 +421,15 @@ class _RatingPageState extends State<RatingPage> {
         final PlatformFile file = result.files.first;
         final String filePath = file.path ?? "";
 
-        String extension = filePath.split('.').last.toLowerCase();
-        if (extension != 'jpg' && extension != 'jpeg' && extension != 'png') {
+        File imageFile = File(filePath);
+        int fileSizeInBytes = imageFile.lengthSync();
+        double fileSizeInMB = fileSizeInBytes / (1024 * 1024);
+
+        if (fileSizeInMB > 5) {
           if (context.mounted) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
-                content:
-                    Text("Masukkan gambar yang bertipe jpg, jpeg, atau png"),
+                content: Text("Ukuran gambar tidak boleh lebih dari 5 MB"),
               ),
             );
           }
@@ -441,9 +438,25 @@ class _RatingPageState extends State<RatingPage> {
             _fotoControllers[index].text = "";
           });
         } else {
-          setState(() {
-            _fotoControllers[index].text = filePath.toString();
-          });
+          String extension = filePath.split('.').last.toLowerCase();
+          if (extension != 'jpg' && extension != 'jpeg' && extension != 'png') {
+            if (context.mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content:
+                      Text("Masukkan gambar yang bertipe jpg, jpeg, atau png"),
+                ),
+              );
+            }
+
+            setState(() {
+              _fotoControllers[index].text = "";
+            });
+          } else {
+            setState(() {
+              _fotoControllers[index].text = filePath.toString();
+            });
+          }
         }
       }
     } else {
@@ -456,9 +469,7 @@ class _RatingPageState extends State<RatingPage> {
   void uploadVideo(index) async {
     final selectVideo = await FilePicker.platform.pickFiles(
       type: FileType.custom,
-      allowedExtensions: [
-        'mp4',
-      ],
+      allowedExtensions: ['mp4'],
     );
 
     if (selectVideo != null) {
@@ -468,12 +479,15 @@ class _RatingPageState extends State<RatingPage> {
         final PlatformFile file = result.files.first;
         final String filePath = file.path ?? "";
 
-        String extension = filePath.split('.').last.toLowerCase();
-        if (extension != 'mp4') {
+        File videoFile = File(filePath);
+        int fileSizeInBytes = videoFile.lengthSync();
+        double fileSizeInMB = fileSizeInBytes / (1024 * 1024);
+
+        if (fileSizeInMB > 10) {
           if (context.mounted) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
-                content: Text("Masukkan Video yang bertipe mp4"),
+                content: Text("Ukuran video tidak boleh lebih dari 10 MB"),
               ),
             );
           }
@@ -482,9 +496,24 @@ class _RatingPageState extends State<RatingPage> {
             _videoControllers[index].text = "";
           });
         } else {
-          setState(() {
-            _videoControllers[index].text = filePath.toString();
-          });
+          String extension = filePath.split('.').last.toLowerCase();
+          if (extension != 'mp4') {
+            if (context.mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text("Masukkan video yang bertipe mp4"),
+                ),
+              );
+            }
+
+            setState(() {
+              _videoControllers[index].text = "";
+            });
+          } else {
+            setState(() {
+              _videoControllers[index].text = filePath.toString();
+            });
+          }
         }
       }
     } else {

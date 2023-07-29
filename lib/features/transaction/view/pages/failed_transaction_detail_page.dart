@@ -65,7 +65,9 @@ class FailedTransactionDetailPage extends StatelessWidget {
                         children: [
                           _sizedContainer(
                             CachedNetworkImage(
-                              imageUrl: cFailed.productImageUrl,
+                              imageUrl: (cFailed.productImageUrl.isNotEmpty)
+                                  ? (cFailed.productImageUrl)
+                                  : 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg',
                               imageBuilder: (context, imageProvider) =>
                                   Container(
                                 decoration: BoxDecoration(
@@ -172,7 +174,9 @@ class FailedTransactionDetailPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text("Metode Pembayaran"),
-                  Text(detailTransaction.paymentMethod),
+                  Text(detailTransaction.paymentMethod == ""
+                      ? "-"
+                      : detailTransaction.paymentMethod ?? ""),
                 ],
               ),
               const Padding(
