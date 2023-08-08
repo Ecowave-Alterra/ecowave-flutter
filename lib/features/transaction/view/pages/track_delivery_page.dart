@@ -93,7 +93,7 @@ class _TrackDeliveryPageState extends State<TrackDeliveryPage> {
                         },
                         child: const Text(
                           'Salin',
-                          style: TextStyle(color: AppColors.primary400),
+                          style: TextStyle(color: AppColors.primary500),
                         ),
                       ),
                     ],
@@ -137,7 +137,7 @@ class _TrackDeliveryPageState extends State<TrackDeliveryPage> {
                                         .toFormattedDateShort(),
                                     style: TextStyle(
                                         color: index == 0
-                                            ? AppColors.black
+                                            ? AppColors.primary500
                                             : AppColors.grey300),
                                   ),
                                   Container(
@@ -150,7 +150,7 @@ class _TrackDeliveryPageState extends State<TrackDeliveryPage> {
                                         trackingDelivery.desc,
                                         style: TextStyle(
                                             color: index == 0
-                                                ? AppColors.black
+                                                ? AppColors.primary500
                                                 : AppColors.grey300),
                                         textAlign: TextAlign.right,
                                       ),
