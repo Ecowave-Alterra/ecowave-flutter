@@ -201,7 +201,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                                       ),
                                       TextButton(
                                         onPressed: () {
-                                          isProductCategory = 'perabot';
+                                          isProductCategory = 'Perabot';
                                           setState(() {});
                                         },
                                         child: Container(
@@ -214,7 +214,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                                             borderRadius: BorderRadius.circular(
                                                 AppSizes.radius),
                                             color:
-                                                isProductCategory == 'perabot'
+                                                isProductCategory == 'Perabot'
                                                     ? AppColors.primary500
                                                     : AppColors.white,
                                           ),
@@ -223,7 +223,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                                               children: [
                                                 Visibility(
                                                   visible: isProductCategory ==
-                                                          'perabot'
+                                                          'Perabot'
                                                       ? true
                                                       : false,
                                                   child: const Padding(
@@ -240,7 +240,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                                                   'Perabot',
                                                   style: TextStyle(
                                                     color: isProductCategory ==
-                                                            'perabot'
+                                                            'Perabot'
                                                         ? AppColors.white
                                                         : AppColors.primary500,
                                                     fontWeight:
@@ -256,7 +256,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                                       ),
                                       TextButton(
                                         onPressed: () {
-                                          isProductCategory = 'kantong';
+                                          isProductCategory = 'Kantong';
                                           setState(() {});
                                         },
                                         child: Container(
@@ -269,7 +269,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                                             borderRadius: BorderRadius.circular(
                                                 AppSizes.radius),
                                             color:
-                                                isProductCategory == 'kantong'
+                                                isProductCategory == 'Kantong'
                                                     ? AppColors.primary500
                                                     : AppColors.white,
                                           ),
@@ -278,7 +278,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                                               children: [
                                                 Visibility(
                                                   visible: isProductCategory ==
-                                                          'kantong'
+                                                          'Kantong'
                                                       ? true
                                                       : false,
                                                   child: const Padding(
@@ -295,7 +295,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                                                   'Kantong',
                                                   style: TextStyle(
                                                     color: isProductCategory ==
-                                                            'kantong'
+                                                            'Kantong'
                                                         ? AppColors.white
                                                         : AppColors.primary500,
                                                     fontWeight:
@@ -450,9 +450,9 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                                           onPressed: () {
                                             Navigator.pop(context);
                                             isFilterOn = 1;
-                                            isProductCategory == 'perabot' ||
+                                            isProductCategory == 'Perabot' ||
                                                     isProductCategory ==
-                                                        'kantong'
+                                                        'Kantong'
                                                 ? context
                                                     .read<ProductBloc>()
                                                     .add(FilterProductEvent(
