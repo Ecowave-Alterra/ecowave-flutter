@@ -5,6 +5,7 @@ import 'package:ecowave/features/transaction/model/models/tracking_delivery_mode
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
 class TrackDeliveryPage extends StatefulWidget {
   final HistoryTransactionModel detailTransaction;
@@ -126,6 +127,9 @@ class _TrackDeliveryPageState extends State<TrackDeliveryPage> {
                             final TrackingDeliveryModel trackingDelivery =
                                 state.dataTracking[index];
 
+                            final String deliveryDate = DateFormat(
+                                    'd MMM y, H:mm a', 'id')
+                                .format(DateTime.parse(trackingDelivery.date));
                             return Container(
                               margin: const EdgeInsets.only(bottom: 28),
                               child: Row(
@@ -133,8 +137,7 @@ class _TrackDeliveryPageState extends State<TrackDeliveryPage> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    DateTime.parse(trackingDelivery.date)
-                                        .toFormattedDateShort(),
+                                    deliveryDate,
                                     style: TextStyle(
                                         color: index == 0
                                             ? AppColors.primary500
