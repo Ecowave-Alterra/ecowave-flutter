@@ -114,8 +114,10 @@ class ShippingOptionsPage extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-                                const Spacer(),
-                                Text(shipping.value.currencyFormatRp),
+                                // const Spacer(),
+                                Flexible(
+                                    child:
+                                        Text(shipping.value.currencyFormatRp)),
                               ],
                             ),
                           ),
