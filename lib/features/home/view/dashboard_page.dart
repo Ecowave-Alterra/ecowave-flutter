@@ -13,7 +13,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DashboardPage extends StatefulWidget {
-  const DashboardPage({super.key});
+  final String? token;
+  const DashboardPage({super.key, required this.token});
 
   @override
   State<DashboardPage> createState() => _DashboardPageState();
@@ -23,7 +24,10 @@ class _DashboardPageState extends State<DashboardPage> {
   @override
   void initState() {
     context.read<ProductBloc>().add(GetProductEvent());
-    context.read<ProfileBloc>().add(GetDataUser());
+    if (widget.token != '') {
+      context.read<ProfileBloc>().add(GetDataUser());
+    }
+
     context.read<InformationBloc>().add(const GetInformationEvent(id: 1));
     super.initState();
   }
@@ -35,7 +39,9 @@ class _DashboardPageState extends State<DashboardPage> {
 
   Future<void> _refreshData() async {
     context.read<ProductBloc>().add(GetProductEvent());
-    context.read<ProfileBloc>().add(GetDataUser());
+    if (widget.token != '') {
+      context.read<ProfileBloc>().add(GetDataUser());
+    }
 
     context.read<InformationBloc>().add(const GetInformationEvent(id: 1));
 

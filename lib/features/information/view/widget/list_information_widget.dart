@@ -1,8 +1,8 @@
-import 'package:ecowave/features/information/bloc/bookmark/bookmark_bloc.dart';
+// import 'package:ecowave/features/information/bloc/bookmark/bookmark_bloc.dart';
 import 'package:ecowave/features/information/model/models/information_model.dart';
 import 'package:ecowave/features/information/view/pages/detail_information_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+// import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -75,30 +75,31 @@ class ListInformation extends StatelessWidget {
                     ),
                   ),
                 ),
-                ValueListenableBuilder(
-                  valueListenable: isBookmark,
-                  builder: (context, value, _) {
-                    return IconButton(
-                      onPressed: () {
-                        isBookmark.value = !isBookmark.value;
-                        if (value == false) {
-                          context.read<BookmarkBloc>().add(AddBookmarkEvent(
-                              informationModel: informationModel));
-                        } else if (value == true) {
-                          context.read<BookmarkBloc>().add(DeleteBookmarkEvent(
-                              id: informationModel.informationId));
-                        }
-                      },
-                      icon: ImageIcon(
-                        value
-                            ? AppIcons.solidBookmark
-                            : AppIcons.outlineBookmark,
-                        color: AppColors.primary600,
-                        size: 18,
-                      ),
-                    );
-                  },
-                ),
+                const SizedBox()
+                // ValueListenableBuilder(
+                //   valueListenable: isBookmark,
+                //   builder: (context, value, _) {
+                //     return IconButton(
+                //       onPressed: () {
+                //         isBookmark.value = !isBookmark.value;
+                //         if (value == false) {
+                //           context.read<BookmarkBloc>().add(AddBookmarkEvent(
+                //               informationModel: informationModel));
+                //         } else if (value == true) {
+                //           context.read<BookmarkBloc>().add(DeleteBookmarkEvent(
+                //               id: informationModel.informationId));
+                //         }
+                //       },
+                //       icon: ImageIcon(
+                //         value
+                //             ? AppIcons.solidBookmark
+                //             : AppIcons.outlineBookmark,
+                //         color: AppColors.primary600,
+                //         size: 18,
+                //       ),
+                //     );
+                //   },
+                // ),
               ],
             ),
           ],

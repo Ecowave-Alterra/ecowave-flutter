@@ -40,7 +40,7 @@ class _ContentInformationState extends State<ContentInformation> {
   void _scrollListener() {
     if (_scrollController.offset >=
             _scrollController.position.maxScrollExtent &&
-        !_scrollController.position.outOfRange &&
+        // !_scrollController.position.outOfRange &&
         !isScrolled) {
       context.read<UpdatePointBloc>().add(GetMessageEvent());
       context.read<ProfileBloc>().add(GetDataUser());
